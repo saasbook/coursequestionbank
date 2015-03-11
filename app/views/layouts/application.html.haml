@@ -1,0 +1,24 @@
+!!! 5
+%html
+  %head
+    %title Course Question Bank
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body
+    %h1.title Course Question Bank
+    - if @current_user
+      - if !@current_user.name.empty?
+        %p.welcome  Welcome, #{@current_user.name}!
+      - else
+        %p.welcome  Welcome, #{@current_user.provider} user!
+      = link_to 'Log Out', logout_path
+    #main
+      - if flash[:notice]
+        #notice.message= flash[:notice]
+      - elsif flash[:warning]
+        #warning.message= flash[:warning]
+      
+
+      = yield

@@ -34,4 +34,7 @@ Saasquizes::Application.configure do
 
   # Print deprecation notices to the stderr
   config.active_support.deprecation = :stderr
+  
+  #Turn on ImniAuth test mode
+  OmniAuth.config.test_mode = true
 end
