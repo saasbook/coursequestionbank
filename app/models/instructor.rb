@@ -1,5 +1,3 @@
 class Instructor < ActiveRecord::Base
-  attr_accessible :name, :last_used, :privilege, :uid, :provider
-  has_many :questions, :collections
+  attr_accessible :created_by, :is_public, :last_used, :last_used, :name
 end
-

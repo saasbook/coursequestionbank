@@ -1,0 +1,9 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  last_used: 2015-03-10 22:14:53
+
+two:
+  name: MyString
+  last_used: 2015-03-10 22:14:53

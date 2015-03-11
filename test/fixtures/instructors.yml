@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/Fixtures.html
+
+one:
+  name: MyString
+  last_used: 2015-03-10 19:30:21
+  created_by: MyString
+  is_public: false
+  last_used: 2015-03-10 19:30:21
+
+two:
+  name: MyString
+  last_used: 2015-03-10 19:30:21
+  created_by: MyString
+  is_public: false
+  last_used: 2015-03-10 19:30:21
