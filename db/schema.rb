@@ -11,13 +11,38 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150309001906) do
+ActiveRecord::Schema.define(:version => 20150311011451) do
+
+  create_table "collections", :force => true do |t|
+    t.string   "name"
+    t.datetime "last_used"
+    t.integer  "instructor_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
 
   create_table "instructors", :force => true do |t|
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
     t.string   "privilege"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "questions", :force => true do |t|
+    t.string   "text"
+    t.datetime "created_date"
+    t.string   "created_by"
+    t.boolean  "is_public"
+    t.datetime "last_used"
+    t.integer  "instructor_id"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+  end
+
+  create_table "tags", :force => true do |t|
+    t.string   "name"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
