@@ -1,6 +1,8 @@
 class Instructor < ActiveRecord::Base
+  has_many :questions
+  has_many :collections
+  
   attr_accessible :name, :provider, :uid, :privilege
-  has_many :questions, :collections
   
   def self.create_with_omniauth(auth)
     create! do |user|
