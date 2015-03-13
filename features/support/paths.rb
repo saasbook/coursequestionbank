@@ -15,7 +15,9 @@ module NavigationHelpers
 
     when /^the (CourseQuestionBank )?home\s?page$/ then '/'
     when /^the login page$/ then '/login'
-    when /^the questions page$/ then '/questions'
+    when /^the questions page$/ then '/problems'
+    
+    
     when /^the edit page for "(.+)"$/i
         edit_movie_path(Movie.find_by_title($1).id)
     when /the details page for "(.*)"/i
