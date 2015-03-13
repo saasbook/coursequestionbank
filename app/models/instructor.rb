@@ -1,8 +1,9 @@
 class Instructor < ActiveRecord::Base
-  has_many :questions
-  has_many :collections
+
+  attr_accessible :privilege, :name, :uid, :privilege
+  has_and_belongs_to_many :collections
+  has_and_belongs_to_many :problems
   
-  attr_accessible :name, :provider, :uid, :privilege
   
   def self.create_with_omniauth(auth)
     create! do |user|
@@ -12,4 +13,5 @@ class Instructor < ActiveRecord::Base
       user.privilege = "admin"
     end
   end
+
 end
