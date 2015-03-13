@@ -1,0 +1,115 @@
+<html>
+  <head>
+    <title>A few example questions</title>
+    <style type="text/css" media="all">
+    body { font-family: Times, serif; }
+    .header { text-align: right; font-weight: bold; padding-right: 30%; line-height: 300%; }
+    h1 { text-align: center; }
+    ol.questions { list-style-type: number; }
+    li.question { page-break-inside: avoid; border-bottom: 1px solid grey;  }
+    li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
+    li.selectmultiple  ol.answers { vertical-align: center; list-style-type: none; list-style-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABQAAAAUAQMAAAC3R49OAAAABlBMVEUAAAD///+l2Z/dAAAAEklEQVQImWNgAIL6/w+ogoEAAKI4Kp2NVIeDAAAAAElFTkSuQmCC');  }
+    li.truefalse ol.answers { list-style-type: none; }
+    .correct { color: green; font-weight: bold; border: 1px solid black; padding: 0.2ex; }
+    .incorrect { color: red }
+    .explanation { font-style: italic }
+    .instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div id="name">Name:</div>
+      <div id="sid">SID:</div>
+    </div>
+    <h1>A few example questions</h1>
+    <div class="instructions">
+      <ul>
+        <li>No books, notes, or electronic devices allowed.  </li>
+        <li>Time limit is 30 minutes.</li>
+        <li>6 multiple-choice questions, points indicated per question,
+          6 points total.  Points per question are intended 
+          to reflect approximate times they should take, at about 1 point per minute.</li>
+        <li>For 'select all that apply' questions worth N points,
+          you get 1/N of the points for each RIGHT answer that you check, plus
+          1/N of the points for each WRONG answer that you correctly
+          leave unchecked.  That is, equal weight is given to deciding
+          whether each choice is part of the right answer or not.</li> 
+      </ul>
+      <b>Good skill!</b>
+    </div>
+    <!-- Seed: 158418087087103374421056037485224779982 -->
+<ol class="questions">
+  <li id="question-0" class="question multiplechoice ">
+    <div class="text">
+      <p>
+[1 point] Which of the following best identifies the four basic operations supported by RDBMS?      </p>
+    </div>
+    <ol class="answers">
+      <li>REST</li>
+      <li>HTTP</li>
+      <li>CRUD</li>
+      <li>Get, Put, Post, Delete</li>
+    </ol>
+  </li>
+  <li id="question-1" class="question truefalse ">
+    <div class="text">
+      <p>
+[1 point] True or False: If an app has a RESTful API, it must be performing CRUD operations.      </p>
+    </div>
+    <ol class="answers">
+      <li>True</li>
+      <li>False</li>
+    </ol>
+  </li>
+  <li id="question-2" class="question multiplechoice ">
+    <div class="text">
+      <p>
+[1 point] The implied port number of the URI <tt>http://google.com</tt> is      </p>
+    </div>
+    <ol class="answers">
+      <li>400</li>
+      <li>80</li>
+      <li>8000</li>
+      <li>3000</li>
+    </ol>
+  </li>
+  <li id="question-3" class="question selectmultiple multiple">
+    <div class="text">
+      <p>
+[1 point] Select ALL that apply: Which tiers in the three-tier architecture are involved in handling views?      </p>
+    </div>
+    <ol class="answers">
+      <li>Persistence</li>
+      <li>Database</li>
+      <li>Logic</li>
+      <li>Presentation</li>
+    </ol>
+  </li>
+  <li id="question-4" class="question multiplechoice ">
+    <div class="text">
+      <p>
+[1 point] The ----- tier of three-tier SaaS apps is the most complicated to scale.      </p>
+    </div>
+    <ol class="answers">
+      <li>Logic</li>
+      <li>Database</li>
+      <li>Presentation</li>
+      <li>Persistence</li>
+    </ol>
+  </li>
+  <li id="question-5" class="question multiplechoice ">
+    <div class="text">
+      <p>
+[1 point] An HTTP request must consist of both a(n) ----- and a(n) -----      </p>
+    </div>
+    <ol class="answers">
+      <li>URL, wildcard</li>
+      <li>URI, HTTP request method</li>
+      <li>CRUD action, database</li>
+      <li>header, cookie</li>
+    </ol>
+  </li>
+</ol>
+
+  </body>
+</html>
