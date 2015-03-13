@@ -11,3 +11,48 @@
  *= require_self
  *= require_tree .
  */
+
+ html, body {
+ 	/*font-family: 'Patrick Hand';*/
+ 	font-family: Helvetica;
+ 	margin: 0px;
+ 	padding: 0px;
+ }
+
+ h1, p {
+ 	margin: 0px;
+ 	padding: 0px;
+ }
+
+ a:link, a:visited, a:hover, a:active {
+ 	color: #2163E3;
+ }
+
+ h1.title, p.welcome {
+ 	display: inline-block;
+ 	margin: 5px 5px 5px 10px;
+
+ }
+
+ p.welcome {
+ 	margin-right: 10px;
+ }
+
+ #header {
+ 	font-family: 'Patrick Hand';
+ 	width: 100%;
+ 	position: relative;
+ 	background-color: #EBF4FA;
+ 	border-top: solid;
+ 	border-bottom: solid;
+ 	border-top-width: 2px;
+ 	border-bottom-width: 2px;
+ }
+
+#user {
+	padding: 5px;
+	margin: 5px;
+	display: inline-block;
+	float: right;
+	font-size: 18px;
+}

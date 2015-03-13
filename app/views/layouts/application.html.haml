@@ -1,4 +1,6 @@
 !!! 5
+%link{:href => 'http://fonts.googleapis.com/css?family=Patrick+Hand|Delius|Handlee', :rel => 'stylesheet', :type => 'text/css'}
+
 %html
   %head
     %title Course Question Bank
@@ -7,13 +9,15 @@
     = csrf_meta_tags
 
   %body
-    %h1.title Course Question Bank
-    - if @current_user
-      - if !@current_user.name.empty?
-        %p.welcome  Welcome, #{@current_user.name}!
-      - else
-        %p.welcome  Welcome, #{@current_user.provider} user!
-      = link_to 'Log Out', logout_path, method: :post
+    #header
+      %h1.title Course Question Bank
+      #user
+        - if @current_user
+          - if !@current_user.name.empty?
+            %p.welcome  Welcome, #{@current_user.name}!
+          - else
+            %p.welcome  Welcome, #{@current_user.provider} user!
+          = link_to 'Log Out', logout_path, method: :post
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]
