@@ -1,0 +1,28 @@
+!!! 5
+%link{:href => 'http://fonts.googleapis.com/css?family=Patrick+Hand|Delius|Handlee', :rel => 'stylesheet', :type => 'text/css'}
+
+%html
+  %head
+    %title Course Question Bank
+    = stylesheet_link_tag 'application'
+    = javascript_include_tag 'application'
+    = csrf_meta_tags
+
+  %body
+    #header
+      %h1.title Course Question Bank
+      #user
+        - if @current_user
+          - if !@current_user.name.empty?
+            %p.welcome  Welcome, #{@current_user.name}!
+          - else
+            %p.welcome  Welcome, #{@current_user.provider} user!
+          = link_to 'Log Out', logout_path, method: :post
+    #main
+      - if flash[:notice]
+        #notice.message= flash[:notice]
+      - elsif flash[:warning]
+        #warning.message= flash[:warning]
+      
+
+      = yield
