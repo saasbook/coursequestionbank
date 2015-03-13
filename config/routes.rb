@@ -1,13 +1,13 @@
 Saasquizes::Application.routes.draw do
 
-  root :to => 'questions#home'
+  root :to => 'problems#home'
   
   get  'auth/:provider/callback' => 'sessions#create'
   post 'logout' => 'sessions#destroy'
   get  'auth/failure' => 'sessions#failure'
   get 'login' => 'sessions#login', :as => 'login'
   
-  resources :questions
+  resources :problems
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
