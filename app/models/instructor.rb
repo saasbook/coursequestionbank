@@ -1,10 +1,11 @@
 class Instructor < ActiveRecord::Base
 
-  attr_accessible :privilege, :name, :uid, :privilege
+  attr_accessible :privilege, :name, :uid, :provider
   has_and_belongs_to_many :collections
-  has_and_belongs_to_many :problems
+  has_many :problems
   
-  
+  scope :username, ->(instructor) { where(name: instructor) }
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]
