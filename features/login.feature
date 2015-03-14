@@ -1,6 +1,5 @@
 @omniauth_test
 Feature: Login with github
-	
 	As an instructor
 	So that I can access the application
 	I want to login to the app with github
