@@ -1,3 +1,18 @@
 -#  This file is app/views/movies/index.html.haml
 %h1 Questions
 
+%table#problems
+  %thead
+    %tr/
+    %th Question Type
+    %th Question Text
+    %th Author
+    %th Date Created
+    %th Expand
+  %tbody
+    - @problems.each do |problem|
+      %tr
+        %td= 'temporary'
+        %td= problem.text
+        %td= problem.created_by
+        %td= problem.created_date

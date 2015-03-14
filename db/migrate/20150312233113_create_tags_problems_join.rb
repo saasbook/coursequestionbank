@@ -8,4 +8,4 @@ class CreateTagsProblemsJoin < ActiveRecord::Migration
   def down
     drop_table 'problems_tags'
   end
-end 
+end
