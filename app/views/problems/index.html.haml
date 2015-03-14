@@ -5,11 +5,6 @@
   = text_field_tag(:tags)
   = submit_tag 'Apply', :id => "filter_submit"
 
-- @problems.each do |p|
-  - p.tags.each do |t|
-    = t.name
-    %br
-
 %table#problems
   %thead
     %tr/
