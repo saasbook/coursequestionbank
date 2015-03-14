@@ -8,6 +8,7 @@ gem 'rails', '3.2.16'
 gem 'ruql', :path => './ruql/'
 gem 'omniauth'
 gem 'omniauth-github'
+gem 'rake'
 
 group :development, :test do
   gem 'sqlite3'
