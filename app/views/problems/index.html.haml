@@ -13,6 +13,6 @@
     - @problems.each do |problem|
       %tr
         %td= 'temporary'
-        %td problem.html5
+        %td= problem.html5.html_safe
         %td= problem.created_by
         %td= problem.created_date
