@@ -1,8 +1,8 @@
 # filter by tags - the filtertags.feature file
 
 Given(/^the following questions have the following tags$/) do |table|
-	table.rows_hash.each do |problems, tag|
-		When %{I fill in "#{problems}" with "#{tag}"}
+	table.rows_hash.each do |hash|
+		puts hash
 	end
 end
 
