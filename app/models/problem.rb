@@ -5,8 +5,11 @@ class Problem < ActiveRecord::Base
   has_and_belongs_to_many :collections
   
   def html5
-    text = "question '' do + \n" + self.text + '\n end'
-    %x(echo text > text.rb) #writes this to text.rb file since ruql prefers files
-    %x(ruql text.rb Html5 --template=preview.html.erb)
+    rb_text = "quiz '' do \n #{text} \n end"
+    puts 'TEXT IS', text
+    File.open('text.rb', 'w'){|file| file.write(rb_text)}
+    x = %x(ruql text.rb Html5 --template=preview.html.erb)
+    print x 
+    x
   end
 end
