@@ -10,3 +10,18 @@
     = t.name
     %br
 
+%table#problems
+  %thead
+    %tr/
+    %th Question Type
+    %th Question Text
+    %th Author
+    %th Date Created
+    %th Expand
+  %tbody
+    - @problems.each do |problem|
+      %tr
+        %td= 'temporary'
+        %td= problem.html5.html_safe
+        %td= problem.created_by
+        %td= problem.created_date
