@@ -16,7 +16,7 @@ Feature: display list of questions filtered by tag
   | rspec            | testing | 
 
   Given the tags table 
-  | tags    |  question         | 
+  | tags    | question          | 
   | twitter | twitter questtion |
   | quiz1   | cucumber          |
   | quiz3   | rails question    |
@@ -27,24 +27,14 @@ Feature: display list of questions filtered by tag
 
   Scenario: restrict to questions with 'quiz1' tag
     When I search for the following tag: 'quiz1'
-    Then I should see question "twitter question"
-    Then I should see question "cucumber"
-    And I should not see question "rails question"
-    And I should not see question "rspec"
+    Then I should see "twitter question"
+    Then I should see "cucumber"
+    And I should not see "rails question"
+    And I should not see "rspec"
 
   Scenario: enter no tags
     When I search for the following tags: ‘’
     Then I should see all questions
-
-  Scenario: sort by created date
-    When I select 'created_date' in filters
-    Then I should see the question "twitter question" before "rspec"
-    And I should not see "cucumber" before "rails question"
-
-  Scenario: filter by created by
-    When I select ‘sort by author’ in filters
-    Then I should see the question "twitter question" before "rspec"
-    And I should not see the question "cucumber" before "twitter question" 
 
 
   
