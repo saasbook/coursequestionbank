@@ -29,3 +29,13 @@
     end" 
 
   )
+
+    Problem.create(created_by: "fox",created_date: '2014-06-09 21:11:55 UTC', is_public: true, text:
+        "choice_answer :randomize => true do
+            text 'The ----- tier of three-tier SaaS apps is the most complicated to scale.'
+            answer 'Presentation'
+            distractor 'Logic'
+            distractor 'Persistence'
+            distractor 'Database'
+        end"
+    )
