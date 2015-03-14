@@ -1,12 +1,15 @@
 -#  This file is app/views/movies/index.html.haml
 %h1 Questions
+= form_tag problems_path, :method => :get, :id => "tags_form" do
+  = label_tag(:tags, "Tags")
+  = text_field_tag(:tags)
+  = submit_tag 'Apply', :id => "filter_submit"
 
 %table#problems
   %thead
     %tr/
     %th Question Type
     %th Question Text
-    %th Author
     %th Date Created
     %th Expand
   %tbody
@@ -14,5 +17,4 @@
       %tr
         %td= 'temporary'
         %td= problem.html5.html_safe
-        %td= problem.created_by
         %td= problem.created_date

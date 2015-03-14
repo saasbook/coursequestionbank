@@ -15,10 +15,10 @@
         distractor 'REST', :explanation => 'REpresentational State Transfer is a design approach for making SaaS requests self-contained by having each request refer to a resource and an operation on that resource.'
     end" 
 
-  )
+  ).tags.create(name: 'cucumber')
 
-
-    Problem.create(created_by:'world', created_date: '2013-06-09 21:51:55 UTC', is_public: true, text:
+    rails = Tags.create(name: 'rails')
+    Problem.create(created_by:'world', created_date: '2013-06-09 21:51:55 UTC', is_public: true, tags: rails, text:
 
     "select_multiple :randomize => true do
         text  'Which tiers in the three-tier architecture are involved in handling views?'
@@ -30,7 +30,7 @@
 
   )
 
-    Problem.create(created_by: "fox",created_date: '2014-06-09 21:11:55 UTC', is_public: true, text:
+    Problem.create(created_by: "fox",created_date: '2014-06-09 21:11:55 UTC', is_public: true, tags: rails, text:
         "choice_answer :randomize => true do
             text 'The ----- tier of three-tier SaaS apps is the most complicated to scale.'
             answer 'Presentation'
@@ -39,3 +39,4 @@
             distractor 'Database'
         end"
     )
+
