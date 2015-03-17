@@ -13,6 +13,6 @@ class Instructor < ActiveRecord::Base
       user.name = auth["info"]["name"]
       user.privilege = "admin"
     end
-  end
+  end 
 
 end
