@@ -28,9 +28,9 @@
         distractor 'Database'
     end" 
 
-  ).tags = rails
+  ).tags.push(rails)
 
-    Problem.create(created_date: '2014-06-09 21:11:55 UTC', is_public: true, tags: rails, text:
+    Problem.create(created_date: '2014-06-09 21:11:55 UTC', is_public: true,  text:
         "choice_answer :randomize => true do
             text 'The ----- tier of three-tier SaaS apps is the most complicated to scale.'
             answer 'Presentation'
@@ -38,7 +38,8 @@
             distractor 'Persistence'
             distractor 'Database'
         end"
-    )
+    ).tags.push(rails)
 
+    puts c
     puts 'seeds successfully imported --------'
 
