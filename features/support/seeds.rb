@@ -18,7 +18,7 @@
   ).tags.create(name: 'cucumber')
 
     rails = Tag.create(name: 'rails')
-    Problem.create(created_date: '2013-06-09 21:51:55 UTC', is_public: true, tags: rails, text:
+    Problem.create(created_date: '2013-06-09 21:51:55 UTC', is_public: true, text:
 
     "select_multiple :randomize => true do
         text  'Which tiers in the three-tier architecture are involved in handling views?'
@@ -28,7 +28,7 @@
         distractor 'Database'
     end" 
 
-  )
+  ).tags = rails
 
     Problem.create(created_date: '2014-06-09 21:11:55 UTC', is_public: true, tags: rails, text:
         "choice_answer :randomize => true do
