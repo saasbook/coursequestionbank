@@ -4,18 +4,18 @@ Feature: import ruql questions from my local hard drive onto the server and corr
   I want to be able to upload my local ruql files to the database
 
   Scenario: import questions
-    When I follow ‘import questions’
-    I should be on the import page
+    When I follow 'import questions'
+    Then I should be on the import page
     
   Scenario: import invalid question
-    When I follow ‘import questions’
-    And I upload ‘invalid.rb’
-    I should be on the import page.
-    And I should see a warning “Ruql format not recognized”
+    When I follow 'import questions'
+    And I upload 'invalid.rb'
+    Then I should be on the import page.
+    And I should see a warning 'Ruql format not recognized'
 
 
   Scenario: add tag to question
-    Given I create a question ‘foo’
-    And I follow ‘create tag’
-    And I enter ‘SaaS-Agile’
-    I should see ‘Saas-Agile’ as a tag
+    Given I create a question 'foo'
+    And I follow 'create tag'
+    And I enter 'SaaS-Agile'
+    Then I should see 'Saas-Agile' as a tag
