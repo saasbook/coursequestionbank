@@ -1,4 +1,5 @@
 #setup file. should be the same in both features/support/ and db/
+    puts '----------------starting seed importing--------'
     Problem.create(created_date: '2012-06-09 21:51:55 UTC', is_public: true, text:
 
     "choice_answer :randomize => true do
@@ -34,5 +35,5 @@
         end"
     ).tags.push(rails)
 
-    puts 'seeds successfully imported --------'
+    puts '----------------seeds successfully imported --------'
 
