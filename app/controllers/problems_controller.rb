@@ -6,8 +6,9 @@ class ProblemsController < ApplicationController
 
 	def index
   		@problems = Problem.all
-  	
-  		#tags
+  	  @collections = ["C1", "C2", "C3", "C4", "C5"]
+  		
+      #tags
   		if params[:tags]
   			@problems = Problem.joins(:tags).merge(Tag.tag_name(params[:tags].split(",")))
   		end

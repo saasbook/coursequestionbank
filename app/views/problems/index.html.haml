@@ -1,20 +1,21 @@
 -#  This file is app/views/movies/index.html.haml
-%h1 Questions
-= form_tag problems_path, :method => :get, :id => "tags_form" do
-  = label_tag(:tags, "Tags")
-  = text_field_tag(:tags)
-  = submit_tag 'Apply', :id => "filter_submit"
 
-%table#problems
-  %thead
-    %tr/
-    %th Question Type
-    %th Question Text
-    %th Date Created
-    %th Expand
-  %tbody
-    - @problems.each do |problem|
-      %tr
-        %td= 'temporary'
-        %td= problem.html5.html_safe
-        %td= problem.created_date
+%div.col-md-2#sidebar-filter
+  = render "filter"
+
+%div.col-md-10
+  %div.table-responsive
+    %table.table-hover
+      %thead
+        %tr/
+        %th Question Type
+        %th Question Text
+        %th Date Created
+        %th Expand
+      %tbody
+        - @problems.each do |problem|
+          %tr
+            %td= 'temporary'
+            %td= problem.html5.html_safe
+            %td= problem.created_date
+            %td= problem.tags

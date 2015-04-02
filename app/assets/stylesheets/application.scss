@@ -1,0 +1,74 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+
+ html, body {
+ 	/*font-family: 'Patrick Hand';*/
+ 	font-family: Helvetica;
+ 	margin: 0px;
+ 	padding: 0px;
+ }
+
+ h1, p {
+ 	margin: 0px;
+ 	padding: 0px;
+ }
+
+ a:link, a:visited, a:hover, a:active {
+ 	color: #2163E3;
+ }
+
+ h1.title, p.welcome {
+ 	display: inline-block;
+ 	margin: 5px 5px 5px 10px;
+
+ }
+
+ p.welcome {
+ 	margin-right: 10px;
+ }
+
+ #header {
+ 	font-family: 'Patrick Hand';
+ 	width: 100%;
+ 	position: relative;
+ 	background-color: #EBF4FA;
+ 	border-top: solid;
+ 	border-bottom: solid;
+ 	border-top-width: 2px;
+ 	border-bottom-width: 2px;
+ }
+
+#user {
+	padding: 5px;
+	margin: 5px;
+	display: inline-block;
+	float: right;
+	font-size: 18px;
+}
+
+#sidebar-filter {
+	background: #EBF4FA;
+	padding: 10px;
+}
+
+	ol.questions { list-style-type: none; }
+    li.question { page-break-inside: avoid; }
+    li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
+    li.selectmultiple  ol.answers { list-style-type: lower-alpha;  }
+    li.truefalse ol.answers { list-style-type: lower-alpha; }
+    .correct { color: green; font-weight: bold; border: 1px solid black; padding: 0.2ex; }
+    .incorrect { color: red }
+    .explanation { font-style: italic }
+    .instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }

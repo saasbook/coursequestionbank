@@ -1,0 +1,12 @@
+
+= form_tag problems_path, :method => :get, :id => "tags_form", class: 'form-inline' do
+  = label_tag(:tags, "Tags:")
+  = text_field_tag(:tags, params[:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
+  <br><br>
+  = label_tag(:tags, "Collections:")
+  <br>
+  - @collections.each do |collection|
+    = check_box_tag "collections[#{collection}]", 1, true, class: "checkbox"
+    = collection
+    <br>
+  = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
