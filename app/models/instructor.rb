@@ -1,7 +1,7 @@
 class Instructor < ActiveRecord::Base
 
   attr_accessible :privilege, :name, :uid, :provider
-  has_and_belongs_to_many :collections
+  has_many :collections
   has_many :problems
   
   scope :username, ->(instructor) { where(name: instructor) }

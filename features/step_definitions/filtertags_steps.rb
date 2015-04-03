@@ -1,6 +1,5 @@
 # filter by tags - the filtertags.feature file
 
-
 When(/^I search for the following tag: (.+)/)  do |arg1|
  	choose(arg1)
 end

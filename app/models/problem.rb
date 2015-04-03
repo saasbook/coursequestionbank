@@ -9,10 +9,10 @@ class Problem < ActiveRecord::Base
 
   def html5
     rb_text = "quiz '' do \n #{text} \n end"
-    puts 'TEXT IS', text
+    #puts 'TEXT IS', text
     File.open('text.rb', 'w'){|file| file.write(rb_text)}
     x = %x(ruql text.rb Html5 --template=preview.html.erb)
-    print x 
+    #print x 
     x
   end
 

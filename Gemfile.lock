@@ -124,6 +124,9 @@ GEM
       rack
     rack-test (0.6.3)
       rack (>= 1.0)
+    rack_session_access (0.1.1)
+      builder (>= 2.0.0)
+      rack (>= 1.0.0)
     rails (3.2.16)
       actionmailer (= 3.2.16)
       actionpack (= 3.2.16)
@@ -212,6 +215,7 @@ DEPENDENCIES
   omniauth
   omniauth-github
   pg
+  rack_session_access
   rails (= 3.2.16)
   rspec-rails (~> 2.14.0)
   ruby-debug19

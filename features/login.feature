@@ -16,7 +16,7 @@ Scenario: redirect to login page if not logged in
 Scenario: redirect to home page if login successful
 	Given I am on the login page
 	And I follow "Log in with your GitHub account"
-	Then I should be on the questions page
+	Then I should be on the problems page
 
 Scenario: redirect to login page if login unsuccessful
 	Given I am on the login page

@@ -17,6 +17,7 @@ group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
+  gem 'rack_session_access'
 end
 
 group :production do

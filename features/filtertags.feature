@@ -3,40 +3,28 @@ Feature: display list of questions filtered by tag
   So that I can quickly find questions appropriate for my class
   I want to find questions matching only certain tags
 
-  Background: the following questions have been added
+  Background:
+    
 
-  Given the following questions have the following tags
-  | question         | tags    | 
-  | twitter question | quiz1   | 
-  | twitter question | twitter | 
-  | rails question   | rails   | 
-  | rails question   | quiz3   | 
-  | cucumber         | quiz1   |
-  | cucumber         | testing | 
-  | rspec            | testing | 
+  Scenario: restrict to questions with 'quiz 2' tag
+    Given I am signed in with uid "1234" and provider "github"
+    And I am on the CourseQuestionBank home page
+    When I fill in "tags" with "quiz 2"
+    And I press "Apply"
+    Then I should see "quiz 1"
+    And I should see "quiz 2"
+    And I should not see "quiz 3"
+    And I should not see "quiz 4"
 
-  Given the tags table 
-
-  | tags    | question          | 
-  | twitter | twitter questtion |
-  | quiz1   | cucumber          |
-  | quiz3   | rails question    |
-  | quiz1   | twitter question  |
-  | rails   | rails question    |
-  | testing | cucumber          |
-  | testing | rspec             |
-
-  Scenario: restrict to questions with 'quiz1' tag
-    When I search for the following tag: 'quiz1'
-
-    Then I should see "twitter question"
-    Then I should see "cucumber"
-    And I should not see "rails question"
-    And I should not see "rspec"
-
-  Scenario: enter no tags
-    When I search for the following tags: ‘’
-    Then I should see all questions
+  Scenario: searching for two tags
+    Given I am signed in with uid "1234" and provider "github"
+    And I am on the CourseQuestionBank home page
+    When I fill in "tags" with "quiz 2,quiz 4"
+    And I press "Apply"
+    Then I should see "quiz 1"
+    And I should see "quiz 2"
+    And I should not see "quiz 3"
+    And I should see "quiz 4"
 
 
   

@@ -14,7 +14,7 @@
       #user
         - if @current_user
           - if !@current_user.name.empty?
-            %p.welcome  Welcome, #{@current_user.name}!
+            %p.welcome  Welcome, #{@current_user.name}, #{@current_user.uid}!
           - else
             %p.welcome  Welcome, #{@current_user.provider} user!
           = link_to 'Log Out', logout_path, method: :post
