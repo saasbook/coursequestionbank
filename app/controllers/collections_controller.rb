@@ -10,7 +10,7 @@ class CollectionsController < ApplicationController
 
   def create
     @collection = Collection.new params[:collection]
-    @collection.instructor = @current_user
+    @collection.instructor =  @current_user
     @collection.created_at = DateTime.now
     @collection.save
     puts 'collection created successfuly and entered into DB'
