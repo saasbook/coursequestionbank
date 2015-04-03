@@ -1,0 +1,26 @@
+-# in app/views//show.html.haml
+
+%h2 Dashboard #{@instructor.name}
+
+-if @collections.empty?
+  %h3 You have no collections! Start one now. (TODO ADD LINK TO START COLLECTION) 
+  =link_to 'start a new collection', new_collection_path
+
+-else
+  %table#collections
+  %thead
+    %tr
+      %th Name
+      %th Items
+      %th Description
+      %th Last Used
+      %th Expand
+      %th Mark as current
+  %tbody
+  - @collections.each do |collection|
+    %tr
+      %td= @collection.name
+      %td= @collection.problems.length
+      %td Not yet implemented
+      %td= @collection.last_used
+      %td= link_to edit_collection_path(@collection.id) 

@@ -1,0 +1,9 @@
+%h1 _form partial
+
+= form_for @collection do |c|
+
+  = c.label =>  :name
+  = c.text_field  
+
+
+  = submit_tag 'Save Changes'
