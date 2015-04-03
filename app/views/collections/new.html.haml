@@ -1,9 +1,9 @@
 %h1 new.html.haml standin
 
-- form_for @collection do |f|
-  - f.label :name
-  - f.text_field :name
-  - f.submit
+/ = form_for @collection do |f|
+/   = f.label :name
+/   = f.text_field :name
+/   = f.submit
 
-= render partial: "form", :collection => @collection
-%h1 partial should ahve been rendered kthx
+= render "form", :collection => @collection
+%p partial should ahve been rendered kthx
