@@ -1,9 +1,8 @@
 quiz '' do 
- select_multiple :randomize => true do
-               text  'Which tiers in the three-tier architecture are involved in handling views?'
-               answer 'Presentation'
-               answer 'Logic'
-               distractor 'Persistence'
-               distractor 'Database'
-               end 
+ choice_answer do
+    text "Which rendering system - Haml or Erb - allows not only Ruby variables but arbitrary Ruby code to be interpolated into a template?"
+    distractor 'Haml'
+    distractor 'Erb'
+    answer 'both'
+  end 
  end
