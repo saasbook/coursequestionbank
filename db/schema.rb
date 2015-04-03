@@ -11,13 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150313214304) do
+ActiveRecord::Schema.define(:version => 20150403202232) do
 
   create_table "collections", :force => true do |t|
     t.string   "name"
     t.datetime "last_used"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "instructor_id"
   end
 
   create_table "collections_instructors", :id => false, :force => true do |t|
@@ -27,7 +28,7 @@ ActiveRecord::Schema.define(:version => 20150313214304) do
 
   create_table "collections_problems", :id => false, :force => true do |t|
     t.integer "collection_id"
-    t.integer "problems_id"
+    t.integer "problem_id"
   end
 
   create_table "instructors", :force => true do |t|
@@ -39,19 +40,15 @@ ActiveRecord::Schema.define(:version => 20150313214304) do
     t.datetime "updated_at", :null => false
   end
 
-  create_table "instructors_problems", :id => false, :force => true do |t|
-    t.integer "instructor_id"
-    t.integer "problem_id"
-  end
-
   create_table "problems", :force => true do |t|
+    t.integer  "instructor_id"
     t.string   "text"
     t.datetime "created_date"
     t.string   "created_by"
     t.boolean  "is_public"
     t.datetime "last_used"
-    t.datetime "created_at",   :null => false
-    t.datetime "updated_at",   :null => false
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
