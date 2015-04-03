@@ -17,7 +17,7 @@ class Problem < ActiveRecord::Base
   end
 
   def self.filter(user, filters = {})
-    problems = Problem.joins(:instructor, :tags, :collections).merge(Instructor.where(:id => user.id))
+    problems = Problem.joins(:instructor, :tags, :collections).uniq.merge(Instructor.where(:id => user.id))
     if filters[:tags]
       problems = problems.merge(Tag.tag_name(filters[:tags].split(",")))
     elsif filters[:collections]
