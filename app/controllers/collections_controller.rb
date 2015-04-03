@@ -14,6 +14,7 @@ class CollectionsController < ApplicationController
     @collection.created_at = DateTime.now
     @collection.save
     puts 'collection created successfuly and entered into DB'
+    redirect_to profile_path
   end
 
 end
