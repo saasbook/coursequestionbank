@@ -8,7 +8,8 @@ Saasquizes::Application.routes.draw do
   get 'login' => 'sessions#login', :as => 'login'
   
   resources :problems
-
+  get 'profile' => 'instructor#show', :as => 'profile'
+  resources :collections
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

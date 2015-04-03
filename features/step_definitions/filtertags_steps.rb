@@ -5,5 +5,5 @@ When(/^I search for the following tag: (.+)/)  do |arg1|
 end
 
 Then(/^I should see all questions$/) do
-  assert(page.all('table#problems tr').count-1 == Problems.all.count)
+  assert(page.all('table#problems tr').count - 1 == Problems.all.count)
 end
