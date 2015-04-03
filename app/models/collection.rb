@@ -3,5 +3,11 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :problems
 
   scope :collection, ->(collection_name) { where(name: collection_name) }
-  #Problem.joins(:collections).merge(Collection.name)
+  
+  def self.collections_for_user(user)
+  	collections = Set.new
+    user.problems.each { |p| collections.merge(p.collections)  }
+    collections
+  end
+
 end

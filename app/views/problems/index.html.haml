@@ -5,10 +5,9 @@
 
 %div.col-md-10
   %div.table-responsive
-    %table.table-striped
+    %table.table.table-striped
       %thead
-        %tr/
-        %th Question Type
+        %tr
         %th Question Text
         %th Date Created
         %th Collections
@@ -17,7 +16,6 @@
       %tbody
         - @problems.each do |problem|
           %tr
-            %td= 'temporary'
             %td= problem.html5.html_safe
             %td= problem.created_date
             - collstring = ""

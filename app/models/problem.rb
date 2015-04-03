@@ -15,4 +15,14 @@ class Problem < ActiveRecord::Base
     print x 
     x
   end
+
+  def self.filter(user, filters = {})
+    problems = Problem.joins(:instructor, :tags, :collections).merge(Instructor.where(:id => user.id))
+    if filters[:tags]
+      problems = problems.merge(Tag.tag_name(filters[:tags].split(",")))
+    elsif filters[:collections]
+      problems = problems.merge(Collection.collection(filters[:collections].keys))
+    end
+    return problems
+  end
 end
