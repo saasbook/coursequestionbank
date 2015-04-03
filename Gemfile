@@ -14,7 +14,7 @@ group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'rack_session_access'
