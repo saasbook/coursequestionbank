@@ -11,11 +11,21 @@
         %th Question Type
         %th Question Text
         %th Date Created
-        %th Expand
+        %th Collections
+        %th Tags
+        %th Created By
       %tbody
         - @problems.each do |problem|
           %tr
             %td= 'temporary'
             %td= problem.html5.html_safe
             %td= problem.created_date
-            %td= problem.tags
+            - collstring = ""
+            -problem.collections.each do |coll| 
+              -collstring << coll.name + " "
+            %td= collstring
+            - collstring = ""
+            -problem.tags.each {|tag| collstring << tag.name + " " }
+            %td= collstring
+            %td= problem.instructor.name
+

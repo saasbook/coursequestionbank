@@ -1,12 +1,25 @@
 
-= form_tag problems_path, :method => :get, :id => "tags_form", class: 'form-inline' do
-  = label_tag(:tags, "Tags:")
-  = text_field_tag(:tags, params[:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
-  <br><br>
+= form_tag problems_path, :method => :get, :id => "filter_form" do
+  %div.form-group
+    = label_tag(:search_query, "Search Keywords:")
+    = text_field_tag(:search_query, params[:search_query], class: 'form-control', placeholder: "Search")
+  
+  %div.form-group
+    = label_tag(:tags, "Tags:")
+    = text_field_tag(:tags, params[:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
+
+  
   = label_tag(:tags, "Collections:")
-  <br>
   - @collections.each do |collection|
-    = check_box_tag "collections[#{collection}]", 1, true, class: "checkbox"
-    = collection
-    <br>
-  = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
+    %div.checkbox
+      %label
+        = check_box_tag "collections[#{collection.name}]", 1, true, class: "checkbox"
+        = collection.name
+
+  %div.form-group
+    = label_tag(:last_exported, "Last Exported:")
+    = text_field_tag(:last_exported_begin, params[:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
+    = text_field_tag(:last_exported_end, params[:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
+  
+  %div.form-group
+    = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
