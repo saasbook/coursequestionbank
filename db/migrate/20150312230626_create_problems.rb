@@ -2,7 +2,7 @@ class CreateProblems < ActiveRecord::Migration
   def change
     create_table :problems do |t|
       t.belongs_to :instructor, index: true
-      t.string :text
+      t.text :text
       t.datetime :created_date
       t.string :created_by
       t.boolean :is_public

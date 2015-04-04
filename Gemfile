@@ -15,7 +15,6 @@ group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
-
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'rack_session_access'
