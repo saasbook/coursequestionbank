@@ -1,13 +1,9 @@
 quiz '' do 
  select_multiple do
-    text %q{Around 2007, the claim "Rails doesn't scale"  was attributed to
-Twitter engineers, and the fact that Twitter later moved
-away from Rails was cited by some as evidence that the claim was true.
-Which of the following statements (there may be more than one) describe Raffi
-Krikorian's (Twitter Director of Engineering) views on this subject?}
-    answer "Rails itself isn't the problem, but the original Ruby VM does have some performance problems that impede scaling for heavy server workloads."
-    answer "Rails itself isn't the problem, but the development processes typically used around Rails don't scale well to large teams."
-    distractor "If you're building a startup and expect high volume, Raffi Krikorian would advise you to stay away from Ruby and Rails from the start."
-    answer "If Twitter had been architected as a service-oriented architecture from the start, they might have stayed on Ruby/Rails somewhat longer than they did."
+    text 'Which statements are TRUE regarding Rails routes and the resources to which they refer?'
+    answer 'In an MVC app, every valid route must eventually trigger a controller action.'
+    answer 'One common set of RESTful resource actions are the CRUD actions on models.'
+    distractor 'A route always contains one or more wildcard parameters, such as ":id", to identify the particular resource named in the operation.',
+    :explanation => "Some routes, such as those to list all resources of a given type or create a new resource of a given type, don't require any such identifier."
   end 
  end

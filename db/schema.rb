@@ -11,19 +11,14 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150403202232) do
+ActiveRecord::Schema.define(:version => 20150313213909) do
 
   create_table "collections", :force => true do |t|
+    t.integer  "instructor_id"
     t.string   "name"
     t.datetime "last_used"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "instructor_id"
-  end
-
-  create_table "collections_instructors", :id => false, :force => true do |t|
-    t.integer "collection_id"
-    t.integer "instructor_id"
   end
 
   create_table "collections_problems", :id => false, :force => true do |t|
