@@ -13,7 +13,12 @@ class CollectionsController < ApplicationController
     @collection.instructor =  @current_user
     @collection.created_at = DateTime.now
     @collection.save
-    @current_user.current_collection = @collection
+    @current_user.current_collection = @collection.id
+
+
+    puts 'COLLECTION IS ', @current_user.current_collection
+    @current_user.save
+    
     puts 'collection created successfuly and entered into DB'
     redirect_to profile_path
   end
