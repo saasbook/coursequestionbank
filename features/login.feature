@@ -5,7 +5,7 @@ Feature: Login with github
 	I want to login to the app with github
 
 Background: 
-	Given I am signed in with provider "github"
+	Given I am signed in with uid "1234" and provider "github"
 	And I am on the CourseQuestionBank home page
 
 Scenario: redirect to login page if not logged in
