@@ -13,7 +13,7 @@
       %h1.title Course Question Bank
       #user
         - if @current_user
-          - if !@current_user.name.empty?
+          - if !@current_user.name
             %p.welcome  Welcome, #{@current_user.name}!
           - else
             %p.welcome  Welcome, #{@current_user.provider} user!
