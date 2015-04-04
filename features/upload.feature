@@ -13,17 +13,9 @@ Scenario: redirect to login page if not logged in
 	Then I should be on the login page
 	
 Scenario: upload a file successfully
-	Given I successfully upload a file
-	Then I should be on the success page
-
-Scenario: attempted upload without a file selected
 	Given I am on the upload page
-	And I press upload without selecting a file
-	Then I should see a flash message asking me to select a file
-
-Scenario: upload a file unsuccessfully
-	Given I am on the upload page
-	And I have selected a file to upload
+	And I attach the file "features/test_files/foo.txt" to "file_upload"
 	And I press the upload button
-	And the upload fails
-	Then I should see a flash message telling me of failure
+	Then I should see "Success!"
+
+

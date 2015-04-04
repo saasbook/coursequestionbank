@@ -12,7 +12,6 @@ class UploadController < ApplicationController
       question_open = false
       p = Problem.new
       File.open(params["myfile"].tempfile, 'r') do |f1|
-        puts 'here'
         col = f1.gets
         col2 = /'(.*?)'/.match(col).to_s.gsub! /'/, ''
         

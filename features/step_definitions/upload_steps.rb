@@ -1,5 +1,5 @@
 Given(/^I have selected a file to upload$/) do
-  param['myfile'] = 'test_files/text.rb'
+  page.driver.browser.post('/upload', "myfile" => "test_files/foo.txt")
 end
 
 Given(/^I press the upload button$/) do
