@@ -21,7 +21,7 @@ class UploadController < ApplicationController
         puts col
         puts col2
         
-        @collection1 = Collection.create(name: col2)
+        @collection1 = @current_user.collections.create(name: col2)
         @tag1 = Tag.create(name: col2)
 
         while line = f1.gets
