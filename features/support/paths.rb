@@ -16,7 +16,11 @@ module NavigationHelpers
     when /^the (CourseQuestionBank )?home\s?page$/ then '/'
     when /^the login page$/ then '/login'
     when /^the problems page$/ then '/problems'
+<<<<<<< HEAD
     when /^the dashboard$/ then '/profile'
+=======
+    when /^the upload page$/ then '/upload'
+>>>>>>> 424ae761027e2b1741d3b3afbb181c3554408234
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:
