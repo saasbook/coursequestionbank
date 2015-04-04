@@ -18,7 +18,8 @@ class CollectionsController < ApplicationController
     redirect_to profile_path
   end
 
-  def add_to_collection
+
+
   # def swagger
   #   do work
   #   render json: {success: 'true'}

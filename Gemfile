@@ -9,6 +9,7 @@ gem 'ruql'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
+gem 'barista'
 
 group :development, :test do
   gem 'sqlite3'
