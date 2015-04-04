@@ -7,6 +7,8 @@ class UploadController < ApplicationController
       #end  
      
       def upload()
+      @tag1 = Tag.create(name: "quiz 1")
+      @collection1 = Collection.create(name: "Fall 14")	
       question_open = false
       p = Problem.new
       puts params["myfile"].original_filename
@@ -23,6 +25,8 @@ class UploadController < ApplicationController
                     question_open = true
             else
                     p.instructor = @current_user
+                    p.tags << @tag1
+                    p.collections<< @collection1
                     puts "HERE "
                     puts "HERE "
                     puts "HERE "
@@ -31,6 +35,7 @@ class UploadController < ApplicationController
                     puts "HERE "
                     puts "HERE"
                     puts p.instructor.id.to_s
+                    p.text<<line
                     p.save!
                     p = Problem.new
                     puts line
