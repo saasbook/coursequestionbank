@@ -1,11 +1,4 @@
 quiz '' do 
-   select_multiple do
-    text "Which are American political parties?"
-    answer "Democrats"
-    answer "Republicans"
-    answer "Greens", :explanation => "Yes, they're a party!"
-    distractor "Tories", :explanation => "They're British"
-    distractor "Social Democrats"
-  end
+   truefalse 'The earth is flat.', false, :explanation => 'No, just looks that way'
  
  end
