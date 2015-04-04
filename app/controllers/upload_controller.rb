@@ -8,13 +8,22 @@ class UploadController < ApplicationController
      
       def upload()
       @tag1 = Tag.create(name: "quiz 1")
-      @collection1 = Collection.create(name: "Fall 14")	
+      #@collection1 = Collection.create(name: "Fall 14")	
       question_open = false
       p = Problem.new
       puts params["myfile"].original_filename
       puts "PASS PASS PASS PASS"
       File.open(params["myfile"].tempfile, 'r') do |f1|
         puts 'here'
+        col = f1.gets
+        col2 = /'(.*?)'/.match(col).to_s.gsub! /'/, ''
+        puts "FUCK FUCK FUCK FUCK"
+        puts col
+        puts col2
+        
+        @collection1 = Collection.create(name: col2)
+        @tag1 = Tag.create(name: col2)
+
         while line = f1.gets
         puts line
           #next if line =~ /\s*quiz*/
@@ -34,6 +43,7 @@ class UploadController < ApplicationController
                     puts "HERE "
                     puts "HERE "
                     puts "HERE"
+                    puts @collection1
                     puts p.instructor.id.to_s
                     p.text<<line
                     p.save!
@@ -45,6 +55,8 @@ class UploadController < ApplicationController
             if line =~ /\s*truefalse.*/
                     #puts line
                     p.text = line
+                    p.collections<< @collection1
+                    p.tags << @tag1
                     p.instructor = @current_user
                     p.save!
                     p = Problem.new
