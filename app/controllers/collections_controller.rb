@@ -6,6 +6,7 @@ class CollectionsController < ApplicationController
   end
   def edit
     @collection = Collection.find(params[:id])
+    @problems = @collection.problems
   end
   # creates a new collection with user specified values and sets as current collection
   def create

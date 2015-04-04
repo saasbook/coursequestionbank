@@ -1,0 +1,25 @@
+%div.col-md-10
+  %div.table-responsive
+    %table.table.table-striped#problems
+      %thead
+        %tr
+        %th Question Text
+        %th Date Created
+        %th Collections
+        %th Tags
+        %th Created By
+        %th Add to
+      %tbody
+        - @problems.each do |problem|
+          %tr
+            %td= problem.html5.html_safe
+            %td= problem.created_date
+            - collstring = ""
+            -problem.collections.each do |coll| 
+              -collstring << coll.name + " "
+            %td= collstring
+            - collstring = ""
+            -problem.tags.each {|tag| collstring << tag.name + " " }
+            %td= collstring
+            %td= problem.instructor.name
+            %td= link_to "your link", add_problem_path( :id => problem.id)
