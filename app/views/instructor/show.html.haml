@@ -19,14 +19,13 @@
         %th Items
         %th Description
         %th Last Used
-        %th Expand
         %th Mark as current
       %tbody
         - @collections.each do |collection|
           %tr
-          %td= collection.name
+          %td= link_to collection.name, edit_collection_path(:id => collection.id)
           %td= collection.problems.length
           %td Not yet implemented
           %td= collection.last_used
-          %td= link_to "expand", edit_collection_path(:id => collection.id) 
+          %td coming soon
 

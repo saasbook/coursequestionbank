@@ -22,4 +22,4 @@
             -problem.tags.each {|tag| collstring << tag.name + " " }
             %td= collstring
             %td= problem.instructor.name
-            %td= link_to "your link", add_problem_path( :id => problem.id)
+            %td= link_to "current collection", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"

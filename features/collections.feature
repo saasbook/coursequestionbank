@@ -8,13 +8,22 @@ Feature: collections that we can add problems to
     And I am on the dashboard
   
   Scenario: create a new collection
-  	When I press "add_collection"
+
+  	When I follow "start a new collection"
   	And I fill in "collection_name" with "yolo"
-  	And I press "submit"
+  	And I press "Create Collection"
   	Then I should be on the dashboard
 
-
-
+  Scenario: add a new question
+    When I follow "start a new collection"
+    And I fill in "collection_name" with "yolo"
+    And I press "Create Collection"
+    Then I should be on the dashboard
+    Then I am on the problems page
+    Then I follow "problem1"
+    Then I am on the dashboard
+    Then I follow "yolo"
+    Then I should see "Select ALL that apply"
 
   
 
