@@ -7,7 +7,7 @@ class ProblemsController < ApplicationController
 	def index
   		filter_options = params.slice(:tags, :collections, :last_exported)
       @problems = Problem.filter(@current_user, filter_options)
-      @collections = Collection.collections_for_user(@current_user)
+      @collections = @current_user.collections
 	end
 
 

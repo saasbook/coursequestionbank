@@ -4,11 +4,4 @@ class Collection < ActiveRecord::Base
   belongs_to :instructor
   scope :collection, ->(collection_name) { where(name: collection_name) }
   
-  def self.collections_for_user(user)
-  	collections = Set.new 
-    user.problems.each { |p| collections.merge(p.collections)  }
-    collections
-  end
-
-
 end

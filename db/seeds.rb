@@ -12,9 +12,9 @@
 @tag2 = Tag.create(name: "quiz 2")
 @tag3 = Tag.create(name: "quiz 3")
 @tag4 = Tag.create(name: "quiz 4")
-@collection1 = Collection.create(name: "Fall 14")
-@collection2 = Collection.create(name: "Spring 15")
-@collection3 = Collection.create(name: "Spring 14")
+@collection1 = @instructor.collections.create(name: "Fall 14")
+@collection2 = @instructor.collections.create(name: "Spring 15")
+@collection3 = @instructor.collections.create(name: "Spring 14")
 
 @p1 = Problem.new(created_date: '2012-06-09 21:51:55 UTC', is_public: true, text:
                
