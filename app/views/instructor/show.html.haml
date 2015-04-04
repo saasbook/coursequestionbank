@@ -1,14 +1,14 @@
--# in app/views//show.html.haml
+-# in app/views/show.html.haml
 
 %h2 Dashboard #{@instructor.name}
 
 -if @collections.empty?
-  %h3 You have no collections! Start one now. (TODO ADD LINK TO START COLLECTION) 
-  =link_to 'start a new collection', new_collection_path
+  %h3 You have no collections! Start one now.
+  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
 
 -else
 
-  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info'
+  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
 
 %div.col-md-10
   %div.table-responsive

@@ -16,6 +16,7 @@ module NavigationHelpers
     when /^the (CourseQuestionBank )?home\s?page$/ then '/'
     when /^the login page$/ then '/login'
     when /^the problems page$/ then '/problems'
+    when /^the dashboard$/ then '/profile'
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

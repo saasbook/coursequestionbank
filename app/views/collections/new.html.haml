@@ -1,9 +1,4 @@
 %h1 Create New Collection
 
-/ = form_for @collection do |f|
-/   = f.label :name
-/   = f.text_field :name
-/   = f.submit
 
 = render "form", :collection => @collection
-%p partial should ahve been rendered kthx
