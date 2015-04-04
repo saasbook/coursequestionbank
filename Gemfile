@@ -10,12 +10,11 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'
-gem 'cucumber-rails’
+gem 'cucumber-rails'
 group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
-
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'rack_session_access'
