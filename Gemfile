@@ -10,7 +10,7 @@ gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'
-gem 'cucumber-rails’, require 
+gem 'cucumber-rails’
 group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
