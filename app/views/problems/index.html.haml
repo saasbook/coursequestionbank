@@ -13,6 +13,7 @@
         %th Collections
         %th Tags
         %th Created By
+        %th Add to
       %tbody
         - @problems.each do |problem|
           %tr
@@ -26,4 +27,4 @@
             -problem.tags.each {|tag| collstring << tag.name + " " }
             %td= collstring
             %td= problem.instructor.name
-
+            %td= link_to "your link", :onclick => "myfunction"

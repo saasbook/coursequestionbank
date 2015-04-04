@@ -12,8 +12,6 @@ class Problem < ActiveRecord::Base
     #puts 'TEXT IS', text
     File.open('text.rb', 'w'){|file| file.write(rb_text)}
     x = %x(ruql text.rb Html5 --template=preview.html.erb)
-    #print x 
-    x
   end
 
   def self.filter(user, filters = {})

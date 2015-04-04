@@ -1,6 +1,6 @@
 class Instructor < ActiveRecord::Base
 
-  attr_accessible :privilege, :name, :uid, :provider
+  attr_accessible :privilege, :name, :uid, :provider, :current_collection
   has_many :collections
   has_many :problems
   

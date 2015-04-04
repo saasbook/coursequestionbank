@@ -9,4 +9,6 @@ class Collection < ActiveRecord::Base
     user.problems.each { |p| collections.merge(p.collections)  }
     collections
   end
+
+
 end
