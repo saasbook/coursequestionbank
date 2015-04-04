@@ -9,5 +9,6 @@ Krikorian's (Twitter Director of Engineering) views on this subject?}
     answer "Rails itself isn't the problem, but the development processes typically used around Rails don't scale well to large teams."
     distractor "If you're building a startup and expect high volume, Raffi Krikorian would advise you to stay away from Ruby and Rails from the start."
     answer "If Twitter had been architected as a service-oriented architecture from the start, they might have stayed on Ruby/Rails somewhat longer than they did."
+
   end 
  end
