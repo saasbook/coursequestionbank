@@ -6,6 +6,12 @@ class Instructor < ActiveRecord::Base
   
   scope :username, ->(instructor) { where(name: instructor) }
 
+  searchable do
+    string :name
+    string :uid
+    string :provider
+  end
+
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]

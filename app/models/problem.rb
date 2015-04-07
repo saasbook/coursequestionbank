@@ -6,6 +6,26 @@ class Problem < ActiveRecord::Base
   
   scope :is_public, -> { where(is_public:  true) }
   scope :last_used, ->(time) { where("last_used < ?", time) }
+  scope :instructor_id, ->(id) { where(instructor_id: id) }
+  
+
+  searchable do
+    integer   :id
+    text      :text
+    integer   :instructor_id
+    boolean   :is_public
+    time      :last_used
+    
+    string    :tag_names, :multiple => true do
+      tags.map(&:name)
+    end
+
+    string    :coll_names, :multiple => true do
+      collections.map(&:name)
+    end 
+
+    #join(:tag_name, :target => Tag, :type => :string, :join => { :from => :problem_ids, :to => :id }, :as => 'name')
+  end
 
   def html5
     rb_text = "quiz '' do \n #{text} \n end"
@@ -15,12 +35,32 @@ class Problem < ActiveRecord::Base
   end
 
   def self.filter(user, filters = {})
-    problems = Problem.joins(:instructor, :tags, :collections).uniq.merge(Instructor.where(:id => user.id))
-    if filters[:tags] and !filters[:tags].empty?
-      problems = problems.merge(Tag.tag_name(filters[:tags].split(",")))
-    elsif filters[:collections]
-      problems = problems.merge(Collection.collection(filters[:collections].keys))
+    #problems = Problem.joins(:instructor, :tags, :collections).uniq.merge(Instructor.where(:id => user.id))
+    #if filters[:tags] and !filters[:tags].empty?
+    #  problems = problems.merge(Tag.tag_name(filters[:tags].split(",")))
+    #elsif filters[:collections]
+    #  problems = problems.merge(Collection.collection(filters[:collections].keys))
+    #end
+
+    if !filters[:tags]
+      filters[:tags] = ""
     end
-    return problems
+
+    if !filters[:collections]
+      filters[:collections] = {}
+    end
+
+
+    problems = Problem.search do
+      any_of do
+        with(:instructor_id, 1)
+        with(:is_public, true)
+      end
+
+      with(:tag_names, filters[:tags].split(","))
+      with(:coll_names, filters[:collections].keys)
+      fulltext filters[:search]
+    end
+    return problems.results
   end
 end
