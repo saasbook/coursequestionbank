@@ -84,7 +84,6 @@ class Problem < ActiveRecord::Base
       fulltext filters[:search]
     end
 
-    puts "!!!!!!i'm in filter" + problems.results.size.to_s + Problem.all.size.to_s
     return problems.results
   end
 end
