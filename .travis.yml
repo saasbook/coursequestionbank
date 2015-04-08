@@ -5,7 +5,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec sunspot-solr start -p 8981
   - bundle exec rake sunspot:solr:reindex
-  - cucumber
+  - bundle exec cucumber
   - bundle exec rake spec
   - bundle exec sunspot-solr stop
 
