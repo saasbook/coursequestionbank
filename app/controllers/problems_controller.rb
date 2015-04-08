@@ -5,7 +5,7 @@ class ProblemsController < ApplicationController
   end
 
 	def index
-  		filter_options = params.slice(:tags, :collections, :last_exported)
+  		filter_options = params.slice(:tags, :collections, :last_exported, :search)
       @problems = Problem.filter(@current_user, filter_options)
       @collections = @current_user.collections unless !@current_user
 	end
