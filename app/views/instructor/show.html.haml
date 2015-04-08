@@ -5,12 +5,10 @@
 -if @collections.empty?
   %h3 You have no collections! Start one now.
   =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
-  =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
 
 -else
 
   =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
-  =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
 
 %div.col-md-10
   %div.table-responsive

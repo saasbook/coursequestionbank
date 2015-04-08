@@ -3,5 +3,4 @@ class Tag < ActiveRecord::Base
   has_and_belongs_to_many :problems
 
   scope :tag_name, ->(t) { where(name: t) } 
-
 end

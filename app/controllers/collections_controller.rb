@@ -2,10 +2,7 @@ class CollectionsController < ApplicationController
   def new
     puts 'NEW CALLED'
     @collection = Collection.new
-  end
-  def update
-    Collection.find(params[:id]).update_attributes(params[:collection])
-    redirect_to  profile_path
+
   end
   def edit
     @collection = Collection.find(params[:id])
