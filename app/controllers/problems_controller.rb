@@ -5,6 +5,12 @@ class ProblemsController < ApplicationController
   end
 
 	def index
+      if params[:collections]
+        @chosen_collections = params[:collections].keys
+      else
+        @chosen_collections = @current_user.collections.each {|c| @chosen_collections << c.name}
+      end
+      
   		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
       @problems = Problem.filter(@current_user, filter_options)
       @collections = @current_user.collections unless !@current_user

@@ -13,7 +13,10 @@
   - @collections.each do |collection|
     %div.checkbox
       %label
-        = check_box_tag "collections[#{collection.name}]", 1, true, class: "checkbox"
+        -if @chosen_collections.include? collection.name
+          = check_box_tag "collections[#{collection.name}]", 1, true, class: "checkbox"
+        -else
+          = check_box_tag "collections[#{collection.name}]", 1, false, class: "checkbox"
         = collection.name
 
   %div.form-group
