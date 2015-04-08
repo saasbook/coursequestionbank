@@ -34,6 +34,7 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
 @p1.instructor = @instructor
 @p1.tags << @tag1
 @p1.tags << @tag4
+@p1.collections << @collection1
 @p1.save
 
 
