@@ -4,8 +4,9 @@ class Problem < ActiveRecord::Base
   belongs_to :instructor
   has_and_belongs_to_many :collections
   
+
   scope :is_public, -> { where(is_public:  true) }
-  scope :last_used, ->(time) { where("last_used < ?", time) }
+  scope :last_used, ->(t) { where(last_used: t) }
   scope :instructor_id, ->(id) { where(instructor_id: id) }
   
 
@@ -24,7 +25,6 @@ class Problem < ActiveRecord::Base
       collections.map(&:name)
     end 
 
-    #join(:tag_name, :target => Tag, :type => :string, :join => { :from => :problem_ids, :to => :id }, :as => 'name')
   end
 
   def html5
@@ -50,6 +50,13 @@ class Problem < ActiveRecord::Base
       filters[:collections] = {}
     end
 
+    if !filters[:last_exported_begin] or filters[:last_exported_end].empty?
+      filters[:last_exported_begin] = nil
+    end
+    if !filters[:last_exported_end] or filters[:last_exported_end].empty?
+      filters[:last_exported_end] = nil
+    end
+
 
     problems = Problem.search do
       any_of do
@@ -59,6 +66,15 @@ class Problem < ActiveRecord::Base
 
       with(:tag_names, filters[:tags].split(","))
       with(:coll_names, filters[:collections].keys)
+      
+      if filters[:last_exported_begin] 
+        with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
+      end
+
+      if filters[:last_exported_end]
+        with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
+      end
+
       fulltext filters[:search]
     end
     return problems.results
