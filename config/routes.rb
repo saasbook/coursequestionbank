@@ -11,7 +11,9 @@ Saasquizes::Application.routes.draw do
   
   resources :problems
   get 'profile' => 'instructor#show', :as => 'profile'
+  get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   resources :collections
+
   # The priority is based upon order of creation:
   # first created -> highest priority.
 

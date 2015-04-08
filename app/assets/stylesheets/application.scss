@@ -20,13 +20,26 @@
  	padding: 0px;
  }
 
+ #main {
+ 	margin: 20px;
+ }
+
  h1, p {
  	margin: 0px;
  	padding: 0px;
  }
 
+a {
+ 	text-decoration: none;
+ }
+ 
+
  a:link, a:visited, a:hover, a:active {
- 	color: #2163E3;
+ }
+
+ .btn-primary, .btn-info {
+ 	//float: right;
+ 	margin: 20px 5px;
  }
 
  h1.title, p.welcome {
@@ -56,6 +69,7 @@
 	display: inline-block;
 	float: right;
 	font-size: 18px;
+	margin-right: 10px,
 }
 
 #sidebar-filter {

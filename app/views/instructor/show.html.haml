@@ -1,12 +1,17 @@
--# in app/views//show.html.haml
+-# in app/views/show.html.haml
 
 %h2 Dashboard #{@instructor.name}
 
 -if @collections.empty?
-  %h3 You have no collections! Start one now. (TODO ADD LINK TO START COLLECTION) 
-  =link_to 'start a new collection', new_collection_path
+  %h3 You have no collections! Start one now.
+  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
+  =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
 
 -else
+
+  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
+  =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
+
 %div.col-md-10
   %div.table-responsive
     %table.table.table-striped#collections
@@ -16,14 +21,13 @@
         %th Items
         %th Description
         %th Last Used
-        %th Expand
         %th Mark as current
       %tbody
         - @collections.each do |collection|
           %tr
-          %td= collection.name
+          %td= link_to collection.name, edit_collection_path(:id => collection.id)
           %td= collection.problems.length
           %td Not yet implemented
           %td= collection.last_used
-          %td= link_to edit_collection_path(collection.id) 
+          %td coming soon
 

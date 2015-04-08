@@ -9,15 +9,19 @@ gem 'ruql'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
+gem 'barista'
+gem 'cucumber-rails'
+gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
+gem 'progress_bar'
 
 group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
-  gem 'cucumber-rails'
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'rack_session_access'
+  gem 'sunspot_solr', :git => 'https://github.com/sunspot/sunspot.git'
 end
 
 group :production do

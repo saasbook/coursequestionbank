@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150313213909) do
+ActiveRecord::Schema.define(:version => 20150407093217) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -31,19 +31,21 @@ ActiveRecord::Schema.define(:version => 20150313213909) do
     t.string   "provider"
     t.string   "uid"
     t.string   "privilege"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",         :null => false
+    t.datetime "updated_at",         :null => false
+    t.integer  "current_collection"
   end
 
   create_table "problems", :force => true do |t|
     t.integer  "instructor_id"
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_date"
     t.string   "created_by"
     t.boolean  "is_public"
     t.datetime "last_used"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.text     "rendered_text"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
