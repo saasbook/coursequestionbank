@@ -12,16 +12,10 @@ class ProblemsController < ApplicationController
       end
       
   		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
-      @problems = Problem.filter(@current_user, filter_options)
-      
-      @collections = @current_user.collections unless !@current_user
 
-      if params[:collections]
-        @chosen_collections = params[:collections].keys
-      else
-        @chosen_collections = []
-      end
-      
+      @problems = Problem.filter(@current_user, filter_options)
+      @collections = @current_user.collections unless !@current_user
+  
 	end
 
 

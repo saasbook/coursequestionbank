@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text 
+  attr_accessible :created_date, :is_public, :last_used, :text
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -27,17 +27,12 @@ class Problem < ActiveRecord::Base
 
   end
 
-  def html5
-    @readonly = false #hack
-    if rendered_text
-      return rendered_text 
-    end
-    rb_text = "quiz '' do \n #{text} \n end"
-    File.open('text.rb', 'w'){|file| file.write(rb_text)}
-    html5_text = %x(ruql text.rb Html5 --template=preview.html.erb)
-    self.update_attributes(:rendered_text => html5_text)
-    html5_text
 
+  def html5
+    rb_text = "quiz '' do \n #{text} \n end"
+    #puts 'TEXT IS', text
+    File.open('text.rb', 'w'){|file| file.write(rb_text)}
+    x = %x(ruql text.rb Html5 --template=preview.html.erb)
   end
 
   def self.filter(user, filters = {})
@@ -82,6 +77,7 @@ class Problem < ActiveRecord::Base
       end
 
       fulltext filters[:search]
+
     end
     return problems.results
   end

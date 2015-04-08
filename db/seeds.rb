@@ -7,7 +7,6 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 @instructor = Instructor.create(name: "foo", provider: "github", uid: "1234")
-@instructor2 = Instructor.create(name: "bar", provider: "github", uid: "12345")
 
 @tag1 = Tag.create(name: "quiz 1")
 @tag2 = Tag.create(name: "quiz 2")
@@ -32,7 +31,7 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
   end"
                
                )
-@p1.instructor = @instructor2
+@p1.instructor = @instructor
 @p1.tags << @tag1
 @p1.tags << @tag4
 @p1.save
