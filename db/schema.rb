@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150404010702) do
+ActiveRecord::Schema.define(:version => 20150407093217) do
 
   create_table "collections", :force => true do |t|
     t.string   "name"
@@ -50,6 +50,7 @@ ActiveRecord::Schema.define(:version => 20150404010702) do
     t.datetime "last_used"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.text     "rendered_text"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
