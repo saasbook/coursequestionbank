@@ -19,8 +19,7 @@ class RuqlReader < ActiveRecord::Base
     # end
     text = file.open.read
     start = Time.now
-    a = 0
-    text.scan(/select_multiple .*end/m).each {|m| a += 1 }
+    text.scan(/(select_multiple .*end)/m).each {|m| puts m}
     puts "TOTAL ELEMENTS FOUND #{a}"
     # /select_multiple .*end/m.scan(text)
     puts 'TOTAL TIME', Time.now - start, '------------------------------------'
