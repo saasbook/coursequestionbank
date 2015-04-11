@@ -13,4 +13,9 @@ class CollectionsController < ApplicationController
     Collection.create_collection(params[:collection], @current_user)
     redirect_to profile_path
   end
+
+  def update
+    Collection.find(params[:id]).update_attributes(params[:collection])
+    redirect_to profile_path
+  end
 end
