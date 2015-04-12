@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150407093217) do
+ActiveRecord::Schema.define(:version => 20150412003423) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -46,6 +46,7 @@ ActiveRecord::Schema.define(:version => 20150407093217) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.text     "rendered_text"
+    t.text     "json"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
