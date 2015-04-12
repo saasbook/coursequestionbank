@@ -16,7 +16,8 @@ saasquizes_test
 /log/*.log
 /tmp
 
-
+#ignore solr files:
+/solr/*
 #Added by Aaron. some custom others generated. 
 config/mail.yml
 *.log
