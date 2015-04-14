@@ -1,6 +1,6 @@
 -# in app/views/show.html.haml
 
-%h2 Dashboard #{@instructor.name}
+%h2 Dashboard #{@current_user.name}
 
 -if @collections.empty?
   %h3 You have no collections! Start one now.
@@ -29,4 +29,8 @@
           %td= collection.problems.length
           %td Not yet implemented
           %td= collection.last_used
-          %td coming soon
+          %td
+            -if @current_user.current_collection == collection.id 
+              =link_to 'should be gold star', mark_as_current_path(:id => collection.id) 
+            -else 
+              =link_to 'should be grey star', mark_as_current_path(:id => collection.id)

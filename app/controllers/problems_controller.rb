@@ -25,8 +25,8 @@ class ProblemsController < ApplicationController
   #eventually this will be an AJAX call
   def add_to_collection
     Collection.find(@current_user.current_collection).problems.push(Problem.find(params[:id]))
-    flash[:notice] = 'problem added to #{@current_user.current_collection.name}'
-    redirect_to problems_path
+    flash[:notice] = "problem added to #{@current_user.current_collection.name}"
+    redirect_to profile_path
   end
     
 end

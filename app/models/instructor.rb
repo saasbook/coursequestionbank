@@ -15,4 +15,5 @@ class Instructor < ActiveRecord::Base
     end
   end 
 
+
 end

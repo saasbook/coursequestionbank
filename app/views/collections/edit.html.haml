@@ -1,3 +1,6 @@
 %h3= "Your collection #{@collection.name}"
 =render 'form'
+%p 
+  Delete this collection? 
+  =link_to 'trash_can_icon', collection_path(@collection), method: :delete, :confirm => 'Delete this collection?'
 =render 'shared/problemstable'
