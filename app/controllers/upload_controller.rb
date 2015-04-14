@@ -2,7 +2,7 @@ class UploadController < ApplicationController
 
   def upload
     puts params[:ruql_file]
-    if RuqlReader.read_ruql(params[:ruql_file])
+    if RuqlReader.store_as_json(@current_user, params[:ruql_file])
       flash[:notice] = "Sucessfully uploaded file"
       flash.keep
       redirect_to problems_path 

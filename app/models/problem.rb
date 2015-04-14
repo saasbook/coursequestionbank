@@ -13,6 +13,7 @@ class Problem < ActiveRecord::Base
   searchable do
     integer   :id
     text      :text
+    text      :json
     integer   :instructor_id
     boolean   :is_public
     time      :last_used
@@ -32,21 +33,15 @@ class Problem < ActiveRecord::Base
     if rendered_text
       return rendered_text 
     end
-    rb_text = "quiz '' do \n #{text} \n end"
-    File.open('text.rb', 'w'){|file| file.write(rb_text)}
-    html5_text = %x(ruql text.rb Html5 --template=preview.html.erb)
-    self.update_attributes(:rendered_text => html5_text)
-    html5_text
 
+    question = Question.from_JSON(json)
+    quiz = Quiz.new("", :questions => [question])
+    quiz.render_with("Html5", {'template' => 'preview.html.erb'})
+    self.update_attributes(:rendered_text => quiz.output)
+    return quiz.output
   end
 
   def self.filter(user, filters = {})
-    #problems = Problem.joins(:instructor, :tags, :collections).uniq.merge(Instructor.where(:id => user.id))
-    #if filters[:tags] and !filters[:tags].empty?
-    #  problems = problems.merge(Tag.tag_name(filters[:tags].split(",")))
-    #elsif filters[:collections]
-    #  problems = problems.merge(Collection.collection(filters[:collections].keys))
-    #end
 
     if !filters[:tags]
       filters[:tags] = ""
@@ -72,6 +67,8 @@ class Problem < ActiveRecord::Base
 
       with(:tag_names, filters[:tags].split(","))
       with(:coll_names, filters[:collections].keys)
+
+      
       
       if filters[:last_exported_begin] 
         with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])

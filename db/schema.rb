@@ -46,12 +46,18 @@ ActiveRecord::Schema.define(:version => 20150412003423) do
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
     t.text     "rendered_text"
+    t.string   "problem_type"
     t.text     "json"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
     t.integer "problem_id"
     t.integer "tag_id"
+  end
+
+  create_table "ruql_readers", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tags", :force => true do |t|

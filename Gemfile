@@ -5,7 +5,7 @@ gem 'rails', '3.2.16'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'ruql'
+gem 'ruql_cqb', '~> 0.0.0'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
@@ -13,6 +13,7 @@ gem 'barista'
 gem 'cucumber-rails'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
+gem 'json'
 
 group :development, :test do
   gem 'sqlite3'
