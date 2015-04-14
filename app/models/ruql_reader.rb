@@ -37,16 +37,21 @@ class RuqlReader < ActiveRecord::Base
     Quiz.quizzes.each do |quiz| 
         problems_json = quiz.render_with("JSON", {})
         collection = Collection.find_by_name(quiz.title) || user.collections.create(:name => quiz.title)
-        tag = Tag.find_by_name(quiz.title) || Tag.create(:name => quiz.title)
         problems_json.each do |problem_json| 
-            #puts "blah blah blah ", problem_json
-            #todo: parse json and get question_tags and question_type
-            problem = Problem.new(text: "", json: problem_json, is_public: false)
+            json_hash = JSON.parse(problem_json)
+            problem = Problem.new(text: "", 
+                                  json: problem_json, 
+                                  is_public: false, 
+                                  problem_type: json_hash["question_type"], 
+                                  created_date: Time.now)
             problem.instructor = user
             problem.collections << collection
-            problem.tags << tag #TODO: fix so that questions still displayed if no tag assigned
+            json_hash["question_tags"].each do |tag_name| 
+                tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
+                problem.tags << tag
+            end
+
             problem.save
-            puts "yeah yeah yeah ", problem.json
         end
     end
   end

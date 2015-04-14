@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -64,8 +64,9 @@ class Problem < ActiveRecord::Base
         with(:instructor_id, 1)
         with(:is_public, true)
       end
-
-      with(:tag_names, filters[:tags].split(","))
+      
+      with(:tag_names, filters[:tags].split(",")) if !filters[:tags].empty?
+      
       with(:coll_names, filters[:collections].keys)
 
       
