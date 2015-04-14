@@ -1,4 +1,4 @@
 
 = form_tag("", multipart: true) do
-	= file_field_tag 'ruql_file'
+	= file_field_tag 'ruql_file', :id => 'file_upload'
 	= submit_tag('upload')

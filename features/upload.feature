@@ -15,7 +15,13 @@ Scenario: redirect to login page if not logged in
 Scenario: upload a file successfully
 	Given I am on the upload page
 	And I attach the file "features/test_files/foo.txt" to "file_upload"
-	And I press the upload button
-	Then I should see "Success!"
+	And I press "upload"
+	Then I should see "Sucessfully uploaded file"
+
+Scenario: syntax error in the file
+	Given I am on the upload page
+	And I attach the file "features/test_files/foo_error.txt" to "file_upload"
+	And I press "upload"
+	Then I should see "There is an error in the file"
 
 
