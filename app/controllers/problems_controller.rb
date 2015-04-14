@@ -22,11 +22,20 @@ class ProblemsController < ApplicationController
 	end
 
 
-  #eventually this will be an AJAX call
+  #eventually this will be an AJAX call. ALSO WE NEED TO CHANGE OUR HABTM ASSOCIATION TO HAS_MANY: THROUGH SO WE CAN USE VALIDATIONS AND STUFF
   def add_to_collection
-    Collection.find(@current_user.current_collection).problems.push(Problem.find(params[:id]))
-    flash[:notice] = "problem added to #{@current_user.current_collection.name}"
-    redirect_to profile_path
+    collection = Collection.find(@current_user.current_collection)
+    problem_to_add = Problem.find(params[:id])
+    if not collection.problems.include? problem_to_add
+      collection.problems << problem_to_add
+      flash[:notice] = "problem added to #{collection.name}" 
+      flash.keep
+      redirect_to problems_path
+    else 
+      flash[:notice] = "problem already exists in #{collection.name}"
+      flash.keep
+      redirect_to problems_path
+    end
   end
     
 end
