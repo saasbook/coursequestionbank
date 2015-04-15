@@ -1,6 +1,3 @@
-require 'ruql'
-require 'json'
-
 class RuqlReader < ActiveRecord::Base
 
   def self.store_as_json(user, file)
