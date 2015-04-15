@@ -42,15 +42,15 @@ test:
   pool: 5
   timeout: 5000
   encoding: unicode
-  database: saasquizes_test
+  database: coursequestionbank_test
   pool: 5
-  username: saasquizes
+  username: test
   password:
 
 production:
   adapter: postgresql
   encoding: unicode
-  database: saasquizes_production
+  database: coursequestionbank_production
   pool: 5
-  username: saasquizes
+  username: production
   password:

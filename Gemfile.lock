@@ -191,11 +191,7 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
-<<<<<<< HEAD
-    ruql_cqb (0.0.3)
-=======
     ruqlcqb (0.0.0)
->>>>>>> 45907d8ede4d6718e08659d81ceefec6e0fbb70c
       builder
       getopt
     sass (3.4.13)
@@ -249,11 +245,7 @@ DEPENDENCIES
   rails (= 3.2.16)
   rspec-rails (~> 2.14.0)
   ruby-debug19
-<<<<<<< HEAD
-  ruql_cqb (~> 0.0.0)
-=======
   ruqlcqb
->>>>>>> 45907d8ede4d6718e08659d81ceefec6e0fbb70c
   sass-rails (~> 3.2.3)
   simplecov
   sqlite3
