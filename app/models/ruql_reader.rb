@@ -20,7 +20,6 @@ class RuqlReader < ActiveRecord::Base
                 tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
                 problem.tags << tag
             end
-
             problem.save
         end
     end
