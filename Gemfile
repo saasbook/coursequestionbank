@@ -5,7 +5,8 @@ gem 'rails', '3.2.16'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'ruql_cqb', '0.0.0'
+
+gem 'ruql_cqb', '~> 0.0.0'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
