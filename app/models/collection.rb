@@ -12,4 +12,14 @@ class Collection < ActiveRecord::Base
       update_attributes(problem)
     end
   end
+
+  def export
+    if problems.empty? 
+      return nil
+    else 
+      export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
+      puts export_quiz, '---------------------------------------------------------------'
+      export_quiz.render_with('Html5')
+    end
+  end
 end

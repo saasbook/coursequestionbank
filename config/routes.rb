@@ -15,6 +15,7 @@ Saasquizes::Application.routes.draw do
   get 'remove_problem' => 'problems#remove_from_collection'
   resources :collections
   get 'mark_as_current' => 'instructor#mark_as_current'
+  get 'export' => 'collections#export'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.
