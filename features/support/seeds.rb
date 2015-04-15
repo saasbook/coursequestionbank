@@ -16,7 +16,7 @@
 @collection2 = Collection.create(name: "Spring 15")
 @collection3 = Collection.create(name: "Spring 14")
 
-@p1 = Problem.new(created_date: '2012-06-09 21:51:55 UTC', is_public: true, text:
+@p1 = Problem.new(created_date: '2012-06-09 21:51:55 UTC', is_public: true, json: "", text:
                
                "select_multiple do
     text %q{Around 2007, the claim \"Rails doesn\'t scale\"  was attributed to
@@ -39,7 +39,7 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
 @p1.save
 
 
-@p2 = Problem.new(created_date: '2013-06-09 21:51:55 UTC', is_public: true, text:
+@p2 = Problem.new(created_date: '2013-06-09 21:51:55 UTC', is_public: true, json: "", text:
                
                "select_multiple do
 

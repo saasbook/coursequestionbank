@@ -3,6 +3,7 @@
     %table.table.table-striped#problems
       %thead
         %tr
+        %th Question type
         %th Question Text
         %th Date Created
         %th Collections
@@ -12,6 +13,7 @@
       %tbody
         - @problems.each do |problem|
           %tr
+            %td= problem.problem_type
             %td= problem.html5.html_safe
             %td= problem.created_date
             - collstring = ""

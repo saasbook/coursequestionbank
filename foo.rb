@@ -7,10 +7,11 @@ quiz 'A FEW EXAMPLE Qs' do
     answer "CRUD", :explanation => 'Create, Read, Update, Delete are the four basic database operations commonly performed by SaaS apps.'
     distractor "REST", :explanation => 'REpresentational State Transfer is a design approach for making SaaS requests self-contained by having each request refer to a resource and an operation on that resource.'
   end
-
+  
   truefalse 'If an app has a RESTful API, it must be performing CRUD operations.',
   false,
   :explanation => 'The REST principle can be applied to any kind of operation'
+
 
   choice_answer :randomize => true do
     text "The implied port number of the URI <tt>http://google.com</tt> is"
@@ -39,7 +40,7 @@ quiz 'A FEW EXAMPLE Qs' do
   choice_answer :randomize => true do
     text "An HTTP request must consist of both a(n) ----- and a(n) -----"
     distractor "CRUD action, database"
-    distract "header, cookie", :explanation => 'A header is part of the request, but a cookie is not necessarily included unless the server previously specified one.'
+    distractor "header, cookie", :explanation => 'A header is part of the request, but a cookie is not necessarily included unless the server previously specified one.'
     distractor "URL, wildcard", :explanation => 'A URL is necessary, but not a wildcard.'
     answer "URI, HTTP request method", :explanation => "The URI alone isn't enough--the same URI used with two different methods can cause two different actions."
   end

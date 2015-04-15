@@ -1,5 +1,8 @@
 require 'spec_helper'
 
 describe RuqlReader do
-  pending "add some examples to (or delete) #{__FILE__}"
+  it 'should store problems as json' do
+  	#@instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+
+  end
 end

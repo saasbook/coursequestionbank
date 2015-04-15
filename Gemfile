@@ -5,12 +5,16 @@ gem 'rails', '3.2.16'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'ruql'
+gem 'ruql_cqb', '~> 0.0.1'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'
 gem 'cucumber-rails'
+gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
+gem 'progress_bar'
+gem 'json'
+
 group :development, :test do
   gem 'sqlite3'
   gem 'ruby-debug19'
@@ -18,6 +22,7 @@ group :development, :test do
   gem 'rspec-rails', '~> 2.14.0'
   gem 'simplecov'
   gem 'rack_session_access'
+  gem 'sunspot_solr', :git => 'https://github.com/sunspot/sunspot.git'
 end
 
 group :production do

@@ -11,14 +11,19 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150404010702) do
+ActiveRecord::Schema.define(:version => 20150408212224) do
 
   create_table "collections", :force => true do |t|
-    t.integer  "instructor_id"
     t.string   "name"
     t.datetime "last_used"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.integer  "instructor_id"
+  end
+
+  create_table "collections_instructors", :id => false, :force => true do |t|
+    t.integer "collection_id"
+    t.integer "instructor_id"
   end
 
   create_table "collections_problems", :id => false, :force => true do |t|
@@ -38,18 +43,25 @@ ActiveRecord::Schema.define(:version => 20150404010702) do
 
   create_table "problems", :force => true do |t|
     t.integer  "instructor_id"
-    t.text     "text"
+    t.string   "text"
     t.datetime "created_date"
     t.string   "created_by"
     t.boolean  "is_public"
     t.datetime "last_used"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
+    t.text     "rendered_text"
+    t.string   "problem_type"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
     t.integer "problem_id"
     t.integer "tag_id"
+  end
+
+  create_table "ruql_readers", :force => true do |t|
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
   end
 
   create_table "tags", :force => true do |t|

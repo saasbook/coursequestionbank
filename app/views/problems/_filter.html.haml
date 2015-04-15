@@ -1,8 +1,8 @@
 
 = form_tag problems_path, :method => :get, :id => "filter_form" do
   %div.form-group
-    = label_tag(:search_query, "Search Keywords:")
-    = text_field_tag(:search_query, params[:search_query], class: 'form-control', placeholder: "Search")
+    = label_tag(:search, "Search Keywords:")
+    = text_field_tag(:search, params[:search], class: 'form-control', placeholder: "Search")
   
   %div.form-group
     = label_tag(:tags, "Tags:")
@@ -13,7 +13,10 @@
   - @collections.each do |collection|
     %div.checkbox
       %label
-        = check_box_tag "collections[#{collection.name}]", 1, true, class: "checkbox"
+        -if @chosen_collections.include? collection.name
+          = check_box_tag "collections[#{collection.name}]", 1, true, class: "checkbox"
+        -else
+          = check_box_tag "collections[#{collection.name}]", 1, false, class: "checkbox"
         = collection.name
 
   %div.form-group
