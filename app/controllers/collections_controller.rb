@@ -33,4 +33,9 @@ class CollectionsController < ApplicationController
     redirect_to profile_path
   end
 
+  def export
+    @html_code = Collection.find(params[:id]).export
+  end
+
+
 end

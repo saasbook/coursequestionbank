@@ -29,7 +29,6 @@ class Problem < ActiveRecord::Base
   end
 
   def html5
-    @readonly = false #hack
     if rendered_text
       return rendered_text 
     end

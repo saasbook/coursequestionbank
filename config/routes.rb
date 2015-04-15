@@ -12,6 +12,7 @@ Saasquizes::Application.routes.draw do
   resources :problems
   get 'profile' => 'instructor#show', :as => 'profile'
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
+  get 'remove_problem' => 'problems#remove_from_collection'
   resources :collections
   get 'mark_as_current' => 'instructor#mark_as_current'
 

@@ -23,9 +23,9 @@
             %td= collstring
             %td= problem.instructor.name
             %td
-              -if :problems_index
-                =link_to "tba_problems_index", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"
+              -if problems_index
+                =link_to "tba_problems_index", add_problem_path( :id => problem.id), :id => "problem_#{problem.id}"
               -else 
-                =link_to "tba_collections_thing", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"
+                =link_to "remove from this collection", remove_problem_path(problem), :id => "problem_#{problem.id}"
 
               

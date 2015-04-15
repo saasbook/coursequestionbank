@@ -37,5 +37,9 @@ class ProblemsController < ApplicationController
       redirect_to problems_path
     end
   end
-    
+  #stub
+  def remove_from_collection
+    flash[:notice] = 'NOT IMPLEMENTED YET -----------------------------------------------------------------------'
+    redirect_to problems_path
+  end
 end
