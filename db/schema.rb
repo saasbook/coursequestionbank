@@ -11,7 +11,6 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-
 ActiveRecord::Schema.define(:version => 20150415003921) do
 
   create_table "collections", :force => true do |t|
@@ -53,6 +52,7 @@ ActiveRecord::Schema.define(:version => 20150415003921) do
     t.datetime "updated_at",    :null => false
     t.text     "rendered_text"
     t.string   "problem_type"
+    t.text     "json"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
