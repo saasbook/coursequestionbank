@@ -1,0 +1,31 @@
+%div.col-md-10
+  %div.table-responsive
+    %table.table.table-striped#problems
+      %thead
+        %tr
+        %th Question Text
+        %th Date Created
+        %th Collections
+        %th Tags
+        %th Created By
+        %th Add to
+      %tbody
+        - @problems.each do |problem|
+          %tr
+            %td= problem.html5.html_safe
+            %td= problem.created_date
+            - collstring = ""
+            -problem.collections.each do |coll| 
+              -collstring << coll.name + " "
+            %td= collstring
+            - collstring = ""
+            -problem.tags.each {|tag| collstring << tag.name + " " }
+            %td= collstring
+            %td= problem.instructor.name
+            %td
+              -if :problems_index
+                =link_to "tba_problems_index", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"
+              -else 
+                =link_to "tba_collections_thing", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"
+
+              
