@@ -1,4 +1,4 @@
-quiz 'A few example questions' do
+quiz 'A FEW EXAMPLE Qs' do
   
   choice_answer :randomize => true do
     text "Which of the following best identifies the four basic operations supported by RDBMS?"
@@ -7,10 +7,11 @@ quiz 'A few example questions' do
     answer "CRUD", :explanation => 'Create, Read, Update, Delete are the four basic database operations commonly performed by SaaS apps.'
     distractor "REST", :explanation => 'REpresentational State Transfer is a design approach for making SaaS requests self-contained by having each request refer to a resource and an operation on that resource.'
   end
-
+  
   truefalse 'If an app has a RESTful API, it must be performing CRUD operations.',
   false,
   :explanation => 'The REST principle can be applied to any kind of operation'
+
 
   choice_answer :randomize => true do
     text "The implied port number of the URI <tt>http://google.com</tt> is"

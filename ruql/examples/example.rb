@@ -31,7 +31,4 @@ quiz 'Example quiz' do
     distractor "Social Democrats"
   end
   
-  truefalse 'The week has 7 days.', true
-  truefalse 'The earth is flat.', false, :explanation => 'No, just looks that way'
-  
 end

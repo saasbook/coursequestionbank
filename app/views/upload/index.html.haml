@@ -1,7 +1,4 @@
-%html
-  %body
-    %h1 File uploader!
-    %form(method="post" enctype='multipart/form-data')   
-      %input(type='file' name='myfile' id='file_upload')    
-      %br
-      %input(type='submit' value='Upload!')
+
+= form_tag("", multipart: true) do
+	= file_field_tag 'ruql_file', :id => 'file_upload'
+	= submit_tag('upload')

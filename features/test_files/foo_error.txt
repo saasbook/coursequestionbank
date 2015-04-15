@@ -9,10 +9,10 @@ quiz 'A few example questions' do
   end
 
 
-  choice_answer :randomize => true, :tag => "test_tag" do
+  choice_answer :randomize => true do
     text "The implied port number of the URI <tt>http://google.com</tt> is"
     answer "80"
-    distractor "400"
+    distract "400"
     distractor "3000"
     distractor "8000"
   end
