@@ -1,5 +1,5 @@
 class Collection < ActiveRecord::Base
-  attr_accessible :last_used, :name
+  attr_accessible :last_used, :name, :description
   validates :name, presence: true, uniqueness: true
   has_and_belongs_to_many :problems
   belongs_to :instructor

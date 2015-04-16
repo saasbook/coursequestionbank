@@ -16,6 +16,8 @@ Saasquizes::Application.routes.draw do
   resources :collections
   get 'mark_as_current' => 'instructor#mark_as_current'
   get 'export' => 'collections#export'
+  get 'finalize_upload' => 'collections#edit_multiple'
+  post 'update_all' => 'collections#update_all'
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

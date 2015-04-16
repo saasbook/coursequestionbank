@@ -27,7 +27,7 @@
           %tr
           %td= link_to collection.name, edit_collection_path(:id => collection.id)
           %td= collection.problems.length
-          %td Not yet implemented
+          %td= collection.description
           %td= collection.last_used
           %td
             -if @current_user.current_collection == collection.id 
