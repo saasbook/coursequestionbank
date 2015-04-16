@@ -21,9 +21,6 @@ class ProblemsController < ApplicationController
     @problems = Problem.filter(@current_user, filter_options)
 	end
 
-  def add_remove_helper(collection, problem, remove)
-   
-  end
   #eventually this will be an AJAX call. ALSO WE NEED TO CHANGE OUR HABTM ASSOCIATION TO HAS_MANY: THROUGH SO WE CAN USE VALIDATIONS AND STUFF
   def add_to_collection
     collection = Collection.find(params[:collection_id])
@@ -41,13 +38,14 @@ class ProblemsController < ApplicationController
   def remove_from_collection
     collection = Collection.find(params[:collection_id])
     problem_to_remove = Problem.find(params[:id])
-    if not collection.problems.include? problem_to_remove
-      collection.problems.delete_if {|problem| problem == problem_to_remove}
+    if collection.problems.include? problem_to_remove
+      collection.problems.delete(problem_to_remove)
+      collection.save
       flash[:notice] = "problem successfully removed from #{collection.name}"
     else 
       flash[:notice] = "the problem you attempted to remove does not exist in #{collection.name}"
     end
     flash.keep
-    redirect_to problems_path
+    redirect_to edit_collection_path(:id => collection.id)
   end
 end
