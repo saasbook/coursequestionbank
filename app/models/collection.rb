@@ -18,7 +18,6 @@ class Collection < ActiveRecord::Base
       return nil
     else 
       export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
-      puts export_quiz, '---------------------------------------------------------------'
       export_quiz.render_with('Html5')
     end
   end

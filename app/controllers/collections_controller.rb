@@ -35,6 +35,11 @@ class CollectionsController < ApplicationController
 
   def export
     @html_code = Collection.find(params[:id]).export
+    if not @html_code
+      flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection'
+      flash.keep
+      redirect_to edit_collection_path( id: params[:id])
+    end
   end
 
 

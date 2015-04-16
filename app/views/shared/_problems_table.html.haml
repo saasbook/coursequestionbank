@@ -24,8 +24,8 @@
             %td= problem.instructor.name
             %td
               -if problems_index
-                =link_to "tba_problems_index", add_problem_path( :id => problem.id), :id => "problem_#{problem.id}"
+                / =link_to "add to #{@current_user.current_collection.name} (current)", add_problem_path(:id => problem.id, :collection_id => @current_user.current_collection.id), {:id => "problem_#{problem.id}"}
               -else 
-                =link_to "remove from this collection", remove_problem_path(problem), :id => "problem_#{problem.id}"
+                =link_to "remove from this collection", remove_problem_path( :id => problem.id, :collection_id => @current_user.current_collection), {:id => "problem_#{problem.id}"}
 
               

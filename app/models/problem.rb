@@ -38,13 +38,9 @@ class Problem < ActiveRecord::Base
       quiz = Quiz.new("", :questions => [question])
       quiz.render_with("Html5", {'template' => 'preview.html.erb'})
       self.update_attributes(:rendered_text => quiz.output)
-      return quiz.output
-    else 
-      rb_text = "quiz '' do \n #{text} \n end"
-      File.open('text.rb', 'w'){|file| file.write(rb_text)}
-      html5_text = %x(ruql text.rb Html5 --template=preview.html.erb)
-      self.update_attributes(:rendered_text => html5_text)
-      return html5_text
+      quiz.output
+    else
+      'This question could not be displayed (no JSON found)' 
     end
   end
 
