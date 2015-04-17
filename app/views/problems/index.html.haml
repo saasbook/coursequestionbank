@@ -3,4 +3,4 @@
 %div.col-md-2#sidebar-filter
   = render "filter"
 
-= render :partial => "shared/problems_table", locals: {problems_index: true}
+= render :partial => "shared/problems_table", locals: {problems_index: true, problems: @problems}
