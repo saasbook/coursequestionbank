@@ -64,7 +64,7 @@ class Problem < ActiveRecord::Base
 
     problems = Problem.search do
       any_of do
-        with(:instructor_id, 1)
+        with(:instructor_id, user.id)
         with(:is_public, true)
       end
       
