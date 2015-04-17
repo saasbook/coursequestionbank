@@ -5,5 +5,7 @@
 
 @myfunction = (problemid, collectionid) ->
 		$.ajax({url: "/add_problem?collection_id=#{collectionid}&id=#{problemid}"}).done (data) -> 
-			for key, value of data
-				$('#problems').append value 
+			if data["status"] == true
+				alert("Successfully added question to collection!")
+			else
+				alert("You failed to add question")

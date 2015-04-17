@@ -31,15 +31,11 @@ class ProblemsController < ApplicationController
       return
     end
     problem_to_add = Problem.find(params[:id])
-    if not collection.problems.include? problem_to_add
+    if not collection.problems.include? problem_to_add  
       collection.problems << problem_to_add
-      flash[:notice] = "problem added to #{collection.name}" 
-      flash.keep
-      render :json => {:status => "success!"}
+      render :json => {:status => true}
     else 
-      flash[:notice] = "problem already exists in #{collection.name}"
-      flash.keep
-      render :json => {:status => "fail!"}
+      render :json => {:status => false}
     end
   end
 
