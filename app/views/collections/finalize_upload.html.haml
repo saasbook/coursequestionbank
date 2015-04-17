@@ -15,4 +15,5 @@
             %p 
               Export this collection: 
               =link_to 'export button', export_path(:id => collection) 
+            = 'COLLECTIONe: ' + collection.id.to_s  
             = render :partial => "shared/problems_table", locals: {problems_index: false, collection: collection, problems: collection.problems}

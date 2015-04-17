@@ -13,7 +13,7 @@ GIT
 
 GIT
   remote: https://github.com/zhangaaron/ruql.git
-  revision: 8fd0c5292c98224878babbad4c0d3d31addecee7
+  revision: 99aad83ddc4044f88918defce8e41e4bedfaa4a1
   specs:
     ruql (0.0.5)
       builder
