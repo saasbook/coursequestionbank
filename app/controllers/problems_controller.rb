@@ -35,14 +35,12 @@ class ProblemsController < ApplicationController
       collection.problems << problem_to_add
       flash[:notice] = "problem added to #{collection.name}" 
       flash.keep
-      render :json => {"status" => "success!"}
+      render :json => {:status => "success!"}
     else 
       flash[:notice] = "problem already exists in #{collection.name}"
       flash.keep
-      render :json => {"status" => "fail!"}
+      render :json => {:status => "fail!"}
     end
-    flash.keep
-    redirect_to problems_path
   end
 
   def remove_from_collection

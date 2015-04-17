@@ -3,6 +3,7 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
-@myfunction = (problemid) ->
-		$.ajax({url: "/add_problem/?id=#{problemid}"}).done (data) -> $('#problems').append data
-
+@myfunction = (problemid, collectionid) ->
+		$.ajax({url: "/add_problem?collection_id=#{collectionid}&id=#{problemid}"}).done (data) -> 
+			for key, value of data
+				$('#problems').append value 
