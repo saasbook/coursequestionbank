@@ -5,10 +5,8 @@ class RuqlReader
     Quiz.instance_eval "#{IO.read(filename)}"
     collections = []
     puts Quiz.quizzes.map{|q| q.title + ' ,'}.join
-    puts '----------------------------------------------------------'
     puts Quiz.quizzes.uniq.map{|q| q.title + ' ,'}.join
     Quiz.quizzes.uniq.each do |quiz|
-      puts 'QUIZ LOOP RUN --------------------------------------------------------------------------'
       problems_json = quiz.render_with("JSON", {})
       collection = if Collection.find_by_name(quiz.title) then false else user.collections.create(:name => quiz.title) end
       if collection
@@ -29,10 +27,9 @@ class RuqlReader
           problem.save
         end
       else
-        raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. '
+        raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that '
       end
     end
-    puts 'collections -----------------------------------------' + collections.inspect
     collections
   end
 end
