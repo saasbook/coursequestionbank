@@ -11,15 +11,20 @@
   %body
     #header
       .title 
-        %h1= link_to 'Course Question Bank', problems_path
-        #user
-          - if @current_user
-            - if !@current_user.name.empty?
-              %p.welcome  Welcome, #{@current_user.name}!
-            - else
-              %p.welcome  Welcome, #{@current_user.provider} user!
-            = link_to 'Go to my dashboard', profile_path, method: :get
-            = link_to 'Log Out', logout_path, method: :post
+        %h1
+          =link_to 'Course Question Bank', problems_path
+      .welcome
+        - if @current_user
+          - if !@current_user.name.empty?
+            %ul#navbar
+              %li#navbar= link_to " Log Out", logout_path, method: :post
+              %li#navbar= link_to 'My Dashboard', profile_path, method: :get
+              %li#navbar Welcome, #{@current_user.name} user!             
+          - else  
+            %ul#navbar
+              %li#navbar= link_to " Log Out", logout_path, method: :post
+              %li#navbar= link_to 'My Dashboard', profile_path, method: :get
+              %li#navbar Welcome, #{@current_user.provider} user!            
     #main
       - if flash[:notice]
         #notice.message= flash[:notice]

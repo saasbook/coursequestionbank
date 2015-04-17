@@ -3,5 +3,6 @@
 # You can use CoffeeScript in this file: http://jashkenas.github.com/coffee-script/
 
 
+@myfunction = (problemid) ->
+		$.ajax({url: "/add_problem/?id=#{problemid}"}).done (data) -> $('#problems').append data
 
-@myfunction = $.ajax(url: "/add_problem").done (html) -> $("#problems").append html
