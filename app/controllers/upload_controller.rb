@@ -16,6 +16,7 @@ class UploadController < ApplicationController
       return
     end
     flash.keep
+    puts 'UPLOAD IDS:', collections.map{|collection| collection.id}, '-------------------------------------------------'
     redirect_to finalize_upload_path(:ids => collections.map{|collection| collection.id})
   end
 end

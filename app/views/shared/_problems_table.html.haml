@@ -18,13 +18,8 @@
           %tr
             %td= problem.html5.html_safe
             %td= problem.created_date
-            - collstring = ""
-            -problem.collections.each do |coll| 
-              -collstring << coll.name + " "
-            %td= collstring
-            - collstring = ""
-            -problem.tags.each {|tag| collstring << tag.name + " " }
-            %td= collstring
+            %td= problem.collections.map {|collection| collection.name + ', '}.join
+            %td= problem.tags.map {|tags| tags.name + ', '}.join
             %td= problem.instructor.name
             %td
               -if problems_index
