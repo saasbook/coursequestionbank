@@ -14,17 +14,12 @@
 ActiveRecord::Schema.define(:version => 20150416230134) do
 
   create_table "collections", :force => true do |t|
+    t.integer  "instructor_id"
     t.string   "name"
     t.datetime "last_used"
     t.datetime "created_at",    :null => false
     t.datetime "updated_at",    :null => false
-    t.integer  "instructor_id"
     t.text     "description"
-  end
-
-  create_table "collections_instructors", :id => false, :force => true do |t|
-    t.integer "collection_id"
-    t.integer "instructor_id"
   end
 
   create_table "collections_problems", :id => false, :force => true do |t|
@@ -44,7 +39,7 @@ ActiveRecord::Schema.define(:version => 20150416230134) do
 
   create_table "problems", :force => true do |t|
     t.integer  "instructor_id"
-    t.string   "text"
+    t.text     "text"
     t.datetime "created_date"
     t.string   "created_by"
     t.boolean  "is_public"

@@ -25,9 +25,7 @@ class ProblemsController < ApplicationController
   def add_to_collection
     collection = Collection.find(params[:collection_id])
     if not collection
-      flash[:notice] = 'Collection does not exist'
-      flash.keep
-      redirect_to problems_path
+      render :json => {:status => false}
       return
     end
     problem_to_add = Problem.find(params[:id])

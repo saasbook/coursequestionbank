@@ -4,10 +4,8 @@
       %thead
         %tr
         %th Question Text
-        %th Date Created
         %th Collections
         %th Tags
-        %th Created By
         %th
           -if problems_index
             Add to:
@@ -16,16 +14,12 @@
       %tbody
         - problems.each do |problem|
           %tr
-            %td= problem.html5.html_safe
-            %td= problem.created_date
-            - collstring = ""
-            -problem.collections.each do |coll| 
-              -collstring << coll.name + " "
-            %td= collstring
-            - collstring = ""
-            -problem.tags.each {|tag| collstring << tag.name + " " }
-            %td= collstring
-            %td= problem.instructor.name
+            %td
+              = problem.html5.html_safe 
+              = "Created Date: " + problem.created_date.to_s + " | "
+              = "Created By: " + problem.instructor.name
+            %td= problem.collections.map {|collection| collection.name + ', '}.join
+            %td= problem.tags.map {|tags| tags.name + ', '}.join
             %td
               -if problems_index
                 / =link_to "add to #{Collection.find(@current_user.current_collection).name} (current)", add_problem_path(:id => problem.id, :collection_id => @current_user.current_collection), {:id => "problem_#{problem.id}"}
