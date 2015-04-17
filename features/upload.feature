@@ -16,7 +16,7 @@ Scenario: upload a file successfully
 	Given I am on the upload page
 	And I attach the file "features/test_files/foo.txt" to "file_upload"
 	And I press "upload"
-	Then I should see "Sucessfully uploaded file"
+	Then I should see "Quiz successfully uploaded"
 
 Scenario: syntax error in the file
 	Given I am on the upload page
