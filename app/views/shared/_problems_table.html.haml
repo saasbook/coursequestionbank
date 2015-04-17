@@ -8,9 +8,13 @@
         %th Collections
         %th Tags
         %th Created By
-        %th Add to
+        %th
+          -if problems_index
+            Add to:
+          -else 
+            Remove from collection
       %tbody
-        - @problems.each do |problem|
+        - problems.each do |problem|
           %tr
             %td= problem.html5.html_safe
             %td= problem.created_date
@@ -23,9 +27,9 @@
             %td= collstring
             %td= problem.instructor.name
             %td
-              -if :problems_index
-                =link_to "tba_problems_index", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"
+              -if problems_index
+                =link_to "add to #{Collection.find(@current_user.current_collection).name} (current)", add_problem_path(:id => problem.id, :collection_id => @current_user.current_collection), {:id => "problem_#{problem.id}"}
               -else 
-                =link_to "tba_collections_thing", add_problem_path( :id => problem.id), :id => "problem#{problem.id}"
+                =link_to "remove from this collection", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}"}
 
-              
+            

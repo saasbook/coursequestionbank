@@ -11,6 +11,14 @@ GIT
       sunspot (= 2.2.0)
     sunspot_solr (2.2.0)
 
+GIT
+  remote: https://github.com/zhangaaron/ruql.git
+  revision: 8fd0c5292c98224878babbad4c0d3d31addecee7
+  specs:
+    ruql (0.0.5)
+      builder
+      getopt
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -191,9 +199,6 @@ GEM
       ruby-debug-base19 (>= 0.11.19)
     ruby_core_source (0.1.5)
       archive-tar-minitar (>= 0.5.2)
-    ruqlcqb (0.0.0)
-      builder
-      getopt
     sass (3.4.13)
     sass-rails (3.2.6)
       railties (~> 3.2.0)
@@ -245,7 +250,7 @@ DEPENDENCIES
   rails (= 3.2.16)
   rspec-rails (~> 2.14.0)
   ruby-debug19
-  ruqlcqb
+  ruql!
   sass-rails (~> 3.2.3)
   simplecov
   sqlite3
