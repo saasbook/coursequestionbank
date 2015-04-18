@@ -16,7 +16,14 @@ Feature: collections that we can add problems to
     And I add problem containing 'Raffi' to collection 'yolo'
     And I should see Collection 'yolo' in the database
     And I remove problem containing 'Raffi' to collection 'yolo'
-    Then I should not see 'Raffi' in collection 'yolo' 
+    Then I should not see 'Raffi' in collection 'yolo'
+ 
+  Scenario: create a new collection
+    When I follow "start a new collection"
+    And I fill in "collection_name" with ""
+    And I press "Create Collection"
+    Then I should see "can't be blank"
+    
 
   Scenario: remove a problem
     When I follow "start a new collection"
