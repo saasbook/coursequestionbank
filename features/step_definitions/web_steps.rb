@@ -82,8 +82,24 @@ Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text,
   }
 end
 
+Then /^(?:|I )should not see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+  data_class = Object.const_get(datatype)
+  assert data_class.find_by_name(name_value).nil?
+end
 
 
+Given /^(?:|I )am looking at edit page regarding collection '(.*)'/ do |collection|
+  collection = Collection.find_by_name(collection).id
+  visit edit_collection_path(:id => collection)
+end
+
+When /^I press the trash icon at '(.*)'/ do |collection|
+  collection = Collection.find_by_name(collection)
+  visit edit_collection_path(:id => collection)
+  steps %Q{
+    Then I follow "trash_can_icon"
+  }
+end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)

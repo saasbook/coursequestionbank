@@ -6,7 +6,6 @@ Feature: collections that we can add problems to
   Background:
     Given I am signed in with uid "1234" and provider "github"
     And I have uploaded 'micro_quizzes.txt'
-
     And I am on the dashboard
   
   Scenario: create a new collection
@@ -30,5 +29,13 @@ Feature: collections that we can add problems to
     And I attach the file "features/test_files/foo.txt" to "file_upload"
     And I press "upload"
     Then I should see "There is an error in the file: Quiz with that name already exists in your list of collections. You probably didn't mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that"
+
+  Scenario: delete a collection
+    When I create a new collection 'apple'
+    Given I am looking at edit page regarding collection 'apple'
+    When I press the trash icon at 'apple'
+    Then I should be on the dashboard
+    And I should not see Collection 'apple' in the database
+
 
     
