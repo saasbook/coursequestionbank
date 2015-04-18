@@ -5,22 +5,24 @@ Feature: collections that we can add problems to
 
   Background:
     Given I am signed in with uid "1234" and provider "github"
+    And I have uploaded 'micro_quizzes.txt'
     And I am on the dashboard
-    And I have uploaded 'test_quizzes'
   
   Scenario: create a new collection
-
     When I follow "start a new collection"
     And I fill in "collection_name" with "yolo"
     And I press "Create Collection"
     Then I should be on the dashboard
-    And I should see collection 'yolo' in the database
+    And I should see Collection 'yolo' in the database
 
-  Scenario: add a new question
-    When I follow "start a new collection"
-    And I fill in "collection_name" with "yolo"
-    And I press "Create Collection"
-    Then I should be on the dashboard
-    Then I am on the problems page
+  Scenario: add a new question to current collection
+    When I create a new collection 'yolo' and mark it as current
+    Then I add the problem containing text 'Raffi' to the current collection
+    Then I should see 'Raffi' within the collection 'yolo'
+
+  Scenario: use the dropdown to add a question to non-current collection:
+    When I create a new collection 'yolo'
+    Then I add the problem containing text 'Raffi' to 'yolo'
+
 
     

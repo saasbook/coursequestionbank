@@ -1,7 +1,7 @@
-Feature: Upload a RUql file
+Feature: Upload a RuQL file
 	As an instructor
 	So that I can add questions
-	I want to upload a RUql file
+	I want to upload a RuQL file
 
 Background:	
 	Given I am signed in with uid "1234" and provider "github"
