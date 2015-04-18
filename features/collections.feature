@@ -16,6 +16,18 @@ Feature: collections that we can add problems to
     Then I should be on the dashboard
     And I add problem containing 'Raffi' to collection 'yolo'
     And I should see Collection 'yolo' in the database
+    And I remove problem containing 'Raffi' to collection 'yolo'
+    Then I should not see 'Raffi' in collection 'yolo' 
+
+  Scenario: remove a problem
+    When I follow "start a new collection"
+    And I fill in "collection_name" with "yolo"
+    And I press "Create Collection"
+    Then I should be on the dashboard
+    And I add problem containing 'lifetime' to collection 'yolo'
+    And I should see Collection 'yolo' in the database
+    And I remove problem containing 'lifetime' to collection 'yolo'
+    Then I should not see 'lifetime' in collection 'yolo'
 
   Scenario: add a new question to current collection
     When I create a new collection 'yolo' and mark it as current

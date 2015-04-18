@@ -46,6 +46,8 @@ Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil
 end
 
+
+
 Given /^(?:|I )have uploaded '(.*)'$/ do |file|
   steps %Q{
     Given I am on the upload page
@@ -73,6 +75,18 @@ When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_te
   visit "/add_problem?collection_id=#{collection}&id=#{problem}"
 end
 
+When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
+  collection = Collection.find_by_name(collection).id
+  visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
+end
+
+
+Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
+  collection = Collection.find_by_name(collection)
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
+  assert !(collection.problems.include? problem)
+end
 
 Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text, collection|
   collection = Collection.find_by_name(collection).id
@@ -81,8 +95,6 @@ Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text,
     Then I should see "#{problem_text}"
   }
 end
-
-
 
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
