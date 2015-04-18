@@ -5,19 +5,17 @@ class ProblemsController < ApplicationController
   end
 
 	def index
-    if @current_user
-      @collections = @current_user.collections
-    else
-      @collections = []
-    end
+    # if @current_user
+    @collections = @current_user.collections
+    # else
+    #   @collections = []
+    # end
     
     @chosen_collections = @collections.map { |c| c.name }
     if params[:collections]
       @chosen_collections = params[:collections].keys
-    end
-    
+    end    
 		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
-
     @problems = Problem.filter(@current_user, filter_options)
 	end
 

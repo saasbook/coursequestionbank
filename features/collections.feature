@@ -37,13 +37,17 @@ Feature: collections that we can add problems to
   Scenario: attempt to add an invalid problem to valid collection
     When I create a new collection 'yolo'
     Then I add the problemid '0' to collection 'yolo'
-    
 
-  Scenario: upload same file twice
-    Given I am on the upload page
-    And I attach the file "features/test_files/foo.txt" to "file_upload"
-    And I press "upload"
-    Given I am on the upload page
-    And I attach the file "features/test_files/foo.txt" to "file_upload"
-    And I press "upload"
-    Then I should see "There is an error in the file: Quiz with that name already exists in your list of collections. You probably didn't mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that"
+  Scenario: update a collection name
+    When I follow "start a new collection"
+    And I fill in "collection_name" with "yolo"
+    And I press "Create Collection"
+    And I update 'yolo' to 'swag'
+    Then I should see Collection 'swag' in the database
+
+  Scenario: attempt to update a collection with invalid name
+    When I follow "start a new collection"
+    And I fill in "collection_name" with "yolo"
+    And I press "Create Collection"
+    And I update 'yolo' to ''
+    Then I should see Collection 'yolo' in the database

@@ -46,7 +46,14 @@ Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil
 end
 
-
+When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
+  collection_id = Collection.find_by_name(former)
+  visit edit_collection_path(:id => collection_id)
+  steps %Q{ 
+    And I fill in "collection_name" with "#{new}"
+    And I press "Update Collection"
+  }
+end
 
 Given /^(?:|I )have uploaded '(.*)'$/ do |file|
   steps %Q{
