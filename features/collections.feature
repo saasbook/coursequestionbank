@@ -19,12 +19,8 @@ Feature: collections that we can add problems to
 
   Scenario: add a new question to current collection
     When I create a new collection 'yolo' and mark it as current
-    And I add problem containing 'Raffi' to the collection 'yolo'
-    Then I should see 'Raffi' within the collection 'yolo'
-
-  Scenario: use the dropdown to add a question to non-current collection:
-    When I create a new collection 'yolo'
-    Then I add the problem containing text 'Raffi' to 'yolo'
+    And I add problem containing 'Raffi' to collection 'yolo'
+    Then I should see 'Raffi' with in the collection 'yolo'
 
   Scenario: attempt to add an invalid problem to valid collection
     When I create a new collection 'yolo'
