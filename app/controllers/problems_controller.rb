@@ -6,7 +6,7 @@ class ProblemsController < ApplicationController
 
 	def index
     if @current_user
-    @collections = @current_user.collections
+      @collections = @current_user.collections
     else
       @collections = []
     end
