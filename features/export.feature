@@ -12,3 +12,12 @@ Feature: Export a collection
     When I follow "1/22/15 (W1 L2)"
     And I follow "export button"
     Then I should see "1/22/15 (W1 L2)"
+
+  Scenario: Export a quiz unsuccessfully
+    When I follow "start a new collection"
+    And I fill in "collection_name" with "yolo"
+    And I press "Create Collection"
+    Then I should be on the dashboard
+    And I follow "yolo"
+    And I follow "export button"
+    Then I should see "Cannot export an empty collection! Add some questions to your collection"

@@ -81,12 +81,20 @@ When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem
   visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
 end
 
+
 Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
   collection = Collection.find_by_name(collection)
   problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
   assert !(collection.problems.include? problem)
 end
 
+Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text, collection|
+  collection = Collection.find_by_name(collection).id
+  visit edit_collection_path(:id => collection)
+  steps %Q{
+    Then I should see "#{problem_text}"
+  }
+end
 
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
