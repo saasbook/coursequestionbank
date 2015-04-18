@@ -15,6 +15,11 @@ Feature: collections that we can add problems to
     Then I should be on the dashboard
     And I should see Collection 'yolo' in the database
 
+  Scenario: remove question from collection
+    When I follow "1/22/15 (W1 L2)"
+    And I go to /remove_problem?collection_id=0&id=1
+    Then I should not see 'Raffi' within the collection '1/22/15 (W1 L2)'
+
   Scenario: add a new question to current collection
     When I create a new collection 'yolo' and mark it as current
     Then I add the problem containing text 'Raffi' to the current collection
