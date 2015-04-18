@@ -74,6 +74,14 @@ When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_te
 end
 
 
+Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text, collection|
+  collection = Collection.find_by_name(collection).id
+  visit edit_collection_path(:id => collection)
+  steps %Q{
+    Then I should see "#{problem_text}"
+  }
+end
+
 
 
 
