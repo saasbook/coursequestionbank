@@ -2,6 +2,7 @@
 Feature: Search questions by question text
 	As an instructor
 	So that I can easily find questions
+	And I have uploaded 'micro_quizzes.txt'
 	I want to be able to search for questions by text
 
 Background: 
