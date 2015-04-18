@@ -57,12 +57,16 @@ Given /^(?:|I )have uploaded '(.*)'$/ do |file|
   }
 end
 
-When /^(?:|I )create a new collection '(.*)' (.*)/ do |name, optional|
+When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
   steps %Q{
     Given I am on the dashboard
     And I follow "start a new collection"
-    And I fill in collection name with 
+    And I fill in "collection_name" with "#{name}"
+    And I press "Create Collection"
   }
+  if optional.strip == 'and mark it as current'
+    visit mark_as_current_path(:id => Collection.find_by_name(name).id)
+  end
 end
 
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
@@ -82,6 +86,8 @@ Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, coll
   problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
   assert !(collection.problems.include? problem)
 end
+
+
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
