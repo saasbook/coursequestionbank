@@ -9,12 +9,12 @@ class UploadController < ApplicationController
       redirect_to upload_path
       return
     end
-    if collections.nil? || collections.empty?
-      flash[:notice] = 'The file you uploaded does not contain any quizzes'
-      flash.keep
-      redirect_to upload_path
-      return
-    end
+    # if collections.nil? || collections.empty?
+    #   flash[:notice] = 'The file you uploaded does not contain any quizzes'
+    #   flash.keep
+    #   redirect_to upload_path
+    #   return
+    # end
     flash.keep
     redirect_to finalize_upload_path(:ids => collections.map{|collection| collection.id})
   end
