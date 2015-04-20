@@ -5,9 +5,6 @@ class SessionsController < ApplicationController
     user = Instructor.find_by_provider_and_uid(auth["provider"],auth["uid"]) ||
       Instructor.create_with_omniauth(auth)
     session[:user_id] = user.id
-    if Rails.env.development? or Rails.env.test?
-      session[:user_id] = Instructor.find_by_uid("1234").id
-    end
     redirect_to problems_path
   end
   
