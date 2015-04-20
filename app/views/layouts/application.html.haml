@@ -14,7 +14,7 @@
         %h1= link_to 'Course Question Bank', problems_path
         #user
           - if @current_user
-            - if !@current_user.name.empty?
+            - if @current_user.name and !@current_user.name.empty?
               %p.welcome  Welcome, #{@current_user.name}!
             - else
               %p.welcome  Welcome, #{@current_user.provider} user!
