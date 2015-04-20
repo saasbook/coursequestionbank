@@ -1,0 +1,8 @@
+%h1 Preview of HTML Code. We should also have other tabs that get rendered but hidden by client-side JS that also have the latex, qualitrics, edX export formats
+
+= @html_code.html_safe
+
+%h1 Copy the html code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
+
+%textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+  = @html_code

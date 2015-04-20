@@ -5,7 +5,7 @@ gem 'rails', '3.2.16'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'ruqlcqb', :require => false
+gem 'ruql', :git =>'https://github.com/zhangaaron/ruql.git'
 gem 'omniauth'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'

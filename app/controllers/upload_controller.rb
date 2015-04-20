@@ -2,14 +2,20 @@ class UploadController < ApplicationController
 
   def upload
     begin 
-      RuqlReader.store_as_json(@current_user, params[:ruql_file])
-      flash[:notice] = "Sucessfully uploaded file"
-      flash.keep
-      redirect_to problems_path 
-    rescue Exception => e 
+      collections = RuqlReader.store_as_json(@current_user, params[:ruql_file])
+    rescue Exception => e
       flash[:notice] = "There is an error in the file: " + e.message
       flash.keep
-      redirect_to upload_path 
+      redirect_to upload_path
+      return
     end
+    # if collections.nil? || collections.empty?
+    #   flash[:notice] = 'The file you uploaded does not contain any quizzes'
+    #   flash.keep
+    #   redirect_to upload_path
+    #   return
+    # end
+    flash.keep
+    redirect_to finalize_upload_path(:ids => collections.map{|collection| collection.id})
   end
 end

@@ -41,6 +41,86 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
+Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+  data_class = Object.const_get(datatype)
+  assert data_class.find_by_name(name_value) #check this exists in database and is not nil
+end
+
+When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
+  collection_id = Collection.find_by_name(former)
+  visit edit_collection_path(:id => collection_id)
+  steps %Q{ 
+    And I fill in "collection_name" with "#{new}"
+    And I press "Update Collection"
+  }
+end
+
+Given /^(?:|I )have uploaded '(.*)'$/ do |file|
+  steps %Q{
+    Given I am on the upload page
+    And I attach the file "features/test_files/#{file}" to "file_upload"
+    And I press "upload"
+    Then I should see "Quiz successfully uploaded"
+  }
+end
+
+When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
+  steps %Q{
+    Given I am on the dashboard
+    And I follow "start a new collection"
+    And I fill in "collection_name" with "#{name}"
+    And I press "Create Collection"
+  }
+  if optional.strip == 'and mark it as current'
+    visit mark_as_current_path(:id => Collection.find_by_name(name).id)
+  end
+end
+
+When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
+  collection = Collection.find_by_name(collection).id
+  visit "/add_problem?collection_id=#{collection}&id=#{problem}"
+end
+
+When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
+  collection = Collection.find_by_name(collection).id
+  visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
+end
+
+
+Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
+  collection = Collection.find_by_name(collection)
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
+  assert !(collection.problems.include? problem)
+end
+
+Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text, collection|
+  collection = Collection.find_by_name(collection).id
+  visit edit_collection_path(:id => collection)
+  steps %Q{
+    Then I should see "#{problem_text}"
+  }
+end
+
+Then /^(?:|I )should not see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+  data_class = Object.const_get(datatype)
+  assert data_class.find_by_name(name_value).nil?
+end
+
+Given /^(?:|I )am looking at edit page regarding collection '(.*)'/ do |collection|
+  collection = Collection.find_by_name(collection).id
+  visit edit_collection_path(:id => collection)
+end
+
+When /^I press the trash icon at '(.*)'/ do |collection|
+  collection = Collection.find_by_name(collection)
+  visit edit_collection_path(:id => collection)
+  steps %Q{
+    Then I follow "trash_can_icon"
+  }
+end
+
 Given /^(?:|I )am on (.+)$/ do |page_name|
   visit path_to(page_name)
 end

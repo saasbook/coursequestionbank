@@ -1,6 +1,9 @@
 %h3= "Your collection #{@collection.name}"
-=render 'form'
+=render :partial=> 'form', locals: {collection: @collection}
 %p 
   Delete this collection? 
   =link_to 'trash_can_icon', collection_path(@collection), method: :delete, :confirm => 'Delete this collection?'
-=render 'shared/problems_table'
+%p 
+  Export this collection: 
+  =link_to 'export button', export_path(:id => @collection) 
+= render :partial => "shared/problems_table", locals: {problems_index: false, collection: @collection, problems: @collection.problems}

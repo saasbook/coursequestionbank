@@ -25,16 +25,17 @@
  }
 
  h1, p {
- 	margin: 0px;
+ 	margin: 10px;
  	padding: 0px;
+ 	text-align: center;
  }
 
 a {
  	text-decoration: none;
  }
  
-
  a:link, a:visited, a:hover, a:active {
+ 	text-decoration: none;
  }
 
  .btn-primary, .btn-info {
@@ -42,15 +43,26 @@ a {
  	margin: 20px 5px;
  }
 
+ .addlink {
+ 	cursor: pointer;
+ }
+
  h1.title, p.welcome {
  	display: inline-block;
- 	margin: 5px 5px 5px 10px;
+ 	margin: 5px 10px 0px 10px;
 
  }
 
- p.welcome {
- 	margin-right: 10px;
- }
+ul#navbar {
+	list-style: none;
+}
+
+li#navbar {
+	float: right;
+	display: inline;
+	font-size: 17px;
+	padding: 11px;
+}
 
  #header {
  	font-family: 'Patrick Hand';
@@ -61,6 +73,7 @@ a {
  	border-bottom: solid;
  	border-top-width: 2px;
  	border-bottom-width: 2px;
+ 	padding-right: 20px;
  }
 
 #user {
@@ -75,6 +88,10 @@ a {
 #sidebar-filter {
 	background: #EBF4FA;
 	padding: 10px;
+}
+#thetextarea {
+	height: 100%;
+	width: 100%;
 }
 
 	ol.questions { list-style-type: none; }
