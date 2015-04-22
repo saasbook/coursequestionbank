@@ -34,7 +34,8 @@ class CollectionsController < ApplicationController
   end
 
   def export
-    @html_code = Collection.find(params[:id]).export
+    
+    @html_code = Collection.find(params[:id]).export(params[:format])
     if not @html_code
       flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection'
       flash.keep
