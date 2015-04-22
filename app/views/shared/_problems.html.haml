@@ -1,0 +1,29 @@
+%div.col-md-9
+  %div.table-responsive
+    %table.table.table-striped#problems
+      %thead
+        %tr
+        %th Question Text
+        %th Collections
+        %th Tags
+        %th
+          -if problems_index
+            Add to:
+          -else 
+            Remove from collection
+      %tbody
+        - problems.each do |problem|
+          %tr
+            %td
+              = problem.html5.html_safe 
+              = "Created Date: " + problem.created_date.to_s + " | "
+              = "Created By: " + problem.instructor.name
+            %td= problem.collections.map {|collection| collection.name + ', '}.join
+            %td= problem.tags.map {|tags| tags.name + ', '}.join
+            %td
+              -if problems_index
+                / =link_to "add to #{Collection.find(@current_user.current_collection).name} (current)", add_problem_path(:id => problem.id, :collection_id => @current_user.current_collection), {:id => "problem_#{problem.id}"}
+                %a{:class => "addlink", :id => "problem#{problem.id}", :onclick => "myfunction('#{problem.id}', #{@current_user.current_collection}); return false"} current collection
+                = select_tag "dropdown", options_from_collection_for_select(Collection.all, "id","name"), :onchange => "myfunction(#{problem.id}, this.value)",:include_blank => true
+              -else 
+                =link_to "remove from this collection", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}"}

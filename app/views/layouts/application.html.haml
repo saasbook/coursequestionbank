@@ -1,5 +1,5 @@
 
-%link{:href => 'http://fonts.googleapis.com/css?family=Patrick+Hand|Delius|Handlee', :rel => 'stylesheet', :type => 'text/css'}
+%link{:href => '//fonts.googleapis.com/css?family=Oswald|Raleway|Yanone+Kaffeesatz|Abril+Fatface|Architects+Daughter', :rel => 'stylesheet', :type => 'text/css'}
 
 %html
   %head
@@ -12,7 +12,8 @@
     #header
       .title 
         %h1
-          =link_to 'Course Question Bank', problems_path
+          =link_to 'Course Question Bank', problems_path        
+    #main
       .welcome
         - if @current_user
           -if @current_user.name and !@current_user.name.empty?
@@ -24,8 +25,7 @@
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
               %li#navbar= link_to 'My Dashboard', profile_path, method: :get
-              %li#navbar Welcome, #{@current_user.provider} user!            
-    #main
+              %li#navbar Welcome, #{@current_user.provider} user!    
       - if flash[:notice]
         #notice.message= flash[:notice]
       - elsif flash[:warning]

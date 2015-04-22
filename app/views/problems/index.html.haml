@@ -1,6 +1,5 @@
 -#  This file is app/views/movies/index.html.haml
-
-%div.col-md-2#sidebar-filter
+%div.col-md-3#sidebar-filter
 	= render "filter"
 
-= render :partial => "shared/problems_table", locals: {problems_index: true, problems: @problems}
+= render :partial => "shared/problems", locals: {problems_index: true, problems: @problems}

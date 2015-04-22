@@ -18,10 +18,10 @@
  	font-family: Helvetica;
  	margin: 0px;
  	padding: 0px;
+ 	background: #F8F8FF;
  }
 
  #main {
- 	margin: 20px;
  }
 
  h1, p {
@@ -55,6 +55,7 @@ a {
 
 ul#navbar {
 	list-style: none;
+	margin: 0px;
 }
 
 li#navbar {
@@ -65,7 +66,7 @@ li#navbar {
 }
 
  #header {
- 	font-family: 'Patrick Hand';
+ 	font-family: 'Raleway';
  	width: 100%;
  	position: relative;
  	background-color: #EBF4FA;
@@ -74,6 +75,7 @@ li#navbar {
  	border-top-width: 2px;
  	border-bottom-width: 2px;
  	padding-right: 20px;
+ 	padding-top: 10px;
  }
 
 #user {
@@ -87,7 +89,9 @@ li#navbar {
 
 #sidebar-filter {
 	background: #EBF4FA;
-	padding: 10px;
+	padding: 15px;
+	margin-left: 0px;
+	margin-top: 0px;
 }
 #thetextarea {
 	height: 100%;
