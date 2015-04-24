@@ -1,5 +1,6 @@
 class SessionsController < ApplicationController
   skip_before_filter :set_current_user
+  
   def create
     auth = request.env["omniauth.auth"]
     user = Instructor.find_by_provider_and_uid(auth["provider"],auth["uid"]) ||
