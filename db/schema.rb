@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150416230134) do
+ActiveRecord::Schema.define(:version => 20150425002757) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -35,6 +35,7 @@ ActiveRecord::Schema.define(:version => 20150416230134) do
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "current_collection"
+    t.string   "type"
   end
 
   create_table "problems", :force => true do |t|
