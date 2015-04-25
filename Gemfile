@@ -7,6 +7,7 @@ gem 'rails', '3.2.16'
 
 gem 'ruql', :git =>'https://github.com/zhangaaron/ruql.git'
 gem 'omniauth'
+gem 'cancan'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'

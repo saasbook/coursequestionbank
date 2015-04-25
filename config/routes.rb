@@ -1,4 +1,4 @@
-Saasquizes::Application.routes.draw do
+Coursequestionbank::Application.routes.draw do
 
   root :to => 'problems#home'
   
