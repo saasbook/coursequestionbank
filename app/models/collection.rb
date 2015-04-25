@@ -1,9 +1,10 @@
 class Collection < ActiveRecord::Base
-  attr_accessible :last_used, :name, :description
+  attr_accessible :last_used, :name, :description, :is_public
   validates :name, presence: true, uniqueness: true
   has_and_belongs_to_many :problems
   belongs_to :instructor
-  scope :collection, ->(collection_name) { where(name: collection_name) }
+  # scope :collection, ->(collection_name) { where(name: collection_name) }
+  scope :mine_or_public, ->(user) {where('instructor=? OR is_public=?', "#{user}", 'true')}
 
   def add_to_collection(problem)
     if problems.include? problem
@@ -20,5 +21,9 @@ class Collection < ActiveRecord::Base
       export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
       export_quiz.render_with('Html5')
     end
+  end
+
+  def public?
+    self.is_public
   end
 end

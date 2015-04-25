@@ -46,13 +46,8 @@ class Problem < ActiveRecord::Base
 
   def self.filter(user, filters = {})
 
-    if !filters[:tags]
-      filters[:tags] = ""
-    end
-
-    if !filters[:collections]
-      filters[:collections] = {}
-    end
+    filters[:tags] ||= ""
+    filters[:collections] ||= {}
 
     if !filters[:last_exported_begin] or filters[:last_exported_end].empty?
       filters[:last_exported_begin] = nil
@@ -68,7 +63,7 @@ class Problem < ActiveRecord::Base
         with(:is_public, true)
       end
       
-      with(:tag_names, filters[:tags].split(",")) if !filters[:tags].empty?
+      with(:tag_names, filters[:tags].split(","))
       
       with(:coll_names, filters[:collections].keys)
 
