@@ -63,21 +63,21 @@ class Problem < ActiveRecord::Base
         with(:is_public, true)
       end
       
-      with(:tag_names, filters[:tags].split(","))
+      # with(:tag_names, filters[:tags].split(","))
       
-      with(:coll_names, filters[:collections].keys)
+      # with(:coll_names, filters[:collections].keys)
 
       
       
-      if filters[:last_exported_begin] 
-        with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
-      end
+      # if filters[:last_exported_begin] 
+      #   with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
+      # end
 
-      if filters[:last_exported_end]
-        with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
-      end
+      # if filters[:last_exported_end]
+      #   with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
+      # end
 
-      fulltext filters[:search]
+      # fulltext filters[:search]
     end
 
     return problems.results

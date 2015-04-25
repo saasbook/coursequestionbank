@@ -4,7 +4,7 @@ class Collection < ActiveRecord::Base
   has_and_belongs_to_many :problems
   belongs_to :instructor
   # scope :collection, ->(collection_name) { where(name: collection_name) }
-  scope :mine_or_public, ->(user) {where('instructor=? OR is_public=?', "#{user}", 'true')}
+  scope :mine_or_public, ->(user) {where('instructor_id=? OR is_public=?', "#{user.id}", 'true')}
 
   def add_to_collection(problem)
     if problems.include? problem
