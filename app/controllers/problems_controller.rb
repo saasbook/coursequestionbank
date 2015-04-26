@@ -1,4 +1,11 @@
 class ProblemsController < ApplicationController
+  # before_filter :set_filter_options
+  @@defaults = {tags: "", collections: "", last_exported_begin: "", last_exported_end: "", page: 1, page_count: 5 } #default arguments hash, not sure about the proper styling for this
+
+  def set_filter_options
+    session[:filter ] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)
+    puts "SESSION SET TO : #{session[:filter]} ----------------------------------------------------------------------------------------"
+  end
 
   def home
       redirect_to problems_path
@@ -10,7 +17,8 @@ class ProblemsController < ApplicationController
     if params[:collections]
       @chosen_collections = params[:collections].keys
     end
-		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
+		# filter_options = session[:filter]
+    filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)
     @problems = Problem.filter(@current_user, filter_options)
 	end
 

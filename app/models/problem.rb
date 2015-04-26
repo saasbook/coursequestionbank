@@ -44,7 +44,7 @@ class Problem < ActiveRecord::Base
     end
   end
 
-  def self.filter(user, filters = {})
+  def self.filter(user, filters = {}, page)
 
     filters[:tags] ||= ''
     filters[:tags] = filters[:tags].strip.split(',')
@@ -77,7 +77,7 @@ class Problem < ActiveRecord::Base
       end
 
       fulltext filters[:search]
-      paginate :page => 1, :per_page => 5
+      paginate :page => filters[:page], :per_page => filters[:page_count]
     end
 
     problems.results
