@@ -17,7 +17,8 @@ class ProblemsController < ApplicationController
     end
 
 		filter_options = params.slice(:collections, :last_exported_begin, :last_exported_end, :search)
-    filter_options[:tags] = params[:tags].strip.split(',') #fixed dis
+    params[:tags] ||= ''
+    filter_options[:tags] = params[:tags].strip.split(',') 
     @problems = Problem.filter(@current_user, filter_options)
 	end
 
