@@ -21,6 +21,7 @@
         %th No. of Questions
         %th Description
         %th Last Used
+        %th Privacy
         %th Mark as current
       %tbody
         - @collections.each do |collection|
@@ -29,6 +30,7 @@
           %td= collection.problems.length
           %td= collection.description
           %td= collection.last_used
+          %td= collection.is_public ? 'Public' : 'Private'
           %td
             -if @current_user.current_collection == collection.id 
               =link_to 'should be gold star', mark_as_current_path(:id => collection.id) 

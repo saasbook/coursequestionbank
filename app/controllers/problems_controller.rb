@@ -5,20 +5,17 @@ class ProblemsController < ApplicationController
   end
 
 	def index
-    if @current_user
-      @collections = @current_user.collections
-    else
-      @collections = []
-    end
+    # if @current_user
+    @collections = @current_user.collections
+    # else
+    #   @collections = []
+    # end
     
     @chosen_collections = @collections.map { |c| c.name }
     if params[:collections]
       @chosen_collections = params[:collections].keys
     end
-
-		filter_options = params.slice(:collections, :last_exported_begin, :last_exported_end, :search)
-    params[:tags] ||= ''
-    filter_options[:tags] = params[:tags].strip.split(',') 
+		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
     @problems = Problem.filter(@current_user, filter_options)
 	end
 
@@ -30,7 +27,7 @@ class ProblemsController < ApplicationController
       return
     end
     problem_to_add = Problem.find(params[:id])
-    if not collection.problems.include? problem_to_add  
+    if not collection.problems.include? problem_to_add
       collection.problems << problem_to_add
       render :json => {:status => true}
     else 

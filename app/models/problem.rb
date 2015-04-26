@@ -46,7 +46,8 @@ class Problem < ActiveRecord::Base
 
   def self.filter(user, filters = {})
 
-    filters[:tags] ||= []
+    filters[:tags] ||= ''
+    filters[:tags] = filters[:tags].strip.split(',')
     filters[:collections] ||= {}
 
     if !filters[:last_exported_begin] or filters[:last_exported_end].empty?
@@ -62,8 +63,7 @@ class Problem < ActiveRecord::Base
         with(:instructor_id, user.id)
         with(:is_public, true)
       end
-      
-      with(:tag_names, filters[:tags])      
+      with(:tag_names, filters[:tags]) if filters[:tags].present? #I THOUGHT SUNSPOT SAID THE PRESENCE CHECK WAS UNNECESARY
       with(:coll_names, filters[:collections].keys)
 
       
