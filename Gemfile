@@ -17,8 +17,8 @@ gem 'progress_bar'
 gem 'json'
 gem 'will_paginate', '~> 3.0.6'
 
-group :development, :test d
-ofa  gem 'sqlite3'
+group :development, :test do
+  gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 2.14.0'
@@ -39,7 +39,6 @@ group :assets do
   gem 'therubyracer'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 
