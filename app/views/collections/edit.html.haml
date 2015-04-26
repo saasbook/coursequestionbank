@@ -1,5 +1,5 @@
 %h3= "Your collection #{@collection.name}"
-=render :partial=> 'form', locals: {collection: @collection}
+=render :partial=> 'form', locals: {collection: @collection, remote: false}
 %p 
   Delete this collection? 
   =link_to 'trash_can_icon', collection_path(@collection), method: :delete, :confirm => 'Delete this collection?'

@@ -14,7 +14,7 @@ Coursequestionbank::Application.routes.draw do
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   get 'remove_problem' => 'problems#remove_from_collection'
   resources :collections
-  get 'mark_as_current' => 'instructor#mark_as_current'
+  get 'mark_as_current' => 'instructors#mark_as_current'
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'

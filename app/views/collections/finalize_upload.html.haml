@@ -8,7 +8,7 @@
       %tbody
         -@collections.each do |collection|
           %tr
-            =render :partial=> 'form', locals: {collection: collection}
+            =render :partial=> 'form', locals: {collection: collection, :remote => true}
             %p 
               Delete this collection? 
               =link_to 'trash_can_icon', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
