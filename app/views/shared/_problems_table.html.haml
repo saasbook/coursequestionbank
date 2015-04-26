@@ -18,7 +18,9 @@
               = problem.html5.html_safe
               = "Created Date: " + problem.created_date.to_s + " | "
               = "Created By: " + problem.instructor.name
-            %td= problem.collections.map {|collection| collection.name.truncate(20) + "\n"}.join.rstrip #remove the annoying trailing newline
+            %td
+              - problem.collections.each do |collection|
+                = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
             %td= problem.tags.map {|tags| tags.name + ', '}.join
             %td
               -if problems_index

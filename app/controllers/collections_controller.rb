@@ -27,6 +27,11 @@ class CollectionsController < ApplicationController
     redirect_to profile_path
   end
 
+  def show
+    @collection = Collection.find(params[:id])
+    @problems = @collection.problems
+  end
+
   def update
     if not (collection = Collection.update(params[:id], params[:collection])).valid?
       flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
