@@ -1,5 +1,5 @@
 
-%link{:href => 'http://fonts.googleapis.com/css?family=Patrick+Hand|Delius|Handlee', :rel => 'stylesheet', :type => 'text/css'}
+%link{:href => 'http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
 
 %html
   %head
@@ -19,7 +19,7 @@
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
               %li#navbar= link_to 'My Dashboard', profile_path, method: :get
-              %li#navbar Welcome, #{@current_user.name} user!             
+              %li#navbar Welcome, #{@current_user.name}!             
           - else  
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post

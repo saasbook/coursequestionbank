@@ -11,7 +11,7 @@
             =render :partial=> 'form', locals: {collection: collection}
             %p 
               Delete this collection? 
-              =link_to 'trash_can_icon', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
+              =link_to 'assets/images/trashcan.png', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
             %p 
               Export this collection: 
               =link_to 'export button', export_path(:id => collection) 

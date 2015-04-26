@@ -15,7 +15,7 @@
 
  html, body {
  	/*font-family: 'Patrick Hand';*/
- 	font-family: Helvetica;
+ 	font-family: 'Droid Serif', Times, serif;
  	margin: 0px;
  	padding: 0px;
  }
@@ -28,6 +28,8 @@
  	margin: 10px;
  	padding: 0px;
  	text-align: center;
+ 	font-family: 'Open Sans';
+ 	font-weight: 700;
  }
 
 a {
@@ -65,7 +67,6 @@ li#navbar {
 }
 
  #header {
- 	font-family: 'Patrick Hand';
  	width: 100%;
  	position: relative;
  	background-color: #EBF4FA;
