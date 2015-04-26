@@ -14,8 +14,10 @@ class ProblemsController < ApplicationController
     @chosen_collections = @collections.map { |c| c.name }
     if params[:collections]
       @chosen_collections = params[:collections].keys
-    end    
-		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
+    end
+
+		filter_options = params.slice(:collections, :last_exported_begin, :last_exported_end, :search)
+    filter_options[:tags] = params[:tags].strip.split(',') #fixed dis
     @problems = Problem.filter(@current_user, filter_options)
 	end
 

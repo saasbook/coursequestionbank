@@ -46,7 +46,7 @@ class Problem < ActiveRecord::Base
 
   def self.filter(user, filters = {})
 
-    filters[:tags] ||= ""
+    filters[:tags] ||= []
     filters[:collections] ||= {}
 
     if !filters[:last_exported_begin] or filters[:last_exported_end].empty?
@@ -63,21 +63,20 @@ class Problem < ActiveRecord::Base
         with(:is_public, true)
       end
       
-      # with(:tag_names, filters[:tags].split(","))
-      
-      # with(:coll_names, filters[:collections].keys)
+      with(:tag_names, filters[:tags])      
+      with(:coll_names, filters[:collections].keys)
 
       
       
-      # if filters[:last_exported_begin] 
-      #   with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
-      # end
+      if filters[:last_exported_begin] 
+        with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
+      end
 
-      # if filters[:last_exported_end]
-      #   with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
-      # end
+      if filters[:last_exported_end]
+        with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
+      end
 
-      # fulltext filters[:search]
+      fulltext filters[:search]
     end
 
     return problems.results
