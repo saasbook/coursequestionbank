@@ -4,3 +4,6 @@
 	= render "filter"
 
 = render :partial => "shared/problems_table", locals: {problems_index: true, problems: @problems}
+
+= will_paginate @problems
+

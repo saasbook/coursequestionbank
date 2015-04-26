@@ -5,12 +5,7 @@ class ProblemsController < ApplicationController
   end
 
 	def index
-    # if @current_user
     @collections = @current_user.collections
-    # else
-    #   @collections = []
-    # end
-    
     @chosen_collections = @collections.map { |c| c.name }
     if params[:collections]
       @chosen_collections = params[:collections].keys

@@ -77,8 +77,9 @@ class Problem < ActiveRecord::Base
       end
 
       fulltext filters[:search]
+      paginate :page => 1, :per_page => 5
     end
 
-    return problems.results
+    problems.results
   end
 end

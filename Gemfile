@@ -15,9 +15,10 @@ gem 'cucumber-rails'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
 gem 'json'
+gem 'will_paginate', '~> 3.0.6'
 
-group :development, :test do
-  gem 'sqlite3'
+group :development, :test d
+ofa  gem 'sqlite3'
   gem 'ruby-debug19'
   gem 'database_cleaner'
   gem 'rspec-rails', '~> 2.14.0'
