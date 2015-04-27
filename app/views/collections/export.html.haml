@@ -1,19 +1,27 @@
-%h1 Preview of HTML Code. We should also have other tabs that get rendered but hidden by client-side JS that also have the latex, qualitrics, edX export formats
-
-= @html_code.html_safe
-
-%h1 Copy the html code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
-
-%textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-  = @html_code
-
-%h1 Copy the EdX code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
-
-%textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-  = @edx_code
-
-
-%h1 Copy the AutoQCM code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
-
-%textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-  = @autoqcm_code
+.export-tabs
+  %ul.nav.nav-tabs
+    %li.active
+      %a{"data-toggle" => "tab", :href => "#sectionA"} Preview Quiz
+    %li
+      %a{"data-toggle" => "tab", :href => "#sectionB"} HTML Code
+    %li
+      %a{"data-toggle" => "tab", :href => "#sectionC"} EdX Code
+    %li
+      %a{"data-toggle" => "tab", :href => "#sectionD"} AutoQCM Code
+  .tab-content
+    #sectionA.tab-pane.fade.in.active
+      %h3 Preview Quiz
+      %h6  We should also have other tabs that get rendered but hidden by client-side JS that also have the latex, qualitrics, edX export formats
+      = @html_code.html_safe
+    #sectionB.tab-pane.fade
+      %h3 HTML Code
+      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+        = @html_code
+    #sectionC.tab-pane.fade.in.active
+      %h3 EdX Code
+      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+        = @edx_code
+    #sectionD.tab-pane.fade
+      %h3 AutoQCM Code
+      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+        = @autoqcm_code

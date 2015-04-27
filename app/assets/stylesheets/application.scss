@@ -18,7 +18,7 @@
  	font-family: 'Droid Serif', Times, serif;
  	margin: 0px;
  	padding: 0px;
- 	background: #F8F8FF;
+ 	background: #fafafa;
  }
 
  #main {
@@ -129,6 +129,15 @@ li#navbar {
 	margin-bottom: 15px;
 	border: 1px solid #DCDCDC;
 	border-radius: 3px;
+}
+
+.export-tabs {
+	padding: 60px 20px 0 20px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.tab-content {
+	font-family: 'Droid Serif', Times, serif;
 }
 
 	ol.questions { list-style-type: none; }
