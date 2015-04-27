@@ -6,4 +6,4 @@
       =link_to "Delete Collection", collection_path(@collection), :class => 'btn btn-danger', method: :delete, :confirm => 'Delete this collection?'
     %p.collectioncontrols
       =link_to "Export Collection", export_path(:id => @collection), :class => 'btn btn-info'
-    = render :partial => "shared/problems_table", locals: {problems_index: false, collection: @collection, problems: @collection.problems}
+    = render :partial => "collections_table", locals: {collection: @collection, problems: @collection.problems}

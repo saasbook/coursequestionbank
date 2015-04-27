@@ -40,6 +40,7 @@ class ProblemsController < ApplicationController
       render :json => {:status => true}
     else 
       render :json => {:status => false}
+      return false
     end
   end
 
