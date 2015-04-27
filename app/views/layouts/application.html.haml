@@ -1,5 +1,9 @@
 
+/ <<<<<<< HEAD
 %link{:href => 'http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
+/ =======
+/ %link{:href => '//fonts.googleapis.com/css?family=Oswald|Raleway|Yanone+Kaffeesatz|Abril+Fatface|Architects+Daughter', :rel => 'stylesheet', :type => 'text/css'}
+/ >>>>>>> 6de216208fcd8b00d2b084f3442497ee2ad11fcc
 
 %html
   %head
@@ -13,6 +17,7 @@
       .title 
         %h1
           =link_to 'Course Question Bank', problems_path
+    #main
       .welcome
         - if @current_user
           -if @current_user.name and !@current_user.name.empty?
@@ -24,8 +29,7 @@
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
               %li#navbar= link_to 'My Dashboard', profile_path, method: :get
-              %li#navbar Welcome, #{@current_user.provider} user!            
-    #main
+              %li#navbar Welcome, #{@current_user.provider} user!    
       - if flash[:notice]
         #notice.message= flash[:notice]
       - elsif flash[:warning]
