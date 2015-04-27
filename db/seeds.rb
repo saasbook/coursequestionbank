@@ -6,14 +6,16 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+#have to clear all user data to fill correct data fields
+Instructor.delete_all
 
-@tag1 = Tag.create(name: "quiz 1")
-@tag2 = Tag.create(name: "quiz 2")
-@tag3 = Tag.create(name: "quiz 3")
-@tag4 = Tag.create(name: "quiz 4")
-@collection1 = @instructor.collections.create(name: "Fall 14")
-@collection2 = @instructor.collections.create(name: "Spring 15")
-@collection3 = @instructor.collections.create(name: "Spring 14")
+@user1 = Whitelist.create(username: "armandofox", privilege: "admin")
+@user2 = Whitelist.create(username: "ishustava", privilege: "admin")
+@user3 = Whitelist.create(username: "zhangaaron", privilege: "admin")
+@user4 = Whitelist.create(username: "ingridh", privilege: "admin")
+@user5 = Whitelist.create(username: "dradding", privilege: "admin")
+@user6 = Whitelist.create(username: "rahdor", privilege: "admin")
+@user7 = Whitelist.create(username: "siddhantpuri", privilege: "admin")
 
 
 

@@ -1,6 +1,6 @@
 
 / <<<<<<< HEAD
-%link{:href => 'http://fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
+%link{:href => '//fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
 / =======
 / %link{:href => '//fonts.googleapis.com/css?family=Oswald|Raleway|Yanone+Kaffeesatz|Abril+Fatface|Architects+Daughter', :rel => 'stylesheet', :type => 'text/css'}
 / >>>>>>> 6de216208fcd8b00d2b084f3442497ee2ad11fcc
@@ -23,7 +23,7 @@
           -if @current_user.name and !@current_user.name.empty?
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
-              -if can? :manage, :all
+              -if can? :manage, Instructor
                 %li#navbar= link_to 'Admin', admin_path, method: :get
               %li#navbar= link_to 'My Collections', profile_path, method: :get
               %li#navbar Welcome, #{@current_user.name}!             

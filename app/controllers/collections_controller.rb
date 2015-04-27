@@ -1,4 +1,5 @@
 class CollectionsController < ApplicationController
+  load_and_authorize_resource
   after_filter :set_current_collection 
 
   def set_current_collection
@@ -71,5 +72,11 @@ class CollectionsController < ApplicationController
     flash[:notice] = "#{params[:problems].size } problems added to collection: #{Collection.find(collection_id).name}"
     flash.keep
     redirect_to problems_path
+  end
+end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    flash[:notice] = exception.message
+    redirect_to profile_path, :alert => exception.message
   end
 end
