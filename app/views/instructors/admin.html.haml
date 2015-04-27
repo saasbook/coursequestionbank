@@ -1,6 +1,6 @@
 %h4 Your current permission level is #{@current_user.privilege}. 
 -if @unauthorized_users.empty?
-  %p There are currently no users to authorize.
+  %p There are currently no users pending authorization.
 -else
   %p The following users have requested access to the site. Please authorize or deny access.
 
@@ -8,13 +8,17 @@
     %table.table.table-striped#problems
       %thead
         %tr
+        %th
         %th Name/login
+        %th Email
         %th Provider
         %th Action
       %tbody
         - @unauthorized_users.each do |user|
           %tr
+          %td= image_tag user.provider_image, size: "30x30"
           %td= user.name
+          %td= user.provider_email
           %td= user.provider
           %td
             =link_to 'authorize', authorize_path("authorize", user), :class => 'btn btn-info', :id=> 'authorize'
