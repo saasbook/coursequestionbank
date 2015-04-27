@@ -11,11 +11,11 @@ class Instructor < ActiveRecord::Base
       user.provider = auth["provider"]
       user.uid = auth["uid"]
       user.name = auth["info"]["name"]
-      user.privilege = "instructor"
+      user.privilege = "default"
     end
   end
 
   def is_admin?
-    false
+    privilege == "instructor" || privilege == "admin"
   end
 end

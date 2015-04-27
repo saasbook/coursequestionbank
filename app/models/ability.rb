@@ -28,5 +28,10 @@ class Ability
     #
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
+    user ||= Instructor.new
+    if user.admin?
+        can :manage, :all
+    end
+
   end
 end
