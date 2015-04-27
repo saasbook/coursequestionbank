@@ -9,17 +9,6 @@
     = label_tag(:tags, "Tags:")
     = text_field_tag(:tags, params[:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
 
-  
-  = label_tag(:tags, "Collections:")
-  - @collections.each do |collection|
-    %div.checkbox
-      %label
-        -if @chosen_collections.include? collection.name
-          = check_box_tag "collections[#{collection.name}]", 1, true, class: "checkbox"
-        -else
-          = check_box_tag "collections[#{collection.name}]", 1, false, class: "checkbox"
-        = collection.name
-
   %div.form-group
     = label_tag(:last_exported, "Last Exported:")
     = text_field_tag(:last_exported_begin, params[:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
