@@ -1,8 +1,8 @@
 -#  This file is app/views/movies/index.html.haml
-
 %div.col-md-2#sidebar-filter
 	= render "filter"
-= will_paginate @problems
+= will_paginate @problems 
+
 = render :partial => "shared/problems_table", locals: {problems_index: true, problems: @problems}
 
 

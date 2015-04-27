@@ -1,6 +1,6 @@
 class ProblemsController < ApplicationController
   # before_filter :set_filter_options
-  @@defaults = {tags: "", collections: "", last_exported_begin: "", last_exported_end: "", page: 1, page_count: 5 } #default arguments hash, not sure about the proper styling for this
+ #@@defaults = {tags: "", collections: "", last_exported_begin: "", last_exported_end: "", page: 1, page_count: 5 } #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filter ] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)

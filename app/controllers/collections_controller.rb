@@ -59,6 +59,4 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-
-
 end
