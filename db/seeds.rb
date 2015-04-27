@@ -19,9 +19,3 @@ Instructor.delete_all
 
 
 
-
-
-
-
-
-

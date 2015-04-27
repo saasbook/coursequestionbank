@@ -65,6 +65,18 @@ class CollectionsController < ApplicationController
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
 
+  def checked_problems
+    collection = Collection.find(params[:dropdown])
+    collection_size = collection.problems.size
+    # make explicit call to this route so that CanCan authorization is used
+    # params[:problems].each {|problem_id| add_problem_path({collection_id: collection.id, id: problem_id})}
+    params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
+    flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
+    flash.keep
+    redirect_to problems_path
+  end
+end
+
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = exception.message
     redirect_to profile_path, :alert => exception.message
