@@ -75,7 +75,6 @@ class CollectionsController < ApplicationController
     flash.keep
     redirect_to problems_path
   end
-end
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = exception.message
