@@ -1,18 +1,19 @@
 -# in app/views/show.html.haml
+%div.col-md-12
+  %div.table-responsive
+    %h2 #{@current_user.name}'s Dashboard
 
-%h2 #{@current_user.name}'s Dashboard
+    -if @collections.empty?
+      %h3 You have no collections! Start one now.
+      =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
+      =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
 
--if @collections.empty?
-  %h3 You have no collections! Start one now.
-  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
-  =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
+    -else
 
--else
+      =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
+      =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
 
-  =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
-  =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
-
-%div.col-md-10
+%div.col-md-12
   %div.table-responsive
     %table.table.table-striped#collections
       %thead

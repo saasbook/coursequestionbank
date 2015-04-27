@@ -14,12 +14,12 @@ class Collection < ActiveRecord::Base
     end
   end
 
-  def export
+  def export(format)
     if problems.empty? 
       return nil
     else 
       export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
-      export_quiz.render_with('Html5')
+      export_quiz.render_with(format)
     end
   end
 
