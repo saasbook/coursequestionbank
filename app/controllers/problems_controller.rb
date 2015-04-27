@@ -1,21 +1,24 @@
 class ProblemsController < ApplicationController
+  # before_filter :set_filter_options
+ #@@defaults = {tags: "", collections: "", last_exported_begin: "", last_exported_end: "", page: 1, page_count: 5 } #default arguments hash, not sure about the proper styling for this
+
+  def set_filter_options
+    session[:filter ] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)
+    puts "SESSION SET TO : #{session[:filter]} ----------------------------------------------------------------------------------------"
+  end
 
   def home
       redirect_to problems_path
   end
 
 	def index
-    if @current_user
-      @collections = @current_user.collections
-    else
-      @collections = []
-    end
-    
+    @collections = @current_user.collections
     @chosen_collections = @collections.map { |c| c.name }
     if params[:collections]
       @chosen_collections = params[:collections].keys
-    end    
-		filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search)
+    end
+		# filter_options = session[:filter]
+    filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)
     @problems = Problem.filter(@current_user, filter_options)
 	end
 
@@ -27,7 +30,7 @@ class ProblemsController < ApplicationController
       return
     end
     problem_to_add = Problem.find(params[:id])
-    if not collection.problems.include? problem_to_add  
+    if not collection.problems.include? problem_to_add
       collection.problems << problem_to_add
       render :json => {:status => true}
     else 

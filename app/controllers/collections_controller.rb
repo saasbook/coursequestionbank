@@ -1,4 +1,13 @@
 class CollectionsController < ApplicationController
+  after_filter :set_current_collection 
+
+  def set_current_collection
+    if not @current_user.current_collection
+      flash[:notice] = 'NO CURRENT COLLECTION'
+      puts 'NO CURRENT COLLECTION ------------------------------------'
+    end
+  end
+
   def new
     @collection = Collection.new
   end
@@ -16,6 +25,11 @@ class CollectionsController < ApplicationController
       flash.keep
     end
     redirect_to profile_path
+  end
+
+  def show
+    @collection = Collection.find(params[:id])
+    @problems = @collection.problems
   end
 
   def update
@@ -45,6 +59,4 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-
-
 end

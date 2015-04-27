@@ -8,9 +8,9 @@ class RuqlReader
     puts Quiz.quizzes.uniq.map{|q| q.title + ' ,'}.join
     Quiz.quizzes.uniq.each do |quiz|
       problems_json = quiz.render_with("JSON", {})
-      collection = if Collection.find_by_name(quiz.title) then false else user.collections.create(:name => quiz.title) end
+      collection = if Collection.find_by_name(quiz.title) then false else user.collections.new(:name => quiz.title) end
       if collection
-        collections.append collection
+        
         problems_json.each do |problem_json|
           json_hash = JSON.parse(problem_json)
           problem = Problem.new(text: "", 
@@ -26,6 +26,8 @@ class RuqlReader
           end
           problem.save
         end
+        collection.save!
+        collections.append collection
       else
         raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that '
       end

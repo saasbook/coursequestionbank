@@ -1,6 +1,8 @@
-= form_for collection do |f|
+= form_for(collection, :remote => !!remote) do |f| #magical hacks to set remote to be true when called from finalize_upload
   = f.label :name
   = f.text_field :name
   = f.label :description
   = f.text_field :description
+  = f.label 'Mark as public?'
+  = f.check_box :is_public
   = f.submit

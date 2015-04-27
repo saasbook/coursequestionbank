@@ -1,4 +1,4 @@
-class InstructorController < ApplicationController
+class InstructorsController < ApplicationController
 
   def show
     @instructor = Instructor.find_by_id(@current_user)
