@@ -6,13 +6,6 @@
 
   %div.table-responsive
     %table.table.table-striped#problems
-      %thead
-        %tr
-        %th
-        %th Name/login
-        %th Email
-        %th Provider
-        %th Action
       %tbody
         - @unauthorized_users.each do |user|
           %tr
