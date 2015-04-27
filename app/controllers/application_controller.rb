@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-  	flash[:notice] = "You don't have persmission to access the site at the moment."
+  	flash[:notice] = "You have successfully logged in but don't have persmission to access the site at the moment. Please wait until you have been authorized by one of our administrators."
     redirect_to login_path, :alert => exception.message
   end
 

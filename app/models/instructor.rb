@@ -11,7 +11,11 @@ class Instructor < ActiveRecord::Base
       user.provider = auth["provider"]
       user.uid = auth["uid"]
       user.name = auth["info"]["name"]
-      user.privilege = "default"
+      if Instructor.all.size == 0 #to make sure that the first user is admin
+        user.privilege = "admin"
+      else
+        user.privilege = "default"
+      end
     end
   end
 
