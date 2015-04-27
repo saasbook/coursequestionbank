@@ -1,6 +1,6 @@
 -# in app/views/show.html.haml
 
-%h2 Dashboard #{@current_user.name}
+%h2 #{@current_user.name}'s Dashboard
 
 -if @collections.empty?
   %h3 You have no collections! Start one now.
@@ -17,20 +17,23 @@
     %table.table.table-striped#collections
       %thead
         %tr
+        %th 
         %th Name
-        %th No. of Questions
+        %th # Questions
         %th Description
         %th Last Used
-        %th Mark as current
+      
       %tbody
         - @collections.each do |collection|
           %tr
+          %td
+            -if @current_user.current_collection == collection.id 
+              =link_to image_tag('yellowstar.png', width: 30), mark_as_current_path(:id => collection.id) 
+            -else 
+              =link_to image_tag('graystar.png', width: 30), mark_as_current_path(:id => collection.id)
           %td= link_to collection.name, edit_collection_path(:id => collection.id)
           %td= collection.problems.length
           %td= collection.description
           %td= collection.last_used
-          %td
-            -if @current_user.current_collection == collection.id 
-              =link_to 'should be gold star', mark_as_current_path(:id => collection.id) 
-            -else 
-              =link_to 'should be grey star', mark_as_current_path(:id => collection.id)
+          
+            

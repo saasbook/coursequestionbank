@@ -1,5 +1,6 @@
 
 = form_tag problems_path, :method => :get, :id => "filter_form" do
+
   %div.form-group
     = label_tag(:search, "Search Keywords:")
     = text_field_tag(:search, params[:search], class: 'form-control', placeholder: "Search")
