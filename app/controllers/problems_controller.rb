@@ -1,10 +1,10 @@
 class ProblemsController < ApplicationController
-  # before_filter :set_filter_options
- #@@defaults = {tags: "", collections: "", last_exported_begin: "", last_exported_end: "", page: 1, page_count: 5 } #default arguments hash, not sure about the proper styling for this
+  before_filter :set_filter_options
+ @@defaults = {tags: "", collections: "", last_exported_begin: "", last_exported_end: "", per_page: 5 } #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
-    session[:filter ] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)
-    puts "SESSION SET TO : #{session[:filter]} ----------------------------------------------------------------------------------------"
+    session[:filters] = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page).merge @@defaults 
+    puts "SESSION SET TO : #{session[:filters]} ----------------------------------------------------------------------------------------"
   end
 
   def home
@@ -18,8 +18,7 @@ class ProblemsController < ApplicationController
       @chosen_collections = params[:collections].keys
     end
     # filter_options = session[:filter]
-    filter_options = params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :page_count)
-    @problems = Problem.filter(@current_user, filter_options)
+    @problems = Problem.filter(@current_user, session[:filters])
   end
 
   #eventually this will be an AJAX call. ALSO WE NEED TO CHANGE OUR HABTM ASSOCIATION TO HAS_MANY: THROUGH SO WE CAN USE VALIDATIONS AND STUFF

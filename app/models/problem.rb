@@ -45,10 +45,7 @@ class Problem < ActiveRecord::Base
   end
 
   def self.filter(user, filters = {})
-
-    filters[:tags] ||= ''
     filters[:tags] = filters[:tags].strip.split(',')
-    filters[:collections] ||= {}
 
     if !filters[:last_exported_begin] or filters[:last_exported_end].empty?
       filters[:last_exported_begin] = nil
@@ -64,7 +61,7 @@ class Problem < ActiveRecord::Base
         with(:is_public, true)
       end
       with(:tag_names, filters[:tags]) if filters[:tags].present? #I THOUGHT SUNSPOT SAID THE PRESENCE CHECK WAS UNNECESARY
-      with(:coll_names, filters[:collections].keys)
+      # with(:coll_names, filters[:collections].keys)
 
       
       
@@ -77,7 +74,7 @@ class Problem < ActiveRecord::Base
       end
 
       fulltext filters[:search]
-      paginate :page => filters[:page], :per_page => 5
+      paginate :page => filters[:page], :per_page => filters[:per_page]
     end
 
     problems.results
