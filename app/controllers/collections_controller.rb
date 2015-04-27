@@ -2,10 +2,10 @@ class CollectionsController < ApplicationController
   after_filter :set_current_collection 
 
   def set_current_collection
-    if not @current_user.current_collection
-      flash[:notice] = 'NO CURRENT COLLECTION'
-      puts 'NO CURRENT COLLECTION ------------------------------------'
-    end
+    # if not @current_user.current_collection
+    #   flash[:notice] = 'NO CURRENT COLLECTION'
+    #   puts 'NO CURRENT COLLECTION ------------------------------------'
+    # end
   end
 
   def new
