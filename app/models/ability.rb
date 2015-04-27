@@ -30,9 +30,9 @@ class Ability
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
     user ||= Instructor.new
     if user.admin?
-        can :manage, :all
+        can :manage, Instructor
     end
-    if user.instructor?
+    if user.instructor? or user.admin?
         can :manage, Problem, :instructor_id => user.id
         can :read, Problem, :is_public => true
         can :read, Problem, :collection => { :is_public => true }
