@@ -5,8 +5,6 @@
   =link_to 'trash_can_icon', collection_path(@collection), method: :delete, :confirm => 'Delete this collection?'
 %p 
   Export this collection as html: 
-  =link_to 'export button', export_path(:id => @collection, :format => 'Html5')
-  Export this collection as EdX:
-  =link_to 'export button', export_path(:id => @collection, :format => 'EdXml')
+  =link_to 'export button', export_path(:id => @collection)
  
 = render :partial => "shared/problems_table", locals: {problems_index: false, collection: @collection, problems: @collection.problems}
