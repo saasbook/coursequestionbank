@@ -10,4 +10,19 @@ class InstructorsController < ApplicationController
     redirect_to profile_path
   end
 
+  def show_unauthorized
+  	@unauthorized_users = Instructor.nonadmin
+  	render 'admin'
+  end
+
+  def authorize
+  	user = Instructor.find(params[:id])
+  	if params[:action] == "authorize"
+  		user.update_attributes(privilege: "admin")
+  	else
+  		user.update_attributes(privilege: "denied")
+  	end
+  	redirect_to admin_path
+  end
+
 end

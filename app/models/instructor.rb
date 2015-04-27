@@ -5,17 +5,22 @@ class Instructor < ActiveRecord::Base
   has_many :problems
   
   scope :username, ->(instructor) { where(name: instructor) }
+  scope :nonadmin, -> {where(privilege: "default")}
 
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]
       user.uid = auth["uid"]
       user.name = auth["info"]["name"]
-      user.privilege = "instructor"
+      if Instructor.all.size == 0 #to make sure that the first user is admin
+        user.privilege = "admin"
+      else
+        user.privilege = "default"
+      end
     end
   end
 
-  def is_admin?
-    false
+  def admin?
+    privilege == "instructor" || privilege == "admin"
   end
 end

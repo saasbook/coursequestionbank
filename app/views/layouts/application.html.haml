@@ -23,7 +23,9 @@
           -if @current_user.name and !@current_user.name.empty?
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
-              %li#navbar= link_to 'My Dashboard', profile_path, method: :get
+              -if can? :manage, :all
+                %li#navbar= link_to 'Admin', admin_path, method: :get
+              %li#navbar= link_to 'My Collections', profile_path, method: :get
               %li#navbar Welcome, #{@current_user.name}!             
           - else  
             %ul#navbar
