@@ -15,9 +15,12 @@ Coursequestionbank::Application.routes.draw do
   get 'remove_problem' => 'problems#remove_from_collection'
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
+  get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
+  get 'admin/:action/:id' => 'instructors#authorize', :as => 'authorize'
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
+
 
   # The priority is based upon order of creation:
   # first created -> highest priority.

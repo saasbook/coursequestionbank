@@ -5,6 +5,7 @@ class Instructor < ActiveRecord::Base
   has_many :problems
   
   scope :username, ->(instructor) { where(name: instructor) }
+  scope :nonadmin, -> {where(privilege: "default")}
 
   def self.create_with_omniauth(auth)
     create! do |user|
