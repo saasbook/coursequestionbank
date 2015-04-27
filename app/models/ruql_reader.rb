@@ -8,9 +8,8 @@ class RuqlReader
     puts Quiz.quizzes.uniq.map{|q| q.title + ' ,'}.join
     Quiz.quizzes.uniq.each do |quiz|
       problems_json = quiz.render_with("JSON", {})
-      collection = if Collection.find_by_name(quiz.title).instructor == user then false else user.collections.new(:name => quiz.title) end
-      if collection
-        
+      collection = if (Collection.find_by_name(quiz.title) and Collection.find_by_name(quiz.title).instructor == user) then false else user.collections.new(:name => quiz.title) end
+      if collection        
         problems_json.each do |problem_json|
           json_hash = JSON.parse(problem_json)
           problem = Problem.new(text: "", 
