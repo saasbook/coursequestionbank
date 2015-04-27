@@ -10,11 +10,11 @@
       %tbody
         -@collections.each do |collection|
           %tr
-            =render :partial=> 'form', locals: {collection: collection}
-            %p.collectioncontrols
-              =link_to(image_tag('trashcan.png', width: 21),  collection_path(@collection), method: :delete, :confirm => 'Delete this collection?')
-            %p.collectioncontrols
-
+            =render :partial=> 'form', locals: {collection: collection, :remote => true}
+            %p 
+              Delete this collection? 
+              =link_to 'trash_can_icon', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
+            %p 
               Export this collection: 
               =link_to 'export button', export_path(:id => collection) 
             = render :partial => "shared/problems_table", locals: {problems_index: false, collection: collection, problems: collection.problems}
