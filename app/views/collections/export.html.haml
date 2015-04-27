@@ -1,18 +1,19 @@
 %h1 Preview of HTML Code. We should also have other tabs that get rendered but hidden by client-side JS that also have the latex, qualitrics, edX export formats
-
+#tabs1
 = @html_code.html_safe
 
+#tabs2
 %h1 Copy the html code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
 
-%textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-  = @html_code
-
+  %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+    = @html_code
+#tabs3
 %h1 Copy the EdX code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
 
 %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
   = @edx_code
 
-
+#tabs4
 %h1 Copy the AutoQCM code into clipboard.(preferably a button to allow users to automatically copy to clipboard)
 
 %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
