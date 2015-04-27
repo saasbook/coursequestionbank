@@ -20,6 +20,7 @@ Coursequestionbank::Application.routes.draw do
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
+  post 'checked_problems' => 'collections#checked_problems'
 
 
   # The priority is based upon order of creation:

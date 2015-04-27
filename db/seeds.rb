@@ -6,7 +6,6 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-@instructor = Instructor.create(name: "foo", provider: "github", uid: "1234")
 
 @tag1 = Tag.create(name: "quiz 1")
 @tag2 = Tag.create(name: "quiz 2")
@@ -15,8 +14,6 @@
 @collection1 = @instructor.collections.create(name: "Fall 14")
 @collection2 = @instructor.collections.create(name: "Spring 15")
 @collection3 = @instructor.collections.create(name: "Spring 14")
-
-
 
 
 
