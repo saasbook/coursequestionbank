@@ -13,7 +13,7 @@
             Remove from collection
       %tbody
         - problems.each do |problem|
-          %tr
+          %tr#problem_row
             %td
               = problem.html5.html_safe
               = "Created Date: " + problem.created_date.to_s + " | "

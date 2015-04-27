@@ -7,7 +7,7 @@ class ApplicationController < ActionController::Base
   protected # prevents method from being invoked by a route
   def set_current_user
     @current_user ||= Instructor.find_by_id(session[:user_id])
-    authorize! :manage, :all
+    authorize! :read, Problem
     redirect_to login_path and return unless @current_user
   end
 

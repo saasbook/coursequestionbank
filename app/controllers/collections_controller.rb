@@ -13,8 +13,13 @@ class CollectionsController < ApplicationController
   end
 
   def edit
-    @collection = Collection.find(params[:id])
-    @problems = @collection.problems
+    if can? :manage, Collection
+      @collection = Collection.find(params[:id])
+      @problems = @collection.problems
+    else
+      flash[:notice] = "you do not have permission to access this page"
+      redirect_to profile_path
+    end
   end
 
   # creates a new collection with user specified values and sets as current collection

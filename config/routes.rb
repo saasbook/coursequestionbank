@@ -17,6 +17,7 @@ Coursequestionbank::Application.routes.draw do
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
   get 'admin/:action/:id' => 'instructors#authorize', :as => 'authorize'
+  get 'admin/add/to/whitelist' => 'instructors#add_to_whitelist', :as => 'whitelist'
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'

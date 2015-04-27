@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150427103608) do
+ActiveRecord::Schema.define(:version => 20150427182212) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -39,6 +39,7 @@ ActiveRecord::Schema.define(:version => 20150427103608) do
     t.string   "type"
     t.string   "provider_image"
     t.string   "provider_email"
+    t.string   "username"
   end
 
   create_table "problems", :force => true do |t|
@@ -77,6 +78,13 @@ ActiveRecord::Schema.define(:version => 20150427103608) do
 
   create_table "tags", :force => true do |t|
     t.string   "name"
+    t.datetime "created_at", :null => false
+    t.datetime "updated_at", :null => false
+  end
+
+  create_table "whitelists", :force => true do |t|
+    t.string   "username"
+    t.string   "privilege"
     t.datetime "created_at", :null => false
     t.datetime "updated_at", :null => false
   end
