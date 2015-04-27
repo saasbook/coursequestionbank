@@ -1,8 +1,12 @@
 -#  This file is app/views/movies/index.html.haml
 %div.col-md-2#sidebar-filter
-	= render "filter"
-= will_paginate @problems 
 
+  = render "filter"
+= will_paginate @problems
+%p
+  = link_to 'View 5 (testing purposes)', problems_path(:per_page => 5)
+  = link_to 'View 30', problems_path(:per_page => 30)
+  = link_to 'View 60', problems_path(:per_page => 60)
 = render :partial => "shared/problems_table", locals: {problems_index: true, problems: @problems}
 
 
