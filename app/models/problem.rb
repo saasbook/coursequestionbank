@@ -44,7 +44,7 @@ class Problem < ActiveRecord::Base
     end
   end
 
-  def self.filter(user, filters = {}, page)
+  def self.filter(user, filters = {})
 
     filters[:tags] ||= ''
     filters[:tags] = filters[:tags].strip.split(',')
