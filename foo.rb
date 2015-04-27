@@ -8,7 +8,7 @@ quiz 'A FEW EXAMPLE Qs' do
     distractor "REST", :explanation => 'REpresentational State Transfer is a design approach for making SaaS requests self-contained by having each request refer to a resource and an operation on that resource.'
   end
   
-  truefalse 'If an app has a RESTful API, it must be performing CRUD operations.',
+  truefalse 'If an app has a RESTful API, it must be performing CRUD operations.', 
   false,
   :explanation => 'The REST principle can be applied to any kind of operation'
 

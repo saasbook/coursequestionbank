@@ -66,10 +66,12 @@ class CollectionsController < ApplicationController
   end
 
   def checked_problems
-    collection_id = params[:dropdown]
+    collection = Collection.find(params[:dropdown])
+    collection_size = collection.problems.size
     # make explicit call to this route so that CanCan authorization is used
-    params[:problems].each {|problem_id| add_problem_path({collection_id: collection_id, id: problem_id})}
-    flash[:notice] = "#{params[:problems].size } problems added to collection: #{Collection.find(collection_id).name}"
+    # params[:problems].each {|problem_id| add_problem_path({collection_id: collection.id, id: problem_id})}
+    params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
+    flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
     flash.keep
     redirect_to problems_path
   end
