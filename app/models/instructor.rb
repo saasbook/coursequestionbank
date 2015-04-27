@@ -15,7 +15,7 @@ class Instructor < ActiveRecord::Base
     end
   end
 
-  def is_admin?
+  def admin?
     privilege == "instructor" || privilege == "admin"
   end
 end
