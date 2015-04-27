@@ -1,0 +1,9 @@
+%div.col-md-9
+  - problems.each do |problem|
+    %div.problem_box
+      %div.col-md-1
+        = check_box_tag "problems[#{problem.id}]", 1, false, class: "checkbox"
+      %div.col-md-10
+        %p Problem 
+      %div.col-md-1
+        %span.glyphicon.glyphicon-triangle-left

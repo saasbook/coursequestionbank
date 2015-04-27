@@ -1,4 +1,13 @@
 class CollectionsController < ApplicationController
+  after_filter :set_current_collection 
+
+  def set_current_collection
+    # if not @current_user.current_collection
+    #   flash[:notice] = 'NO CURRENT COLLECTION'
+    #   puts 'NO CURRENT COLLECTION ------------------------------------'
+    # end
+  end
+
   def new
     @collection = Collection.new
   end
@@ -18,6 +27,11 @@ class CollectionsController < ApplicationController
     redirect_to profile_path
   end
 
+  def show
+    @collection = Collection.find(params[:id])
+    @problems = @collection.problems
+  end
+
   def update
     if not (collection = Collection.update(params[:id], params[:collection])).valid?
       flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
@@ -34,9 +48,13 @@ class CollectionsController < ApplicationController
   end
 
   def export
-    @html_code = Collection.find(params[:id]).export
+    
+    @html_code = Collection.find(params[:id]).export('Html5')
+    @edx_code = Collection.find(params[:id]).export('EdXml')
+    @autoqcm_code = Collection.find(params[:id]).export('AutoQCM')
+
     if not @html_code
-      flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection'
+      flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection first!'
       flash.keep
       redirect_to edit_collection_path( id: params[:id])
     end
@@ -45,6 +63,4 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-
-
 end

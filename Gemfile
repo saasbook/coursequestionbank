@@ -7,6 +7,7 @@ gem 'rails', '3.2.16'
 
 gem 'ruql', :git =>'https://github.com/zhangaaron/ruql.git'
 gem 'omniauth'
+gem 'cancan'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'
@@ -14,6 +15,7 @@ gem 'cucumber-rails'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
 gem 'json'
+gem 'will_paginate', '~> 3.0.6'
 
 group :development, :test do
   gem 'sqlite3'
@@ -37,7 +39,6 @@ group :assets do
   gem 'therubyracer'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
-
   gem 'uglifier', '>= 1.0.3'
 end
 

@@ -15,25 +15,43 @@
 
  html, body {
  	/*font-family: 'Patrick Hand';*/
- 	font-family: Helvetica;
+ 	font-family: 'Droid Serif', Times, serif;
  	margin: 0px;
  	padding: 0px;
+ 	background: #fafafa;
  }
 
  #main {
- 	margin: 20px;
  }
 
  h1, p {
  	margin: 10px;
  	padding: 0px;
- 	text-align: center;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+ 	font-weight: 700;
  }
+
+.message{
+	color: red;
+}
+
+.col-md-10 {
+	// width: 100%;
+}
 
 a {
  	text-decoration: none;
  }
  
+p.collectioncontrols {
+	display: inline;
+	margin: 0;
+}
+
+.btn {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif
+}
+
  a:link, a:visited, a:hover, a:active {
  	text-decoration: none;
  }
@@ -53,8 +71,13 @@ a {
 
  }
 
+ .title {
+ 	text-align: center;
+ }
+
 ul#navbar {
 	list-style: none;
+	margin: 0px;
 }
 
 li#navbar {
@@ -65,7 +88,7 @@ li#navbar {
 }
 
  #header {
- 	font-family: 'Patrick Hand';
+ 	font-family: 'Raleway';
  	width: 100%;
  	position: relative;
  	background-color: #EBF4FA;
@@ -74,6 +97,7 @@ li#navbar {
  	border-top-width: 2px;
  	border-bottom-width: 2px;
  	padding-right: 20px;
+ 	padding-top: 10px;
  }
 
 #user {
@@ -87,11 +111,37 @@ li#navbar {
 
 #sidebar-filter {
 	background: #EBF4FA;
-	padding: 10px;
+	padding: 15px;
+	margin-left: 0px;
+	margin-top: 0px;
 }
+
 #thetextarea {
 	height: 100%;
 	width: 100%;
+}
+
+
+#authorize {
+	margin: 0px;
+
+.problem_box {
+	width: 100%;
+	height: 20%;
+	background: white;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid #DCDCDC;
+	border-radius: 3px;
+}
+
+.export-tabs {
+	padding: 60px 20px 0 20px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.tab-content {
+	font-family: 'Droid Serif', Times, serif;
 }
 
 	ol.questions { list-style-type: none; }

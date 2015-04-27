@@ -15,15 +15,17 @@
         - problems.each do |problem|
           %tr
             %td
-              = problem.html5.html_safe 
+              = problem.html5.html_safe
               = "Created Date: " + problem.created_date.to_s + " | "
               = "Created By: " + problem.instructor.name
-            %td= problem.collections.map {|collection| collection.name + ', '}.join
+            %td
+              - problem.collections.each do |collection|
+                = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
             %td= problem.tags.map {|tags| tags.name + ', '}.join
             %td
               -if problems_index
-                / =link_to "add to #{Collection.find(@current_user.current_collection).name} (current)", add_problem_path(:id => problem.id, :collection_id => @current_user.current_collection), {:id => "problem_#{problem.id}"}
                 %a{:class => "addlink", :id => "problem#{problem.id}", :onclick => "myfunction('#{problem.id}', #{@current_user.current_collection}); return false"} current collection
-                = select_tag "dropdown", options_from_collection_for_select(Collection.all, "id","name"), :onchange => "myfunction(#{problem.id}, this.value)",:include_blank => true
+                / =link_to_function "YOLO", "myfunction('#{problem.id}', #{@current_user.current_collection}); return false"
+                = select_tag "dropdown", options_from_collection_for_select(Collection.where(instructor_id: @current_user), "id","name"), :onchange => "myfunction(#{problem.id}, this.value)",:include_blank => true
               -else 
                 =link_to "remove from this collection", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}"}

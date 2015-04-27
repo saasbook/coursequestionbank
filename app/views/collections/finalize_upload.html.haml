@@ -1,4 +1,6 @@
-%h3= "Quiz successfully uploaded! Finalize changes or discard this upload"
+%p{:style=>"color: green; font-style: italic"}
+  = "Your quiz was successfully uploaded! We found #{@collections.size} collections in your quiz. Review them below here:"
+
 
 %div.col-md-10
   %div.table-responsive
@@ -8,11 +10,10 @@
       %tbody
         -@collections.each do |collection|
           %tr
-            =render :partial=> 'form', locals: {collection: collection}
-            %p 
-              Delete this collection? 
-              =link_to 'trash_can_icon', collection_path(collection), method: :delete, :confirm => 'Delete this collection?'
-            %p 
-              Export this collection: 
-              =link_to 'export button', export_path(:id => collection) 
+            =render :partial=> 'form', locals: {collection: collection, :remote => true}
+            </br>
+            %p.collectioncontrols
+              =link_to "Delete Controls", collection_path(collection), :class => 'btn btn-danger', method: :delete, :confirm => 'Delete this collection?'
+            %p.collectioncontrols
+              =link_to "Export Collection", export_path(:id => @collection), :class => 'btn btn-info'
             = render :partial => "shared/problems_table", locals: {problems_index: false, collection: collection, problems: collection.problems}

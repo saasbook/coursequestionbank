@@ -45,20 +45,13 @@ class Problem < ActiveRecord::Base
   end
 
   def self.filter(user, filters = {})
+    filters['tags'] = filters['tags'].strip.split(',')
 
-    if !filters[:tags]
-      filters[:tags] = ""
+    if !filters['last_exported_begin'] or filters['last_exported_end'].empty?
+      filters['last_exported_begin'] = nil
     end
-
-    if !filters[:collections]
-      filters[:collections] = {}
-    end
-
-    if !filters[:last_exported_begin] or filters[:last_exported_end].empty?
-      filters[:last_exported_begin] = nil
-    end
-    if !filters[:last_exported_end] or filters[:last_exported_end].empty?
-      filters[:last_exported_end] = nil
+    if !filters['last_exported_end'] or filters['last_exported_end'].empty?
+      filters['last_exported_end'] = nil
     end
 
 
@@ -67,24 +60,20 @@ class Problem < ActiveRecord::Base
         with(:instructor_id, user.id)
         with(:is_public, true)
       end
-      
-      with(:tag_names, filters[:tags].split(",")) if !filters[:tags].empty?
-      
-      with(:coll_names, filters[:collections].keys)
-
-      
-      
-      if filters[:last_exported_begin] 
-        with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
+      with(:tag_names, filters[:tags]) if filters[:tags].present? #I THOUGHT SUNSPOT SAID THE PRESENCE CHECK WAS UNNECESARY
+      # with(:coll_names, filters[:collections].keys)
+      if filters['last_exported_begin'] 
+        with(:last_used).greater_than_or_equal_to(filters['last_exported_begin'])
       end
 
-      if filters[:last_exported_end]
-        with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
+      if filters['last_exported_end']
+        with(:last_used).less_than_or_equal_to(filters['last_exported_end'])
       end
+      fulltext filters['search']
+      paginate :page => filters['page'], :per_page => filters['per_page']
 
-      fulltext filters[:search]
     end
 
-    return problems.results
+    problems.results
   end
 end
