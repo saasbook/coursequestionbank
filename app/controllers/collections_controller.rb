@@ -1,4 +1,5 @@
 class CollectionsController < ApplicationController
+  load_and_authorize_resource
   after_filter :set_current_collection 
 
   def set_current_collection
@@ -13,13 +14,8 @@ class CollectionsController < ApplicationController
   end
 
   def edit
-    if can? :manage, Collection
-      @collection = Collection.find(params[:id])
-      @problems = @collection.problems
-    else
-      flash[:notice] = "you do not have permission to access this page"
-      redirect_to profile_path
-    end
+    @collection = Collection.find(params[:id])
+    @problems = @collection.problems
   end
 
   # creates a new collection with user specified values and sets as current collection

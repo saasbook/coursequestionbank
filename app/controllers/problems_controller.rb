@@ -1,5 +1,4 @@
 class ProblemsController < ApplicationController
-
   before_filter :set_filter_options
  @@defaults = {'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 } #default arguments hash, not sure about the proper styling for this
 

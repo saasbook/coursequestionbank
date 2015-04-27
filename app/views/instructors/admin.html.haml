@@ -34,7 +34,7 @@
       = label_tag(:username, "Github Username:")
       = text_field_tag(:username, params[:username], class: 'form-control', placeholder: "GitHub username")
     %div.form-group
-      = label_tag(:privilege, "Privilege level:")
+      = label_tag(:privilege, "Access level:")
       = select_tag(:access, options_for_select(["instructor", "admin"]), class: 'form-control')
     
       = submit_tag 'Add', :id => "whitelist_submit", :class => 'btn btn-info'
