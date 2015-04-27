@@ -65,5 +65,11 @@ class CollectionsController < ApplicationController
   end
 
   def checked_problems
+    collection_id = params[:dropdown]
+    # make explicit call to this route so that CanCan authorization is used
+    params[:problems].each {|problem_id| add_problem_path({collection_id: collection_id, id: problem_id})}
+    flash[:notice] = "#{params[:problems].size } problems added to collection: #{Collection.find(collection_id).name}"
+    flash.keep
+    redirect_to problems_path
   end
 end
