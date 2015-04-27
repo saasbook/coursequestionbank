@@ -1,4 +1,11 @@
-
-= form_tag("", multipart: true) do
-	= file_field_tag 'ruql_file', :id => 'file_upload'
-	= submit_tag('upload')
+%div.col-md-10
+	%div{:style=>"margin-top: 2%; margin-left: 21%; border-style:dashed; border-width:4px; border-color: #d3dbe1;"}
+		%div{:style=>"margin: 10%; margin-left: 38%"}
+			= form_tag("", multipart: true) do
+				= file_field_tag 'ruql_file', :id => 'file_upload'
+				%br
+				%br
+				%br
+				%br
+				%div{:style=>"margin-left: 8%"}
+					= submit_tag('Upload File', :class => 'btn btn-primary')

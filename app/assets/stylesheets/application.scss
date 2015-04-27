@@ -15,7 +15,7 @@
 
  html, body {
  	/*font-family: 'Patrick Hand';*/
- 	font-family: Helvetica;
+ 	font-family: 'Droid Serif', Times, serif;
  	margin: 0px;
  	padding: 0px;
  }
@@ -27,13 +27,31 @@
  h1, p {
  	margin: 10px;
  	padding: 0px;
- 	text-align: center;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+ 	font-weight: 700;
  }
+
+.message{
+	color: red;
+}
+
+.col-md-10 {
+	// width: 100%;
+}
 
 a {
  	text-decoration: none;
  }
  
+p.collectioncontrols {
+	display: inline;
+	margin: 0;
+}
+
+.btn {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif
+}
+
  a:link, a:visited, a:hover, a:active {
  	text-decoration: none;
  }
@@ -53,6 +71,10 @@ a {
 
  }
 
+ .title {
+ 	text-align: center;
+ }
+
 ul#navbar {
 	list-style: none;
 }
@@ -65,7 +87,6 @@ li#navbar {
 }
 
  #header {
- 	font-family: 'Patrick Hand';
  	width: 100%;
  	position: relative;
  	background-color: #EBF4FA;
@@ -89,6 +110,7 @@ li#navbar {
 	background: #EBF4FA;
 	padding: 10px;
 }
+
 #thetextarea {
 	height: 100%;
 	width: 100%;
