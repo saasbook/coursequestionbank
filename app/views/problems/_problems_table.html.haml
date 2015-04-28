@@ -18,8 +18,9 @@
                 %li.glyphicon.glyphicon-chevron-right{:class => 'icon', :id => "#{problem.id - 1}"}
                 %div{:id => "q#{problem.id - 1}"}
                   = problem.html5.html_safe
-                  = "Created Date: " + problem.created_date.to_s + " | "
-                  = "Created By: " + problem.instructor.name
+                  %div{:class => "additional"}
+                    = "Created Date: " + problem.created_date.to_s + " | "
+                    = "Created By: " + problem.instructor.name
 
               %td
                 - problem.collections.each do |collection|
