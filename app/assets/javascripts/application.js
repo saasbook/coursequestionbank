@@ -20,7 +20,7 @@ jQuery(document).ready(function() {
 	var bla = {}
 	$('.answers').hide(); //Hide/close all containers
 
-	$(':button').click(function(){
+	$('.icon').click(function(){
 	
 
 		$('#q' + $(this).attr('id')).find('.answers').toggle();
