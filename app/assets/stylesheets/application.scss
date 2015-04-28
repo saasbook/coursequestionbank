@@ -30,7 +30,27 @@
 	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
  	font-weight: 700;
  }
+body,table{
+        font-family:verdana,arial,sans-serif;
+        font-size:12px;
+    }
 
+    td,th{
+        margin:0px;
+        white-space:normal;
+        width:650px
+    }
+
+    .text{
+        height:30px;
+        width:600px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .text:hover{
+        height:auto;
+    }
 .message{
 	color: red;
 }
