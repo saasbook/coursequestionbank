@@ -31,6 +31,22 @@
  	font-weight: 700;
  }
 
+    td,th{
+        margin:0px;
+        white-space:normal;
+        width:650px
+    }
+
+    .text{
+        height:30px;
+        width:600px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .text:hover{
+        height:auto;
+    }
 .message{
 	color: red;
 }

@@ -6,6 +6,7 @@
       %table.table.table-striped#problems
         %thead
           %tr
+          %th
           %th Question Text
           %th Collections
           %th Tags
@@ -15,9 +16,13 @@
             %tr
               %td= check_box_tag "problems[#{problem.id}]", 1
               %td
-                = problem.html5.html_safe
-                = "Created Date: " + problem.created_date.to_s + " | "
-                = "Created By: " + problem.instructor.name
+                %li.glyphicon.glyphicon-chevron-right{:class => 'icon', :id => "#{problem.id - 1}"}
+                %div{:id => "q#{problem.id - 1}"}
+                  = problem.html5.html_safe
+                  %div{:class => "additional"}
+                    = "Created Date: " + problem.created_date.to_s + " | "
+                    = "Created By: " + problem.instructor.name
+
               %td
                 - problem.collections.each do |collection|
                   = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
