@@ -165,6 +165,18 @@ li#navbar {
 	height: 30%;
 }
 
+.pagination {
+	margin: 0px;
+	padding: 5px;
+	float: right;
+	margin-right: inherit;
+}
+
+.right {
+	float: right;
+}
+
+
 	ol.questions { list-style-type: none; }
     li.question { page-break-inside: avoid; }
     li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
