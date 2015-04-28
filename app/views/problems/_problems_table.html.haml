@@ -15,7 +15,7 @@
             %tr
               %td= check_box_tag "problems[#{problem.id}]", 1
               %td
-                %button{:class => 'btn btn-default btn-sm dropdown-toggle', :type => 'button', 'data-toggle' => 'collapse', :id => "#{problem.id - 1}"}
+                %li.glyphicon.glyphicon-chevron-right{:class => 'icon', :id => "#{problem.id - 1}"}
                 %div{:id => "q#{problem.id - 1}"}
                   = problem.html5.html_safe
                   = "Created Date: " + problem.created_date.to_s + " | "
