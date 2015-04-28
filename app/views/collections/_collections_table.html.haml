@@ -18,4 +18,4 @@
               - problem.collections.each do |collection|
                 = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
             %td= problem.tags.map {|tags| tags.name + ', '}.join
-            %td= link_to "remove from this collection", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}"}
+            %td= link_to "", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}", :class => 'glyphicon glyphicon-trash'}

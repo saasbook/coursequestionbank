@@ -1,8 +1,15 @@
-= form_for(collection, :remote => !!remote) do |f| #magical hacks to set remote to be true when called from finalize_upload
+= form_for(collection, :remote => !!remote, :html => {:class => 'form-inline'}) do |f| #magical hacks to set remote to be true when called from finalize_upload
   = f.label :name
-  = f.text_field :name
+  = f.text_field :name, :class => 'form-control'
   = f.label :description
-  = f.text_field :description
+  = f.text_field :description, :class => 'form-control'
   = f.label 'Mark as public?'
-  = f.check_box :is_public
-  = f.submit
+  = f.check_box :is_public, :class => 'form-control'
+  %div.form-group
+    = f.submit 'Update', class: 'btn btn-primary'
+    =link_to collection_path(collection), :class => 'btn btn-default', method: :delete, :confirm => 'Delete this collection?' do
+      %span.glyphicon.glyphicon-trash
+      Delete
+    =link_to export_path(:id => collection), :class => 'btn btn-default' do
+      %span.glyphicon.glyphicon-export
+      Export
