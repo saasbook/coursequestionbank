@@ -1,7 +1,13 @@
 %div.col-md-12
   %div.table-responsive
-
     %h2 Create New Collection
 
-
-    = render "form", :collection => @collection, :remote => false
+    = form_for(@collection, :html => {:class => 'form-inline'}) do |f| #magical hacks to set remote to be true when called from finalize_upload
+      = f.label :name
+      = f.text_field :name, :class => 'form-control'
+      = f.label :description
+      = f.text_field :description, :class => 'form-control'
+      = f.label 'Mark as public?'
+      = f.check_box :is_public, :class => 'form-control'
+      %div.form-group
+        = f.submit 'Create', class: 'btn btn-primary'
