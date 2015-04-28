@@ -15,9 +15,12 @@
             %tr
               %td= check_box_tag "problems[#{problem.id}]", 1
               %td
-                = problem.html5.html_safe
-                = "Created Date: " + problem.created_date.to_s + " | "
-                = "Created By: " + problem.instructor.name
+                %button{:class => 'btn btn-default btn-sm dropdown-toggle', :type => 'button', 'data-toggle' => 'collapse', :id => "#{problem.id - 1}"}
+                %div{:id => "q#{problem.id - 1}"}
+                  = problem.html5.html_safe
+                  = "Created Date: " + problem.created_date.to_s + " | "
+                  = "Created By: " + problem.instructor.name
+
               %td
                 - problem.collections.each do |collection|
                   = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
