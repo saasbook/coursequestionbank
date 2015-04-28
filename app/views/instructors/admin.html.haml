@@ -19,7 +19,7 @@
           - @unauthorized_users.each do |user|
             %tr
             %td= image_tag user.provider_image, size: "30x30"
-            %td= user.username
+            %td= link_to user.username, "https://github.com/#{user.username}"
             %td= user.name
             %td= user.provider_email
             %td= user.provider
