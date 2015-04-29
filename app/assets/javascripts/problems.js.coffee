@@ -8,3 +8,13 @@
         alert("Successfully added question to collection!")
       else
         alert("You failed to add question")
+
+
+$(document).ready ->
+	$('#add_tags').on "keypress", (event) ->
+		if event.which == 44
+			tag = $('#add_tags').val()
+			console.log(tag)
+			$("<span class='tags'>" + tag + "</span>").insertAfter("#add_tags");
+			$('#add_tags').val('');
+			event.preventDefault();

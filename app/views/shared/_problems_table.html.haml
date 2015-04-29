@@ -23,7 +23,10 @@
             %td
               - problem.collections.each do |collection|
                 = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
-            %td= problem.tags.map {|tags| tags.name + ', '}.join
+            %td= text_field_tag(:username, params[:username], class: 'form-control', placeholder: "GitHub username")
+              - problem.tags.each do |tag|
+                %span= tag
+              
             %td
               -if problems_index
                 %a{:class => "addlink", :id => "problem#{problem.id}", :onclick => "myfunction('#{problem.id}', #{@current_user.current_collection}); return false"} current collection

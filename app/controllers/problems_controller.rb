@@ -56,4 +56,7 @@ class ProblemsController < ApplicationController
     flash.keep
     redirect_to edit_collection_path(:id => collection.id)
   end
+
+  def add_tag
+  end
 end
