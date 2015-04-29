@@ -58,5 +58,13 @@ class ProblemsController < ApplicationController
   end
 
   def add_tag
+    #puts "add tag:", params[:tag]
+    @problem = Problem.find(params[:id])
+    @tag = Tag.find_by_name(params[:tag])
+    if !@tag
+      @tag = Tag.create(name: params[:tag])
+      @problem.tags << @tag
+    end
+    redirect_to problems_path
   end
 end

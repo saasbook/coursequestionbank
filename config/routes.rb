@@ -13,7 +13,7 @@ Coursequestionbank::Application.routes.draw do
   get 'profile' => 'instructors#show', :as => 'profile'
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   get 'remove_problem' => 'problems#remove_from_collection'
-  get 'add/:tag/to/problem' => 'problems#add_tag', :as => 'add_tag'
+  get 'add/:tag/to/problem/:id' => 'problems#add_tag', :as => 'add_tag'
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
