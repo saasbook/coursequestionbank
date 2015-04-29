@@ -11,13 +11,13 @@
 
 
 $(document).ready ->
-	$('#add_tags').on "keypress", (event) ->
+	$('[id^="add_tags_"]').on "keypress", (event) ->
 		if event.which == 44
-			tag = $('#add_tags').val().trim()
+			tag = $(this).val().trim()
 			tag_id = $(this).parent().attr("id")
 			problem_id = parseInt(tag_id, 10)
-			$("<span class='tag'>" + tag + "</span>").insertBefore("#add_tags")
-			$('#add_tags').val('')
+			$("<span class='tag'>" + tag + "</span>").insertBefore(this)
+			$(this).val('')
 			event.preventDefault()
 			$.ajax
    				url: "add/" + tag + "/to/problem/" + problem_id

@@ -30,4 +30,4 @@
             %td{:id => "#{problem.id}_tag"}
               - problem.tags.each do |tag|
                 %span.tag= tag.name
-              = text_field_tag(:tag, "", class: 'form-control', id: 'add_tags', placeholder: "Add tags")
+              = text_field_tag(:tag, "", class: 'form-control', id: "add_tags_#{problem.id}", placeholder: "Add tags")
