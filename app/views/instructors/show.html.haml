@@ -18,7 +18,8 @@
     %table.table.table-striped#collections
       %thead
         %tr
-        %th 
+        %th
+        %th Color
         %th Name
         %th # Questions
         %th Description
@@ -33,6 +34,7 @@
               =link_to image_tag('yellowstar.png', width: 30), mark_as_current_path(:id => collection.id) 
             -else 
               =link_to image_tag('graystar.png', width: 30), mark_as_current_path(:id => collection.id)
+          %td{:bgcolor => collection.color}
           %td= link_to collection.name.truncate(35), edit_collection_path(:id => collection.id)
           %td= collection.problems.length
           %td= collection.description
