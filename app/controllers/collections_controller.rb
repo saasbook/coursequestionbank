@@ -51,8 +51,18 @@ class CollectionsController < ApplicationController
   def export
     
     @html_code = Collection.find(params[:id]).export('Html5')
-    @edx_code = Collection.find(params[:id]).export('EdXml')
-    @autoqcm_code = Collection.find(params[:id]).export('AutoQCM')
+    
+    begin
+      @edx_code = Collection.find(params[:id]).export('EdXml')
+    rescue RuntimeError
+      @edx_code = 'EdX not available'
+    end
+ 
+    begin
+      @autoqcm_code = Collection.find(params[:id]).export('AutoQCM')
+    rescue RuntimeError
+      @autoqcm_code = 'AutoQCM not available'
+    end
 
     if not @html_code
       flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection first!'
