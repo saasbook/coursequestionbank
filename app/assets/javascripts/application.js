@@ -22,12 +22,12 @@ jQuery(document).ready(function() {
     $('.additional').hide();
 	$('.icon').click(function(){
 	
-
 		$('#q' + $(this).attr('id')).find('.answers').toggle();
 		//$('#q' + $(this).attr('id')).toggleClass(.text,:)
 		//if($(this).find('.answers'))
 		$('#q' + $(this).attr('id')).find('.additional').toggle();
-		$('#q' + $(this).attr('id')).find('.text').css("height","auto");
+		//$('#q' + $(this).attr('id')).find('.text').css("height","auto");
+		$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
 		
 
 		//$('#question-0').find('.text').attr("color","red");
