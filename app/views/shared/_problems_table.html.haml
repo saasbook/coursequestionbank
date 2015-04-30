@@ -13,7 +13,7 @@
             Remove from collection
       %tbody
         - problems.each do |problem|
-          %tr#problem_row
+          %tr{:id => "q#{problem.id - 1}"}
             %td
               %div{:id => "q#{problem.id - 1}"}
                 = problem.html5.html_safe

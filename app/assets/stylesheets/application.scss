@@ -28,6 +28,9 @@
     height:auto;
     width:600px;
  }
+.toggler2{
+    height:auto;
+}
 
 
  h1, p {
@@ -51,6 +54,15 @@
     }
 
     .text:hover{
+        height:auto;
+    }
+    .colname{
+        height:20px;
+        overflow:hidden;
+        text-overflow:ellipsis;
+    }
+
+    .colname:hover{
         height:auto;
     }
 .message{
