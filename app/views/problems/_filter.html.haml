@@ -13,6 +13,14 @@
     = label_tag(:last_exported, "Last Exported:")
     = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
     = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
-
-  %div.form-group
+    %div.form-group 
+      = label_tag(:tags, "Collections:")
+        - @collections.each do |collection|
+          %div.checkbox
+            %label
+              -if session[:filters][:collections].include? collection.id
+                = check_box_tag "collections[#{collection}]", 1, true, class: "checkbox"
+              -else
+                = check_box_tag "collections[#{collection}]", 1, false, class: "checkbox"
+              = collection.name 
     = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
