@@ -4,7 +4,8 @@ class ProblemsController < ApplicationController
 
   def set_filter_options
     # if not session[:filters]
-    session[:filters] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
+    session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
+    session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
     # else
     #   session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page) 
     # end
