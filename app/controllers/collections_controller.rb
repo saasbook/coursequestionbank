@@ -78,11 +78,16 @@ class CollectionsController < ApplicationController
   def checked_problems
     collection = Collection.find(params[:dropdown])
     collection_size = collection.problems.size
-    # make explicit call to this route so that CanCan authorization is used
-    # params[:problems].each {|problem_id| add_problem_path({collection_id: collection.id, id: problem_id})}
-    params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
-    flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
-    flash.keep
+    if params['add_problems'] and params[:problems].present?
+      params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
+      flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
+      flash.keep
+    end
+    if params[:problems].present? #for delete route
+      params[:problems].each {|problem_id, value| Problem.find(problem_id).destroy}
+      flash[:notice] = 'Problems successfully deleted'
+      flash.keep
+    end
     redirect_to problems_path
   end
 

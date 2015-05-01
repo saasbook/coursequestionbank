@@ -26,7 +26,6 @@ class InstructorsController < ApplicationController
   end
 
   def add_to_whitelist
-    puts "blah blah ", params
     Whitelist.create(username: params["username"], privilege: params["access"])
     @user = Instructor.find_by_username(params["username"])
     @user.update_attributes(privilege: params["access"]) if @user

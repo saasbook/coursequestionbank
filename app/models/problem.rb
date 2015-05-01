@@ -71,7 +71,6 @@ class Problem < ActiveRecord::Base
       fulltext filters['search']
       paginate :page => filters['page'], :per_page => filters['per_page']
     end
-    puts "#{problems.results} ----------------------------------------------------------"
     problems
   end
 end
