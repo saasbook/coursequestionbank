@@ -5,6 +5,7 @@ class ProblemsController < ApplicationController
 
   def set_filter_options
     puts "SESSION IS : #{session[:filters]} ----------------------------------------------------------------------------------------"
+    session[:filters] ||= @@defaults
     session[:filters] = @@defaults.merge session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
     puts "SESSION SET TO : #{session[:filters]} ----------------------------------------------------------------------------------------"
     puts "PARAMS SLICE: #{params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)}"
