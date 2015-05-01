@@ -22,22 +22,6 @@ class ProblemsController < ApplicationController
     @problems = problems.results
   end
 
-  #eventually this will be an AJAX call. ALSO WE NEED TO CHANGE OUR HABTM ASSOCIATION TO HAS_MANY: THROUGH SO WE CAN USE VALIDATIONS AND STUFF
-  # def add_to_collection
-  #   collection = Collection.find(params[:collection_id])
-  #   if not collection
-  #     render :json => {:status => false}
-  #     return
-  #   end
-  #   problem_to_add = Problem.find(params[:id])
-  #   if not collection.problems.include? problem_to_add
-  #     collection.problems << problem_to_add
-  #     render :json => {:status => true}
-  #   else 
-  #     render :json => {:status => false}
-  #   end
-  # end
-
   def remove_from_collection
     collection = Collection.find(params[:collection_id])
     problem_to_remove = Problem.find(params[:id])
