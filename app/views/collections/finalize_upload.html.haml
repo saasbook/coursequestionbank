@@ -5,4 +5,4 @@
   -@collections.each do |collection|
     %tr
       =render :partial=> 'form', locals: {collection: collection, :remote => true}
-      = render :partial => "shared/problems_table", locals: {problems_index: false, collection: collection, problems: collection.problems}
+      = render :partial => "collections_table", locals: {collection: collection, problems: collection.problems}
