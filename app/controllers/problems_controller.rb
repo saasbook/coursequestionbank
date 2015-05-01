@@ -3,7 +3,8 @@ class ProblemsController < ApplicationController
  @@defaults = {'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 } #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
-    session[:filters] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
+    session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
+    session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
   end
 
   def home
