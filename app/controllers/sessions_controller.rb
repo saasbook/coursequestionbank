@@ -1,4 +1,6 @@
 class SessionsController < ApplicationController
+  skip_load_resource
+  skip_authorize_resource
   skip_before_filter :set_current_user
   
   def create

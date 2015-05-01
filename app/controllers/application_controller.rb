@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  # load_and_authorize_resource
+  load_and_authorize_resource
   #alias_method :current_user, :set_current_user
 
   before_filter :set_current_user
