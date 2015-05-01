@@ -17,20 +17,16 @@
 
 jQuery(document).ready(function() {
 
-	var bla = {}
-	$('.answers').hide(); //Hide/close all containers
-    $('.additional').hide();
+	$('.maintable').find('.answers').hide(); //Hide/close all containers
+    $('.maintable').find('.additional').hide();
+    $('.text').addClass('toggler').removeClass('text');
+    $('.maintable').find('.toggler').addClass('text').removeClass('toggler');
 	$('.icon').click(function(){
 	
-
 		$('#q' + $(this).attr('id')).find('.answers').toggle();
-		//$('#q' + $(this).attr('id')).toggleClass(.text,:)
-		//if($(this).find('.answers'))
 		$('#q' + $(this).attr('id')).find('.additional').toggle();
-		$('#q' + $(this).attr('id')).find('.text').css("height","auto");
-		
-
-		//$('#question-0').find('.text').attr("color","red");
+		$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
+		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");		
 	});
 });
 
