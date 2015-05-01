@@ -1,6 +1,6 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  load_and_authorize_resource
+  # load_and_authorize_resource
   #alias_method :current_user, :set_current_user
 
   before_filter :set_current_user
@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-  	flash[:notice] = "You have successfully logged in but don't have persmission to access the site at the moment. Please wait until you have been authorized by one of our administrators."
+  	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
     redirect_to login_path, :alert => exception.message
   end
 
