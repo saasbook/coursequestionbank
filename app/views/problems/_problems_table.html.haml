@@ -35,7 +35,8 @@
 / =======
 =form_tag checked_problems_path do
   =select_tag 'dropdown', options_from_collection_for_select(Collection.where(instructor_id: @current_user), "id","name")
-  =submit_tag 'Add problems to the collection', class: 'btn'
+  =submit_tag 'Add problems to the collection',  name: 'add_problems',  class: 'btn btn-default'
+  =submit_tag 'Delete problems', name:'delete_problems', class: 'btn btn-default'
   %div.col-md-10
     %div{:class => "maintable"}
       %div.table-responsive
