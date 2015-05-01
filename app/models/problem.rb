@@ -55,7 +55,7 @@ class Problem < ActiveRecord::Base
     end
 
 
-    problems = Problem.search do
+    problems = Problem.search do 
       any_of do
         with(:instructor_id, user.id)
         with(:is_public, true)
@@ -65,15 +65,13 @@ class Problem < ActiveRecord::Base
       if filters['last_exported_begin'] 
         with(:last_used).greater_than_or_equal_to(filters['last_exported_begin'])
       end
-
       if filters['last_exported_end']
         with(:last_used).less_than_or_equal_to(filters['last_exported_end'])
       end
       fulltext filters['search']
       paginate :page => filters['page'], :per_page => filters['per_page']
-
     end
-
-    problems.results
+    puts "#{problems.results} ----------------------------------------------------------"
+    problems
   end
 end
