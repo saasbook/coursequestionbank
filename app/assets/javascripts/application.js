@@ -27,6 +27,7 @@ jQuery(document).ready(function() {
 		$('#q' + $(this).attr('id')).find('.additional').toggle();
 		$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
 		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");		
+		$('.icon').toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
 	});
 });
 
