@@ -1,10 +1,11 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
- @@defaults = {'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 } #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
     session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
+
   end
 
   def home
@@ -17,7 +18,7 @@ class ProblemsController < ApplicationController
     if params[:collections]
       @chosen_collections = params[:collections].keys
     end
-    problems = Problem.filter(@current_user, session[:filters])
+    problems = Problem.filter(@current_user, session[:filters].clone) #for some reason session[:filters] was being passed by reference? i have no clue why wtf
     @problems = problems.results
   end
 
