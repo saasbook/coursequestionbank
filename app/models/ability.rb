@@ -31,8 +31,10 @@ class Ability
     user ||= Instructor.new
     if user.admin?
         can :manage, Instructor
+        can :manage, Problem
+        can :manage, Collection
     end
-    if user.instructor? or user.admin?
+    if user.instructor?
         can :manage, Problem, :instructor_id => user.id
         can :read, Problem, :is_public => true
         can :read, Problem, :collection => { :is_public => true }

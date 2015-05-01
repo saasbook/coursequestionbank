@@ -2,7 +2,7 @@
   %div.table-responsive
     %h2 Create New Collection
 
-    = form_for(@collection, :html => {:class => 'form-inline'}) do |f| #magical hacks to set remote to be true when called from finalize_upload
+    = form_for(@collection, :html => {:class => 'form-inline'}) do |f|
       = f.label :name
       = f.text_field :name, :class => 'form-control'
       = f.label :description

@@ -25,7 +25,6 @@ class ProblemsController < ApplicationController
     end
     problems = Problem.filter(@current_user, session[:filters])
     @problems = problems.results
-    # @paginated_problems = 
   end
 
   #eventually this will be an AJAX call. ALSO WE NEED TO CHANGE OUR HABTM ASSOCIATION TO HAS_MANY: THROUGH SO WE CAN USE VALIDATIONS AND STUFF

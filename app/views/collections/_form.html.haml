@@ -9,7 +9,7 @@
     = f.submit 'Update', class: 'btn btn-primary'
     =link_to collection_path(collection), :class => 'btn btn-default', method: :delete, :confirm => 'Delete this collection?' do
       %span.glyphicon.glyphicon-trash
-      Delete
+      Delete Collection
     =link_to export_path(:id => collection), :class => 'btn btn-default' do
       %span.glyphicon.glyphicon-export
       Export
