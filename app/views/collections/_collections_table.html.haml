@@ -3,6 +3,7 @@
     %table.table.table-striped#problems
       %thead
         %tr
+        %th
         %th Question Text
         %th Collections
         %th Tags
@@ -10,6 +11,8 @@
       %tbody
         - problems.each do |problem|
           %tr
+          %tr{:id => "q#{problem.id - 1}"}
+            %td= check_box_tag "problems[#{problem.id}]", 1
             %td
               = problem.html5.html_safe
               = "Created Date: " + problem.created_date.to_s + " | "
