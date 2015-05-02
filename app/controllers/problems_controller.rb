@@ -6,7 +6,6 @@ class ProblemsController < ApplicationController
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
     session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
-
   end
 
   def home
