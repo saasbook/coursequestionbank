@@ -53,3 +53,8 @@ Feature: collections that we can add problems to
     When I press the trash icon at 'apple'
     Then I should be on the dashboard
     And I should not see Collection 'apple' in the database
+
+  Scenario: view a collection
+    When I am on the homepage
+    And I click on "1/22/15 (W1 L2)"
+    Then I should see "Because Agile tends to focus on small teams, it cannot be used effectively "
