@@ -1,5 +1,5 @@
 class Collection < ActiveRecord::Base
-  attr_accessible :last_used, :name, :description, :is_public
+  attr_accessible :last_used, :name, :description, :is_public, :color
   validates :name, presence: true #, uniqueness: true for now this is bad
   has_and_belongs_to_many :problems
   belongs_to :instructor
