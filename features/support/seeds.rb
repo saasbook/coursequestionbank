@@ -6,7 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-@instructor = Instructor.create(name: "Example User", provider: "github", uid: "1234")
+@instructor = Instructor.create(name: "Example User", provider: "github", uid: "1234", username: "test", privilege: "admin")
 
 @tag1 = Tag.create(name: "quiz 1")
 @tag2 = Tag.create(name: "quiz 2")

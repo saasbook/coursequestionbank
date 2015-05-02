@@ -32,5 +32,4 @@ $(document).ready ->
 			url: "remove/" + tag_id + "/from/problem/" + pid
 			success: (data, textStatus, jqXHR) ->
 				$('#all_tags_' + pid).html(data)
-
 		event.preventDefault()

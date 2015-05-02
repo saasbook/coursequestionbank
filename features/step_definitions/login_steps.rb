@@ -11,8 +11,6 @@ Given /^I am signed in with uid "([^\"]*)" and provider "([^\"]*)"$/ do |uid, pr
 	Instructor.stub(:find_by_provider_and_uid).and_return(@instructor)
 	Instructor.stub(:create_with_omniauth).and_return(@instructor)
 	visit "/auth/#{provider.downcase}"
-	
-	
 end
 
 Given /I am not logged in/ do
