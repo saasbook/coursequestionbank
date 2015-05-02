@@ -17,4 +17,4 @@
       =collection.name
     =check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: "checkbox", id: "collections[0]"
     All Collections
-= submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
+  = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
