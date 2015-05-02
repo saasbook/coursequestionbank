@@ -16,8 +16,16 @@ $(document).ready ->
 			tag = $(this).val().trim()
 			tag_id = $(this).parent().attr("id")
 			problem_id = parseInt(tag_id, 10)
-			$("<span class='tag'>" + tag + "</span>").insertBefore(this)
+			#$("<span class='tag'>" + tag + "</span>").insertAfter(this)
 			$(this).val('')
 			event.preventDefault()
 			$.ajax
-   				url: "add/" + tag + "/to/problem/" + problem_id
+				url: "add/" + tag + "/to/problem/" + problem_id
+				success: (data, textStatus, jqXHR) ->
+					#dconsole.log($('#all_tags_' + problem_id).text())
+					$('#all_tags_' + problem_id).html(data)
+
+	$('[id^="remove_tag"]').click ->
+		tag_id = parseInt($(this).parent().attr("id"))
+		console.log(tag_id)
+		event.preventDefault()

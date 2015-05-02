@@ -61,10 +61,11 @@ class ProblemsController < ApplicationController
     #puts "add tag:", params[:tag]
     @problem = Problem.find(params[:id])
     @tag = Tag.find_by_name(params[:tag])
-    if !@tag
+    if !(@problem.tags.include? @tag)
+      puts @tag.name + "tag is not in problem's tags"
       @tag = Tag.create(name: params[:tag])
       @problem.tags << @tag
     end
-    redirect_to problems_path
+    render :partial => "tags", locals: { tags: @problem.tags}
   end
 end

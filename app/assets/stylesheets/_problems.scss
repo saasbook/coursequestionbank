@@ -3,8 +3,19 @@
 // You can use Sass (SCSS) here: http://sass-lang.com/
 	
 .tag {
-    background: #fff;
+    //background: #5bc0de;
     padding: 5px;
-    border: 1px solid #DCDCDC;
-    border-radius: 3px;
+    //border: 1px solid #DCDCDC;
+    //border-radius: 3px;
+    margin: 3px;
+    //color: #fff;
+}
+
+#all_tags {
+	margin-top: 10px;
+}
+
+.remove_tag:hover {
+	text-decoration: line-through;
+	color: #ff0000;
 }

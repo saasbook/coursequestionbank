@@ -28,6 +28,7 @@
               - problem.collections.each do |collection|
                 = link_to "#{collection.name.truncate(20)} \n", collection_path(:id => collection.id)
             %td{:id => "#{problem.id}_tag"}
-              - problem.tags.each do |tag|
-                %span.tag= tag.name
               = text_field_tag(:tag, "", class: 'form-control', id: "add_tags_#{problem.id}", placeholder: "Add tags")
+              %div{:id => "all_tags_#{problem.id}"}
+                = render :partial => "tags", locals: { tags: problem.tags}
+              
