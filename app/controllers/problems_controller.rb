@@ -58,14 +58,19 @@ class ProblemsController < ApplicationController
   end
 
   def add_tag
-    #puts "add tag:", params[:tag]
     @problem = Problem.find(params[:id])
     @tag = Tag.find_by_name(params[:tag])
-    if !(@problem.tags.include? @tag)
-      puts @tag.name + "tag is not in problem's tags"
+    if !@tag or !(@problem.tags.include? @tag)
       @tag = Tag.create(name: params[:tag])
       @problem.tags << @tag
     end
+    render :partial => "tags", locals: { tags: @problem.tags}
+  end
+
+  def remove_tag
+    @problem = Problem.find(params[:id])
+    @tag = Tag.find(params[:tid])
+    @problem.tags.delete(@tag)
     render :partial => "tags", locals: { tags: @problem.tags}
   end
 end

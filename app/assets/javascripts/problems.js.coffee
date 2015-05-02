@@ -22,10 +22,15 @@ $(document).ready ->
 			$.ajax
 				url: "add/" + tag + "/to/problem/" + problem_id
 				success: (data, textStatus, jqXHR) ->
-					#dconsole.log($('#all_tags_' + problem_id).text())
 					$('#all_tags_' + problem_id).html(data)
 
-	$('[id^="remove_tag"]').click ->
+	@clickHandler = $('body').on "click", '[id^="remove_tag"]', (event) ->
+		console.log("fn called")
 		tag_id = parseInt($(this).parent().attr("id"))
-		console.log(tag_id)
+		pid = parseInt($(this).parent().parent().parent().attr("id"))
+		$.ajax
+			url: "remove/" + tag_id + "/from/problem/" + pid
+			success: (data, textStatus, jqXHR) ->
+				$('#all_tags_' + pid).html(data)
+
 		event.preventDefault()

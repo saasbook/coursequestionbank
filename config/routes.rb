@@ -14,6 +14,7 @@ Coursequestionbank::Application.routes.draw do
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   get 'remove_problem' => 'problems#remove_from_collection'
   get 'add/:tag/to/problem/:id' => 'problems#add_tag', :as => 'add_tag'
+  get 'remove/:tid/from/problem/:id' => 'problems#remove_tag', :as => 'remove_tag'
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
