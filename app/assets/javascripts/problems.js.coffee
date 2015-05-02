@@ -11,10 +11,25 @@
 
 
 $(document).ready ->
-	$('#add_tags').on "keypress", (event) ->
+	$('[id^="add_tags_"]').on "keypress", (event) ->
 		if event.which == 44
-			tag = $('#add_tags').val()
-			console.log(tag)
-			$("<span class='tags'>" + tag + "</span>").insertAfter("#add_tags");
-			$('#add_tags').val('');
-			event.preventDefault();
+			tag = $(this).val().trim()
+			tag_id = $(this).parent().attr("id")
+			problem_id = parseInt(tag_id, 10)
+			#$("<span class='tag'>" + tag + "</span>").insertAfter(this)
+			$(this).val('')
+			event.preventDefault()
+			$.ajax
+				url: "add/" + tag + "/to/problem/" + problem_id
+				success: (data, textStatus, jqXHR) ->
+					$('#all_tags_' + problem_id).html(data)
+
+	@clickHandler = $('body').on "click", '[id^="remove_tag"]', (event) ->
+		console.log("fn called")
+		tag_id = parseInt($(this).parent().attr("id"))
+		pid = parseInt($(this).parent().parent().parent().attr("id"))
+		$.ajax
+			url: "remove/" + tag_id + "/from/problem/" + pid
+			success: (data, textStatus, jqXHR) ->
+				$('#all_tags_' + pid).html(data)
+		event.preventDefault()

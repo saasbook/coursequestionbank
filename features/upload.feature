@@ -15,22 +15,22 @@ Scenario: redirect to login page if not logged in
 Scenario: upload a file successfully
 	Given I am on the upload page
 	And I attach the file "features/test_files/foo.txt" to "file_upload"
-	And I press "upload"
-	Then I should see "Quiz successfully uploaded"
+	And I press "Upload File"
+	Then I should see "Your quiz was successfully uploaded!"
 
 Scenario: syntax error in the file
 	Given I am on the upload page
 	And I attach the file "features/test_files/foo_error.txt" to "file_upload"
-	And I press "upload"
+	And I press "Upload File"
 	Then I should see "There is an error in the file"
 
 Scenario: upload same file twice
 	Given I am on the upload page
 	And I attach the file "features/test_files/foo.txt" to "file_upload"
-	And I press "upload"
+	And I press "Upload File"
 	Given I am on the upload page
 	And I attach the file "features/test_files/foo.txt" to "file_upload"
-	And I press "upload"
+	And I press "Upload File"
 	Then I should see "There is an error in the file: Quiz with that name already exists in your list of collections. You probably didn't mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that"
 
 

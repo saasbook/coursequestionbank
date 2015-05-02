@@ -12,6 +12,7 @@
 
 @import "bootstrap-sprockets";
 @import "bootstrap";
+@import 'problems';
 
  html, body {
  	/*font-family: 'Patrick Hand';*/
@@ -192,6 +193,10 @@ li#navbar {
 
 .right {
 	float: right;
+}
+
+.maintable {
+	margin-top: 10px;
 }
 
 

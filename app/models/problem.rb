@@ -17,15 +17,14 @@ class Problem < ActiveRecord::Base
     integer   :instructor_id
     boolean   :is_public
     time      :last_used
+    # integer :collection_id
     
     string    :tag_names, :multiple => true do
       tags.map(&:name)
     end
-
-    string    :coll_names, :multiple => true do
-      collections.map(&:name)
-    end 
-
+    # integer :collection_ids, :multiple => true do
+    #   collections.map(&:id)
+    # end
   end
 
   def html5
@@ -61,8 +60,8 @@ class Problem < ActiveRecord::Base
         with(:is_public, true)
       end
       with(:tag_names, filters[:tags]) if filters[:tags].present? #I THOUGHT SUNSPOT SAID THE PRESENCE CHECK WAS UNNECESARY
-      # with(:coll_names, filters[:collections].keys)
-      if filters['last_exported_begin'] 
+      # with(:collection_ids, filters[:collections].keys)
+      if filters['last_exported_begin']
         with(:last_used).greater_than_or_equal_to(filters['last_exported_begin'])
       end
       if filters['last_exported_end']

@@ -1,4 +1,4 @@
-/ <<<<<<< HEAD
+
 / =form_tag checked_problems_path, class: 'form-inline' do
 /   %div.form-group
 /     =select_tag 'dropdown', options_from_collection_for_select(Collection.where(instructor_id: @current_user), "id","name"), class: 'form-control'
@@ -36,11 +36,8 @@
 =form_tag checked_problems_path, class: 'form-inline' do
   %div.form-group
     =select_tag 'dropdown', options_from_collection_for_select(Collection.where(instructor_id: @current_user), "id","name"), class: 'form-control'
-
-  =submit_tag 'Add problems to the collection',  name: 'add_problems',  class: 'btn btn-default'
-  =submit_tag 'Delete problems', class: 'btn btn-default'
-  %br
-  %br
+    =submit_tag 'Add problems to the collection',  name: 'add_problems',  class: 'btn btn-default'
+    =submit_tag 'Delete problems', class: 'btn btn-default'
   %div{:class => "maintable"}
     %div.table-responsive
       %table.table.table-striped#problems
@@ -61,10 +58,12 @@
                 %div{:class => "additional"}
                   = "Created Date: " + problem.created_date.to_s + " | "
                   = "Created By: " + problem.instructor.name
-
               %td
                 - problem.collections.each do |collection|
                   %p{:class => "colname"}
                     = link_to "#{collection.name} \n", collection_path(:id => collection.id)
-              %td= problem.tags.map {|tags| tags.name + ', '}.join
-/ >>>>>>> truncate
+              %td{:id => "#{problem.id}_tag"}
+                = text_field_tag(:tag, "", class: 'form-control', id: "add_tags_#{problem.id}", placeholder: "Add tags")
+                %div{:id => "all_tags_#{problem.id}"}
+                  = render :partial => "tags", locals: { tags: problem.tags}
+

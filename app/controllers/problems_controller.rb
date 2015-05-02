@@ -4,11 +4,8 @@ class ProblemsController < ApplicationController
  @@defaults = HashWithIndifferentAccess.new({'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
-    puts "SESSION IS : #{session[:filters]} ----------------------------------------------------------------------------------------"
-    session[:filters] ||= @@defaults
-    session[:filters] = @@defaults.merge session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
-    puts "SESSION SET TO : #{session[:filters]} ----------------------------------------------------------------------------------------"
-    puts "PARAMS SLICE: #{params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)}"
+    session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
+    session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
   end
 
   def home
@@ -35,5 +32,19 @@ class ProblemsController < ApplicationController
   end
 
   def add_tag
+    @problem = Problem.find(params[:id])
+    @tag = @problem.tags.find_by_name(params[:tag])
+    if !@tag
+      @tag = Tag.create(name: params[:tag])
+      @problem.tags << @tag
+    end
+    render :partial => "tags", locals: { tags: @problem.tags}
+  end
+
+  def remove_tag
+    @problem = Problem.find(params[:id])
+    @tag = Tag.find(params[:tid])
+    @problem.tags.delete(@tag)
+    render :partial => "tags", locals: { tags: @problem.tags}
   end
 end

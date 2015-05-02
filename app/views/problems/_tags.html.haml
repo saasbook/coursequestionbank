@@ -1,0 +1,2 @@
+- tags.each do |tag|
+    %span.tag{:id => tag.id.to_s + "_tag"}= link_to tag.name,  '', class: 'remove_tag', id: 'remove_tag'
