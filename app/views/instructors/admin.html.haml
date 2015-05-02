@@ -25,7 +25,7 @@
             %td= user.provider
             %td
               =link_to 'authorize', authorize_path("authorize", user), :class => 'btn btn-info', :id=> 'authorize'
-              =link_to 'deny', authorize_path("deny", user), :class => 'btn btn-warning', :id=> 'deny'
+              =link_to 'deny', authorize_path("deny", user), :method=> :get, :class => 'btn btn-warning', :id=> 'deny'
 
   %hr
   %h4 Give permisions to users manually:

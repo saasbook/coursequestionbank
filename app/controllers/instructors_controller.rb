@@ -16,11 +16,12 @@ class InstructorsController < ApplicationController
   end
 
   def authorize
+    puts "authorize called"
   	user = Instructor.find(params[:id])
-  	if params[:action] == "authorize"
+  	if params[:permission] == "authorize"
   		user.update_attributes(privilege: "instructor")
-  	else
-  		user.update_attributes(privilege: "denied")
+  	elsif params[:permission] == "deny"
+   		user.update_attributes(privilege: "denied")
   	end
   	redirect_to admin_path
   end
