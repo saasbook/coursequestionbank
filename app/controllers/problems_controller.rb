@@ -58,5 +58,19 @@ class ProblemsController < ApplicationController
   end
 
   def add_tag
+    @problem = Problem.find(params[:id])
+    @tag = @problem.tags.find_by_name(params[:tag])
+    if !@tag
+      @tag = Tag.create(name: params[:tag])
+      @problem.tags << @tag
+    end
+    render :partial => "tags", locals: { tags: @problem.tags}
+  end
+
+  def remove_tag
+    @problem = Problem.find(params[:id])
+    @tag = Tag.find(params[:tid])
+    @problem.tags.delete(@tag)
+    render :partial => "tags", locals: { tags: @problem.tags}
   end
 end

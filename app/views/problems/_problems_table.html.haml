@@ -62,5 +62,8 @@
                   - problem.collections.each do |collection|
                     %p{:class => "colname"}
                       = link_to "#{collection.name} \n", collection_path(:id => collection.id)
-                %td= problem.tags.map {|tags| tags.name + ', '}.join
-/ >>>>>>> truncate
+                %td{:id => "#{problem.id}_tag"}
+                  = text_field_tag(:tag, "", class: 'form-control', id: "add_tags_#{problem.id}", placeholder: "Add tags")
+                  %div{:id => "all_tags_#{problem.id}"}
+                    = render :partial => "tags", locals: { tags: problem.tags}
+
