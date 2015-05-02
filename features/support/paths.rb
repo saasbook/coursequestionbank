@@ -18,6 +18,7 @@ module NavigationHelpers
     when /^the problems page$/ then '/problems'
     when /^the dashboard$/ then '/profile'
     when /^the upload page$/ then '/upload'
+    when /^the admin panel$/ then '/admin'
     
     # Add more mappings here.
     # Here is an example that pulls values out of the Regexp:

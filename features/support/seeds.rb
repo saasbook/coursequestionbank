@@ -34,6 +34,8 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
 @p1.instructor = @instructor
 @p1.tags << @tag1
 @p1.tags << @tag4
+
+
 @p1.collections << @collection1
 @p1.collections << @collection2
 @p1.save
@@ -42,6 +44,7 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
 @p2 = Problem.new(created_date: '2013-06-09 21:51:55 UTC', is_public: true, json: "", text:
                
                "select_multiple do
+
     text %q{Which statements comparing Plan-and-Document (P&D) with
             Agile software engineering processes are true?}
     answer \"The basic types of activities involved in software
@@ -52,6 +55,7 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
             P&D and Agile, but their interaction over the project
             lifetime differs between P&D and Agile.
             \"""
+
     distractor \"Because Agile tends to focus on small teams, it cannot
                 be used effectively to build large systems.\",
     :explanation => \"""
@@ -59,6 +63,7 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
             together to form large services in a Service-Oriented Architecture.
             For example, Amazon.com is architected this way.
             \"""
+
     answer \"The Waterfall methodology involves the customer much more heavily at
             the beginning and end of the lifecycle, whereas the XP (extreme
             programming) methodology involves the customer throughout
@@ -68,8 +73,10 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
             the customer and using it to inform the next iteration of
             work.
             \"""
+
     answer \"The Spiral methodology combines elements of the waterfall model
             with intermediate prototypes.\"
+
   end" 
                
                )
