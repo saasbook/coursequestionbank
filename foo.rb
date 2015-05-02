@@ -1,6 +1,6 @@
-quiz 'A FEW EXAMPLE Qs' do
+quiz 'Another example' do
   
-  choice_answer :randomize => true do
+  choice_answer :tag => "test tag" do
     text "Which of the following best identifies the four basic operations supported by RDBMS?"
     distractor "HTTP", :explanation => 'HTTP stands for HyperText Transfer Protocol, which is used to transfer SaaS content to browsers.'
     distractor "Get, Put, Post, Delete", :explanation => 'These are four of the methods or "verbs" used by HTTP.'

@@ -1,6 +1,6 @@
 quiz '1/22/15 (W1 L2)' do
 
-  select_multiple do
+  select_multiple :tag => "quiz 1" do
     text %q{Around 2007, the claim "Rails doesn't scale"  was attributed to
 Twitter engineers, and the fact that Twitter later moved
 away from Rails was cited by some as evidence that the claim was true.
