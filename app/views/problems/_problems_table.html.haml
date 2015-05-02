@@ -27,7 +27,7 @@
                 %td
                   - problem.collections.each do |collection|
                     %p{:class => "colname"}
-                      = link_to "#{collection.name} \n", collection_path(:id => collection.id)
+                      = link_to "#{collection.name} \n", collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
                 %td{:id => "#{problem.id}_tag"}
                   = text_field_tag(:tag, "", class: 'form-control', id: "add_tags_#{problem.id}", placeholder: "Add tags")
                   %div{:id => "all_tags_#{problem.id}"}
