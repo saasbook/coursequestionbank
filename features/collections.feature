@@ -11,7 +11,7 @@ Feature: collections that we can add problems to
   Scenario: create a new collection
     When I follow "start a new collection"
     And I fill in "collection_name" with "yolo"
-    And I press "Create Collection"
+    And I press "Create"
     Then I should be on the dashboard
     And I add problem containing 'Raffi' to collection 'yolo'
     And I should see Collection 'yolo' in the database
@@ -21,14 +21,14 @@ Feature: collections that we can add problems to
   Scenario: create a new collection
     When I follow "start a new collection"
     And I fill in "collection_name" with ""
-    And I press "Create Collection"
+    And I press "Create"
     Then I should see "can't be blank"
     
 
   Scenario: remove a problem
     When I follow "start a new collection"
     And I fill in "collection_name" with "yolo"
-    And I press "Create Collection"
+    And I press "Create"
     Then I should be on the dashboard
     And I add problem containing 'lifetime' to collection 'yolo'
     And I should see Collection 'yolo' in the database
@@ -43,14 +43,14 @@ Feature: collections that we can add problems to
   Scenario: update a collection name
     When I follow "start a new collection"
     And I fill in "collection_name" with "yolo"
-    And I press "Create Collection"
+    And I press "Create"
     And I update 'yolo' to 'swag'
     Then I should see Collection 'swag' in the database
 
   Scenario: attempt to update a collection with invalid name
     When I follow "start a new collection"
     And I fill in "collection_name" with "yolo"
-    And I press "Create Collection"
+    And I press "Create"
     And I update 'yolo' to ''
     Then I should see Collection 'yolo' in the database
 
