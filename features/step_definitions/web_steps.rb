@@ -51,7 +51,7 @@ When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
   visit edit_collection_path(:id => collection_id)
   steps %Q{ 
     And I fill in "collection_name" with "#{new}"
-    And I press "Update Collection"
+    And I press "Update"
   }
 end
 
