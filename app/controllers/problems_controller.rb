@@ -59,8 +59,8 @@ class ProblemsController < ApplicationController
 
   def add_tag
     @problem = Problem.find(params[:id])
-    @tag = Tag.find_by_name(params[:tag])
-    if !@tag or !(@problem.tags.include? @tag)
+    @tag = @problem.tags.find_by_name(params[:tag])
+    if !@tag
       @tag = Tag.create(name: params[:tag])
       @problem.tags << @tag
     end
