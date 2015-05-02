@@ -1,18 +1,20 @@
-
 = form_tag problems_path, :method => :get, :id => "filter_form" do
-
   %div.form-group
     = label_tag(:search, "Search Keywords:")
-    = text_field_tag(:search, params[:search], class: 'form-control', placeholder: "Search")
-  
+    = text_field_tag(:search, session[:filters][:search], class: 'form-control', placeholder: "Search")  
   %div.form-group
     = label_tag(:tags, "Tags:")
-    = text_field_tag(:tags, params[:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
+    = text_field_tag(:tags, session[:filters][:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
 
   %div.form-group
     = label_tag(:last_exported, "Last Exported:")
-    = text_field_tag(:last_exported_begin, params[:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
-    = text_field_tag(:last_exported_end, params[:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
-
-  %div.form-group
-    = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
+    = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
+    = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
+  %div.form-group 
+    = label_tag(:collections, "Collections:")
+    -@collections.each do |collection|
+      =check_box_tag "collections[#{collection.id}]", 1,  !!(session[:filters][:collections].include? collection.id), class: "checkbox", id: "collections[#{collection.id}]"
+      =collection.name
+    =check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: "checkbox", id: "collections[0]"
+    All Collections
+  = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'

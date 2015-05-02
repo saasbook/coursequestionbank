@@ -1,5 +1,3 @@
-
-
 Given /^I am signed in with provider "([^\"]*)"$/ do |provider| 
 	visit login_path
 	visit "/auth/#{provider.downcase}"
@@ -20,4 +18,3 @@ end
 Given /login was unsuccessful/ do
 	visit auth_failure_path
 end
-
