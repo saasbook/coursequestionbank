@@ -21,9 +21,3 @@ Feature: display list of questions filtered by tag
     And I am on the CourseQuestionBank home page
     When I fill in "tags" with "quiz 2,quiz 4"
     And I press "Apply"
-
-
-  
-
-
-

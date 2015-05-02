@@ -15,6 +15,7 @@
 @collection1 = Collection.create(name: "Fall 14")
 @collection2 = Collection.create(name: "Spring 15")
 @collection3 = Collection.create(name: "Spring 14")
+
 @p1 = Problem.new(created_date: '2012-06-09 21:51:55 UTC', is_public: true, json: "", text:
                
                "select_multiple do
@@ -33,6 +34,9 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
 @p1.instructor = @instructor
 @p1.tags << @tag1
 @p1.tags << @tag4
+
+
+
 @p1.collections << @collection1
 @p1.collections << @collection2
 @p1.save
@@ -44,7 +48,6 @@ Krikorian\'s (Twitter Director of Engineering) views on this subject?}
 
     text %q{Which statements comparing Plan-and-Document (P&D) with
             Agile software engineering processes are true?}
-
     answer \"The basic types of activities involved in software
             engineering are the same in P&D and Agile methodologies\",
     :explanation => \"""
