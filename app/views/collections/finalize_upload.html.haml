@@ -1,6 +1,6 @@
 %div.col-md-12
   %h3{:style=>"color: blue; padding:0px;margin:0px;"}
-    = "Your quiz was successfully uploaded! We found #{@collections.size} collections with #{collections.reduce{|collection, n| collection.size + n}} problems in your quiz. Review them below:"
+    = "Your quiz was successfully uploaded! We found #{@collections.size} collections with #{@collections.inject(1){|sum, c| c.problems.size + sum}} problems in your quiz. Review them below:"
   
   -@collections.each do |collection|
     %tr
