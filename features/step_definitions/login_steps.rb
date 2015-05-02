@@ -6,7 +6,7 @@ Given /^I am signed in with provider "([^\"]*)"$/ do |provider|
 end
 
 Given /^I am signed in with uid "([^\"]*)" and provider "([^\"]*)"$/ do |uid, provider| 
-	@instructor = Instructor.find_by_uid(uid)
+	@instructor = Instructor.find_by_username(uid)
 	visit login_path
 	Instructor.stub(:find_by_provider_and_uid).and_return(@instructor)
 	Instructor.stub(:create_with_omniauth).and_return(@instructor)
