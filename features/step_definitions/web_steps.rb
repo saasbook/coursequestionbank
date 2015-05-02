@@ -69,7 +69,7 @@ When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
     Given I am on the dashboard
     And I follow "start a new collection"
     And I fill in "collection_name" with "#{name}"
-    And I press "Create Collection"
+    And I press "Create"
   }
   if optional.strip == 'and mark it as current'
     visit mark_as_current_path(:id => Collection.find_by_name(name).id)
@@ -79,7 +79,7 @@ end
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
   problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
   collection = Collection.find_by_name(collection).id
-  visit "/add_problem?collection_id=#{collection}&id=#{problem}"
+  visit checked_problems_path(:problems => [problem], :dropdown => collection)
 end
 
 When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
@@ -116,9 +116,7 @@ end
 When /^I press the trash icon at '(.*)'/ do |collection|
   collection = Collection.find_by_name(collection)
   visit edit_collection_path(:id => collection)
-  steps %Q{
-    Then I follow "trash_can_icon"
-  }
+  click_link 'Delete'
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|

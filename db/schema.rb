@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150427182212) do
+ActiveRecord::Schema.define(:version => 20150429010252) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -21,6 +21,7 @@ ActiveRecord::Schema.define(:version => 20150427182212) do
     t.datetime "updated_at",    :null => false
     t.text     "description"
     t.boolean  "is_public"
+    t.string   "color"
   end
 
   create_table "collections_problems", :id => false, :force => true do |t|

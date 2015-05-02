@@ -3,14 +3,16 @@
   = f.text_field :name, :class => 'form-control'
   = f.label :description
   = f.text_field :description, :class => 'form-control'
+  = f.select :color, ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'Purple'], :class => 'form-control'
   = f.label 'Mark as public?'
   = f.check_box :is_public, :class => 'form-control'
   %div.form-group
     = f.submit 'Update', class: 'btn btn-primary'
-    =link_to collection_path(collection), :class => 'btn btn-default', method: :delete, :confirm => 'Delete this collection?' do
+    =link_to collection_path(collection), :class => 'btn btn-default', method: :delete, :confirm => 'Delete this collection?', id: 'Delete' do
       %span.glyphicon.glyphicon-trash
       Delete Collection
-    =link_to export_path(:id => collection), :class => 'btn btn-default' do
+    =link_to export_path(:id => collection), :class => 'btn btn-default', id: 'Export' do
       %span.glyphicon.glyphicon-export
       Export
+
 

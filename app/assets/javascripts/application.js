@@ -25,12 +25,9 @@ jQuery(document).ready(function() {
 		$('#q' + $(this).attr('id')).find('.answers').toggle();
 		$('#q' + $(this).attr('id')).find('.additional').toggle();
 		$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
-// <<<<<<< HEAD
 		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");		
-		$('.icon').toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
-// // =======
+		$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
 		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-// >>>>>>> 23faf3e4360b01bb95820b48c7afc4284801984f
 	});
 
 });
