@@ -32,4 +32,3 @@
                   = text_field_tag(:tag, "", class: 'form-control', id: "add_tags_#{problem.id}", placeholder: "Add tags")
                   %div{:id => "all_tags_#{problem.id}"}
                     = render :partial => "tags", locals: { tags: problem.tags}
-
