@@ -76,6 +76,16 @@ When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
   end
 end
 
+When /^(?:|I )authorize '(.*)'/ do |user|
+  #you thought I would actually use user? nope
+  # click_link('authorize')
+  visit "admin/authorize/#{Instructor.find_by_name(user).id}"
+end
+
+When /^(?:|I )deny '(.*)'/ do |user|
+  visit "admin/deny/#{Instructor.find_by_name(user).id}"
+end
+
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
   problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
   collection = Collection.find_by_name(collection).id
