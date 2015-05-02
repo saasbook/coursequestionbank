@@ -57,4 +57,4 @@ Feature: collections that we can add problems to
   Scenario: view a collection
     When I am on the homepage
     And I click on "1/22/15 (W1 L2)"
-    Then I should see a list of problems in "1/22/15 (W1 L2)"
+    Then I should see "Because Agile tends to focus on small teams, it cannot be used effectively "
