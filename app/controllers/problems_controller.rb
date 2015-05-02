@@ -3,14 +3,7 @@ class ProblemsController < ApplicationController
  @@defaults = {'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 } #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
-    # if not session[:filters]
     session[:filters] = @@defaults.merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
-    # else
-    #   session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page) 
-    # end
-    puts "SESSION SET TO : #{session[:filters]} ----------------------------------------------------------------------------------------"
-    puts "SESSION FILTERS ----------------------------------------------------------------------------------------"
-    # session[:filters] = {}
   end
 
   def home
