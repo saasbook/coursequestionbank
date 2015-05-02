@@ -24,3 +24,8 @@ Scenario: redirect to login page if login unsuccessful
 	And login was unsuccessful
 	Then I should be on the login page
 	And I should see "Authentication failed, please try again."
+
+Scenario: log out successfully
+  Given I am on the CourseQuestionBank home page
+  And I follow " Log Out"
+  Then I should be on the login page
