@@ -16,6 +16,6 @@ Instructor.delete_all
 @user5 = Whitelist.create(username: "dradding", privilege: "admin")
 @user6 = Whitelist.create(username: "rahdor", privilege: "admin")
 @user7 = Whitelist.create(username: "siddhantpuri", privilege: "admin")
-
+Instructor.create(name: "noob", provider: "github", uid: "1234", username: "noob", privilege: "default")
 
 
