@@ -116,9 +116,7 @@ end
 When /^I press the trash icon at '(.*)'/ do |collection|
   collection = Collection.find_by_name(collection)
   visit edit_collection_path(:id => collection)
-  steps %Q{
-    Then I follow "trash_can_icon"
-  }
+  click_link 'Delete'
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
