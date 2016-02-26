@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '1.9.3'
+# ruby '1.9.3'
 gem 'rails', '3.2.16'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
@@ -15,15 +15,17 @@ gem 'cucumber-rails'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
 gem 'json'
-gem 'will_paginate', '~> 3.0.6'
+gem 'will_paginate'
 
 group :development, :test do
   gem 'sqlite3'
-  gem 'ruby-debug19'
+  #gem 'ruby-debug19'
+  gem 'byebug'
   gem 'database_cleaner'
-  gem 'rspec-rails', '~> 2.14.0'
+  gem 'rspec-rails'
   gem 'simplecov'
   gem 'rack_session_access'
+  gem 'test-unit'
   gem 'sunspot_solr', :git => 'https://github.com/sunspot/sunspot.git'
 end
 
@@ -36,7 +38,7 @@ end
 group :assets do
   gem 'sass-rails',   '~> 3.2.3'
   gem 'coffee-rails', '~> 3.2.1'
-  gem 'therubyracer'
+  #gem 'therubyracer'
   # See https://github.com/sstephenson/execjs#readme for more supported runtimes
   # gem 'therubyracer', :platforms => :ruby
   gem 'uglifier', '>= 1.0.3'

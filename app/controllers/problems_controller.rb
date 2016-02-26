@@ -24,7 +24,7 @@ class ProblemsController < ApplicationController
       collection.problems.delete(problem_to_remove)
       collection.save
       flash[:notice] = "problem successfully removed from #{collection.name}"
-    else 
+    else
       flash[:notice] = "the problem you attempted to remove does not exist in #{collection.name}"
     end
     flash.keep
