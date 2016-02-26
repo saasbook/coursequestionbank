@@ -10,11 +10,10 @@
 Instructor.delete_all
 
 @user1 = Whitelist.create(username: "armandofox", privilege: "admin")
-@user2 = Whitelist.create(username: "ishustava", privilege: "admin")
-@user3 = Whitelist.create(username: "zhangaaron", privilege: "admin")
-@user4 = Whitelist.create(username: "ingridh", privilege: "admin")
-@user5 = Whitelist.create(username: "dradding", privilege: "admin")
-@user6 = Whitelist.create(username: "rahdor", privilege: "admin")
-@user7 = Whitelist.create(username: "siddhantpuri", privilege: "admin")
-
-
+@user2 = Whitelist.create(username: "jshoe", privilege: "admin")
+@user3 = Whitelist.create(username: "kellymtrinh", privilege: "admin")
+@user4 = Whitelist.create(username: "kimeow", privilege: "admin")
+@user5 = Whitelist.create(username: "brandonpickering", privilege: "admin")
+@user6 = Whitelist.create(username: "jesmin-n", privilege: "admin")
+@user7 = Whitelist.create(username: "scabanela", privilege: "admin")
+@user8 = Whitelist.create(username: "jonsheu", privilege: "admin")
