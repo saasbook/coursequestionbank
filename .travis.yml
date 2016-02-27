@@ -3,7 +3,8 @@ env:
 script: 
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rake db:test:prepare
-  - bundle exec sunspot-solr start -p 8982
+    #  - bundle exec sunspot-solr start -p 8982
+  - bundle exec sunspot-solr start
   - bundle exec rake sunspot:solr:reindex
   - bundle exec cucumber
   - bundle exec rake spec
