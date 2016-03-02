@@ -16,6 +16,7 @@ gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
 gem 'json'
 gem 'will_paginate'
+gem 'sunspot_solr'
 
 group :development, :test do
   gem 'sqlite3'
@@ -26,7 +27,7 @@ group :development, :test do
   gem 'simplecov'
   gem 'rack_session_access'
   gem 'test-unit'
-  gem 'sunspot_solr', :git => 'https://github.com/sunspot/sunspot.git'
+  # gem 'sunspot_solr', :git => 'https://github.com/sunspot/sunspot.git'
 end
 
 group :production do

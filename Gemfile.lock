@@ -241,7 +241,7 @@ DEPENDENCIES
   simplecov
   sqlite3
   sunspot_rails!
-  sunspot_solr!
+  sunspot_solr
   test-unit
   uglifier (>= 1.0.3)
   will_paginate
