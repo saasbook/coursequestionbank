@@ -4,7 +4,7 @@ Feature: Login with github
 	So that I can access the application
 	I want to login to the app with github
 
-Background: 
+Background:
 	Given I am signed in with uid "1234" and provider "github"
 	And I am on the CourseQuestionBank home page
 
