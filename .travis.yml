@@ -15,4 +15,4 @@ rvm:
   - 2.2.2
 
 before_script:
-  cat solr/conf/scripts.conf
+  # cat solr/conf/scripts.conf
