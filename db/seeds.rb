@@ -18,3 +18,5 @@ Instructor.delete_all
 @user7 = Whitelist.create(username: "scabanela", privilege: "admin")
 @user8 = Whitelist.create(username: "jonsheu", privilege: "admin")
 @user9 = Whitelist.create(username: "zhangaaron", privilege: "admin")
+
+Problem.create(id: 1, text: "hello")
