@@ -13,3 +13,6 @@ script:
 language: ruby
 rvm:
   - 2.2.2
+
+before_script:
+  cat solr/conf/scripts.conf
