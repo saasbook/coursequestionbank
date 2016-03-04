@@ -11,12 +11,15 @@ gem 'cancan'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'
-gem 'cucumber-rails'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
 gem 'json'
 gem 'will_paginate'
 gem 'sunspot_solr'
+
+group :test do
+  gem 'cucumber-rails', :require => false
+end
 
 group :development, :test do
   gem 'sqlite3'
