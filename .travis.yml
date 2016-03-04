@@ -5,6 +5,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake db:seed
   - bundle exec sunspot-solr start -p 8983
+  - ps
   - bundle exec rake sunspot:solr:reindex
   - bundle exec cucumber
   - bundle exec rake spec
@@ -15,6 +16,5 @@ rvm:
   - 2.2.2
 
 before_script:
-  - find . -name "*conf*"
+  - cat `find . -name 'scripts.conf' -print`
   - ps
-  # cat solr/conf/scripts.conf
