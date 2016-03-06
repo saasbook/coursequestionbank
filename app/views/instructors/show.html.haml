@@ -3,6 +3,7 @@
   %div.table-responsive
     %h2 #{@current_user.name}'s Dashboard
 
+    = @collections
     -if @collections.empty?
       %h3 You have no collections! Start one now.
       =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
@@ -26,15 +27,16 @@
         %th Privacy
 
       %tbody
-        - @collections.each do |collection|
-          %tr
-          %td
-            -if @current_user.current_collection == collection.id
-              =link_to image_tag('yellowstar.png', width: 30), mark_as_current_path(:id => collection.id)
-            -else
-              =link_to image_tag('graystar.png', width: 30), mark_as_current_path(:id => collection.id)
-          %td= link_to collection.name.truncate(35), edit_collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
-          %td= collection.problems.length
-          %td= collection.description
-          %td= collection.last_used
-          %td= collection.is_public ? 'Public' : 'Private'
+        -if !@collections.empty?
+          - @collections.each do |collection|
+            %tr
+            %td
+              -if @current_user.current_collection == collection.id
+                =link_to image_tag('yellowstar.png', width: 30), mark_as_current_path(:id => collection.id)
+              -else
+                =link_to image_tag('graystar.png', width: 30), mark_as_current_path(:id => collection.id)
+            %td= link_to collection.name.truncate(35), edit_collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
+            %td= collection.problems.length
+            %td= collection.description
+            %td= collection.last_used
+            %td= collection.is_public ? 'Public' : 'Private'
