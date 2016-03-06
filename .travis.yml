@@ -2,10 +2,9 @@ env:
   - DB=sqlite
 script:
   - RAILS_ENV=test bundle exec rake db:migrate
+  - bundle exec sunspot-solr start -p 8983
   - bundle exec rake db:test:prepare
   - bundle exec rake db:seed
-  - bundle exec sunspot-solr start -p 8983
-  - ps
   - bundle exec rake sunspot:solr:reindex
   - bundle exec cucumber
   - bundle exec rake spec
