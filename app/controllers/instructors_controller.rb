@@ -11,19 +11,18 @@ class InstructorsController < ApplicationController
   end
 
   def show_unauthorized
-  	@unauthorized_users = Instructor.nonadmin
-  	render 'admin'
+    @unauthorized_users = Instructor.nonadmin
+    render 'admin'
   end
 
   def authorize
-    puts "authorize called"
-  	user = Instructor.find(params[:id])
-  	if params[:permission] == "authorize"
-  		user.update_attributes(privilege: "instructor")
-  	elsif params[:permission] == "deny"
-   		user.update_attributes(privilege: "denied")
-  	end
-  	redirect_to admin_path
+    user = Instructor.find(params[:id])
+    if params[:permission] == "authorize"
+      user.update_attributes(privilege: "instructor")
+    elsif params[:permission] == "deny"
+      user.update_attributes(privilege: "denied")
+    end
+      redirect_to admin_path
   end
 
   def add_to_whitelist
