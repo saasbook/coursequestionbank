@@ -2,8 +2,7 @@ class InstructorsController < ApplicationController
 
   def show
     @instructor = Instructor.find_by_id(@current_user)
-    @test = "HI"
-    @collections = @instructor.collections
+    @collections = @instructor.collections.to_a
   end
 
   def mark_as_current
