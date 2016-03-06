@@ -30,7 +30,6 @@ group :development, :test do
   gem 'simplecov'
   gem 'rack_session_access'
   gem 'test-unit'
-  # gem 'sunspot_solr', :git => 'https://github.com/sunspot/sunspot.git'
 end
 
 group :production do
