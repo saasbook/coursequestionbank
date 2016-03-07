@@ -17,7 +17,7 @@ quiz 'A few example questions' do
     distractor "8000"
   end
 
-  select_multiple :randomize => true do
+  select_multiple :randomize => true, :tag => ["test_tag", "test_tag2"] do
     text  "Which tiers in the three-tier architecture are involved in handling views?"
     answer "Presentation"
     answer "Logic"
@@ -25,7 +25,7 @@ quiz 'A few example questions' do
     distractor "Database"
   end
 
-  choice_answer :randomize => true do
+  choice_answer :randomize => true, :tag => "test_tag2" do
     text "The ----- tier of three-tier SaaS apps is the most complicated to scale."
     answer "Presentation"
     distractor "Logic"
