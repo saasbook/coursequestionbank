@@ -4,8 +4,6 @@ class RuqlReader
     Quiz.nuke_from_orbit
     Quiz.instance_eval "#{IO.read(filename)}"
     collections = []
-    puts Quiz.quizzes.map{|q| q.title + ' ,'}.join
-    puts Quiz.quizzes.uniq.map{|q| q.title + ' ,'}.join
     Quiz.quizzes.uniq.each do |quiz|
       problems_json = quiz.render_with("JSON", {})
       collection = if (Collection.find_by_name(quiz.title) and Collection.find_by_name(quiz.title).instructor == user) then false else user.collections.new(:name => quiz.title) end
