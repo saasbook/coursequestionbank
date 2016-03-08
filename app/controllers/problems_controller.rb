@@ -1,14 +1,32 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
   load_and_authorize_resource
- @@defaults = HashWithIndifferentAccess.new({'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => nil, 'last_exported_begin' => nil, 'last_exported_end' => nil, 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
-    session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
+    session[:filters] = session[:filters].merge params.slice(:tags, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
+    
     if session[:filters][:tags].is_a? String
       session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
     end
+    
+    session[:filters][:collections] = []
+    if params[:collections]
+      params[:collections].each do |key, value| 
+        session[:filters][:collections] << Integer(key) if value == "1"
+      end
+    end
+    if session[:filters][:collections].include?(0)
+      session[:filters][:collections] = []
+    end
+    
+    # if session[:filters][:last_exported_begin] and session[:filters][:last_exported_end].empty?
+    #   session[:filters][:last_exported_begin] = nil
+    # end
+    # if session[:filters][:last_exported_end] and session[:filters][:last_exported_end].empty?
+    #   session[:filters][:last_exported_end] = nil
+    # end
   end
 
   def home

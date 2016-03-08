@@ -22,9 +22,9 @@ class Problem < ActiveRecord::Base
     string    :tag_names, :multiple => true do
       tags.map(&:name)
     end
-    # integer :collection_ids, :multiple => true do
-    #   collections.map(&:id)
-    # end
+    integer :collection_ids, :multiple => true do
+      collections.map(&:id)
+    end
   end
 
   def html5
@@ -54,12 +54,19 @@ class Problem < ActiveRecord::Base
         with(:tag_names, tag)
       end
       
-      # with(:collection_ids, filters[:collections].keys)
+      if !filters[:collections].empty?
+        any_of do
+          filters[:collections].each do |col|
+            with(:collection_ids, col)
+          end
+        end
+      end
+      
       # if filters['last_exported_begin']
-      #   with(:last_used).greater_than_or_equal_to(filters['last_exported_begin'])
+      #   with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
       # end
       # if filters['last_exported_end']
-      #   with(:last_used).less_than_or_equal_to(filters['last_exported_end'])
+      #   with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
       # end
       
       fulltext filters[:search]
