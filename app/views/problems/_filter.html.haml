@@ -4,7 +4,7 @@
     = text_field_tag(:search, session[:filters][:search], class: 'form-control', placeholder: "Search")  
   %div.form-group
     = label_tag(:tags, "Tags:")
-    = text_field_tag(:tags, session[:filters][:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
+    = text_field_tag(:tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: "e.g.: tag 1, tag 2")
 
   // %div.form-group
   //   = label_tag(:last_exported, "Last Exported:")

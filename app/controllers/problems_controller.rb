@@ -6,6 +6,9 @@ class ProblemsController < ApplicationController
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
     session[:filters] = session[:filters].merge params.slice(:tags, :collections, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
+    if session[:filters][:tags].is_a? String
+      session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
+    end
   end
 
   def home
@@ -14,9 +17,7 @@ class ProblemsController < ApplicationController
 
   def index
     @collections = @current_user.collections
-    filters = session[:filters].clone
-    filters[:tags]= filters[:tags].split(',').map(&:strip)
-    @problems = Problem.filter(@current_user, filters)
+    @problems = Problem.filter(@current_user, session[:filters].clone)
   end
 
   def remove_from_collection
