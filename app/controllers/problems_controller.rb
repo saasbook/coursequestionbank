@@ -14,7 +14,9 @@ class ProblemsController < ApplicationController
 
   def index
     @collections = @current_user.collections
-    @problems = Problem.filter(@current_user, session[:filters].clone).results #for some reason session[:filters] was being passed by reference? i have no clue why wtf
+    filters = session[:filters].clone
+    filters[:tags]= filters[:tags].split(',').map(&:strip)
+    @problems = Problem.filter(@current_user, filters)
   end
 
   def remove_from_collection

@@ -6,10 +6,11 @@
     = label_tag(:tags, "Tags:")
     = text_field_tag(:tags, session[:filters][:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
 
-  %div.form-group
-    = label_tag(:last_exported, "Last Exported:")
-    = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
-    = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
+  // %div.form-group
+  //   = label_tag(:last_exported, "Last Exported:")
+  //   = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
+  //   = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
+    
   %div.form-group 
     = label_tag(:collections, "Collections:")
     -@collections.each do |collection|
