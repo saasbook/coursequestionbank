@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
   load_and_authorize_resource
- @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => nil, 'last_exported_begin' => nil, 'last_exported_end' => nil, 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => nil, 'last_exported_begin' => nil, 'last_exported_end' => nil, 'page' => 1, 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
