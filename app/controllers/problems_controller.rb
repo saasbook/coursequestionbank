@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
   load_and_authorize_resource
- @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => nil, 'last_exported_begin' => nil, 'last_exported_end' => nil, 'page' => 1, 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => [], 'last_exported_begin' => nil, 'last_exported_end' => nil, 'page' => 1, 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
@@ -11,10 +11,10 @@ class ProblemsController < ApplicationController
       session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
     end
     
-    session[:filters][:collections] = []
     if params[:collections]
+      session[:filters][:collections] = []
       params[:collections].each do |key, value| 
-        session[:filters][:collections] << Integer(key) if value == "1"
+          session[:filters][:collections] << Integer(key) if value == "1"
       end
     end
     if session[:filters][:collections].include?(0)
