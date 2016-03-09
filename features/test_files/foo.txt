@@ -9,7 +9,8 @@ quiz 'A few example questions' do
   end
 
 
-  choice_answer :randomize => true, :tag => "test_tag" do
+  choice_answer :randomize => true do
+    tags "test_tag"
     text "The implied port number of the URI <tt>http://google.com</tt> is"
     answer "80"
     distractor "400"
@@ -18,6 +19,7 @@ quiz 'A few example questions' do
   end
 
   select_multiple :randomize => true do
+    tags "test_tag", "test_tag2"
     text  "Which tiers in the three-tier architecture are involved in handling views?"
     answer "Presentation"
     answer "Logic"
@@ -26,6 +28,7 @@ quiz 'A few example questions' do
   end
 
   choice_answer :randomize => true do
+    tags "test_tag2"
     text "The ----- tier of three-tier SaaS apps is the most complicated to scale."
     answer "Presentation"
     distractor "Logic"

@@ -22,9 +22,9 @@ class Problem < ActiveRecord::Base
     string    :tag_names, :multiple => true do
       tags.map(&:name)
     end
-    # integer :collection_ids, :multiple => true do
-    #   collections.map(&:id)
-    # end
+    integer :collection_ids, :multiple => true do
+      collections.map(&:id)
+    end
   end
 
   def html5
@@ -43,33 +43,36 @@ class Problem < ActiveRecord::Base
     end
   end
 
-  def self.filter(user, filters = {})
-    filters['tags'] = filters['tags'].strip.split(',')
-
-    if !filters['last_exported_begin'] or filters['last_exported_end'].empty?
-      filters['last_exported_begin'] = nil
-    end
-    if !filters['last_exported_end'] or filters['last_exported_end'].empty?
-      filters['last_exported_end'] = nil
-    end
-
-
+  def self.filter(user, filters)
     problems = Problem.search do 
       any_of do
         with(:instructor_id, user.id)
         with(:is_public, true)
       end
-      with(:tag_names, filters[:tags]) if filters[:tags].present? #I THOUGHT SUNSPOT SAID THE PRESENCE CHECK WAS UNNECESARY
-      # with(:collection_ids, filters[:collections].keys)
-      if filters['last_exported_begin']
-        with(:last_used).greater_than_or_equal_to(filters['last_exported_begin'])
+      
+      filters[:tags].each do |tag|
+        with(:tag_names, tag)
       end
-      if filters['last_exported_end']
-        with(:last_used).less_than_or_equal_to(filters['last_exported_end'])
+      
+      if !filters[:collections].empty?
+        any_of do
+          filters[:collections].each do |col|
+            with(:collection_ids, col)
+          end
+        end
       end
-      fulltext filters['search']
+      
+      # if filters['last_exported_begin']
+      #   with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
+      # end
+      # if filters['last_exported_end']
+      #   with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
+      # end
+      
+      fulltext filters[:search]
       paginate :page => filters['page'], :per_page => filters['per_page']
     end
-    problems
+    
+    problems.results
   end
 end

@@ -10,19 +10,28 @@ Feature: Search questions by question text
 
   Background:
     Given I am signed in with uid "1234" and provider "github"
-    And I have uploaded 'micro_quizzes.txt'
+    And I have uploaded 'foo.txt'
     And I am on the CourseQuestionBank home page
+    And I follow "View 60"
 
   Scenario: searching by question text
-    When I fill in "search" with "Rails doesn't scale"
+    When I fill in "Search Keywords" with "HyperText Transfer Protocol"
     And I press "Apply"
-    Then I should see "Twitter Director of Engineering"
-    And I should not see "The basic types of activities involved in software"
+    Then I should see "RDBMS"
+    And I should not see "implied port number"
 
-  Scenario: search by tag
+  Scenario: search by both question text and tag
+    When I fill in "Search Keywords" with "URI"
+    And I fill in "Tags" with "test_tag"
+    And I press "Apply"
+    Then I should see "implied port number"
+    And I should not see "handling views"
 
-  Scenario: search by keyword
-
-  Scenario: search by something that is both a tag and keyword in text
-
-  Scenario: search by something that is not a tag or keyword (sad path)
+  Scenario: search by text that doesn't match any questions (sad path)
+    When I fill in "Search Keywords" with "Barney the purple dinosaur"
+    And I press "Apply"
+    Then I should see "No questions matched your search criteria"
+    And I should not see "handling views"
+    And I should not see "implied port number"
+    And I should not see "complicated to scale"
+    And I should not see "An HTTP request"
