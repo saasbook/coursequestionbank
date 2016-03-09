@@ -23,6 +23,7 @@ Coursequestionbank::Application.routes.draw do
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
+  post 'update_multiple' => 'collections#update_multiple'
   match 'checked_problems' => 'collections#checked_problems'
 
 

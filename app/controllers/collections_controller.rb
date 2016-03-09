@@ -70,7 +70,27 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-
+  
+  def update_multiple
+    # if params[:problems] and params[:tags]
+    problem = Problem.find(params[:problems])
+    problem.tags.create(name: params[:tags])
+    
+    # params[:problems].each do |problem_id|
+    #   params[:tags].each do |tag|
+    #     problem = Problem.find(problem_id)
+    #     @tag = problem.tags.find_by_name(params[:tag])
+    #     if !@tag
+    #       problem.tags.create(name: params[:tag])
+    #       end
+    #     end
+    #   # end
+    # end
+    flash[:notice] = "Tags were added."
+    flash.keep
+    redirect_to problems_path
+  end
+  
   def checked_problems
     collection = Collection.find(params[:dropdown])
     collection_size = collection.problems.size
