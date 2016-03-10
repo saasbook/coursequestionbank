@@ -2,8 +2,6 @@
   %div.table-responsive
     %table.table.table-striped#problems
       %thead
-        %td Choices
-      %thead
         %tr
         %th Select
         %th Question Text
@@ -11,22 +9,24 @@
         %th Tags
         %th Remove Problem
 
-      %tbody
-        - problems.each do |problem|
-          %tr
-          %tr{:id => "q#{problem.id - 1}"}
-            %td
-              = form_tag update_multiple_path do
+      %tbody        
+        = form_tag update_multiple_path do
+          = text_field :tags, 'tags'
+          = submit_tag 'Add Tags',  class: 'btn btn-primary'
+
+          - problems.each do |problem|
+            %tr
+            %tr{:id => "q#{problem.id - 1}"}
+              %td 
                 = label :add_tags, :problems, problem.id
-                = check_box_tag :problems, problem.id
-                = text_field :tags, 'tag'
-                = submit_tag 'Add Tags',  class: 'btn btn-primary'
-            %td
-              = problem.html5.html_safe
-              = "Created Date: " + problem.created_date.to_s + " | "
-              = "Created By: " + problem.instructor.name
-            %td
-              - problem.collections.each do |collection|
-                = link_to "#{collection.name} \n", collection_path(:id => collection.id)
-            %td= problem.tags.map {|tags| tags.name + ', '}.join 
-            %td= link_to "", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}", :class => 'glyphicon glyphicon-trash'}
+                = check_box_tag "problems[]", problem.id
+
+              %td
+                = problem.html5.html_safe
+                = "Created Date: " + problem.created_date.to_s + " | "
+                = "Created By: " + problem.instructor.name
+              %td
+                - problem.collections.each do |collection|
+                  = link_to "#{collection.name} \n", collection_path(:id => collection.id)
+              %td= problem.tags.map {|tags| tags.name + ', '}.join 
+              %td= link_to "", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}", :class => 'glyphicon glyphicon-trash'}

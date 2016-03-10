@@ -72,23 +72,44 @@ class CollectionsController < ApplicationController
   end
   
   def update_multiple
-    # if params[:problems] and params[:tags]
-    problem = Problem.find(params[:problems])
-    problem.tags.create(name: params[:tags])
+    #one question, possibly multiple tags
+    if params[:problems].length == 1
+      problem = Problem.find(params[:problems])
+      if params[:tags][:tags].length > 1
+          params[:tags].each do |t|
+            if !problem.tags.empty? or !problem.tags.find_by_name(t)
+              problem.tags.create(name: t)
+            end
+          end
+      else
+        if !problem.tags.empty? or !problem.tags.find_by_name(t)
+          problem.tags.create(name: param[:tags])
+        end
+      end
+    end
     
-    # params[:problems].each do |problem_id|
-    #   params[:tags].each do |tag|
-    #     problem = Problem.find(problem_id)
-    #     @tag = problem.tags.find_by_name(params[:tag])
-    #     if !@tag
-    #       problem.tags.create(name: params[:tag])
-    #       end
-    #     end
-    #   # end
-    # end
+    # if multiple problems checked, possibly multiple tags
+    if params[:problems].length > 1
+      params[:problems].each do |problem_id|
+        problem = Problem.find(problem_id)
+        if params[:tags].length >1
+          params[:tags].each do |t|
+            if !problem.tags.empty? or !problem.tags.find_by_name(t)
+              problem.tags.create(name: t)
+            end
+          end
+        else 
+          if !problem.tags.empty? or !problem.tags.find_by_name(t)
+            problem.tags.create(name: params[:tags][:tags])
+          end
+        end
+      end
+    end
+  
+    
     flash[:notice] = "Tags were added."
     flash.keep
-    redirect_to problems_path
+    redirect_to problems_path #edit_collection_path(params)
   end
   
   def checked_problems
