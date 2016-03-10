@@ -1,6 +1,6 @@
 class CollectionsController < ApplicationController
   load_and_authorize_resource
-  after_filter :set_current_collection 
+  after_filter :set_current_collection
 
   def set_current_collection
   end
@@ -45,15 +45,15 @@ class CollectionsController < ApplicationController
   end
 
   def export
-    
+
     @html_code = Collection.find(params[:id]).export('Html5')
-    
+
     begin
       @edx_code = Collection.find(params[:id]).export('EdXml')
     rescue RuntimeError
       @edx_code = 'EdX not available'
     end
- 
+
     begin
       @autoqcm_code = Collection.find(params[:id]).export('AutoQCM')
     rescue RuntimeError
@@ -70,48 +70,61 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-  
-  def update_multiple
-    #one question, possibly multiple tags
-    if params[:problems].length == 1
-      problem = Problem.find(params[:problems])
-      if params[:tags][:tags].length > 1
-          params[:tags].each do |t|
-            if !problem.tags.empty? or !problem.tags.find_by_name(t)
-              problem.tags.create(name: t)
-            end
-          end
-      else
-        if !problem.tags.empty? or !problem.tags.find_by_name(t)
-          problem.tags.create(name: param[:tags])
-        end
-      end
-    end
-    
-    # if multiple problems checked, possibly multiple tags
-    if params[:problems].length > 1
-      params[:problems].each do |problem_id|
-        problem = Problem.find(problem_id)
-        if params[:tags].length >1
-          params[:tags].each do |t|
-            if !problem.tags.empty? or !problem.tags.find_by_name(t)
-              problem.tags.create(name: t)
-            end
-          end
-        else 
-          if !problem.tags.empty? or !problem.tags.find_by_name(t)
-            problem.tags.create(name: params[:tags][:tags])
-          end
-        end
-      end
-    end
-  
-    
+
+  def flash_tag_added
     flash[:notice] = "Tags were added."
     flash.keep
-    redirect_to problems_path #edit_collection_path(params)
   end
-  
+
+  def add_one_tag(cur_tags, tag)
+    if !cur_tags.find_by_name(tag)
+      cur_tags.create(name: tag)
+      flash_tag_added
+    end
+  end
+
+  def add_tags_to_problem(problem_id, new_tags)
+    problem = Problem.find(problem_id)
+    cur_tags = problem.tags
+    if new_tags.length > 1 # multiple tags
+        new_tags.each do |t|
+          add_one_tag(cur_tags, t)
+        end
+    else # single tag
+      add_one_tag(cur_tags, new_tags.first)
+    end
+    problem.save
+  end
+
+  def no_selection_error
+    flash[:error] = "You need to select a problem."
+    flash.keep
+  end
+
+  def no_tags_error
+    flash[:error] = "You need to enter a tag."
+    flash.keep
+  end
+
+  def update_multiple_tags
+    new_tags = params[:tags][:names].split(/\s*,\s*/)
+    selected = params[:problems]
+    if params[:tags][:names] == ""
+      no_tags_error
+    elsif !selected
+      no_selection_error
+    elsif selected.class != Array
+      add_tags_to_problem(selected, new_tags)
+    elsif selected.length == 1
+      add_tags_to_problem(selected.first, new_tags)
+    elsif selected.length > 1
+      selected.each do |problem_id|
+        add_tags_to_problem(problem_id, new_tags)
+      end
+    end
+    redirect_to :back
+  end
+
   def checked_problems
     collection = Collection.find(params[:dropdown])
     collection_size = collection.problems.size
@@ -119,8 +132,7 @@ class CollectionsController < ApplicationController
       params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
       flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
       flash.keep
-    end
-    else if params[:problems].present? #for delete route
+    elsif params[:problems].present? #for delete route
       params[:problems].each {|problem_id, value| Problem.find(problem_id).destroy}
       flash[:notice] = 'Problems successfully deleted'
       flash.keep

@@ -14,7 +14,7 @@
 
   %body
     #header
-      .title 
+      .title
         %h1
           =link_to 'Course Question Bank', problems_path
     #main
@@ -26,16 +26,18 @@
               -if can? :manage, Instructor
                 %li#navbar= link_to 'Admin', admin_path, method: :get
               %li#navbar= link_to 'My Collections', profile_path, method: :get
-              %li#navbar Welcome, #{@current_user.name}!             
-          - else  
+              %li#navbar Welcome, #{@current_user.name}!
+          - else
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
               %li#navbar= link_to 'My Dashboard', profile_path, method: :get
-              %li#navbar Welcome, #{@current_user.provider} user!    
+              %li#navbar Welcome, #{@current_user.provider} user!
       - if flash[:notice]
         #notice.message= flash[:notice]
       - elsif flash[:warning]
         #warning.message= flash[:warning]
-      
+      - elsif flash[:error]
+        #error.message= flash[:error]
+
 
       = yield
