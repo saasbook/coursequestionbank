@@ -28,9 +28,9 @@
                   %p{:class => "colname"}
                     = link_to "#{collection.name} \n", collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
               %td{:id => "#{problem.id}_tag"}
+                %div{:id => "all_tags_#{problem.id}"}
+                  = render :partial => "tags", locals: { tags: problem.tags}
+                %br
                 = form_tag update_multiple_tags_path do
                   = text_field :tags, :names, class: 'form-control', placeholder: 'Add new tags'
                   = hidden_field_tag :problems, problem.id
-
-                %div{:id => "all_tags_#{problem.id}"}
-                  = render :partial => "tags", locals: { tags: problem.tags}
