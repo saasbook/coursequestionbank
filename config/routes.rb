@@ -10,10 +10,11 @@ Coursequestionbank::Application.routes.draw do
   post 'upload' => 'upload#upload', ":as" => 'upload'
 
   resources :problems
+  post 'problems/:id/add_tags' => 'problems#add_tags', :as => 'problem_add_tags'
+  
   get 'profile' => 'instructors#show', :as => 'profile'
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   get 'remove_problem' => 'problems#remove_from_collection'
-  post 'problems/:id/add_tags' => 'problems#add_tags', :as => 'problem_add_tags'
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
