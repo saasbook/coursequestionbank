@@ -24,7 +24,7 @@ Coursequestionbank::Application.routes.draw do
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
   post 'update_multiple_tags' => 'collections#update_multiple_tags'
-  match 'checked_problems' => 'collections#checked_problems'
+  # match 'checked_problems' => 'collections#checked_problems'
 
 
   # The priority is based upon order of creation:

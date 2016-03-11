@@ -87,9 +87,9 @@ When /^(?:|I )deny '(.*)'/ do |user|
 end
 
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
-  collection = Collection.find_by_name(collection).id
-  visit checked_problems_path(:problems => [problem], :dropdown => collection)
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
+  collection = Collection.find_by_name(collection)
+  collection.problems << problem if not collection.problems.include? problem
 end
 
 When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|

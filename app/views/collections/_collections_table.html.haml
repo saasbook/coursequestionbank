@@ -11,15 +11,15 @@
 
       %tbody
         = form_tag update_multiple_tags_path do
-          = text_field :tags, :names, placeholder: 'Enter tags, comma-separated'
+          = text_field_tag :tag_names, nil, placeholder: 'Enter tags, comma-separated'
           = submit_tag 'Add Tags',  class: 'btn btn-primary'
 
           - problems.each do |problem|
             %tr
             %tr{:id => "q#{problem.id - 1}"}
               %td
-                = label :add_tags, :problems, problem.id
-                = check_box_tag "problems[]", problem.id
+                = label :add_tags, :checked_problems, problem.id
+                = check_box_tag "checked_problems[#{problem.id}]", 1, false, :id => "checked_problems_#{problem.id}"
 
               %td
                 = problem.html5.html_safe
