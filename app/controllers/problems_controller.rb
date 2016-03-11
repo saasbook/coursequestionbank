@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
   load_and_authorize_resource
- @@defaults = HashWithIndifferentAccess.new({'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 5 }) #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 60 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
@@ -15,6 +15,7 @@ class ProblemsController < ApplicationController
   def index
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone).results #for some reason session[:filters] was being passed by reference? i have no clue why wtf
+    puts @problems
   end
 
   def remove_from_collection
