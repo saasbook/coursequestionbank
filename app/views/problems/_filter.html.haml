@@ -6,14 +6,20 @@
     = label_tag(:tags, "Tags:")
     = text_field_tag(:tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: "e.g.: tag 1, tag 2")
 
+  %div.form-group
+    = label_tag("Sort By:")
+    </br>
+    = check_box_tag "Last Used",  1, false, id: "last_used_checkbox"
+    = label_tag "Last Used"
+    </br>
+    //-@problems.
+    //= check_box_tag "Date Added",  1, false, id: "date_added_checkbox"
+    //= label_tag "Date Added"
+
   // %div.form-group
   //   = label_tag(:last_exported, "Last Exported:")
   //   = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
   //   = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
-
-  %div.form-group
-    = label_tag(:sortby, "Sort By:")
-    = text_field_tag(:sortby, session[:filters][:sortby], class: 'form-control', placeholder: "placeholder goes here")
 
   %div.form-group
     = label_tag(:collections, "Collections:")
