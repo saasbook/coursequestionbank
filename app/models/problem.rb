@@ -93,6 +93,12 @@ class Problem < ActiveRecord::Base
     tag
   end
   
+  def remove_tag(tag_name)
+    tag = tags.find_by_name(tag_name)
+    tags.delete(tag) if tag
+    save
+  end
+  
   def add_tags(tag_names)
     count = tags.size
     tag_names.each { |tag| add_tag tag }

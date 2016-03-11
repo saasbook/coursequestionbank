@@ -13,7 +13,6 @@
       %table.table.table-striped#problems
         %thead
           %tr
-          %th
           %th Question Text
           %th Collections
           %th Tags
@@ -36,6 +35,6 @@
                 %div{:id => "all_tags_#{problem.id}"}
                   = render :partial => "tags", locals: { tags: problem.tags}
                 %br
-                = form_tag update_multiple_tags_path do
-                  = text_field :tags, :names, class: 'form-control', placeholder: 'Add new tags'
-                  = hidden_field_tag :problems, problem.id
+                
+                = form_tag problem_add_tags_path(id: problem.id) do
+                  = text_field_tag :add_tag_names, nil, class: 'form-control', placeholder: 'Add new tags'

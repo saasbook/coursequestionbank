@@ -51,17 +51,12 @@ class ProblemsController < ApplicationController
     flash.keep
     redirect_to edit_collection_path(:id => collection.id)
   end
-
-  def add_tag
-    @problem = Problem.find(params[:id])
-    @tag = @problem.add_tag(params[:tag])
-    render :partial => "tags", locals: { tags: @problem.tags}
-  end
-
-  def remove_tag
-    @problem = Problem.find(params[:id])
-    @tag = Tag.find(params[:tid])
-    @problem.tags.delete(@tag)
-    render :partial => "tags", locals: { tags: @problem.tags}
+  
+  def add_tags
+    problem = Problem.find(params[:id])
+    tags = params[:add_tag_names].split(/\s*,\s*/)
+    flash[:notice] = "Tags added" if problem.add_tags(tags)
+    flash.keep
+    redirect_to :back
   end
 end

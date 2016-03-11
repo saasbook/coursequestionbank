@@ -26,7 +26,7 @@ Feature: add a tag to existing question
     And I am on the CourseQuestionBank home page
     And I add tag "tag1" to problem "1"
     And I am on the problems page
-    And I remove tag "1" from problem "1"
+    And I remove tag "tag1" from problem "1"
     And I am on the problems page
 
   # Scenario: adding tags to questions in the collection view
