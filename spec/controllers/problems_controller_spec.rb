@@ -11,16 +11,16 @@ describe ProblemsController do
 	# 	end
 	# end
 	
-	describe 'add_tags' do
-		before do
-			session[:user_id] = Instructor.find_by_uid("1234")
-			@problem = Problem.create.id
-		end
+	# describe 'add_tags' do
+	# 	before do
+	# 		session[:user_id] = Instructor.find_by_uid("1234")
+	# 		@problem = Problem.create.id
+	# 	end
 		
-		it 'should add tags' do
-			request.env["HTTP_REFERER"] = '/problems'
-			post :add_tags, :id => @problem, :add_tag_names => "tag1, tag2"
-			expect(Problem.find(@problem).tags.size).to eq(2)
-		end
-	end
+	# 	it 'should add tags' do
+	# 		request.env["HTTP_REFERER"] = '/problems'
+	# 		post :add_tags, :id => @problem, :add_tag_names => "tag1, tag2"
+	# 		expect(Problem.find(@problem).tags.size).to eq(2)
+	# 	end
+	# end
 end

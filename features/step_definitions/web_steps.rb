@@ -87,26 +87,26 @@ When /^(?:|I )deny '(.*)'/ do |user|
 end
 
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
+  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0]
   collection = Collection.find_by_name(collection)
   collection.problems << problem if not collection.problems.include? problem
 end
 
 When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
+  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0].id
   collection = Collection.find_by_name(collection).id
   visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
 end
 
 When /^I check problem containing "(.*)"/ do |problem_text|
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
-  check(problem.to_s)
+  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0].id
+  check("checked_problems_#{problem}")
 end
 
 
 Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
   collection = Collection.find_by_name(collection)
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
+  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0]
   assert !(collection.problems.include? problem)
 end
 
