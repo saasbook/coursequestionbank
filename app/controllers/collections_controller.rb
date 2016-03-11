@@ -129,6 +129,10 @@ class CollectionsController < ApplicationController
     collection = Collection.find(params[:dropdown])
     collection_size = collection.problems.size
     if params['add_problems'] and params[:problems].present?
+      if params[:problems].class == String
+        update_multiple_tags
+        return
+      end
       params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
       flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
       flash.keep
