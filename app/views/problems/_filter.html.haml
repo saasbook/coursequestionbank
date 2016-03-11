@@ -10,7 +10,11 @@
   //   = label_tag(:last_exported, "Last Exported:")
   //   = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
   //   = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
-    
+
+  %div.form-group
+    = label_tag(:sortby, "Sort By:")
+    = text_field_tag(:sortby, session[:filters][:sortby], class: 'form-control', placeholder: "placeholder goes here")
+
   %div.form-group
     = label_tag(:collections, "Collections:")
     -@collections.each do |collection|
