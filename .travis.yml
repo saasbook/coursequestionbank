@@ -20,3 +20,7 @@ after_script:
 language: ruby
 rvm:
   - 2.2.2
+
+addons:
+    code_climate:
+        repo_token: 14403f904d69e9fa8b17ba47a8f76fcb2cc773bde214d6c6c27313419b0647e8
