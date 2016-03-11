@@ -1,14 +1,14 @@
 Coursequestionbank::Application.routes.draw do
 
   root :to => 'problems#home'
-  
+
   get  'auth/:provider/callback' => 'sessions#create'
   post 'logout' => 'sessions#destroy'
   get  'auth/failure' => 'sessions#failure'
   get 'login' => 'sessions#login', :as => 'login'
   get 'upload' => 'upload#index', :as => 'upload'
   post 'upload' => 'upload#upload', ":as" => 'upload'
-  
+
   resources :problems
   get 'profile' => 'instructors#show', :as => 'profile'
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
@@ -23,6 +23,7 @@ Coursequestionbank::Application.routes.draw do
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
+  post 'update_multiple_tags' => 'collections#update_multiple_tags'
   match 'checked_problems' => 'collections#checked_problems'
 
 

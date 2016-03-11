@@ -1,13 +1,13 @@
 Feature: add a tag to existing question
-  As an instructor
+  As an CourseQuestionBank Administrator
   So that I can quickly find questions appropriate for my class
   I want to add tags to questions
 
-  As an instructor,
+  As an CourseQuestionBank Administrator
   So that I will be able to search for related questions,
   I want to tag my questions
 
-  As an instructor,
+  As an CourseQuestionBank Administrator
   So that I can categorize my questions,
   I want to tag my questions
 
