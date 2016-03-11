@@ -98,6 +98,11 @@ When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem
   visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
 end
 
+When /^I check problem containing "(.*)"/ do |problem_text|
+  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
+  check(problem.to_s)
+end
+
 
 Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
   collection = Collection.find_by_name(collection)

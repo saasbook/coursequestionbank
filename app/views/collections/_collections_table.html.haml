@@ -18,8 +18,8 @@
             %tr
             %tr{:id => "q#{problem.id - 1}"}
               %td
-                = label :add_tags, :checked_problems, problem.id
-                = check_box_tag "checked_problems[#{problem.id}]", 1, false, :id => "checked_problems_#{problem.id}"
+                = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}"
+                = label_tag "checked_problems_#{problem.id}", problem.id
 
               %td
                 = problem.html5.html_safe
