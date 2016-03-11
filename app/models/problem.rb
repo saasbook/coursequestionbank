@@ -28,6 +28,10 @@ class Problem < ActiveRecord::Base
     end
   end
 
+  def self.all_problem_types
+    %w(fill_in choice_answer select_multiple truefalse dropdown)
+  end
+  
   def html5
     if rendered_text
       return rendered_text
