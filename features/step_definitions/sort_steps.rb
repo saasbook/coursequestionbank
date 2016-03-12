@@ -1,9 +1,13 @@
 Given /the following problems exist/ do |problems_table|
+  instructor = Instructor.find_by_uid("1234")
   problems_table.hashes.each do |problem|
     # each returned element will be a hash whose key is the table header.
     # you should arrange to add that movie to the database here.
-    Problem.create!(problem)
+    problem[:is_public] = true
+    prob = instructor.problems.create!(problem)
+    prob.tags.create(name: problem[:text])
   end
+  Problem.reindex
   #fail "Unimplemented"
 end
 

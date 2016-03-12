@@ -11,6 +11,11 @@ describe 'sort' do
       response.status.should be 302 
     end
     
+    it 'should only show fill in questions when the fill_in checkbox is selected' do
+      get :index, id: @problems, problem_type: { :fill_in => "1" }
+      response.status.should be 302 
+    end
+    
     it 'should show most recently used problems first' do
       get :index, id: @problems, sort: 'last_used'
       response.status.should be 302 

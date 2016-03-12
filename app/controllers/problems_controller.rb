@@ -4,6 +4,7 @@ class ProblemsController < ApplicationController
  @@defaults = HashWithIndifferentAccess.new({
    'search' => "", 
    'tags' => [], 
+   'sortby' => [],
    'collections' => [], 
    'last_exported_begin' => nil, 'last_exported_end' => nil, 
    'per_page' => 60, 'page' => 1 })
@@ -24,6 +25,13 @@ class ProblemsController < ApplicationController
     
     if session[:filters][:tags].is_a? String
       session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
+    end
+
+    session[:filters][:sortby] = []
+    if params[:sortby]
+      params[:sortby].each do |key, value|
+          session[:filters][:sortby] << key if value == "1"
+      end
     end
 
     session[:filters][:collections] = []
@@ -53,6 +61,7 @@ class ProblemsController < ApplicationController
   def index
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone)
+    @all_problem_types = Problem.all_problem_types
   end
 
   def remove_from_collection

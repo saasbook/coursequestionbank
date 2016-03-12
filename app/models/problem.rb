@@ -18,6 +18,7 @@ class Problem < ActiveRecord::Base
     boolean   :is_public
     time      :last_used
     time      :updated_at
+    string    :problem_type
     # integer :collection_id
 
     string    :tag_names, :multiple => true do
@@ -29,9 +30,9 @@ class Problem < ActiveRecord::Base
   end
 
   def self.all_problem_types
-    %w(fill_in choice_answer select_multiple truefalse dropdown)
+    %w{Dropdown FillIn MultipleChoice SelectMultiple TrueFalse}
   end
-  
+
   def html5
     if rendered_text
       return rendered_text
@@ -57,6 +58,14 @@ class Problem < ActiveRecord::Base
 
       filters[:tags].each do |tag|
         with(:tag_names, tag)
+      end
+
+      if !filters[:sortby].empty?
+        any_of do
+          filters[:sortby].each do |sort_param|
+            with(:problem_type, sort_param)
+          end
+        end
       end
 
       if !filters[:collections].empty?
