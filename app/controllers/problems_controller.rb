@@ -1,18 +1,32 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
   load_and_authorize_resource
- @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => [], 'last_exported_begin' => nil, 'last_exported_end' => nil, 'per_page' => 60 }) #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({
+   'search' => "", 
+   'tags' => [], 
+   'collections' => [], 
+   'last_exported_begin' => nil, 'last_exported_end' => nil, 
+   'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
-    session[:filters] = session[:filters].merge params.slice(:tags, :last_exported_begin, :last_exported_end, :search, :page, :per_page)
 
+    @@defaults.each do |key, value|
+      session[:filters][key] ||= value
+    end
+    
+    session[:filters] = session[:filters].merge params.slice(:page, :per_page)
+  end
+
+  def set_filters
+    session[:filters] = session[:filters].merge params.slice(:tags, :last_exported_begin, :last_exported_end, :search)
+    
     if session[:filters][:tags].is_a? String
       session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
     end
 
+    session[:filters][:collections] = []
     if params[:collections]
-      session[:filters][:collections] = []
       params[:collections].each do |key, value|
           session[:filters][:collections] << Integer(key) if value == "1"
       end
@@ -27,6 +41,8 @@ class ProblemsController < ApplicationController
     # if session[:filters][:last_exported_end] and session[:filters][:last_exported_end].empty?
     #   session[:filters][:last_exported_end] = nil
     # end
+    
+    redirect_to problems_path
   end
 
   def home

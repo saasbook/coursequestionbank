@@ -10,6 +10,7 @@ Coursequestionbank::Application.routes.draw do
   post 'upload' => 'upload#upload', ":as" => 'upload'
 
   resources :problems
+  post 'problems/set_filters' => 'problems#set_filters', :as => 'set_filters'
   post 'problems/:id/add_tags' => 'problems#add_tags', :as => 'problem_add_tags'
   
   get 'profile' => 'instructors#show', :as => 'profile'
