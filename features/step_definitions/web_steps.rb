@@ -99,6 +99,7 @@ When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem
 end
 
 When /^I check problem containing "(.*)"/ do |problem_text|
+  puts page.html # just to figure out why Travis doesn't like this step
   problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0].id
   check("checked_problems_#{problem}")
 end
