@@ -4,7 +4,7 @@ Feature: display list of questions filtered by tag
   I want to find questions matching only certain tags
 
   Background:
-    
+
 
   Scenario: restrict to questions with 'quiz 2' tag
     Given I am signed in with uid "1234" and provider "github"

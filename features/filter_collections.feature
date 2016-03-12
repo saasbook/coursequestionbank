@@ -16,7 +16,7 @@ Feature: User can filter questions by collection
     And I press "Apply"
     Then I should see "Plan-and-Document (P&D) with Agile"
     And I should not see "In an HTML5 document"
-  
+
   Scenario: filter by multiple collections
     When I check "1/22/15 (W1 L2)"
     And I check "1/29/15 (W2 L2): Ruby; HTTP/HTML/CSS basics"
@@ -24,7 +24,7 @@ Feature: User can filter questions by collection
     Then I should see "Plan-and-Document (P&D) with Agile"
     And I should see "In an HTML5 document"
     And I should not see "Consider the following Ruby code"
-  
+
   Scenario: filter using all collections
     When I check "All Collections"
     And I press "Apply"
