@@ -2,6 +2,7 @@ env:
   - DB=sqlite
 before_script:
   - bundle exec sunspot-solr start -p 8983
+  - CODECLIMATE_REPO_TOKEN=14403f904d69e9fa8b17ba47a8f76fcb2cc773bde214d6c6c27313419b0647e8 bundle exec rake
 script:
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rake db:test:prepare
