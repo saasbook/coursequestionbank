@@ -86,28 +86,34 @@ When /^(?:|I )deny '(.*)'/ do |user|
   visit "admin/deny/#{Instructor.find_by_name(user).id}"
 end
 
+def problems_with_text(text, collection=nil)
+  probs = Problem.all.select{|problem| problem.json and problem.json.include? text}
+  probs.select!{|problem| problem.collections.map(&:name).include? collection} if collection
+  probs
+end
+
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0]
+  problem = problems_with_text(problem_text)[0]
   collection = Collection.find_by_name(collection)
   collection.problems << problem if not collection.problems.include? problem
 end
 
 When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0].id
+  problem = problems_with_text(problem_text)[0].id
   collection = Collection.find_by_name(collection).id
   visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
 end
 
-When /^I check problem containing "(.*)"/ do |problem_text|
-  puts page.html # just to figure out why Travis doesn't like this step
-  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0].id
-  check("checked_problems_#{problem}")
+When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection|
+  problems_with_text(problem_text, collection).each do |problem|
+    check("checked_problems_#{problem.id}")
+  end
 end
 
 
 Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
   collection = Collection.find_by_name(collection)
-  problem = Problem.all.select{|problem| problem.json and problem.json.include? problem_text}[0]
+  problem = problems_with_text(problem_text)[0]
   assert !(collection.problems.include? problem)
 end
 
