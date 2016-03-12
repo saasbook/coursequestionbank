@@ -60,9 +60,9 @@ class Problem < ActiveRecord::Base
         with(:tag_names, tag)
       end
 
-      if !filters[:sortby].empty?
+      if !filters[:problem_type].empty?
         any_of do
-          filters[:sortby].each do |sort_param|
+          filters[:problem_type].each do |sort_param|
             with(:problem_type, sort_param)
           end
         end

@@ -4,7 +4,7 @@ class ProblemsController < ApplicationController
  @@defaults = HashWithIndifferentAccess.new({
    'search' => "", 
    'tags' => [], 
-   'sortby' => [],
+   'problem_type' => [],
    'collections' => [], 
    'last_exported_begin' => nil, 'last_exported_end' => nil, 
    'per_page' => 60, 'page' => 1 })
@@ -27,10 +27,10 @@ class ProblemsController < ApplicationController
       session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
     end
 
-    session[:filters][:sortby] = []
-    if params[:sortby]
-      params[:sortby].each do |key, value|
-          session[:filters][:sortby] << key if value == "1"
+    session[:filters][:problem_type] = []
+    if params[:problem_type]
+      params[:problem_type].each do |key, value|
+          session[:filters][:problem_type] << key if value == "1"
       end
     end
 

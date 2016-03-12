@@ -2,9 +2,14 @@
   %div.form-group
     = label_tag(:search, "Search Keywords:")
     = text_field_tag(:search, session[:filters][:search], class: 'form-control', placeholder: "Search")  
+    
+  %hr
+    
   %div.form-group
     = label_tag(:tags, "Tags:")
     = text_field_tag(:tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: "e.g.: tag 1, tag 2")
+
+  %hr
 
   // %div.form-group
   //   = label_tag(:last_exported, "Last Exported:")
@@ -12,14 +17,12 @@
   //   = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
 
   %div.form-group
-    = label_tag(:sortby, "Sort By:")
-    </br>
-    = check_box_tag "sortby[last_used]", 1, !!(session[:filters][:sortby].include? "last_used"), class: "checkbox", id: "sortby_last_used"
-    = label_tag "sortby_last_used", "Last Used"
-    </br>
+    = label_tag(:problem_type, "Problem type:")
     -@all_problem_types.each do |type|
-      = check_box_tag "sortby[#{type}]", 1, !!(session[:filters][:sortby].include? type), class: "checkbox", id: "sortby_#{type}"
-      = label_tag "sortby_#{type}", type
+      = check_box_tag "problem_type[#{type}]", 1, !!(session[:filters][:problem_type].include? type), class: "checkbox", id: "problem_type_#{type}"
+      = label_tag "problem_type_#{type}", type
+
+  %hr
 
   %div.form-group
     = label_tag(:collections, "Collections:")
