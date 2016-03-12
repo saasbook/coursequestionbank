@@ -6,12 +6,8 @@ class Collection < ActiveRecord::Base
   # scope :collection, ->(collection_name) { where(name: collection_name) }
   scope :mine_or_public, ->(user) {where('instructor_id=? OR is_public=?', "#{user.id}", 'true')}
 
-  def add_to_collection(problem)
-    if problems.include? problem
-      return false
-    else 
-      update_attributes(problem)
-    end
+  def add_problem(problem)
+    problems << problem if not problems.include? problem
   end
 
   def export(format)

@@ -2,8 +2,7 @@ class InstructorsController < ApplicationController
 
   def show
     @instructor = Instructor.find_by_id(@current_user)
-    @test = "HI"
-    @collections = @instructor.collections
+    @collections = @instructor.collections.to_a
   end
 
   def mark_as_current
@@ -12,19 +11,18 @@ class InstructorsController < ApplicationController
   end
 
   def show_unauthorized
-  	@unauthorized_users = Instructor.nonadmin
-  	render 'admin'
+    @unauthorized_users = Instructor.nonadmin
+    render 'admin'
   end
 
   def authorize
-    puts "authorize called"
-  	user = Instructor.find(params[:id])
-  	if params[:permission] == "authorize"
-  		user.update_attributes(privilege: "instructor")
-  	elsif params[:permission] == "deny"
-   		user.update_attributes(privilege: "denied")
-  	end
-  	redirect_to admin_path
+    user = Instructor.find(params[:id])
+    if params[:permission] == "authorize"
+      user.update_attributes(privilege: "instructor")
+    elsif params[:permission] == "deny"
+      user.update_attributes(privilege: "denied")
+    end
+      redirect_to admin_path
   end
 
   def add_to_whitelist

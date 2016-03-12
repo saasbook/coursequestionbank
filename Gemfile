@@ -16,6 +16,7 @@ gem 'progress_bar'
 gem 'json'
 gem 'will_paginate'
 gem 'sunspot_solr'
+gem "codeclimate-test-reporter", group: :test, require: nil
 
 group :test do
   gem 'cucumber-rails', :require => false

@@ -11,7 +11,7 @@ class Instructor < ActiveRecord::Base
     create! do |user|
       user.provider = auth["provider"]
       user.uid = auth["uid"]
-      if !auth["info"]["name"].empty?
+      if auth["info"]["name"] and !auth["info"]["name"].empty?
         user.name = auth["info"]["name"]
       else
         user.name = auth["info"]["nickname"]

@@ -2,7 +2,7 @@
   = f.label :name
   = f.text_field :name, :class => 'form-control'
   = f.label :description
-  = f.text_field :description, :class => 'form-control'
+  = f.text_field :description, :class => 'form-control', :placeholder => 'Write a description'
   = f.select :color, ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'Purple'], :class => 'form-control'
   = f.label 'Mark as public?'
   = f.check_box :is_public, :class => 'form-control'
@@ -14,5 +14,4 @@
     =link_to export_path(:id => collection), :class => 'btn btn-default', id: 'Export' do
       %span.glyphicon.glyphicon-export
       Export
-
-
+%hr

@@ -1,11 +1,11 @@
 quiz '1/22/15 (W1 L2)' do
 
   select_multiple do
-    text %q{Around 2007, the claim "Rails doesn\'t scale"  was attributed to
+    text %q{Around 2007, the claim "Rails doesn't scale"  was attributed to
 Twitter engineers, and the fact that Twitter later moved
 away from Rails was cited by some as evidence that the claim was true.
 Which of the following statements (there may be more than one) describe Raffi
-Krikorian\'s (Twitter Director of Engineering) views on this subject?}
+Krikorian's (Twitter Director of Engineering) views on this subject?}
     answer "Rails itself isn't the problem, but the original Ruby VM does have some performance problems that impede scaling for heavy server workloads."
     answer "Rails itself isn't the problem, but the development processes typically used around Rails don't scale well to large teams."
     distractor "If you're building a startup and expect high volume, Raffi Krikorian would advise you to stay away from Ruby and Rails from the start."

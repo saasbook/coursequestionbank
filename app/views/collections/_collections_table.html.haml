@@ -1,16 +1,28 @@
+= form_tag update_multiple_tags_path, id: "update_multiple_tags" do
+  = text_field_tag :tag_names, nil, placeholder: 'Enter tags, comma-separated'
+  = submit_tag 'Add Tags',  class: 'btn btn-primary'
+
 %div.col-md-10
   %div.table-responsive
     %table.table.table-striped#problems
       %thead
         %tr
+        %th Select
         %th Question Text
         %th Collections
         %th Tags
         %th Remove Problem
+
       %tbody
+      
+
         - problems.each do |problem|
           %tr
           %tr{:id => "q#{problem.id - 1}"}
+            %td
+              = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}", form: "update_multiple_tags"
+              = label_tag "checked_problems_#{problem.id}", problem.id
+
             %td
               = problem.html5.html_safe
               = "Created Date: " + problem.created_date.to_s + " | "
@@ -18,5 +30,12 @@
             %td
               - problem.collections.each do |collection|
                 = link_to "#{collection.name} \n", collection_path(:id => collection.id)
-            %td= problem.tags.map {|tags| tags.name + ', '}.join
+            %td
+              %div{:id => "all_tags_#{problem.id}"}
+                = render :partial => "problems/tags", locals: { tags: problem.tags}
+              %br
+              %br
+              = form_tag problem_add_tags_path(id: problem.id) do
+                = text_field_tag :add_tag_names, nil, class: 'form-control', placeholder: 'Add new tags'
+
             %td= link_to "", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}", :class => 'glyphicon glyphicon-trash'}
