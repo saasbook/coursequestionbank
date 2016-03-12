@@ -47,7 +47,6 @@ Feature: collections that we can add problems to
     Then I should see Collection 'yolo' in the database
 
   Scenario: delete a collection
-    pending
     When I create a new collection 'apple' and mark it as current
     Given I am looking at edit page regarding collection 'apple'
     When I press the trash icon at 'apple'
