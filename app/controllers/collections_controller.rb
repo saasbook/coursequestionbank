@@ -13,14 +13,18 @@ class CollectionsController < ApplicationController
     @collection = Collection.find(params[:id])
     @problems = @collection.problems
   end
+  
+  def collection_errors(collection)
+    flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
+  end
 
   # creates a new collection with user specified values and sets as current collection
   def create
     collection_hash = params[:collection]
     if not (collection = @current_user.collections.create(collection_hash)).valid?
-      flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
-      flash.keep
+      collection_errors(collection)
     end
+    flash.keep
     redirect_to profile_path
   end
 
@@ -31,9 +35,9 @@ class CollectionsController < ApplicationController
 
   def update
     if not (collection = Collection.update(params[:id], params[:collection])).valid?
-      flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
-      flash.keep
+      collection_errors(collection)
     end
+    flash.keep
     redirect_to profile_path
   end
 
