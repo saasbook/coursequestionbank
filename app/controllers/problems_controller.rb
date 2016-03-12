@@ -3,10 +3,10 @@ class ProblemsController < ApplicationController
   load_and_authorize_resource
  @@defaults = HashWithIndifferentAccess.new({
    'search' => "", 
-   'tags' => [], 
+   'tags' => [],
+   'sort_by' => 'Relevancy',
    'problem_type' => [],
    'collections' => [], 
-   'last_exported_begin' => nil, 'last_exported_end' => nil, 
    'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
@@ -21,7 +21,7 @@ class ProblemsController < ApplicationController
   end
 
   def set_filters
-    session[:filters] = session[:filters].merge params.slice(:tags, :last_exported_begin, :last_exported_end, :search)
+    session[:filters] = session[:filters].merge params.slice(:search, :tags, :sort_by)
     
     if session[:filters][:tags].is_a? String
       session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
@@ -43,13 +43,6 @@ class ProblemsController < ApplicationController
     if session[:filters][:collections].include?(0)
       session[:filters][:collections] = []
     end
-
-    # if session[:filters][:last_exported_begin] and session[:filters][:last_exported_end].empty?
-    #   session[:filters][:last_exported_begin] = nil
-    # end
-    # if session[:filters][:last_exported_end] and session[:filters][:last_exported_end].empty?
-    #   session[:filters][:last_exported_end] = nil
-    # end
     
     redirect_to problems_path
   end
@@ -61,6 +54,8 @@ class ProblemsController < ApplicationController
   def index
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone)
+    
+    @sort_by_options = Problem.sort_by_options
     @all_problem_types = Problem.all_problem_types
   end
 

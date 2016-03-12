@@ -110,6 +110,10 @@ When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection
   end
 end
 
+When /^I choose sort by "(.*)"/ do |option|
+  choose("sort_by_#{option}")
+end
+
 
 Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
   collection = Collection.find_by_name(collection)

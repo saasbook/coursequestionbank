@@ -19,7 +19,7 @@ class Problem < ActiveRecord::Base
     time      :last_used
     time      :updated_at
     string    :problem_type
-    # integer :collection_id
+    time      :created_date
 
     string    :tag_names, :multiple => true do
       tags.map(&:name)
@@ -31,6 +31,10 @@ class Problem < ActiveRecord::Base
 
   def self.all_problem_types
     %w{Dropdown FillIn MultipleChoice SelectMultiple TrueFalse}
+  end
+  
+  def self.sort_by_options
+    ['Relevancy', 'Date Created', 'Last Used']
   end
 
   def html5
@@ -76,15 +80,16 @@ class Problem < ActiveRecord::Base
         end
       end
 
-      # if filters['last_exported_begin']
-      #   with(:last_used).greater_than_or_equal_to(filters[:last_exported_begin])
-      # end
-      # if filters['last_exported_end']
-      #   with(:last_used).less_than_or_equal_to(filters[:last_exported_end])
-      # end
-
       fulltext filters[:search]
-      order_by(:updated_at, :desc)
+      
+      if filters[:sort_by] == 'Relevancy'
+        order_by(:score, :desc)
+      elsif filters[:sort_by] == 'Date Created'
+        order_by(:created_date, :desc)
+      elsif filters[:sort_by] == 'Last Used'
+        order_by(:last_used, :desc)
+      end
+      
       paginate :page => filters['page'], :per_page => filters['per_page']
     end
 

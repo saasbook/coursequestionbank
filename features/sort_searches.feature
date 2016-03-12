@@ -22,7 +22,7 @@ Background:
 #Scenario: sort by level of difficulty
   
 Scenario: sort by last used
-  When I check "Last Used"
+  When I choose sort by "Last Used"
   And I press "Apply"
   Then I should see "text1" before "text5"
 
