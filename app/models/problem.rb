@@ -30,7 +30,9 @@ class Problem < ActiveRecord::Base
   end
 
   def self.all_problem_types
-    %w{Dropdown FillIn MultipleChoice SelectMultiple TrueFalse}
+    {'Dropdown' => 'Dropdown', 'FillIn' => 'Fill-in', 
+      'MultipleChoice' => 'Multiple choice', 'SelectMultiple' => 'Select multiple', 
+      'TrueFalse' => 'True/False'}
   end
   
   def self.sort_by_options

@@ -21,9 +21,9 @@
 
   %div.form-group
     = label_tag(:problem_type, "Problem type:")
-    -@all_problem_types.each do |type|
+    -@all_problem_types.each do |type, display_type|
       = check_box_tag "problem_type[#{type}]", 1, !!(session[:filters][:problem_type].include? type), class: "checkbox", id: "problem_type_#{type}"
-      = label_tag "problem_type_#{type}", type
+      = label_tag "problem_type_#{type}", display_type
 
   %hr
 

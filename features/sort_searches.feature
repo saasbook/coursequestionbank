@@ -27,7 +27,7 @@ Scenario: sort by last used
   Then I should see "text1" before "text5"
 
 Scenario: sort by problem type: true/false
-  When I check "TrueFalse"
+  When I check "True/False"
   And I press "Apply"
   Then I should see "text4"
   And I should not see "text1"
@@ -36,7 +36,7 @@ Scenario: sort by problem type: true/false
   And I should not see "text5"
 
 Scenario: sort by problem type: fill_in
-  When I check "FillIn"
+  When I check "Fill-in"
   And I press "Apply"
   Then I should see "text1"
   And I should not see "text2"
@@ -45,7 +45,7 @@ Scenario: sort by problem type: fill_in
   And I should not see "text5"
 
 Scenario: sort by problem type: choice_answer
-  When I check "MultipleChoice"
+  When I check "Multiple choice"
   And I press "Apply"
   Then I should see "text2"
   And I should not see "text1"
@@ -54,7 +54,7 @@ Scenario: sort by problem type: choice_answer
   And I should not see "text5"
 
 Scenario: sort by problem type: select_multiple
-  When I check "SelectMultiple"
+  When I check "Select multiple"
   And I press "Apply"
   Then I should see "text3"
   And I should not see "text1"
