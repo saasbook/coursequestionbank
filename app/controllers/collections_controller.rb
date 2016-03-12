@@ -70,79 +70,46 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-
-  def flash_tag_added
-    flash[:notice] = "Tags were added."
-    flash.keep
-  end
-
-  def add_one_tag(cur_tags, tag)
-    if !cur_tags.find_by_name(tag)
-      cur_tags.create(name: tag)
-      flash_tag_added
-    end
-  end
-
+  
   def add_tags_to_problem(problem_id, new_tags)
     problem = Problem.find(problem_id)
-    cur_tags = problem.tags
-    if new_tags.length > 1 # multiple tags
-        new_tags.each do |t|
-          add_one_tag(cur_tags, t)
-        end
-    else # single tag
-      add_one_tag(cur_tags, new_tags.first)
-    end
-    problem.save
-  end
-
-  def no_selection_error
-    flash[:error] = "You need to select a problem."
-    flash.keep
-  end
-
-  def no_tags_error
-    flash[:error] = "You need to enter a tag."
-    flash.keep
+    flash[:notice] = "Tags were added." if problem.add_tags(new_tags)
   end
 
   def update_multiple_tags
-    new_tags = params[:tags][:names].split(/\s*,\s*/)
-    selected = params[:problems]
-    if params[:tags][:names] == ""
-      no_tags_error
-    elsif !selected
-      no_selection_error
-    elsif selected.class != Array
-      add_tags_to_problem(selected, new_tags)
-    elsif selected.length == 1
-      add_tags_to_problem(selected.first, new_tags)
-    elsif selected.length > 1
+    new_tags = params[:tag_names] ? params[:tag_names].split(/\s*,\s*/) : []
+    selected = params[:checked_problems] ? params[:checked_problems].keys : []
+    if new_tags == []
+      flash[:error] = "You need to enter a tag."
+    elsif selected == []
+      flash[:error] = "You need to select a problem."
+    else
       selected.each do |problem_id|
         add_tags_to_problem(problem_id, new_tags)
       end
     end
+    flash.keep
     redirect_to :back
   end
 
-  def checked_problems
-    collection = Collection.find(params[:dropdown])
-    collection_size = collection.problems.size
-    if params['add_problems'] and params[:problems].present?
-      if params[:problems].class == String
-        update_multiple_tags
-        return
-      end
-      params[:problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
-      flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
-      flash.keep
-    elsif params[:problems].present? #for delete route
-      params[:problems].each {|problem_id, value| Problem.find(problem_id).destroy}
-      flash[:notice] = 'Problems successfully deleted'
-      flash.keep
-    end
-    redirect_to problems_path
-  end
+  # def checked_problems
+  #   redirect_to problems_path
+  #   collection = Collection.find(params[:dropdown])
+  #   collection_size = collection.problems.size
+  #   if params['add_problems'] and params[:checked_problems].present?
+  #     # if params[:checked_problems].class == String
+  #     #   update_multiple_tags
+  #     #   return
+  #     # end
+  #     params[:checked_problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
+  #     flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:checked_problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
+  #   elsif params[:checked_problems].present? #for delete route
+  #     params[:checked_problems].each {|problem_id, value| Problem.find(problem_id).destroy}
+  #     flash[:notice] = 'Problems successfully deleted'
+  #   end
+  #   flash.keep
+  #   redirect_to problems_path
+  # end
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = exception.message

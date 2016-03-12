@@ -13,8 +13,7 @@ Coursequestionbank::Application.routes.draw do
   get 'profile' => 'instructors#show', :as => 'profile'
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   get 'remove_problem' => 'problems#remove_from_collection'
-  get 'add/:tag/to/problem/:id' => 'problems#add_tag', :as => 'add_tag'
-  get 'remove/:tid/from/problem/:id' => 'problems#remove_tag', :as => 'remove_tag'
+  post 'problems/:id/add_tags' => 'problems#add_tags', :as => 'problem_add_tags'
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
@@ -24,7 +23,7 @@ Coursequestionbank::Application.routes.draw do
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
   post 'update_multiple_tags' => 'collections#update_multiple_tags'
-  match 'checked_problems' => 'collections#checked_problems'
+  # match 'checked_problems' => 'collections#checked_problems'
 
 
   # The priority is based upon order of creation:

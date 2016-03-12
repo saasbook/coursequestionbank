@@ -1,7 +1,7 @@
 class ProblemsController < ApplicationController
   before_filter :set_filter_options
   load_and_authorize_resource
- @@defaults = HashWithIndifferentAccess.new({'tags' => "", 'collections' => {}, 'last_exported_begin' => "", 'last_exported_end' => '', 'per_page' => 60 }) #default arguments hash, not sure about the proper styling for this
+ @@defaults = HashWithIndifferentAccess.new({'tags' => [], 'collections' => [], 'last_exported_begin' => nil, 'last_exported_end' => nil, 'per_page' => 60 }) #default arguments hash, not sure about the proper styling for this
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
@@ -51,21 +51,12 @@ class ProblemsController < ApplicationController
     flash.keep
     redirect_to edit_collection_path(:id => collection.id)
   end
-
-  def add_tag
-    @problem = Problem.find(params[:id])
-    @tag = @problem.tags.find_by_name(params[:tag])
-    if !@tag
-      @tag = Tag.create(name: params[:tag])
-      @problem.tags << @tag
-    end
-    render :partial => "tags", locals: { tags: @problem.tags}
-  end
-
-  def remove_tag
-    @problem = Problem.find(params[:id])
-    @tag = Tag.find(params[:tid])
-    @problem.tags.delete(@tag)
-    render :partial => "tags", locals: { tags: @problem.tags}
+  
+  def add_tags
+    problem = Problem.find(params[:id])
+    tags = params[:add_tag_names].split(/\s*,\s*/)
+    flash[:notice] = "Tags added" if problem.add_tags(tags)
+    flash.keep
+    redirect_to :back
   end
 end
