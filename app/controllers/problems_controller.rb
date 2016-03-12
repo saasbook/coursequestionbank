@@ -15,6 +15,7 @@ class ProblemsController < ApplicationController
       session[:filters][key] ||= value
     end
     
+    session[:filters][:page] = nil
     session[:filters] = session[:filters].merge params.slice(:page, :per_page)
   end
 
