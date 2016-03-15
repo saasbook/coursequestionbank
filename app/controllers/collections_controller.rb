@@ -37,6 +37,9 @@ class CollectionsController < ApplicationController
     if not (collection = Collection.update(params[:id], params[:collection])).valid?
       collection_errors(collection)
     end
+    if params[:collection][:is_public] != nil
+      collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
+    end
     flash.keep
     redirect_to profile_path
   end
