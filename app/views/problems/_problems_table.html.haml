@@ -31,10 +31,11 @@
                 - problem.collections.each do |collection|
                   %p{:class => "colname"}
                     = link_to "#{collection.name} \n", collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
-              %td{:id => "#{problem.id}_tag"}
+              
+              %td
                 %div{:id => "all_tags_#{problem.id}"}
-                  = render :partial => "tags", locals: { tags: problem.tags}
+                  = render :partial => "tags", locals: { problem: problem }
                 %br
                 
-                = form_tag problem_add_tags_path(id: problem.id) do
-                  = text_field_tag :add_tag_names, nil, class: 'form-control', placeholder: 'Add new tags'
+                = form_tag add_tags_path(id: problem.id) do
+                  = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add new tags'

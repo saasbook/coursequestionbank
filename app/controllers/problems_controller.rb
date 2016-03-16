@@ -75,8 +75,18 @@ class ProblemsController < ApplicationController
   
   def add_tags
     problem = Problem.find(params[:id])
-    tags = params[:add_tag_names].split(/\s*,\s*/)
-    flash[:notice] = "Tags added" if problem.add_tags(tags)
+    tags = params[:tag_names].split(',').map(&:strip)
+    added = problem.add_tags(tags)
+    flash[:notice] = "Tags added" if added.size > 0
+    flash.keep
+    redirect_to :back
+  end
+  
+  def remove_tags
+    problem = Problem.find(params[:id])
+    tags = params[:tag_names].split(',').map(&:strip)
+    tags.each { |tag| problem.remove_tag tag }
+    flash[:notice] = "Tags removed"
     flash.keep
     redirect_to :back
   end

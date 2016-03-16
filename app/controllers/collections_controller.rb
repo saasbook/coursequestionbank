@@ -77,14 +77,9 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-  
-  def add_tags_to_problem(problem_id, new_tags)
-    problem = Problem.find(problem_id)
-    flash[:notice] = "Tags were added." if problem.add_tags(new_tags)
-  end
 
   def update_multiple_tags
-    new_tags = params[:tag_names] ? params[:tag_names].split(/\s*,\s*/) : []
+    new_tags = params[:tag_names] ? params[:tag_names].split(',').map(&:strip) : []
     selected = params[:checked_problems] ? params[:checked_problems].keys : []
     if new_tags == []
       flash[:error] = "You need to enter a tag."
@@ -92,7 +87,8 @@ class CollectionsController < ApplicationController
       flash[:error] = "You need to select a problem."
     else
       selected.each do |problem_id|
-        add_tags_to_problem(problem_id, new_tags)
+        problem = Problem.find(problem_id)
+        flash[:notice] = "Tags were added." if problem.add_tags(new_tags).size > 0
       end
     end
     flash.keep

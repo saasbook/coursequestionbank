@@ -11,7 +11,7 @@ Feature: User can add tags to questions at the time of import
     And I follow "1/22/15 (W1 L2)"
     And I check problem containing "Around 2007, the claim" in "1/22/15 (W1 L2)"
     And I check problem containing "statements comparing Plan-and-Document" in "1/22/15 (W1 L2)"
-    And I fill in "tag_names" with "lorem, ipsum"
+    And I fill in "multiple_tag_names" with "lorem, ipsum"
     And I press "Add Tags"
     Then I should see "lorem"
     And I should see "ipsum"

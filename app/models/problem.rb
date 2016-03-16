@@ -99,18 +99,11 @@ class Problem < ActiveRecord::Base
   end
   
   def add_tag(tag_name)
-    tag = tags.find_by_name(tag_name)
-    if !tag
-      matched = Tag.where(name: tag_name)
-      if matched.size == 0
-        tag = Tag.create(name: tag_name)
-      else
-        tag = matched[0]
-      end
-      tags << tag
-      save
-    end
-    tag
+    return false if tags.find_by_name(tag_name)
+    
+    tags << (Tag.where(name: tag_name)[0] || Tag.create(name: tag_name))
+    save
+    return true
   end
   
   def remove_tag(tag_name)
@@ -120,8 +113,6 @@ class Problem < ActiveRecord::Base
   end
   
   def add_tags(tag_names)
-    count = tags.size
-    tag_names.each { |tag| add_tag tag }
-    return tags.size > count
+    tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
 end
