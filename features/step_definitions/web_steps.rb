@@ -41,7 +41,7 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
-Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil
 end
@@ -49,7 +49,7 @@ end
 When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
   collection_id = Collection.find_by_name(former)
   visit edit_collection_path(:id => collection_id)
-  steps %Q{ 
+  steps %Q{
     And I fill in "collection_name" with "#{new}"
     And I press "Update"
   }
@@ -115,7 +115,7 @@ When /^I choose sort by "(.*)"/ do |option|
 end
 
 
-Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
+Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection|
   collection = Collection.find_by_name(collection)
   problem = problems_with_text(problem_text)[0]
   assert !(collection.problems.include? problem)
@@ -129,7 +129,7 @@ Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text,
   }
 end
 
-Then /^(?:|I )should not see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+Then /^(?:|I )should not see (.*) '(.*)' in the database$/ do |datatype, name_value|
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value).nil?
 end
@@ -330,7 +330,7 @@ Then /^the "([^\"]*)" checkbox(?: within (.*))? should not be checked$/ do |labe
     end
   end
 end
- 
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
@@ -344,8 +344,8 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
   expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
+  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')}
+
   if actual_params.respond_to? :should
     actual_params.should == expected_params
   else
@@ -355,4 +355,16 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+When(/^fill in 'update' with '.*.txt'$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see 'Question has been updated'$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see the text from '.*.txt'$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
 end
