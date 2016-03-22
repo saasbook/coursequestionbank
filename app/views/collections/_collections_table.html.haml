@@ -1,5 +1,5 @@
-= form_tag update_multiple_tags_path, id: "update_multiple_tags" do
-  = text_field_tag :tag_names, nil, id: "multiple_tag_names", placeholder: 'Enter tags, comma-separated'
+= form_tag update_multiple_tags_path, id: "update_multiple_tags_#{collection.id}" do
+  = text_field_tag :tag_names, nil, id: "multiple_tag_names_#{collection.id}", placeholder: 'Enter tags, comma-separated'
   = submit_tag 'Add Tags',  class: 'btn btn-primary'
 
 %div.col-md-10
@@ -20,7 +20,7 @@
           %tr
           %tr{:id => "q#{problem.id - 1}"}
             %td
-              = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}", form: "update_multiple_tags"
+              = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}", form: "update_multiple_tags_#{collection.id}"
               = label_tag "checked_problems_#{problem.id}", problem.id
 
             %td

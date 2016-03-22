@@ -21,7 +21,7 @@ describe ProblemsController do
 			problem = Problem.create.id
 			
 			request.env["HTTP_REFERER"] = '/problems'
-			post :add_tags, :id => problem, :add_tag_names => "tag1, tag2"
+			post :add_tags, :id => problem, :tag_names => "tag1, tag2"
 			
 			expect(Problem.find(problem).tags.size).to eq(2)
 		end
