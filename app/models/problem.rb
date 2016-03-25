@@ -3,6 +3,7 @@ class Problem < ActiveRecord::Base
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
+  belongs_to :previous_version, class_name: 'Problem'
 
 
   scope :is_public, -> { where(is_public:  true) }

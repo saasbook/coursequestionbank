@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20150429010252) do
+ActiveRecord::Schema.define(:version => 20160325190354) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -50,11 +50,12 @@ ActiveRecord::Schema.define(:version => 20150429010252) do
     t.string   "created_by"
     t.boolean  "is_public"
     t.datetime "last_used"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.text     "rendered_text"
     t.string   "problem_type"
     t.text     "json"
+    t.integer  "previous_version_id"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
