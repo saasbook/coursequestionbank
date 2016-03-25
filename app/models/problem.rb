@@ -55,6 +55,21 @@ class Problem < ActiveRecord::Base
       'This question could not be displayed (no JSON found)'
     end
   end
+  
+  def self.from_JSON(instructor, json_source)
+    json_hash = JSON.parse(json_source)
+    problem = Problem.new(text: "", 
+                          json: json_source,
+                          is_public: false, 
+                          problem_type: json_hash["question_type"], 
+                          created_date: Time.now)
+    problem.instructor = instructor
+    json_hash["question_tags"].each do |tag_name|
+      tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
+      problem.tags << tag
+    end
+    problem
+  end
 
   def self.filter(user, filters)
     problems = Problem.search do
