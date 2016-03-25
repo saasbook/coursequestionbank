@@ -114,6 +114,13 @@ class Problem < ActiveRecord::Base
     problems.results
   end
   
+  def supersede(user, source)
+    new_problem = RuqlReader.read_problem(user, source)
+    new_problem.previous_version = self
+    new_problem.save
+    new_problem
+  end
+  
   def add_tag(tag_name)
     return false if tags.find_by_name(tag_name)
     
