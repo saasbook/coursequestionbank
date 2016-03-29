@@ -48,23 +48,7 @@
     }
 
     .text{
-        height:30px;
         width:600px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-    }
-
-    .text:hover{
-        height:auto;
-    }
-    .colname{
-        height:20px;
-        overflow:hidden;
-        text-overflow:ellipsis;
-    }
-
-    .colname:hover{
-        height:auto;
     }
 .message{
 	color: red;
