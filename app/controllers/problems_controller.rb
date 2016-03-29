@@ -71,13 +71,15 @@ class ProblemsController < ApplicationController
           render json: {'error' => e.message}
         else
           flash[:error] = "Error in problem source: #{e.message}"
+          flash[:ruql_source] = params[:ruql_source]
+          flash.keep
           redirect_to :back
         end
         return
       end
     end
     
-    flash[:notice] = "Problem created"
+    flash[:notice] = "Question created"
     flash.keep
     if request.xhr?
       render json: {'error' => nil}
@@ -120,5 +122,6 @@ class ProblemsController < ApplicationController
   
   def supersede
     @problem = Problem.find(params[:id])
+    @ruql_source = flash[:ruql_source]
   end
 end
