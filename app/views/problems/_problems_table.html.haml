@@ -29,7 +29,7 @@
                   = "Created By: " + problem.instructor.name
                   %br
                   %div
-                    = link_to "Supersede", supersede_path(:id => problem.id), :class => "supersede_button"
+                    = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button"
                     %div{:class => "supersede_form", :style => "display: none"}
                       = render :partial => "supersede_form", :locals => {:problem => problem}
               

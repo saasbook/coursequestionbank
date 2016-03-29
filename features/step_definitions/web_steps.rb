@@ -110,6 +110,11 @@ When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection
   end
 end
 
+When /^I follow "(.*)" for problem containing "(.*)"/ do |link_id, problem_text|
+  problem = problems_with_text(problem_text)[0].id
+  click_link("#{link_id}_#{problem}")
+end
+
 When /^I choose sort by "(.*)"/ do |option|
   choose("sort_by_#{option}")
 end
@@ -143,6 +148,10 @@ When /^I press the trash icon at '(.*)'/ do |collection|
   collection = Collection.find_by_name(collection)
   visit edit_collection_path(:id => collection)
   click_link 'Delete'
+end
+
+When /^I fill in "(.*)" with text of "(.*)"/ do |field, file|
+  fill_in(field, :with => IO.read("features/test_files/" + file))
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
