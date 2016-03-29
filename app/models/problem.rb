@@ -117,6 +117,7 @@ class Problem < ActiveRecord::Base
   def supersede(user, source)
     new_problem = RuqlReader.read_problem(user, source)
     new_problem.previous_version = self
+    new_problem.is_public = self.is_public
     new_problem.save
     new_problem
   end
