@@ -28,7 +28,11 @@
                   = "Created Date: " + problem.created_date.to_s + " | "
                   = "Created By: " + problem.instructor.name
                   %br
-                  = link_to "Supersede", supersede_path(:id => problem.id)
+                  %div
+                    = link_to "Supersede", supersede_path(:id => problem.id), :class => "supersede_button"
+                    %div{:class => "supersede_form", :style => "display: none"}
+                      = render :partial => "supersede_form", :locals => {:problem => problem}
+              
               %td
                 - problem.collections.each do |collection|
                   %p{:class => "colname"}
