@@ -1,0 +1,15 @@
+
+%div.col-md-12
+  %h4 Create new version of question:
+  = @problem.html5.html_safe
+  %ol.questions
+    %li{:class => "additional"}
+      = "Created Date: " + @problem.created_date.to_s + " | "
+      = "Created By: " + @problem.instructor.name
+  
+  = form_tag problems_path, :method => :post do
+    = text_area_tag "ruql_source", @problem.ruql_source, :class => "source", :id => nil, :size => "100x15"
+    = hidden_field_tag 'previous_version', @problem.id, :id => nil
+    %br
+    %br
+    = submit_tag "Create question"

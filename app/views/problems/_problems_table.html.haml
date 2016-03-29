@@ -27,6 +27,8 @@
                 %div{:class => "additional"}
                   = "Created Date: " + problem.created_date.to_s + " | "
                   = "Created By: " + problem.instructor.name
+                  %br
+                  = link_to "Supersede", supersede_path(:id => problem.id)
               %td
                 - problem.collections.each do |collection|
                   %p{:class => "colname"}

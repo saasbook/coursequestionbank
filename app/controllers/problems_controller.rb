@@ -58,6 +58,21 @@ class ProblemsController < ApplicationController
     @sort_by_options = Problem.sort_by_options
     @all_problem_types = Problem.all_problem_types
   end
+  
+  def create
+    if params[:previous_version] != nil
+      previous_version = Problem.find(params[:previous_version])
+      begin 
+        previous_version.supersede(@current_user, params[:ruql_source])
+      rescue Exception => e
+        flash[:error] = "Error in problem source: #{e.message}"
+        redirect_to :back and return
+      end
+      flash[:notice] = "Problem created"
+    end
+    flash.keep
+    redirect_to problems_path
+  end
 
   def remove_from_collection
     collection = Collection.find(params[:collection_id])
@@ -89,5 +104,9 @@ class ProblemsController < ApplicationController
     flash[:notice] = "Tags removed"
     flash.keep
     redirect_to :back
+  end
+  
+  def supersede
+    @problem = Problem.find(params[:id])
   end
 end

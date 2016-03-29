@@ -13,6 +13,7 @@ Coursequestionbank::Application.routes.draw do
   post 'problems/filters' => 'problems#set_filters', :as => 'set_filters'
   post 'problems/:id/tags/add' => 'problems#add_tags', :as => 'add_tags'
   post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
+  get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
   
   get 'profile' => 'instructors#show', :as => 'profile'
   get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'

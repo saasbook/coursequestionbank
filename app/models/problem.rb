@@ -56,6 +56,10 @@ class Problem < ActiveRecord::Base
     end
   end
   
+  def ruql_source
+    "My JSON instead: #{json}"
+  end
+  
   def self.from_JSON(instructor, json_source)
     json_hash = JSON.parse(json_source)
     problem = Problem.new(text: "", 
