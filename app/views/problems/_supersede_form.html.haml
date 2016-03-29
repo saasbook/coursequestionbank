@@ -1,7 +1,7 @@
 
 = form_tag problems_path, :method => :post do
-  = text_area_tag "ruql_source", problem.ruql_source, :class => "source_field", :id => nil, :rows => 15
+  = text_area_tag 'ruql_source', problem.ruql_source, :class => "source_field", :id => nil, :rows => 15
   = hidden_field_tag 'previous_version', problem.id, :id => nil
   %br
-  %br
-  = submit_tag "Supersede question"
+  %p.message
+  = submit_tag 'Supersede question'

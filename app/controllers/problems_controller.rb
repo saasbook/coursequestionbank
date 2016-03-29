@@ -62,16 +62,28 @@ class ProblemsController < ApplicationController
   def create
     if params[:previous_version] != nil
       previous_version = Problem.find(params[:previous_version])
+      
       begin 
         previous_version.supersede(@current_user, params[:ruql_source])
+        
       rescue Exception => e
-        flash[:error] = "Error in problem source: #{e.message}"
-        redirect_to :back and return
+        if request.xhr?
+          render json: {'error' => e.message}
+        else
+          flash[:error] = "Error in problem source: #{e.message}"
+          redirect_to :back
+        end
+        return
       end
-      flash[:notice] = "Problem created"
     end
+    
+    flash[:notice] = "Problem created"
     flash.keep
-    redirect_to problems_path
+    if request.xhr?
+      render json: {'error' => nil}
+    else
+      redirect_to problems_path
+    end
   end
 
   def remove_from_collection
