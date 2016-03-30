@@ -49,9 +49,11 @@
 }
 
 .col-md-10 {
+	//width: 100%;
+}
+
+.col-md-12 {
   clear: right;
-  margin-left: 200px;
-	// width: 100%;
 }
 
 a {
@@ -131,6 +133,12 @@ li#navbar {
 	margin-left: 0px;
 	margin-top: 0px;
 	width: 200px;
+}
+
+.maintable {
+  width: 100%;
+  clear: right;
+  margin-left: 200px;
 }
 
 #thetextarea {
