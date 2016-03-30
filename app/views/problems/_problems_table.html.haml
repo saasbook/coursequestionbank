@@ -9,7 +9,7 @@
 
 - else
   %div{:class => "maintable"}
-    %div.table-responsive
+    %div
       %table.table.table-striped#problems
         %thead
           %tr
@@ -43,5 +43,5 @@
                   = render :partial => "tags", locals: { problem: problem }
                 %br
                 
-                = form_tag add_tags_path(id: problem.id) do
-                  = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add new tags'
+                = form_tag add_tags_path(id: problem.id), class: 'add_tags_form' do
+                  = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add tags'
