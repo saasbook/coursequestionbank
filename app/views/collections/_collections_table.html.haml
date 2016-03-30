@@ -17,7 +17,7 @@
 
       - problems.each do |problem|
         %tr
-        %tr{:id => "q#{problem.id - 1}"}
+        %tr{:id => "q#{problem.id}", :class => 'problem_row'}
           %td
             = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}", form: "update_multiple_tags_#{collection.id}"
             = label_tag "checked_problems_#{problem.id}", problem.id
@@ -31,7 +31,7 @@
               = link_to "#{collection.name} \n", collection_path(:id => collection.id)
           
           %td
-            %div{:id => "all_tags_#{problem.id}"}
+            %div{:id => "all_tags_#{problem.id}", :class => 'tag_list'}
               = render :partial => "problems/tags", locals: { problem: problem }
             %br
             %br

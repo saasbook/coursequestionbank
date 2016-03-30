@@ -24,4 +24,30 @@ var Supersession = {
   }
 };
 
-$(Supersession.setup)
+$(Supersession.setup);
+
+
+var AddTags = {
+  setup: function() {
+    $('.problem_row').each(function() {
+      var problem_row = $(this);
+      var problem_id = problem_row.attr('id').substring(1);
+      var add_tags_form = problem_row.find('.add_tags_form');
+      
+      add_tags_form.submit(function() {
+        $.ajax({
+          url: '/problems/' + problem_id + '/tags/add',
+          type: 'POST',
+          data: $(this).serialize(),
+          success: function(data, textStatus, jqXHR) {
+            problem_row.find('.tag_list').html(data);
+          }
+        });
+        add_tags_form[0].reset();
+        return false;
+      });
+    });
+  }
+};
+
+$(AddTags.setup);

@@ -19,10 +19,10 @@
           %th
         %tbody
           - problems.each do |problem|
-            %tr{:id => "q#{problem.id - 1}"}
+            %tr{:id => "q#{problem.id}", :class => 'problem_row'}
               // %td= check_box_tag "checked_problems[#{problem.id}]", 1
               %td
-                %li.glyphicon.glyphicon-chevron-right{:class => 'icon', :id => "#{problem.id - 1}"}
+                %li.glyphicon.glyphicon-chevron-right{:class => 'icon', :id => "#{problem.id}"}
                 = problem.html5.html_safe
                 %div{:class => "additional"}
                   = "Created Date: " + problem.created_date.to_s + " | "

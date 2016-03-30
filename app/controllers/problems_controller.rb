@@ -106,9 +106,13 @@ class ProblemsController < ApplicationController
     problem = Problem.find(params[:id])
     tags = params[:tag_names].split(',').map(&:strip)
     added = problem.add_tags(tags)
-    flash[:notice] = "Tags added" if added.size > 0
-    flash.keep
-    redirect_to :back
+    if request.xhr?
+      render :partial => "tags", locals: { problem: problem }
+    else
+      flash[:notice] = "Tags added" if added.size > 0
+      flash.keep
+      redirect_to :back
+    end
   end
   
   def remove_tags
