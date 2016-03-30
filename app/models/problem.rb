@@ -127,6 +127,7 @@ class Problem < ActiveRecord::Base
   end
   
   def add_tag(tag_name)
+    return false if tag_name.strip == ""
     return false if tags.find_by_name(tag_name)
     
     tags << (Tag.where(name: tag_name)[0] || Tag.create(name: tag_name))
