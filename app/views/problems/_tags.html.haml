@@ -3,4 +3,5 @@
     = tag.name
     = form_tag remove_tags_path(:id => problem.id), :method => :post, :class => 'remove_tag' do
       = hidden_field_tag 'tag_names', tag.name, :id => nil
-      = submit_tag 'X'
+      = button_tag :type => 'submit' do
+        %div.glyphicon.glyphicon-remove

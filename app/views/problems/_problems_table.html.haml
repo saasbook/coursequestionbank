@@ -39,7 +39,7 @@
                     = link_to "#{collection.name} \n", collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
               
               %td
-                %div{:id => "all_tags_#{problem.id}"}
+                %div{:id => "all_tags_#{problem.id}", :class => 'tag_list'}
                   = render :partial => "tags", locals: { problem: problem }
                 %br
                 

@@ -10,6 +10,10 @@
   margin: 2px 1px;
 }
 
+.tag_list {
+  width: 200px;
+}
+
 .tag * {
   display: inline;
   padding: 0px;
@@ -17,10 +21,14 @@
   text-decoration: none;
 }
 
-.tag input[type="submit"] {
+.tag button {
   background-color: inherit;
+  font-family: inherit;
+  color: inherit;
   border: none;
   cursor: pointer;
+  margin: 0;
+  padding: 0;
 }
 
 .add_tags_form {
