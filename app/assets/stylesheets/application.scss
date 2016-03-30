@@ -55,6 +55,8 @@
 }
 
 .col-md-10 {
+  clear: right;
+  margin-left: 200px;
 	// width: 100%;
 }
 
@@ -129,10 +131,12 @@ li#navbar {
 }
 
 #sidebar-filter {
+  position: absolute;
 	background: #EBF4FA;
 	padding: 15px;
 	margin-left: 0px;
 	margin-top: 0px;
+	width: 200px;
 }
 
 #thetextarea {
