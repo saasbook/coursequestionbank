@@ -57,7 +57,7 @@ class Problem < ActiveRecord::Base
   end
   
   def ruql_source
-    "My JSON instead: #{json}"
+    "# Placeholder ruql source:\n" + IO.read('features/test_files/history_test2.txt')
   end
   
   def self.from_JSON(instructor, json_source)
