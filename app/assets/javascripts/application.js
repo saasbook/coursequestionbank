@@ -30,9 +30,7 @@ jQuery(document).ready(function() {
 		$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
 		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
 	});
-});
 
-$(document).ready(function() {
 	var clip = new ZeroClipboard($('.d_clip_button'));
 	$(".d_clip_button").on("click", function(){
 		alert("Source code copied to clipboard!");

@@ -14,7 +14,6 @@
         %tbody
           - problems.each do |problem|
             %tr{:id => "q#{problem.id}", :class => 'problem_row'}
-              // %td= check_box_tag "checked_problems[#{problem.id}]", 1
               %td
                 %li.glyphicon.glyphicon-chevron-right{:class => 'icon', :id => "#{problem.id}"}
                 = problem.html5.html_safe
@@ -25,7 +24,7 @@
                   %div
                     %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "", :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button"}
                       %b Clip Source Code
-                    %input{:id => "source_#{problem.id}", :value => problem.json, :style => "display: none"}
+                    %textarea{:id => "source_#{problem.id}", :value => problem.ruql_source, :style => "display: none"}= problem.ruql_source
                     = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button"
                     %div{:class => "supersede_form", :style => "display: none"}
                       = render :partial => "supersede_form", :locals => {:problem => problem}

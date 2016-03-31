@@ -7,7 +7,7 @@ class RuqlReader
     Quiz.quizzes.uniq.each do |quiz|
       problems_json = quiz.render_with("JSON", {})
       collection = if (Collection.find_by_name(quiz.title) and Collection.find_by_name(quiz.title).instructor == user) then false else user.collections.new(:name => quiz.title) end
-      if collection        
+      if collection
         problems_json.each do |problem_json|
           problem = Problem.from_JSON(user, problem_json)
           problem.collections << collection
@@ -21,7 +21,7 @@ class RuqlReader
     end
     collections
   end
-  
+
   def self.read_problem(user, source)
     quiz = Quiz.new(nil)
     quiz.instance_eval(source)
