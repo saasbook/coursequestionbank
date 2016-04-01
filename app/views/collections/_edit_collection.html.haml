@@ -10,7 +10,7 @@
       Delete Collection
       
 
-%div.section_body
+%div#tag_collection.section_body
   = render :partial=> 'form', locals: {:collection => collection}
   
   = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{collection.id}", :class => 'check_form' do
