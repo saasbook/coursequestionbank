@@ -7,6 +7,7 @@ class ProblemsController < ApplicationController
    'sort_by' => 'Relevancy',
    'problem_type' => [],
    'collections' => [],
+   'bloom_category' => [],
    'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
@@ -42,6 +43,13 @@ class ProblemsController < ApplicationController
     end
     if session[:filters][:collections].include?(0)
       session[:filters][:collections] = []
+    end
+
+    session[:filters][:bloom_category] = []
+    if params[:bloom_category]
+      params[:bloom_category].each do |key, value|
+          session[:filters][:bloom_category] << key if value == "1"
+      end
     end
 
     redirect_to problems_path

@@ -21,6 +21,7 @@ class Problem < ActiveRecord::Base
     time      :updated_at
     string    :problem_type
     time      :created_date
+    string    :bloom_category
 
     string    :tag_names, :multiple => true do
       tags.map(&:name)
@@ -153,6 +154,14 @@ class Problem < ActiveRecord::Base
         any_of do
           filters[:collections].each do |col|
             with(:collection_ids, col)
+          end
+        end
+      end
+      
+      if !filters[:bloom_category].empty?
+        any_of do
+          filters[:bloom_category].each do |category|
+            with(:bloom_category, category)
           end
         end
       end
