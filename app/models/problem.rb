@@ -195,4 +195,9 @@ class Problem < ActiveRecord::Base
   def add_tags(tag_names)
     tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
+  
+  def bloom_categorize(category)
+    self.bloom_category = category
+    save
+  end
 end

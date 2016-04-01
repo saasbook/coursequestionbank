@@ -145,4 +145,11 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
   end
+  
+  def bloom_categorize
+    @problem = Problem.find(params[:id])
+    category = params[:category]
+    @problem.bloom_categorize(category)
+    redirect_to problems_path
+  end
 end
