@@ -1,5 +1,7 @@
 
-%h3.section_title Collection #{@collection.name}
+%div.section_title 
+  %h3 Collection #{@collection.name}
+  %h4= @collection.description
 
 %div.section_options
   - if can? :manage, @collection
