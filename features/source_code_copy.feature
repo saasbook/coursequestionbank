@@ -7,6 +7,5 @@ Scenario: viewing a question's original source code
   Given I am signed in with uid "1234" and provider "github"
   And I have uploaded 'source_code_test.txt'
   And I am on the CourseQuestionBank home page
-  When I press "Supersede"
-  And I press "Copy Source Code"
-  Then I should see ":explanation =>"
+  When I press "Clip Source Code"
+  Then I should see "Source code copied to clipboard!"
