@@ -63,7 +63,13 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 }
 
 .highlighted-button {
-  color: red;
+  background-color: #BED6E6;
+  font-weight: bold;
+  // color: red;
+}
+
+.not-highlighted-button {
+  opacity: 0.6;
 }
 
 .prob-collection {
