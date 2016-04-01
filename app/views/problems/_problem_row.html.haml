@@ -16,7 +16,8 @@
       = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
 
     %br
-    Remember Understand Apply Evaluate
+    - %w{Remember Understand Apply Evaluate}.each do |category|
+      = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "btn btn-default"
 
 %td
   - problem.collections{|c| can? :read, c}.each do |collection|
