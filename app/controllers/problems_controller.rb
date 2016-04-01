@@ -61,7 +61,7 @@ class ProblemsController < ApplicationController
 
   def index
     @collections = @current_user.collections
-    @problems = Problem.filter(@current_user, session[:filters].clone)
+    @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem]))
   end
 
   def create
@@ -69,7 +69,7 @@ class ProblemsController < ApplicationController
       previous_version = Problem.find(params[:previous_version])
 
       begin
-        previous_version.supersede(@current_user, params[:ruql_source])
+        flash[:bump_problem] = previous_version.supersede(@current_user, params[:ruql_source])
 
       rescue Exception => e
         if request.xhr?
@@ -85,7 +85,6 @@ class ProblemsController < ApplicationController
     end
 
     flash[:notice] = "Question created"
-    flash.keep
     if request.xhr?
       render json: {'error' => nil}
     else
@@ -115,7 +114,7 @@ class ProblemsController < ApplicationController
       render :partial => "tags", locals: { problem: problem }
     else
       flash[:notice] = "Tags added" if added.size > 0
-      flash.keep
+      flash[:bump_problem] = problem.id
       redirect_to :back
     end
   end
@@ -125,7 +124,7 @@ class ProblemsController < ApplicationController
     tags = Tag.parse_list params[:tag_names]
     tags.each { |tag| problem.remove_tag tag }
     flash[:notice] = "Tags removed"
-    flash.keep
+    flash[:bump_problem] = problem.id
     redirect_to :back
   end
   
@@ -143,7 +142,6 @@ class ProblemsController < ApplicationController
         flash[:notice] = "Tags were added." if problem.add_tags(new_tags).size > 0
       end
     end
-    flash.keep
     redirect_to :back
   end
   
@@ -156,6 +154,8 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
     category = params[:category]
     @problem.bloom_categorize(category)
+    flash[:notice] = "Bloom category set."
+    flash[:bump_problem] = @problem.id
     redirect_to problems_path
   end
   
@@ -170,6 +170,7 @@ class ProblemsController < ApplicationController
     end
     problem.save
     flash[:notice] = "Problem changed to #{params[:privacy]}"
+    flash[:bump_problem] = problem.id
     redirect_to :back
   end
 end

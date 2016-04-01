@@ -132,7 +132,7 @@ class Problem < ActiveRecord::Base
     problem
   end
 
-  def self.filter(user, filters)
+  def self.filter(user, filters, bump_problem)
     problems = Problem.search do
       any_of do
         with(:instructor_id, user.id)
@@ -180,7 +180,12 @@ class Problem < ActiveRecord::Base
       paginate :page => filters['page'], :per_page => filters['per_page']
     end
 
-    problems.results
+    results = problems.results
+    if !bump_problem.nil?
+      results.reject! {|p| p.id == bump_problem.id}
+      results.insert(0, bump_problem)
+    end
+    return results
   end
 
   def supersede(user, source)
