@@ -5,9 +5,8 @@ Feature: User can see all the buttons associated with Bloom Taxonomy ratings
 
 Background:
   Given I am signed in with uid "1234" and provider "github"
-  And I have uploaded 'bloom_test.txt'
+  And I have uploaded 'foo.txt'
   And I am on the CourseQuestionBank home page
 
 Scenario: listing Bloom rating buttons
-  Then I should see "Create.*Evaluate.*Analyze"
-  And I should see "Apply.*Understand.*Remember"
+  Then I should see /Remember.*Understand.*Apply.*Evaluate/

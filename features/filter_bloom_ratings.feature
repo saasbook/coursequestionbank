@@ -5,7 +5,7 @@ Feature: User can filter search results by Bloom Taxonomy rating
 
 Background:
   Given I am signed in with uid "1234" and provider "github"
-  And I have uploaded 'bloom_test.txt'
+  And I have uploaded 'foo.txt'
   And I am on the CourseQuestionBank home page
 
 Scenario: filtering by Bloom rating
