@@ -8,6 +8,7 @@
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+    %meta{:name => 'viewport', :content => 'initial-scale=1'}
 
   %body
     %div#header
@@ -22,7 +23,7 @@
           - if can? :manage, Instructor
             %li= link_to 'Admin', admin_path, :class => 'btn btn-link'
           %li
-            = form_tag logout_path, :method => 'post' do
+            = form_tag logout_path, :method => :post do
               = submit_tag 'Log Out', :class => 'btn btn-link'
     
       %div#flash_message

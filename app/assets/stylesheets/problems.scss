@@ -1,4 +1,15 @@
 
+ol.questions { list-style-type: none; font-size: 90%; }
+li.question { page-break-inside: avoid; }
+li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
+li.selectmultiple  ol.answers { list-style-type: lower-alpha;  }
+li.truefalse ol.answers { list-style-type: lower-alpha; }
+.correct { color: green; font-weight: bold; border: 1px solid black; padding: 0.2ex; }
+.incorrect { color: red }
+.explanation { font-style: italic }
+.instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }
+
+
 .tag {
   display: inline-block;
   background: #dddddd;

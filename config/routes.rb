@@ -13,11 +13,13 @@ Coursequestionbank::Application.routes.draw do
   post 'problems/filters' => 'problems#set_filters', :as => 'set_filters'
   post 'problems/:id/tags/add' => 'problems#add_tags', :as => 'add_tags'
   post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
+  post 'update_multiple_tags' => 'problems#update_multiple_tags'
   get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
   
   get 'profile' => 'instructors#show', :as => 'profile'
   post 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
   post 'remove_problem' => 'problems#remove_from_collection'
+  
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
@@ -26,7 +28,6 @@ Coursequestionbank::Application.routes.draw do
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
-  post 'update_multiple_tags' => 'collections#update_multiple_tags'
   # match 'checked_problems' => 'collections#checked_problems'
 
 

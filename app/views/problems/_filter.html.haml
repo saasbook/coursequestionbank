@@ -1,19 +1,19 @@
 = form_tag set_filters_path, :method => :post, :id => 'filter-form' do
   
   %div.form-group
-    = label_tag(:search, 'Search Keywords:')
+    = label_tag :search, 'Search Keywords:'
     = text_field_tag :search, session[:filters][:search], class: 'form-control', placeholder: 'Search'
     
   %hr
     
   %div.form-group
-    = label_tag(:tags, 'Tags:')
+    = label_tag :tags, 'Tags:'
     = text_field_tag :tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: 'e.g.: tag 1, tag 2'
 
   %hr
   
   %div.form-group
-    = label_tag(:sort_by, 'Sort by:')
+    = label_tag :sort_by, 'Sort by:'
     - @sort_by_options.each do |option|
       %div.filter_option
         = radio_button_tag :sort_by, option, !!(session[:filters][:sort_by] == option), class: 'radio', id: "sort_by_#{option}"
@@ -22,7 +22,7 @@
   %hr
 
   %div.form-group
-    = label_tag(:problem_type, 'Problem type:')
+    = label_tag :problem_type, 'Problem type:'
     - @all_problem_types.each do |type, display_type|
       %div.filter_option
         = check_box_tag "problem_type[#{type}]", 1, !!(session[:filters][:problem_type].include? type), class: 'checkbox', id: "problem_type_#{type}"
@@ -31,7 +31,7 @@
   %hr
 
   %div.form-group
-    = label_tag(:collections, 'Collections:')
+    = label_tag :collections, 'Collections:'
     - @collections.each do |collection|
       %div.filter_option
         = check_box_tag "collections[#{collection.id}]", 1,  !!(session[:filters][:collections].include? collection.id), class: 'checkbox', id: "collections_#{collection.id}"

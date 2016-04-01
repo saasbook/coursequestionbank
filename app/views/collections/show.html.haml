@@ -1,15 +1,24 @@
 
-%h3#profile_title= @collection.name
+%h3.section_title Collection #{@collection.name}
 
-%div#profile_options
+%div.section_options
   - if can? :manage, @collection
     = link_to "Edit this collection", edit_collection_path(id: @collection), :class => 'btn btn-primary'
+  
+  = link_to export_path(:id => @collection.id), :class => 'btn btn-default' do
+    %span.glyphicon.glyphicon-export
+    Export
 
-%div#profile_body
-  %div.table-responsive
+%div.section_body.section_body_pad
+  = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{@collection.id}", :class => 'check_form' do
+    = text_field_tag :tag_names, nil, :id => "multiple_tag_names_#{@collection.id}", :class => 'form-control', :placeholder => 'tag 1, tag 2'
+    = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
+
+  %div.table-responsive.problem_table
     %table.table.table-striped
       %thead
         %tr
+          %th
           %th Question Text
           %th Collections
           %th Tags
@@ -17,4 +26,4 @@
       %tbody
         - @collection.problems.select{|p| can? :read, p}.each do |problem|
           %tr
-            = render :partial => 'problems/problem_row', :locals => {:problem => problem}
+            = render :partial => 'problems/problem_row', :locals => {:problem => problem, :check_box_form => "update_multiple_tags_#{@collection.id}"}

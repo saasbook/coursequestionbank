@@ -37,8 +37,8 @@ Feature: add a tag to existing question
     And I follow "1/22/15 (W1 L2)"
     And I check problem containing "Around 2007, the claim" in "1/22/15 (W1 L2)"
     And I check problem containing "statements comparing Plan-and-Document" in "1/22/15 (W1 L2)"
-    And I fill in "Enter tags, comma-separated" with "tag 1, tag 2"
-    And I press "Add Tags"
+    And I fill in "tag 1, tag 2" with "tag 1, tag 2"
+    And I press "Tag checked problems"
     Then I should see "tag 1"
     And I should see "tag 2"
   
@@ -50,7 +50,7 @@ Feature: add a tag to existing question
     And I follow "1/22/15 (W1 L2)"
     And I check problem containing "Around 2007, the claim" in "1/22/15 (W1 L2)"
     And I check problem containing "statements comparing Plan-and-Document" in "1/22/15 (W1 L2)"
-    And I press "Add Tags"
+    And I press "Tag checked problems"
     Then I should see "You need to enter a tag"
 
   Scenario: don't check problems in collection view
@@ -59,6 +59,6 @@ Feature: add a tag to existing question
     And I am on the CourseQuestionBank home page
     And I follow "My Collections"
     And I follow "1/22/15 (W1 L2)"
-    And I fill in "Enter tags, comma-separated" with "tag 1, tag 2"
-    And I press "Add Tags"
+    And I fill in "tag 1, tag 2" with "tag 1, tag 2"
+    And I press "Tag checked problems"
     Then I should see "You need to select a problem"
