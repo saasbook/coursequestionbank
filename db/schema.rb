@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160325190354) do
+ActiveRecord::Schema.define(:version => 20160401072455) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -56,6 +56,7 @@ ActiveRecord::Schema.define(:version => 20160325190354) do
     t.string   "problem_type"
     t.text     "json"
     t.integer  "previous_version_id"
+    t.string   "bloom_category"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
