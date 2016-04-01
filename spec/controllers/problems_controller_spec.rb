@@ -18,7 +18,7 @@ describe ProblemsController do
 		end
 		
 		it 'should add tags' do
-			problem = Problem.create.id
+			problem = Problem.create(:is_public => true).id
 			
 			request.env["HTTP_REFERER"] = '/problems'
 			post :add_tags, :id => problem, :tag_names => "tag1, tag2"
@@ -34,7 +34,7 @@ describe ProblemsController do
 		end
 		
 		it 'should remove tags' do
-			problem = Problem.create
+			problem = Problem.create(:is_public => true)
 			problem.add_tags(['tag 1', 'tag 2', 'tag 3'])
 			
 			request.env["HTTP_REFERER"] = '/problems'
@@ -51,7 +51,7 @@ describe ProblemsController do
 		end
 		
 		it 'should set privacy' do
-			problem = Problem.create(:is_public => false)
+			problem = @instructor.problems.create(:is_public => false)
 			
 			request.env["HTTP_REFERER"] = '/problems'
 			post :set_privacy, :id => problem.id, :privacy => 'public'
@@ -67,8 +67,8 @@ describe ProblemsController do
     end
     
     it 'should add tags' do
-      problem1 = Problem.create.id
-      problem2 = Problem.create.id
+      problem1 = Problem.create(:is_public => true).id
+      problem2 = Problem.create(:is_public => true).id
       checked_hash = {problem1.to_s => "1", problem2.to_s => "1"}
       
       request.env["HTTP_REFERER"] = '/problems'
