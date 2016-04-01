@@ -116,6 +116,11 @@ When /^I follow "(.*)" for problem containing "(.*)"/ do |link_id, problem_text|
   click_link("#{link_id}_#{problem}")
 end
 
+When /^I press button "(.*)" for problem containing "(.*)"/ do |link_id, problem_text|
+  problem = problems_with_text(problem_text)[0].id
+  click_on("copy_source_button_#{problem}")
+end
+
 When /^I choose sort by "(.*)"/ do |option|
   choose("sort_by_#{option}")
 end
@@ -162,6 +167,7 @@ end
 When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
+
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
