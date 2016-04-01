@@ -7,5 +7,5 @@ Scenario: viewing a question's original source code
   Given I am signed in with uid "1234" and provider "github"
   And I have uploaded 'source_code_test.txt'
   And I am on the CourseQuestionBank home page
-  When I press "Clip Source Code"
-  Then I should see "Source code copied to clipboard!"
+  When I press button "copy_source_button" for problem containing "This is a source code test"
+  Then I should see "What's your favorite creative color?"

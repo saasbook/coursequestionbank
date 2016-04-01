@@ -7,10 +7,10 @@
   %div.additional
     Created #{problem.created_date} by #{problem.instructor.name}
     %br
-    
-    %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "", :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default", :style => 'display: none'}
+
+    %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "", :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default", :value => "copy_source_button_#{problem.id}"}
       Clip Source Code
-      
+
     = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button btn btn-default"
     %div{:class => "supersede_form", :style => "display: none"}
       = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
@@ -23,6 +23,6 @@
   %div{:id => "all_tags_#{problem.id}", :class => 'tag_list'}
     = render :partial => 'problems/tags', locals: { problem: problem }
   %br
-  
+
   = form_tag add_tags_path(id: problem.id), class: 'add_tags_form' do
     = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add tags'
