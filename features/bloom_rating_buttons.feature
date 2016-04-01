@@ -9,4 +9,7 @@ Background:
   And I am on the CourseQuestionBank home page
 
 Scenario: listing Bloom rating buttons
-  Then I should see /Remember.*Understand.*Apply.*Evaluate/
+  Then I should see a button "Remember"
+  And I should see a button "Understand"
+  And I should see a button "Apply"
+  And I should see a button "Evaluate"
