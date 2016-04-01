@@ -1,0 +1,209 @@
+/*
+ * This is a manifest file that'll be compiled into application.css, which will include all the files
+ * listed below.
+ *
+ * Any CSS and SCSS file within this directory, lib/assets/stylesheets, vendor/assets/stylesheets,
+ * or vendor/assets/stylesheets of plugins, if any, can be referenced here using a relative path.
+ *
+ * You're free to add application-wide styles to this file and they'll appear at the top of the
+ * compiled file, but it's generally better to create a new file per style scope.
+ *
+ */
+
+@import "bootstrap-sprockets";
+@import "bootstrap";
+@import 'problems';
+
+ html, body {
+ 	/*font-family: 'Patrick Hand';*/
+ 	font-family: 'Droid Serif', Times, serif;
+ 	margin: 0px;
+ 	padding: 0px;
+ 	background: #fafafa;
+ }
+
+ #main {
+ }
+
+ .toggler{
+    height:auto;
+ }
+.toggler2{
+    height:auto;
+}
+
+
+ h1, p {
+ 	margin: 10px;
+ 	padding: 0px;
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+ 	font-weight: 700;
+ }
+
+    td,th{
+        margin:0px;
+        white-space:normal;
+    }
+.message{
+	color: red;
+}
+
+.col-md-10 {
+	//width: 100%;
+}
+
+.col-md-12 {
+  clear: right;
+}
+
+a {
+ 	text-decoration: none;
+ }
+
+p.collectioncontrols {
+	display: inline;
+	margin: 0;
+}
+
+.btn {
+	font-family: 'Open Sans', Helvetica, Arial, sans-serif
+}
+
+ a:link, a:visited, a:hover, a:active {
+ 	text-decoration: none;
+ }
+
+ .btn-primary, .btn-info {
+ 	//float: right;
+ 	margin: 20px 5px;
+ }
+
+ .addlink {
+ 	cursor: pointer;
+ }
+
+ h1.title, p.welcome {
+ 	display: inline-block;
+ 	margin: 5px 10px 0px 10px;
+
+ }
+
+ .title {
+ 	text-align: center;
+ }
+
+ul#navbar {
+	list-style: none;
+	margin: 0px;
+}
+
+li#navbar {
+	float: right;
+	display: inline;
+	font-size: 17px;
+	padding: 11px;
+}
+
+ #header {
+ 	font-family: 'Raleway';
+ 	width: 100%;
+ 	position: relative;
+ 	background-color: #EBF4FA;
+ 	border-top: solid;
+ 	border-bottom: solid;
+ 	border-top-width: 2px;
+ 	border-bottom-width: 2px;
+ 	padding-right: 20px;
+ 	padding-top: 10px;
+ }
+
+#user {
+	padding: 5px;
+	margin: 5px;
+	display: inline-block;
+	float: right;
+	font-size: 18px;
+	margin-right: 10px,
+}
+
+#sidebar-filter {
+  position: absolute;
+	background: #EBF4FA;
+	padding: 15px;
+	margin-left: 0px;
+	margin-top: 0px;
+	width: 200px;
+}
+
+.filter_option input {
+  display: inline-block;
+}
+
+#problems_view {
+  width: 100%;
+  clear: right;
+  padding-left: 215px;
+}
+
+#thetextarea {
+	height: 100%;
+	width: 100%;
+}
+
+
+#authorize {
+	margin: 0px;
+}
+
+.problem_box {
+	width: 100%;
+	height: 20%;
+	background: white;
+	margin-top: 15px;
+	margin-bottom: 15px;
+	border: 1px solid #DCDCDC;
+	border-radius: 3px;
+}
+
+.export-tabs {
+	padding: 60px 20px 0 20px;
+    font-family: 'Open Sans', Helvetica, Arial, sans-serif;
+}
+
+.tab-content {
+	font-family: 'Droid Serif', Times, serif;
+}
+
+#problem_row {
+	height: 30%;
+}
+
+.pagination {
+	margin: 0px;
+	padding: 5px;
+	float: right;
+	margin-right: inherit;
+}
+
+.right {
+	float: right;
+}
+
+.maintable {
+	margin-top: 10px;
+}
+
+	ol.questions { list-style-type: none; }
+    li.question { page-break-inside: avoid; }
+    li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
+    li.selectmultiple  ol.answers { list-style-type: lower-alpha;  }
+    li.truefalse ol.answers { list-style-type: lower-alpha; }
+    .correct { color: green; font-weight: bold; border: 1px solid black; padding: 0.2ex; }
+    .incorrect { color: red }
+    .explanation { font-style: italic }
+    .instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }
+
+.source_field {
+  font-family: monospace;
+  width: 100%;
+}

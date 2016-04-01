@@ -1,0 +1,45 @@
+
+.tag {
+  display: inline-block;
+  background: #dddddd;
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin: 2px 1px;
+}
+
+.tag .glyphicon {
+  font-size: 80%;
+}
+
+.tag_list {
+  width: 200px;
+}
+
+.tag * {
+  display: inline;
+  padding: 0px;
+  margin: 0px;
+  text-decoration: none;
+}
+
+.add_tags_form {
+  margin-top: 5px;
+}
+
+.add_tags_form input {
+  width: 90px;
+  padding: 0 6px;
+}
+
+
+.problem_box {
+  background-color: #eeeeee;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 4px;
+}
+
+.source_field {
+  font-family: monospace;
+  width: 100%;
+}

@@ -39,3 +39,9 @@
               = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add tags'
 
           %td= link_to "", remove_problem_path( :id => problem.id, :collection_id => collection), {:id => "problem_#{problem.id}", :class => 'glyphicon glyphicon-trash'}
+
+
+// %td
+//             = form_tag remove_problem_path(:id => problem.id, :collection_id => @collection.id), :method => :post do
+//               = button_tag :type => 'submit', :class => 'clr-button' do
+//                 %div.glyphicon.glyphicon-remove

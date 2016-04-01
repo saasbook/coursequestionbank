@@ -1,0 +1,23 @@
+
+%td
+
+%td
+  = problem.html5.html_safe
+  %div.additional
+    Created #{problem.created_date} by #{problem.instructor.name}
+    %br
+    = link_to 'Supersede', supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => 'supersede_button btn btn-secondary'
+    %div{:class => 'supersede_form', :style => 'display: none'}
+      = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
+
+%td
+  - problem.collections{|c| can? :read, c}.each do |collection|
+    = link_to "#{collection.name.truncate(35)}", collection_path(:id => collection.id), :class => 'btn btn-link'
+
+%td
+  %div{:id => "all_tags_#{problem.id}", :class => 'tag_list'}
+    = render :partial => 'problems/tags', locals: { problem: problem }
+  %br
+  
+  = form_tag add_tags_path(id: problem.id), class: 'add_tags_form' do
+    = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add tags'

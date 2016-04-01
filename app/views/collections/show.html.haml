@@ -1,3 +1,20 @@
-- if @collection.instructor == @current_user
-  = link_to "Click here to edit this collection", edit_collection_path(id: @collection)
-= render :partial => "collections_table", locals: {collection: @collection, problems: @collection.problems}
+
+%h3#profile_title= @collection.name
+
+%div#profile_options
+  - if can? :manage, @collection
+    = link_to "Edit this collection", edit_collection_path(id: @collection), :class => 'btn btn-primary'
+
+%div#profile_body
+  %div.table-responsive
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Question Text
+          %th Collections
+          %th Tags
+      
+      %tbody
+        - @collection.problems.select{|p| can? :read, p}.each do |problem|
+          %tr
+            = render :partial => 'problems/problem_row', :locals => {:problem => problem}
