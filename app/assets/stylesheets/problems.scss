@@ -47,8 +47,14 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   font-size: 80%
 }
 
-.additional div {
+.additional > div {
   margin: 5px 0;
+}
+
+.additional .prob_privacy {
+  float: right;
+  margin-top: 0;
+  margin-left: 5px;
 }
 
 .additional .button_to {

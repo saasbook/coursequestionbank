@@ -5,7 +5,13 @@
 %td
   = problem.html5.html_safe
   
+  %hr
   %div.additional
+    %div.prob_privacy
+      = button_to (problem.is_public ? 'Public' : 'Private'),
+        set_problem_privacy_path(:id => problem.id, :privacy => problem.is_public ? 'private' : 'public'),
+        :class => 'btn btn-default'
+  
     %div Created #{problem.created_date} by #{problem.instructor.name}
     
     %div

@@ -157,4 +157,18 @@ class ProblemsController < ApplicationController
     @problem.bloom_categorize(category)
     redirect_to problems_path
   end
+  
+  def set_privacy
+    problem = Problem.find(params[:id])
+    if params[:privacy] == 'public'
+      problem.is_public = true
+    elsif params[:privacy] == 'private'
+      problem.is_public = false
+    else
+      return
+    end
+    problem.save
+    flash[:notice] = "Problem changed to #{params[:privacy]}"
+    redirect_to :back
+  end
 end
