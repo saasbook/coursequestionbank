@@ -39,6 +39,7 @@ jQuery(document).ready(function() {
 	
 	$("#check_all").change(function () {
     $("#filter-content input:checkbox").prop('checked', $(this).prop("checked"));
+    $("#tag_collection input:checkbox").prop('checked', $(this).prop("checked"));
 	});
 	
 });
