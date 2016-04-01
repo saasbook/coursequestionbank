@@ -43,6 +43,20 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 }
 
 
+.additional div {
+  margin: 5px 0;
+}
+
+.additional .button_to {
+  display: inline-block;
+  margin: 0;
+}
+
+.highlighted-button {
+  color: red;
+}
+
+
 .problem_box {
   background-color: #eeeeee;
   padding: 10px;

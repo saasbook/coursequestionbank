@@ -34,6 +34,13 @@ class ProblemsController < ApplicationController
           session[:filters][:problem_type] << key if value == "1"
       end
     end
+    
+    session[:filters][:bloom_category] = []
+    if params[:bloom_category]
+      params[:bloom_category].each do |key, value|
+          session[:filters][:bloom_category] << key if value == "1"
+      end
+    end
 
     session[:filters][:collections] = []
     if params[:collections]
@@ -43,13 +50,6 @@ class ProblemsController < ApplicationController
     end
     if session[:filters][:collections].include?(0)
       session[:filters][:collections] = []
-    end
-
-    session[:filters][:bloom_category] = []
-    if params[:bloom_category]
-      params[:bloom_category].each do |key, value|
-          session[:filters][:bloom_category] << key if value == "1"
-      end
     end
 
     redirect_to problems_path

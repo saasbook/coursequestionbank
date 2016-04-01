@@ -150,19 +150,19 @@ class Problem < ActiveRecord::Base
           end
         end
       end
-
-      if !filters[:collections].empty?
-        any_of do
-          filters[:collections].each do |col|
-            with(:collection_ids, col)
-          end
-        end
-      end
       
       if !filters[:bloom_category].empty?
         any_of do
           filters[:bloom_category].each do |category|
             with(:bloom_category, category)
+          end
+        end
+      end
+
+      if !filters[:collections].empty?
+        any_of do
+          filters[:collections].each do |col|
+            with(:collection_ids, col)
           end
         end
       end
