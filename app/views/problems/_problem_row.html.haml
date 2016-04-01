@@ -15,6 +15,9 @@
     %div{:class => "supersede_form", :style => "display: none"}
       = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
 
+    %br
+    Remember Understand Apply Evaluate
+
 %td
   - problem.collections{|c| can? :read, c}.each do |collection|
     = link_to "#{collection.name.truncate(35)}", collection_path(:id => collection.id), :class => 'btn btn-link', :title => collection.name
