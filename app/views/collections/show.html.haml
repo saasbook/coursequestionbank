@@ -11,10 +11,12 @@
 
 %div.section_body.section_body_pad
   = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{@collection.id}", :class => 'check_form' do
+    = check_box_tag 'check_all', 'yes', false
+    = "Check All"
     = text_field_tag :tag_names, nil, :id => "multiple_tag_names_#{@collection.id}", :class => 'form-control', :placeholder => 'tag 1, tag 2'
     = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
 
-  %div.table-responsive.problem_table
+  %div#tag_collection.table-responsive.problem_table
     %table.table.table-striped
       %thead
         %tr

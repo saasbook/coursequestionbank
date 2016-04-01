@@ -36,4 +36,10 @@ jQuery(document).ready(function() {
 	$(".d_clip_button").on("click", function(){
 		alert("Source code copied to clipboard!");
 	});
+	
+	$("#check_all").change(function () {
+    $("#filter-content input:checkbox").prop('checked', $(this).prop("checked"));
+    $("#tag_collection input:checkbox").prop('checked', $(this).prop("checked"));
+	});
+	
 });
