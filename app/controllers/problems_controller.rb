@@ -24,7 +24,7 @@ class ProblemsController < ApplicationController
     session[:filters] = session[:filters].merge params.slice(:search, :tags, :sort_by)
 
     if session[:filters][:tags].is_a? String
-      session[:filters][:tags] = session[:filters][:tags].split(',').map(&:strip)
+      session[:filters][:tags] = Tag.parse_list session[:filters][:tags]
     end
 
     session[:filters][:problem_type] = []
@@ -104,7 +104,7 @@ class ProblemsController < ApplicationController
 
   def add_tags
     problem = Problem.find(params[:id])
-    tags = params[:tag_names].split(',').map(&:strip)
+    tags = Tag.parse_list params[:tag_names]
     added = problem.add_tags(tags)
     if request.xhr?
       render :partial => "tags", locals: { problem: problem }
@@ -117,13 +117,30 @@ class ProblemsController < ApplicationController
 
   def remove_tags
     problem = Problem.find(params[:id])
-    tags = params[:tag_names].split(',').map(&:strip)
+    tags = Tag.parse_list params[:tag_names]
     tags.each { |tag| problem.remove_tag tag }
     flash[:notice] = "Tags removed"
     flash.keep
     redirect_to :back
   end
-
+  
+  def update_multiple_tags
+    new_tags = Tag.parse_list params[:tag_names]
+    selected = params[:checked_problems] ? params[:checked_problems].keys : []
+    if new_tags == []
+      flash[:error] = "You need to enter a tag."
+    elsif selected == []
+      flash[:error] = "You need to select a problem."
+    else
+      selected.each do |problem_id|
+        problem = Problem.find(problem_id)
+        flash[:notice] = "Tags were added." if problem.add_tags(new_tags).size > 0
+      end
+    end
+    flash.keep
+    redirect_to :back
+  end
+  
   def supersede
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]

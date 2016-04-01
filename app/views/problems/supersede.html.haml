@@ -1,10 +1,8 @@
 
 %div.col-md-12
   %h4 Create new version of question:
-  = @problem.html5.html_safe
-  %ol.questions
-    %li{:class => "additional"}
-      = "Created Date: " + @problem.created_date.to_s + " | "
-      = "Created By: " + @problem.instructor.name
+  %div.problem_box
+    = @problem.html5.html_safe
+    %div.additional Created #{@problem.created_date} by #{@problem.instructor.name}
   
-  = render :partial => "supersede_form", :locals => {:problem => @problem}
+  = render :partial => 'supersede_form', :locals => {:problem => @problem}

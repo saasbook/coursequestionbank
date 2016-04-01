@@ -34,11 +34,17 @@ class CollectionsController < ApplicationController
   end
 
   def update
-    if not (collection = Collection.update(params[:id], params[:collection])).valid?
+    collection = Collection.find(params[:id])
+    collection.name = params[:name] if params[:name] != nil
+    collection.description = params[:description] if params[:description] != nil
+    collection.is_public = params[:is_public] if params[:is_public] != nil
+    if not collection.valid?
       collection_errors(collection)
-    end
-    if params[:collection][:is_public] != nil
-      collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
+    else
+      collection.save
+      if params[:is_public] != nil
+        collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
+      end
     end
     flash.keep
     redirect_to profile_path
@@ -76,23 +82,6 @@ class CollectionsController < ApplicationController
 
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
-  end
-
-  def update_multiple_tags
-    new_tags = params[:tag_names] ? params[:tag_names].split(',').map(&:strip) : []
-    selected = params[:checked_problems] ? params[:checked_problems].keys : []
-    if new_tags == []
-      flash[:error] = "You need to enter a tag."
-    elsif selected == []
-      flash[:error] = "You need to select a problem."
-    else
-      selected.each do |problem_id|
-        problem = Problem.find(problem_id)
-        flash[:notice] = "Tags were added." if problem.add_tags(new_tags).size > 0
-      end
-    end
-    flash.keep
-    redirect_to :back
   end
 
   # def checked_problems
