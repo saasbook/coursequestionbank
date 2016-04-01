@@ -26,12 +26,14 @@
               -if can? :manage, Instructor
                 %li#navbar= link_to 'Admin', admin_path, method: :get
               %li#navbar= link_to 'My Collections', profile_path, method: :get
+              %li#navbar= link_to 'Home', problems_path
               %li#navbar Welcome, #{@current_user.name}!
           - else
             %ul#navbar
               %li#navbar= link_to " Log Out", logout_path, method: :post
               %li#navbar= link_to 'My Dashboard', profile_path, method: :get
               %li#navbar Welcome, #{@current_user.provider} user!
+              %li#navbar= link_to 'Home', problems_path
       - if flash[:notice]
         #notice.message= flash[:notice]
       - elsif flash[:warning]
