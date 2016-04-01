@@ -1,1 +1,10 @@
-Lorem ipsum
+quiz 'Source Code Test Quiz' do
+
+  choice_answer :randomize => true do
+    text "This is a source code test. What's your favorite creative color?"
+    distractor "Green", :explanation => 'Green is not a creative color.'
+    distractor "Black", :explanation => 'Black is not a creative color.'
+    answer "Blue", :explanation => 'Blue is a creative color.'
+  end
+
+end
