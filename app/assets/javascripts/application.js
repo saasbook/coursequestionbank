@@ -17,19 +17,19 @@
 //= require zeroclipboard
 
 jQuery(document).ready(function() {
-	$('.maintable').find('.answers').hide(); //Hide/close all containers
-	$('.maintable').find('.additional').hide();
-	$('.text').addClass('toggler').removeClass('text');
-	$('.maintable').find('.toggler').addClass('text').removeClass('toggler');
-	$('.icon').click(function(){
+	// $('.maintable').find('.answers').hide(); //Hide/close all containers
+	// $('.maintable').find('.additional').hide();
+	// $('.text').addClass('toggler').removeClass('text');
+	// $('.maintable').find('.toggler').addClass('text').removeClass('toggler');
+	// $('.icon').click(function(){
 
-		$('#q' + $(this).attr('id')).find('.answers').toggle();
-		$('#q' + $(this).attr('id')).find('.additional').toggle();
-		$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
-		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-		$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
-		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-	});
+	// 	$('#q' + $(this).attr('id')).find('.answers').toggle();
+	// 	$('#q' + $(this).attr('id')).find('.additional').toggle();
+	// 	$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
+	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
+	// 	$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
+	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
+	// });
 
 	$('.d_clip_button').show();
 	var clip = new ZeroClipboard($('.d_clip_button'));
@@ -37,9 +37,10 @@ jQuery(document).ready(function() {
 		alert("Source code copied to clipboard!");
 	});
 	
-	$("#check_all").change(function () {
-    $("#filter-content input:checkbox").prop('checked', $(this).prop("checked"));
-    $("#tag_collection input:checkbox").prop('checked', $(this).prop("checked"));
+	$('.check_all').show();
+	$('.check_all').change(function () {
+		var group = $(this).attr('id').substring('check_all_'.length);
+    $('.check_box_' + group).prop('checked', $(this).prop('checked'));
 	});
 	
 });

@@ -21,7 +21,7 @@ Feature: User can search for questions by tags
 
   Scenario: search for matching questions by a specific tag
     When I fill in "Tags" with "test_tag"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "implied port number"
     And I should see "handling views"
     And I should not see "complicated to scale"
@@ -29,7 +29,7 @@ Feature: User can search for questions by tags
 
   Scenario: search with multiple tags
     When I fill in "Tags" with "test_tag, test_tag2"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "handling views"
     And I should not see "implied port number"
     And I should not see "complicated to scale"
@@ -37,7 +37,7 @@ Feature: User can search for questions by tags
 
   Scenario: search by a tag that doesn’t match any questions (sad path)
     When I fill in "Tags" with "not_a_tag"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "No questions matched your search criteria"
     And I should not see "handling views"
     And I should not see "implied port number"

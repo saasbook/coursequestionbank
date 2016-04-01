@@ -1,28 +1,43 @@
 
 - if !local_assigns[:check_box_form].nil?
-  %td= check_box_tag "checked_problems[#{problem.id}]", 0, false, id: "checked_problems_#{problem.id}", class: "check_tags", form: check_box_form
+  %td= check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}", class: "checkbox check_box_#{check_group}", form: check_box_form
 
 %td
   = problem.html5.html_safe
+  
   %div.additional
-    Created #{problem.created_date} by #{problem.instructor.name}
-    %br
+    - if can? :set_privacy, problem
+      %div.prob_privacy
+        = button_to (problem.is_public ? 'Public' : 'Private'),
+          set_problem_privacy_path(:id => problem.id, :privacy => problem.is_public ? 'private' : 'public'),
+          :class => 'btn btn-default'
+  
+    %div Created #{problem.created_date} by #{problem.instructor.name}
     
-    %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "", :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default", :style => 'display: none'}
-      Clip Source Code
-      
-    = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button btn btn-default"
-    %div{:class => "supersede_form", :style => "display: none"}
-      = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
-
-%td
-  - problem.collections{|c| can? :read, c}.each do |collection|
-    = link_to "#{collection.name.truncate(35)}", collection_path(:id => collection.id), :class => 'btn btn-link', :title => collection.name
+    %div
+      Collections:
+      - problem.collections.select{|c| can? :read, c}.each do |collection|
+        = link_to "#{collection.name.truncate(35)}", collection_path(:id => collection.id), :class => 'btn btn-link prob-collection', :title => collection.name
+    
+    %div
+      Bloom Category:
+      - Problem.all_bloom_categories.each do |category|
+        = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "btn btn-default #{'highlighted-button' if problem.bloom_category == category}"
+    
+    %div
+      %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "",
+              :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default", 
+              :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
+        Clip Source Code
+  
+      = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button btn btn-default"
+      %div{:class => "supersede_form", :style => "display: none"}
+        = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
 
 %td
   %div{:id => "all_tags_#{problem.id}", :class => 'tag_list'}
     = render :partial => 'problems/tags', locals: { problem: problem }
   %br
-  
+
   = form_tag add_tags_path(id: problem.id), class: 'add_tags_form' do
     = text_field_tag :tag_names, nil, id: "add_tags_#{problem.id}", class: 'form-control', placeholder: 'Add tags'

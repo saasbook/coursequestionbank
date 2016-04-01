@@ -1,5 +1,5 @@
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :bloom_category
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -21,6 +21,7 @@ class Problem < ActiveRecord::Base
     time      :updated_at
     string    :problem_type
     time      :created_date
+    string    :bloom_category
 
     string    :tag_names, :multiple => true do
       tags.map(&:name)
@@ -34,6 +35,10 @@ class Problem < ActiveRecord::Base
     {'Dropdown' => 'Dropdown', 'FillIn' => 'Fill-in',
       'MultipleChoice' => 'Multiple choice', 'SelectMultiple' => 'Select multiple',
       'TrueFalse' => 'True/False'}
+  end
+
+  def self.all_bloom_categories
+    %w{Remember Understand Apply Evaluate}
   end
 
   def self.sort_by_options
@@ -63,7 +68,7 @@ class Problem < ActiveRecord::Base
     answers = json_hash["answers"]
     return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
     result << ruql_question_header(json_hash)
-    result << "\n  text '" + json_hash["question_text"] + "'"
+    result << "\n  text %q{" + json_hash["question_text"] + "}"
     answers.each do |answer| # answers first
       result << ruql_answer_line(answer) if answer["correct"]
     end
@@ -76,7 +81,7 @@ class Problem < ActiveRecord::Base
 
   def ruql_true_false(json_hash)
     line = "truefalse "
-    line += "'" + json_hash["question_text"] + "', "
+    line += '"' + json_hash["question_text"] + '"'
     json_hash["answers"].each do |answer|
       if answer["correct"]
         line += answer["answer_text"].downcase
@@ -104,7 +109,7 @@ class Problem < ActiveRecord::Base
   def ruql_answer_line(answer)
     line = "\n  "
     line += answer["correct"] ? "answer" : "distractor"
-    line += " '" + answer["answer_text"] + "'"
+    line += ' "' + answer["answer_text"] + '"'
     if answer["explanation"]
       line += ', :explanation => "' + answer["explanation"] + '"'
     end
@@ -142,6 +147,14 @@ class Problem < ActiveRecord::Base
         any_of do
           filters[:problem_type].each do |sort_param|
             with(:problem_type, sort_param)
+          end
+        end
+      end
+
+      if !filters[:bloom_category].empty?
+        any_of do
+          filters[:bloom_category].each do |category|
+            with(:bloom_category, category)
           end
         end
       end
@@ -195,5 +208,10 @@ class Problem < ActiveRecord::Base
 
   def add_tags(tag_names)
     tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
+  end
+
+  def bloom_categorize(category)
+    self.bloom_category = category
+    save
   end
 end

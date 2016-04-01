@@ -42,12 +42,16 @@
   float: right;
 }
 
+.check_form .form-control {
+  width: 120px;
+  display: inline-block;
+  margin-right: 3px;
+}
+
 .problem_table {
   clear: right;
 }
 
-.check_form .form-control {
-  width: 120px;
-  display: inline-block;
-  margin-right: 10px;
+th .check_all {
+  margin: 0 0 4px;
 }

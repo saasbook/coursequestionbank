@@ -43,6 +43,37 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 }
 
 
+.additional {
+  font-size: 80%;
+  margin-top: 15px;
+}
+
+.additional > div {
+  margin: 5px 0;
+}
+
+.additional .prob_privacy {
+  float: right;
+  margin-top: 0;
+  margin-left: 5px;
+}
+
+.additional .button_to {
+  display: inline-block;
+  margin: 0;
+}
+
+.highlighted-button {
+  color: red;
+}
+
+.prob-collection {
+  font-size: inherit;
+  border: none;
+  padding: 0 10px;
+}
+
+
 .problem_box {
   background-color: #eeeeee;
   padding: 10px;

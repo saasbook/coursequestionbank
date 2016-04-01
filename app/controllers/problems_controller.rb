@@ -7,6 +7,7 @@ class ProblemsController < ApplicationController
    'sort_by' => 'Relevancy',
    'problem_type' => [],
    'collections' => [],
+   'bloom_category' => [],
    'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
@@ -33,6 +34,13 @@ class ProblemsController < ApplicationController
           session[:filters][:problem_type] << key if value == "1"
       end
     end
+    
+    session[:filters][:bloom_category] = []
+    if params[:bloom_category]
+      params[:bloom_category].each do |key, value|
+          session[:filters][:bloom_category] << key if value == "1"
+      end
+    end
 
     session[:filters][:collections] = []
     if params[:collections]
@@ -54,9 +62,6 @@ class ProblemsController < ApplicationController
   def index
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone)
-
-    @sort_by_options = Problem.sort_by_options
-    @all_problem_types = Problem.all_problem_types
   end
 
   def create
@@ -134,6 +139,7 @@ class ProblemsController < ApplicationController
     else
       selected.each do |problem_id|
         problem = Problem.find(problem_id)
+        authorize! :add_tags, problem
         flash[:notice] = "Tags were added." if problem.add_tags(new_tags).size > 0
       end
     end
@@ -144,5 +150,26 @@ class ProblemsController < ApplicationController
   def supersede
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
+  end
+  
+  def bloom_categorize
+    @problem = Problem.find(params[:id])
+    category = params[:category]
+    @problem.bloom_categorize(category)
+    redirect_to problems_path
+  end
+  
+  def set_privacy
+    problem = Problem.find(params[:id])
+    if params[:privacy] == 'public'
+      problem.is_public = true
+    elsif params[:privacy] == 'private'
+      problem.is_public = false
+    else
+      return
+    end
+    problem.save
+    flash[:notice] = "Problem changed to #{params[:privacy]}"
+    redirect_to :back
   end
 end

@@ -1,5 +1,5 @@
 quiz 'A few example questions' do
-  
+
   choice_answer :randomize => true do
     text "Which of the following best identifies the four basic operations supported by RDBMS?"
     distractor "HTTP", :explanation => 'HTTP stands for HyperText Transfer Protocol, which is used to transfer SaaS content to browsers.'
