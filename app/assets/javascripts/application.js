@@ -31,7 +31,7 @@ jQuery(document).ready(function() {
 		$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
 	});
 
-	// $('.d_clip_button').show();
+	$('.d_clip_button').show();
 	var clip = new ZeroClipboard($('.d_clip_button'));
 	$(".d_clip_button").on("click", function(){
 		alert("Source code copied to clipboard!");
