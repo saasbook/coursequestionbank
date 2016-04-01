@@ -23,9 +23,9 @@ class CollectionsController < ApplicationController
     collection_hash = params[:collection]
     if not (collection = @current_user.collections.create(collection_hash)).valid?
       collection_errors(collection)
+      redirect_to :back and return
     end
-    flash.keep
-    redirect_to profile_path
+    redirect_to collection_path(:id => collection.id)
   end
 
   def show
@@ -45,14 +45,14 @@ class CollectionsController < ApplicationController
     
     if not collection.valid?
       collection_errors(collection)
+      redirect_to :back and return
     else
       collection.save
       # if params[:is_public] != nil
       #   collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
       # end
     end
-    flash.keep
-    redirect_to profile_path
+    redirect_to collection_path(:id => collection.id)
   end
 
   def destroy
