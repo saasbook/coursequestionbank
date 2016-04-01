@@ -19,7 +19,7 @@
 
     %br
     Bloom Category:
-    - @all_bloom_categories.each do |category|
+    - Problem.all_bloom_categories.each do |category|
       = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "btn btn-default #{'highlighted-button' if problem.bloom_category == category}"
 
 %td

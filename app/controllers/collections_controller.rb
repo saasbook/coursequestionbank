@@ -12,7 +12,6 @@ class CollectionsController < ApplicationController
   def edit
     @collection = Collection.find(params[:id])
     @problems = @collection.problems
-    @all_bloom_categories = Problem.all_bloom_categories
   end
   
   def collection_errors(collection)
@@ -83,7 +82,6 @@ class CollectionsController < ApplicationController
 
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
-    @all_bloom_categories = Problem.all_bloom_categories
   end
 
   # def checked_problems

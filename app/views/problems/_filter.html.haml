@@ -14,7 +14,7 @@
   
   %div.form-group
     = label_tag :sort_by, 'Sort by:'
-    - @sort_by_options.each do |option|
+    - Problem.sort_by_options.each do |option|
       %div.filter_option
         = radio_button_tag :sort_by, option, !!(session[:filters][:sort_by] == option), class: 'radio', id: "sort_by_#{option}"
         = label_tag "sort_by_#{option}", option
@@ -23,7 +23,7 @@
 
   %div.form-group
     = label_tag :problem_type, 'Problem type:'
-    - @all_problem_types.each do |type, display_type|
+    - Problem.all_problem_types.each do |type, display_type|
       %div.filter_option
         = check_box_tag "problem_type[#{type}]", 1, !!(session[:filters][:problem_type].include? type), class: 'checkbox', id: "problem_type_#{type}"
         = label_tag "problem_type_#{type}", display_type
@@ -44,7 +44,7 @@
 
   %div.form-group
     = label_tag :bloom_category, 'Bloom category:'
-    - @all_bloom_categories.each do |category|
+    - Problem.all_bloom_categories.each do |category|
       %div.filter_option
         = check_box_tag "bloom_category[#{category}]", 1, !!(session[:filters][:bloom_category].include? category), class: 'checkbox', id: "bloom_category_#{category}"
         = label_tag "bloom_category_#{category}", category

@@ -62,10 +62,6 @@ class ProblemsController < ApplicationController
   def index
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone)
-
-    @sort_by_options = Problem.sort_by_options
-    @all_problem_types = Problem.all_problem_types
-    @all_bloom_categories = Problem.all_bloom_categories
   end
 
   def create
