@@ -57,6 +57,16 @@ class ProblemsController < ApplicationController
 
     @sort_by_options = Problem.sort_by_options
     @all_problem_types = Problem.all_problem_types
+    @all_bloom_categories = Problem.all_bloom_categories
+    @button_styles = {}
+    @problems.each do |problem|
+      @button_styles[problem.id] = {}
+      @all_bloom_categories.each do |category|
+        if problem.bloom_category == category
+          @button_styles[problem.id][category] = 'highlighted-button'
+        end
+      end
+    end
   end
 
   def create

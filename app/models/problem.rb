@@ -35,6 +35,10 @@ class Problem < ActiveRecord::Base
       'MultipleChoice' => 'Multiple choice', 'SelectMultiple' => 'Select multiple',
       'TrueFalse' => 'True/False'}
   end
+  
+  def self.all_bloom_categories
+    %w{Remember Understand Apply Evaluate}
+  end
 
   def self.sort_by_options
     ['Relevancy', 'Date Created', 'Last Used']
