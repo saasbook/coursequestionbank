@@ -35,16 +35,21 @@ class CollectionsController < ApplicationController
 
   def update
     collection = Collection.find(params[:id])
+    
     collection.name = params[:name] if params[:name] != nil
     collection.description = params[:description] if params[:description] != nil
     collection.is_public = params[:is_public] if params[:is_public] != nil
+    if ['Public', 'Private'].include? params[:privacy]
+      collection.is_public = params[:privacy] == 'Public'
+    end
+    
     if not collection.valid?
       collection_errors(collection)
     else
       collection.save
-      if params[:is_public] != nil
-        collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
-      end
+      # if params[:is_public] != nil
+      #   collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
+      # end
     end
     flash.keep
     redirect_to profile_path
