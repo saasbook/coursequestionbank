@@ -1,20 +1,25 @@
 Coursequestionbank::Application.routes.draw do
 
   root :to => 'problems#home'
-  
+
   get  'auth/:provider/callback' => 'sessions#create'
   post 'logout' => 'sessions#destroy'
   get  'auth/failure' => 'sessions#failure'
   get 'login' => 'sessions#login', :as => 'login'
   get 'upload' => 'upload#index', :as => 'upload'
   post 'upload' => 'upload#upload', ":as" => 'upload'
-  
+
   resources :problems
+  post 'problems/filters' => 'problems#set_filters', :as => 'set_filters'
+  post 'problems/:id/tags/add' => 'problems#add_tags', :as => 'add_tags'
+  post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
+  post 'update_multiple_tags' => 'problems#update_multiple_tags'
+  get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
+
   get 'profile' => 'instructors#show', :as => 'profile'
-  get 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
-  get 'remove_problem' => 'problems#remove_from_collection'
-  get 'add/:tag/to/problem/:id' => 'problems#add_tag', :as => 'add_tag'
-  get 'remove/:tid/from/problem/:id' => 'problems#remove_tag', :as => 'remove_tag'
+  post 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
+  post 'remove_problem' => 'problems#remove_from_collection'
+  
   resources :collections
   get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
@@ -23,7 +28,7 @@ Coursequestionbank::Application.routes.draw do
   get 'export' => 'collections#export'
   get 'finalize_upload' => 'collections#finalize_upload'
   post 'update_all' => 'collections#update_all'
-  match 'checked_problems' => 'collections#checked_problems'
+  # match 'checked_problems' => 'collections#checked_problems'
 
 
   # The priority is based upon order of creation:

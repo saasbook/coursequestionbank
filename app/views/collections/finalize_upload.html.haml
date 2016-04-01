@@ -1,8 +1,6 @@
-%div.col-md-12
-  %h3{:style=>"color: blue; padding:0px;margin:0px;"}
-    = "Your quiz was successfully uploaded! We found #{@collections.size} collections with #{@collections.inject(0){|sum, c| c.problems.size + sum}} problems in your quiz. Review them below:"
+
+%h3.section_title Upload successful! #{num_problems(@collections)} problems found in #{@collections.size} collections.
   
-  -@collections.each do |collection|
-    %tr
-      =render :partial=> 'form', locals: {collection: collection, :remote => true}
-      = render :partial => "collections_table", locals: {collection: collection, problems: collection.problems}
+- @collections.each do |collection|
+  %hr
+  = render :partial => 'edit_collection', locals: {collection: collection}

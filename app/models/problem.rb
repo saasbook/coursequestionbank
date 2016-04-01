@@ -3,12 +3,13 @@ class Problem < ActiveRecord::Base
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
-  
+  belongs_to :previous_version, class_name: 'Problem'
+
 
   scope :is_public, -> { where(is_public:  true) }
   scope :last_used, ->(t) { where(last_used: t) }
   scope :instructor_id, ->(id) { where(instructor_id: id) }
-  
+
 
   searchable do
     integer   :id
@@ -17,19 +18,31 @@ class Problem < ActiveRecord::Base
     integer   :instructor_id
     boolean   :is_public
     time      :last_used
-    # integer :collection_id
-    
+    time      :updated_at
+    string    :problem_type
+    time      :created_date
+
     string    :tag_names, :multiple => true do
       tags.map(&:name)
     end
-    # integer :collection_ids, :multiple => true do
-    #   collections.map(&:id)
-    # end
+    integer :collection_ids, :multiple => true do
+      collections.map(&:id)
+    end
+  end
+
+  def self.all_problem_types
+    {'Dropdown' => 'Dropdown', 'FillIn' => 'Fill-in',
+      'MultipleChoice' => 'Multiple choice', 'SelectMultiple' => 'Select multiple',
+      'TrueFalse' => 'True/False'}
+  end
+
+  def self.sort_by_options
+    ['Relevancy', 'Date Created', 'Last Used']
   end
 
   def html5
     if rendered_text
-      return rendered_text 
+      return rendered_text
     end
 
     if json and !json.empty?
@@ -39,37 +52,147 @@ class Problem < ActiveRecord::Base
       self.update_attributes(:rendered_text => quiz.output)
       quiz.output
     else
-      'This question could not be displayed (no JSON found)' 
+      'This question could not be displayed (no JSON found)'
     end
   end
 
-  def self.filter(user, filters = {})
-    filters['tags'] = filters['tags'].strip.split(',')
-
-    if !filters['last_exported_begin'] or filters['last_exported_end'].empty?
-      filters['last_exported_begin'] = nil
+  def ruql_source
+    result = ""
+    return "" if self.json == nil
+    json_hash = JSON.parse(self.json)
+    answers = json_hash["answers"]
+    return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
+    result << ruql_question_header(json_hash)
+    result << "\n  text '" + json_hash["question_text"] + "'"
+    answers.each do |answer| # answers first
+      result << ruql_answer_line(answer) if answer["correct"]
     end
-    if !filters['last_exported_end'] or filters['last_exported_end'].empty?
-      filters['last_exported_end'] = nil
+    answers.each do |answer| # distractors second
+      result << ruql_answer_line(answer) if !answer["correct"]
     end
+    result << "\nend"
+    return result
+  end
 
+  def ruql_true_false(json_hash)
+    line = "truefalse "
+    line += "'" + json_hash["question_text"] + "', "
+    json_hash["answers"].each do |answer|
+      if answer["correct"]
+        line += answer["answer_text"].downcase
+      end
+      if answer["explanation"]
+        line += ', :explanation => "' + answer["explanation"] + '"'
+      end
+    end
+    return line
+  end
 
-    problems = Problem.search do 
+  def ruql_question_header(json_hash)
+    line = case json_hash["question_type"]
+      when "SelectMultiple" then "select_multiple"
+      when "MultipleChoice" then "choice_answer"
+      when "FillIn" then "fill_in"
+      else ""
+    end
+    if json_hash["randomize"]
+      line += ' :randomize => true'
+    end
+    return line + " do"
+  end
+
+  def ruql_answer_line(answer)
+    line = "\n  "
+    line += answer["correct"] ? "answer" : "distractor"
+    line += " '" + answer["answer_text"] + "'"
+    if answer["explanation"]
+      line += ', :explanation => "' + answer["explanation"] + '"'
+    end
+    return line
+  end
+
+  def self.from_JSON(instructor, json_source)
+    json_hash = JSON.parse(json_source)
+    problem = Problem.new(text: "",
+                          json: json_source,
+                          is_public: false,
+                          problem_type: json_hash["question_type"],
+                          created_date: Time.now)
+    problem.instructor = instructor
+    json_hash["question_tags"].each do |tag_name|
+      tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
+      problem.tags << tag
+    end
+    problem
+  end
+
+  def self.filter(user, filters)
+    problems = Problem.search do
       any_of do
         with(:instructor_id, user.id)
         with(:is_public, true)
       end
-      with(:tag_names, filters[:tags]) if filters[:tags].present? #I THOUGHT SUNSPOT SAID THE PRESENCE CHECK WAS UNNECESARY
-      # with(:collection_ids, filters[:collections].keys)
-      if filters['last_exported_begin']
-        with(:last_used).greater_than_or_equal_to(filters['last_exported_begin'])
+
+      filters[:tags].each do |tag|
+        with(:tag_names, tag)
       end
-      if filters['last_exported_end']
-        with(:last_used).less_than_or_equal_to(filters['last_exported_end'])
+
+      if !filters[:problem_type].empty?
+        any_of do
+          filters[:problem_type].each do |sort_param|
+            with(:problem_type, sort_param)
+          end
+        end
       end
-      fulltext filters['search']
+
+      if !filters[:collections].empty?
+        any_of do
+          filters[:collections].each do |col|
+            with(:collection_ids, col)
+          end
+        end
+      end
+
+      fulltext filters[:search]
+
+      if filters[:sort_by] == 'Relevancy'
+        order_by(:score, :desc)
+      elsif filters[:sort_by] == 'Date Created'
+        order_by(:created_date, :desc)
+      elsif filters[:sort_by] == 'Last Used'
+        order_by(:last_used, :desc)
+      end
+
       paginate :page => filters['page'], :per_page => filters['per_page']
     end
-    problems
+
+    problems.results
+  end
+
+  def supersede(user, source)
+    new_problem = RuqlReader.read_problem(user, source)
+    new_problem.previous_version = self
+    new_problem.is_public = self.is_public
+    new_problem.save
+    new_problem
+  end
+
+  def add_tag(tag_name)
+    return false if tag_name.strip == ""
+    return false if tags.find_by_name(tag_name)
+
+    tags << (Tag.where(name: tag_name)[0] || Tag.create(name: tag_name))
+    save
+    return true
+  end
+
+  def remove_tag(tag_name)
+    tag = tags.find_by_name(tag_name)
+    tags.delete(tag) if tag
+    save
+  end
+
+  def add_tags(tag_names)
+    tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
 end

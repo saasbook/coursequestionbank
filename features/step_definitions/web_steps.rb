@@ -41,7 +41,7 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
-Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil
 end
@@ -49,8 +49,8 @@ end
 When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
   collection_id = Collection.find_by_name(former)
   visit edit_collection_path(:id => collection_id)
-  steps %Q{ 
-    And I fill in "collection_name" with "#{new}"
+  steps %Q{
+    And I fill in "name" with "#{new}"
     And I press "Update"
   }
 end
@@ -60,14 +60,14 @@ Given /^(?:|I )have uploaded '(.*)'$/ do |file|
     Given I am on the upload page
     And I attach the file "features/test_files/#{file}" to "file_upload"
     And I press "Upload File"
-    Then I should see "successfully uploaded"
+    Then I should see "Upload successful!"
   }
 end
 
 When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
   steps %Q{
     Given I am on the dashboard
-    And I follow "start a new collection"
+    And I follow "New collection"
     And I fill in "collection_name" with "#{name}"
     And I press "Create"
   }
@@ -86,22 +86,44 @@ When /^(?:|I )deny '(.*)'/ do |user|
   visit "admin/deny/#{Instructor.find_by_name(user).id}"
 end
 
+def problems_with_text(text, collection=nil)
+  probs = Problem.all.select{|problem| problem.json and problem.json.include? text}
+  probs.select!{|problem| problem.collections.map(&:name).include? collection} if collection
+  probs
+end
+
 When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
-  collection = Collection.find_by_name(collection).id
-  visit checked_problems_path(:problems => [problem], :dropdown => collection)
+  problem = problems_with_text(problem_text)[0]
+  collection = Collection.find_by_name(collection)
+  collection.problems << problem if not collection.problems.include? problem
 end
 
 When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0].id
-  collection = Collection.find_by_name(collection).id
-  visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
+  problem = problems_with_text(problem_text)[0]
+  collection = Collection.find_by_name(collection)
+  collection.problems.delete(problem)
+  collection.save
+end
+
+When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection|
+  problems_with_text(problem_text, collection).each do |problem|
+    check("checked_problems_#{problem.id}")
+  end
+end
+
+When /^I follow "(.*)" for problem containing "(.*)"/ do |link_id, problem_text|
+  problem = problems_with_text(problem_text)[0].id
+  click_link("#{link_id}_#{problem}")
+end
+
+When /^I choose sort by "(.*)"/ do |option|
+  choose("sort_by_#{option}")
 end
 
 
-Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection| 
+Then /^(?:|I )should not see '(.*)' in collection '(.*)'/ do |problem_text, collection|
   collection = Collection.find_by_name(collection)
-  problem = Problem.all.select{|problem| problem.json.include? problem_text}[0]
+  problem = problems_with_text(problem_text)[0]
   assert !(collection.problems.include? problem)
 end
 
@@ -113,7 +135,7 @@ Then /^(?:|I )should see '(.*)' with in the collection '(.*)'/ do |problem_text,
   }
 end
 
-Then /^(?:|I )should not see (.*) '(.*)' in the database$/ do |datatype, name_value| 
+Then /^(?:|I )should not see (.*) '(.*)' in the database$/ do |datatype, name_value|
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value).nil?
 end
@@ -126,7 +148,11 @@ end
 When /^I press the trash icon at '(.*)'/ do |collection|
   collection = Collection.find_by_name(collection)
   visit edit_collection_path(:id => collection)
-  click_link 'Delete'
+  click_button('Delete Collection')
+end
+
+When /^I fill in "(.*)" with text of "(.*)"/ do |field, file|
+  fill_in(field, :with => IO.read("features/test_files/" + file))
 end
 
 Given /^(?:|I )am on (.+)$/ do |page_name|
@@ -314,7 +340,7 @@ Then /^the "([^\"]*)" checkbox(?: within (.*))? should not be checked$/ do |labe
     end
   end
 end
- 
+
 Then /^(?:|I )should be on (.+)$/ do |page_name|
   current_path = URI.parse(current_url).path
   if current_path.respond_to? :should
@@ -328,8 +354,8 @@ Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
   expected_params = {}
-  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')} 
-  
+  expected_pairs.rows_hash.each_pair{|k,v| expected_params[k] = v.split(',')}
+
   if actual_params.respond_to? :should
     actual_params.should == expected_params
   else
@@ -339,4 +365,16 @@ end
 
 Then /^show me the page$/ do
   save_and_open_page
+end
+
+When(/^fill in 'update' with '.*.txt'$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see 'Question has been updated'$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^I should see the text from '.*.txt'$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
 end

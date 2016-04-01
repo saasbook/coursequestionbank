@@ -1,2 +1,7 @@
-- tags.each do |tag|
-    %span.tag{:id => tag.id.to_s + "_tag"}= link_to tag.name,  '', class: 'remove_tag', id: 'remove_tag'
+- problem.tags.each do |tag|
+  %div.tag
+    = tag.name
+    = form_tag remove_tags_path(:id => problem.id), :method => :post, :class => 'remove_tag' do
+      = hidden_field_tag 'tag_names', tag.name, :id => nil
+      = button_tag :type => 'submit', :class => 'clr-button' do
+        %div.glyphicon.glyphicon-remove

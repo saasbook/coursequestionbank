@@ -1,20 +1,43 @@
-= form_tag problems_path, :method => :get, :id => "filter_form" do
+= form_tag set_filters_path, :method => :post, :id => 'filter-form' do
+  
   %div.form-group
-    = label_tag(:search, "Search Keywords:")
-    = text_field_tag(:search, session[:filters][:search], class: 'form-control', placeholder: "Search")  
+    = label_tag :search, 'Search Keywords:'
+    = text_field_tag :search, session[:filters][:search], class: 'form-control', placeholder: 'Search'
+    
+  %hr
+    
   %div.form-group
-    = label_tag(:tags, "Tags:")
-    = text_field_tag(:tags, session[:filters][:tags], class: 'form-control', placeholder: "e.g.: tag 1,tag 2")
+    = label_tag :tags, 'Tags:'
+    = text_field_tag :tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: 'e.g.: tag 1, tag 2'
+
+  %hr
+  
+  %div.form-group
+    = label_tag :sort_by, 'Sort by:'
+    - @sort_by_options.each do |option|
+      %div.filter_option
+        = radio_button_tag :sort_by, option, !!(session[:filters][:sort_by] == option), class: 'radio', id: "sort_by_#{option}"
+        = label_tag "sort_by_#{option}", option
+  
+  %hr
 
   %div.form-group
-    = label_tag(:last_exported, "Last Exported:")
-    = text_field_tag(:last_exported_begin, session[:filters][:last_exported_begin], class: 'form-control', placeholder: "dd/mm/yyyy")
-    = text_field_tag(:last_exported_end, session[:filters][:last_exported_end], class: 'form-control', placeholder: "dd/mm/yyyy")
-  %div.form-group 
-    = label_tag(:collections, "Collections:")
-    -@collections.each do |collection|
-      =check_box_tag "collections[#{collection.id}]", 1,  !!(session[:filters][:collections].include? collection.id), class: "checkbox", id: "collections[#{collection.id}]"
-      =collection.name
-    =check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: "checkbox", id: "collections[0]"
-    All Collections
-  = submit_tag 'Apply', :id => "filter_submit", :class => 'btn btn-info'
+    = label_tag :problem_type, 'Problem type:'
+    - @all_problem_types.each do |type, display_type|
+      %div.filter_option
+        = check_box_tag "problem_type[#{type}]", 1, !!(session[:filters][:problem_type].include? type), class: 'checkbox', id: "problem_type_#{type}"
+        = label_tag "problem_type_#{type}", display_type
+
+  %hr
+
+  %div.form-group
+    = label_tag :collections, 'Collections:'
+    - @collections.each do |collection|
+      %div.filter_option
+        = check_box_tag "collections[#{collection.id}]", 1,  !!(session[:filters][:collections].include? collection.id), class: 'checkbox', id: "collections_#{collection.id}"
+        = label_tag "collections_#{collection.id}", collection.name
+    %div.filter_option
+      = check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: 'checkbox', id: 'collections_0'
+      = label_tag 'collections_0', 'All Collections'
+  
+  = submit_tag 'Apply', :class => 'btn btn-primary'

@@ -7,20 +7,10 @@ class RuqlReader
     Quiz.quizzes.uniq.each do |quiz|
       problems_json = quiz.render_with("JSON", {})
       collection = if (Collection.find_by_name(quiz.title) and Collection.find_by_name(quiz.title).instructor == user) then false else user.collections.new(:name => quiz.title) end
-      if collection        
+      if collection
         problems_json.each do |problem_json|
-          json_hash = JSON.parse(problem_json)
-          problem = Problem.new(text: "", 
-                                json: problem_json,
-                                is_public: false, 
-                                problem_type: json_hash["question_type"], 
-                                created_date: Time.now)
-          problem.instructor = user
+          problem = Problem.from_JSON(user, problem_json)
           problem.collections << collection
-          json_hash["question_tags"].each do |tag_name|
-            tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
-            problem.tags << tag
-          end
           problem.save
         end
         collection.save!
@@ -30,5 +20,13 @@ class RuqlReader
       end
     end
     collections
+  end
+
+  def self.read_problem(user, source)
+    quiz = Quiz.new(nil)
+    quiz.instance_eval(source)
+    problems_json = quiz.render_with("JSON", {})
+    raise 'Supersession source must contain exactly one question.' unless problems_json.size == 1
+    Problem.from_JSON(user, problems_json[0])
   end
 end

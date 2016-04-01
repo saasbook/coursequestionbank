@@ -1,7 +1,7 @@
 class UploadController < ApplicationController
 
   def upload
-    begin 
+    begin
       collections = RuqlReader.store_as_json(@current_user, params[:ruql_file])
     rescue Exception => e
       flash[:notice] = "There is an error in the file: " + e.message

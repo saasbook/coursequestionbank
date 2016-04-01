@@ -1,0 +1,32 @@
+
+%h3.section_title 
+  Edit Collection
+  = link_to collection.name, collection_path(:id => collection.id)
+
+%div.section_options
+  = form_tag collection_path(:id => collection.id), :method => :delete do
+    = button_tag :type => 'submit', :class => 'btn btn-default' do
+      %span.glyphicon.glyphicon-trash
+      Delete Collection
+      
+
+%div.section_body
+  = render :partial=> 'form', locals: {:collection => collection}
+  
+  = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{collection.id}", :class => 'check_form' do
+    = text_field_tag :tag_names, nil, :id => "multiple_tag_names_#{collection.id}", :class => 'form-control', :placeholder => 'tag 1, tag 2'
+    = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
+
+  %div.table-responsive.problem_table
+    %table.table.table-striped
+      %thead
+        %tr
+          %th
+          %th Question Text
+          %th Collections
+          %th Tags
+      
+      %tbody
+        - collection.problems.select{|p| can? :read, p}.each do |problem|
+          %tr
+            = render :partial => 'problems/problem_row', :locals => {:problem => problem, :check_box_form => "update_multiple_tags_#{collection.id}"}
