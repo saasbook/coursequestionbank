@@ -45,7 +45,6 @@ var AddTags = {
     });
   }
 };
-
 $(AddTags.setup);
 
 
@@ -63,5 +62,22 @@ var RemoveTags = {
     });
   }
 };
-
 $(RemoveTags.setup);
+
+
+var ChangePrivacy = {
+  setup: function() {
+    $('.prob_privacy form').submit(function() {
+      var button = $(this).find('input[type="submit"]');
+      button.attr('value', button.attr('value') == 'Public' ? 'Private' : 'Public');
+      $.ajax({
+        context: this,
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: $(this).serialize()
+      });
+      return false;
+    });
+  }
+};
+$(ChangePrivacy.setup);

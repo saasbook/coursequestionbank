@@ -161,15 +161,16 @@ class ProblemsController < ApplicationController
   
   def set_privacy
     problem = Problem.find(params[:id])
-    if params[:privacy] == 'public'
+    privacy = params[:privacy].downcase.strip
+    if privacy == 'public'
       problem.is_public = true
-    elsif params[:privacy] == 'private'
+    elsif privacy == 'private'
       problem.is_public = false
     else
       return
     end
     problem.save
-    flash[:notice] = "Problem changed to #{params[:privacy]}"
+    flash[:notice] = "Problem changed to #{privacy}"
     flash[:bump_problem] = problem.id
     redirect_to :back
   end
