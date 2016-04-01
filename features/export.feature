@@ -14,7 +14,7 @@ Feature: Export a collection
     Then I should see "1/22/15 (W1 L2)"
 
   Scenario: Export a quiz unsuccessfully
-    When I follow "start a new collection"
+    When I follow "New collection"
     And I fill in "collection_name" with "yolo"
     And I press "Create"
     Then I should be on the dashboard

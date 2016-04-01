@@ -57,8 +57,8 @@ class Problem < ActiveRecord::Base
   end
 
   def ruql_source
-    # "# Placeholder ruql source:\n" + IO.read('features/test_files/history_test2.txt')
     result = ""
+    return "" if self.json == nil
     json_hash = JSON.parse(self.json)
     answers = json_hash["answers"]
     return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"

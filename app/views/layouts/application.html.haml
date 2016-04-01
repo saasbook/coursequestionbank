@@ -1,9 +1,6 @@
 
-/ <<<<<<< HEAD
 %link{:href => '//fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
-/ =======
-/ %link{:href => '//fonts.googleapis.com/css?family=Oswald|Raleway|Yanone+Kaffeesatz|Abril+Fatface|Architects+Daughter', :rel => 'stylesheet', :type => 'text/css'}
-/ >>>>>>> 6de216208fcd8b00d2b084f3442497ee2ad11fcc
+
 
 %html
   %head
@@ -11,35 +8,31 @@
     = stylesheet_link_tag 'application'
     = javascript_include_tag 'application'
     = csrf_meta_tags
+    %meta{:name => 'viewport', :content => 'initial-scale=1'}
 
   %body
-    #header
-      .title
-        %h1
-          =link_to 'Course Question Bank', problems_path
-    #main
-      .welcome
-        - if @current_user
-          -if @current_user.name and !@current_user.name.empty?
-            %ul#navbar
-              %li#navbar= link_to " Log Out", logout_path, method: :post
-              -if can? :manage, Instructor
-                %li#navbar= link_to 'Admin', admin_path, method: :get
-              %li#navbar= link_to 'My Collections', profile_path, method: :get
-              %li#navbar= link_to 'Home', problems_path
-              %li#navbar Welcome, #{@current_user.name}!
-          - else
-            %ul#navbar
-              %li#navbar= link_to " Log Out", logout_path, method: :post
-              %li#navbar= link_to 'My Dashboard', profile_path, method: :get
-              %li#navbar Welcome, #{@current_user.provider} user!
-              %li#navbar= link_to 'Home', problems_path
-      - if flash[:notice]
-        #notice.message= flash[:notice]
-      - elsif flash[:warning]
-        #warning.message= flash[:warning]
-      - elsif flash[:error]
-        #error.message= flash[:error]
+    %div#header
+      %h1#banner
+        = link_to 'Course Question Bank', problems_path
 
+      - if @current_user
+        %ul#navbar
+          %li#welcome_message Welcome, #{user_display_name(@current_user)}!
+          %li= link_to 'Home', problems_path, :class => 'btn btn-link'
+          %li= link_to 'My Collections', profile_path, :class => 'btn btn-link'
+          - if can? :manage, Instructor
+            %li= link_to 'Admin', admin_path, :class => 'btn btn-link'
+          %li
+            = form_tag logout_path, :method => :post do
+              = submit_tag 'Log Out', :class => 'btn btn-link'
+    
+      %div#flash_message
+        - if flash[:notice]
+          %p.message= flash[:notice]
+        - elsif flash[:warning]
+          %p.message= flash[:warning]
+        - elsif flash[:error]
+          %p.message= flash[:error]
 
+    %div#main
       = yield
