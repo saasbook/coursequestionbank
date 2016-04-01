@@ -1,5 +1,2 @@
-%div.col-md-12
-  %div
-    %h3= "Your collection: #{@collection.name}"
-    = render :partial=> 'form', locals: {collection: @collection, :remote => false}
-    = render :partial => "collections_table", locals: {collection: @collection, problems: @collection.problems}
+
+= render :partial => 'edit_collection', :locals => {:collection => @collection}

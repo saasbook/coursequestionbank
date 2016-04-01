@@ -50,7 +50,7 @@ When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
   collection_id = Collection.find_by_name(former)
   visit edit_collection_path(:id => collection_id)
   steps %Q{
-    And I fill in "collection_name" with "#{new}"
+    And I fill in "name" with "#{new}"
     And I press "Update"
   }
 end
@@ -60,14 +60,14 @@ Given /^(?:|I )have uploaded '(.*)'$/ do |file|
     Given I am on the upload page
     And I attach the file "features/test_files/#{file}" to "file_upload"
     And I press "Upload File"
-    Then I should see "successfully uploaded"
+    Then I should see "Upload successful!"
   }
 end
 
 When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
   steps %Q{
     Given I am on the dashboard
-    And I follow "start a new collection"
+    And I follow "New collection"
     And I fill in "collection_name" with "#{name}"
     And I press "Create"
   }
@@ -99,9 +99,10 @@ When /^(?:|I )add problem containing '(.*)' to collection '(.*)'/ do |problem_te
 end
 
 When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem_text, collection|
-  problem = problems_with_text(problem_text)[0].id
-  collection = Collection.find_by_name(collection).id
-  visit "/remove_problem?collection_id=#{collection}&id=#{problem}"
+  problem = problems_with_text(problem_text)[0]
+  collection = Collection.find_by_name(collection)
+  collection.problems.delete(problem)
+  collection.save
 end
 
 When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection|
@@ -147,7 +148,7 @@ end
 When /^I press the trash icon at '(.*)'/ do |collection|
   collection = Collection.find_by_name(collection)
   visit edit_collection_path(:id => collection)
-  click_link 'Delete'
+  click_button('Delete Collection')
 end
 
 When /^I fill in "(.*)" with text of "(.*)"/ do |field, file|

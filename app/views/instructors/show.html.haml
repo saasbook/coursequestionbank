@@ -1,40 +1,56 @@
--# in app/views/show.html.haml
-%div.col-md-12
-  %div.table-responsive
-    %h2 #{@current_user.name}'s Dashboard
 
-    -if @collections.empty?
-      %h3 You have no collections! Start one now.
-      =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
-      =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
+%h3.section_title Your collections
 
-    -else
+%div.section_options
+  = link_to 'New collection', new_collection_path, :class => 'btn btn-primary'
+  = link_to 'Upload questions', upload_path, :class => 'btn btn-primary'
 
-      =link_to 'start a new collection', new_collection_path, :class => 'btn btn-info', :id=> 'add_collection'
-      =link_to 'upload new questions', upload_path, :class => 'btn btn-primary', :id=> 'upload_questions'
 
-%div.col-md-12
-  %div.table-responsive
-    %table.table.table-striped#collections
+- if @collections.empty?
+  %h4.section_body You have no collections! Start one now.
+  
+- else
+  %div.table-responsive.section_body
+    %table.table.table-striped
       %thead
         %tr
-        %th
-        %th Name
-        %th # Questions
-        %th Description
-        %th Last Used
-        %th Privacy
-
+          %th Name
+          %th # Questions
+          %th Description
+          %th Last used
+      
       %tbody
         - @collections.each do |collection|
           %tr
-          %td
-            -if @current_user.current_collection == collection.id
-              =link_to image_tag('yellowstar.png', width: 30), mark_as_current_path(:id => collection.id)
-            -else
-              =link_to image_tag('graystar.png', width: 30), mark_as_current_path(:id => collection.id)
-          %td= link_to collection.name.truncate(35), edit_collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
-          %td= collection.problems.length
-          %td= collection.description
-          %td= collection.last_used
-          %td= collection.is_public ? 'Public' : 'Private'
+            %td= link_to collection.name.truncate(35), collection_path(:id => collection.id), :class => 'btn btn-link', :title => collection.name
+            %td= collection.problems.length
+            %td= collection.description
+            %td= collection.last_used
+            
+
+// - if !@collections.empty?
+//   %div.col-md-12
+//     %div.table-responsive
+//       %table.table.table-striped#collections
+//         %thead
+//           %tr
+//           %th
+//           %th Name
+//           %th # Questions
+//           %th Description
+//           %th Last Used
+//           %th Privacy
+  
+//         %tbody
+//           - @collections.each do |collection|
+//             %tr
+//             %td
+//               -if @current_user.current_collection == collection.id
+//                 =link_to image_tag('yellowstar.png', width: 30), mark_as_current_path(:id => collection.id)
+//               -else
+//                 =link_to image_tag('graystar.png', width: 30), mark_as_current_path(:id => collection.id)
+//             %td= link_to collection.name.truncate(35), edit_collection_path(:id => collection.id), :style => "color: " + collection.color.to_s
+//             %td= collection.problems.length
+//             %td= collection.description
+//             %td= collection.last_used
+//             %td= collection.is_public ? 'Public' : 'Private'

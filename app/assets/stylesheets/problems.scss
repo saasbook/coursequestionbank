@@ -1,0 +1,56 @@
+
+ol.questions { list-style-type: none; font-size: 90%; }
+li.question { page-break-inside: avoid; }
+li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
+li.selectmultiple  ol.answers { list-style-type: lower-alpha;  }
+li.truefalse ol.answers { list-style-type: lower-alpha; }
+.correct { color: green; font-weight: bold; border: 1px solid black; padding: 0.2ex; }
+.incorrect { color: red }
+.explanation { font-style: italic }
+.instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }
+
+
+.tag {
+  display: inline-block;
+  background: #dddddd;
+  padding: 2px 4px;
+  border-radius: 3px;
+  margin: 2px 1px;
+}
+
+.tag .glyphicon {
+  font-size: 80%;
+}
+
+.tag_list {
+  width: 200px;
+}
+
+.tag * {
+  display: inline;
+  padding: 0px;
+  margin: 0px;
+  text-decoration: none;
+}
+
+.add_tags_form {
+  margin-top: 5px;
+}
+
+.add_tags_form input {
+  width: 90px;
+  padding: 0 6px;
+}
+
+
+.problem_box {
+  background-color: #eeeeee;
+  padding: 10px;
+  margin: 15px;
+  border-radius: 4px;
+}
+
+.source_field {
+  font-family: monospace;
+  width: 100%;
+}

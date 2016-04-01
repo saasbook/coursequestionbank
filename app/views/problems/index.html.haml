@@ -1,13 +1,34 @@
-%div.col-md-2#sidebar-filter
-  = render "filter"
-%div.col-md-10#problems_view
-  %div.container-fluid
-    = render :partial => "problems_table", locals: { problems: @problems}
-  %div.container-fluid
-    %div.col-md-6
-      %p
-        = link_to 'View 5', problems_path(:per_page => 5)
-        = link_to 'View 30', problems_path(:per_page => 30)
-        = link_to 'View 60', problems_path(:per_page => 60)
-    %div.col-md-6
-      = will_paginate @problems
+
+%div#filter-sidebar
+  = render :partial => 'filter'
+  
+
+%div#filter-content.container-fluid
+  - if @problems.empty?
+    %h3 No questions matched your search criteria
+
+  - else
+    = form_tag update_multiple_tags_path, :id => 'update_multiple_tags', :class => 'check_form' do
+      = text_field_tag :tag_names, nil, :id => 'multiple_tag_names', :class => 'form-control', :placeholder => 'tag 1, tag 2'
+      = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
+      
+    %div.table-responsive.problem_table
+      %table.table.table-striped
+        %thead
+          %tr
+            %th
+            %th Question Text
+            %th Collections
+            %th Tags
+        
+        %tbody
+          - @problems.select{|p| can? :read, p}.each do |problem|
+            %tr
+              = render :partial => 'problem_row', :locals => {:problem => problem, :check_box_form => 'update_multiple_tags'}
+  
+    %div.row#page_options
+      %div.col-xs-6
+        - [5, 30, 60].each do |n|
+          = link_to "View #{n}", problems_path(:per_page => n)
+      %div.col-xs-6
+        = will_paginate @problems

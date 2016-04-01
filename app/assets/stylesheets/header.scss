@@ -1,0 +1,42 @@
+
+#banner {
+  text-align: center;
+ 	background-color: #EBF4FA;
+ 	border-top: solid;
+ 	border-bottom: solid;
+ 	border-top-width: 2px;
+ 	border-bottom-width: 2px;
+ 	margin: 0;
+ 	padding: 30px 0 10px;
+}
+
+#banner a:link, #banner a:visited, #banner a:hover, #banner a:active {
+  text-decoration: none;
+}
+
+#navbar {
+  float: right;
+  margin: 0;
+  padding: 0;
+}
+
+#navbar li {
+  display: inline-block;
+}
+
+#welcome_message {
+  padding: 6px 12px;
+}
+
+#navbar li form {
+  margin: 0;
+}
+
+.btn:link, .btn:visited, .btn:hover, .btn:active {
+  text-decoration: none;
+}
+
+#flash_message {
+  clear: right;
+  margin: 0 20px;
+}
