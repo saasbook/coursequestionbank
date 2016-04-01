@@ -139,6 +139,7 @@ class ProblemsController < ApplicationController
     else
       selected.each do |problem_id|
         problem = Problem.find(problem_id)
+        authorize! :add_tags, problem
         flash[:notice] = "Tags were added." if problem.add_tags(new_tags).size > 0
       end
     end

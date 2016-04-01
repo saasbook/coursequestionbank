@@ -29,12 +29,10 @@ class Ability
     # See the wiki for details:
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
     user ||= Instructor.new
-    if user.admin?
-        can :manage, :all
-    end
-    if user.instructor?
+    if user.admin? or user.instructor?
         can :manage, Problem, :instructor_id => user.id
-        can :read, Problem, :is_public => true
+        can [:read, :supersede, :add_tags, :remove_tags, :bloom_categorize], Problem, :is_public => true
+        
         can :manage, Collection, :instructor_id => user.id
         can :read, Collection, :is_public => true
     end
