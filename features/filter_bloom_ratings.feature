@@ -8,21 +8,27 @@ Background:
   And I have uploaded 'bloom_test.txt'
   And I am on the CourseQuestionBank home page
 
-Scenario: filtering by Bloom rating
-  When I check "Understand"
+Scenario: positive filtering by Bloom rating
+  When I press "Understand"
+  And I check "Understand"
   And I press "Search"
-  Then I should see "understand question"
-  And I should not see "evaluate question"
+  Then I should see "Which of the following"
 
-Scenario: filtering by multiple ratings
-  When I check "Understand"
+Scenario: negative filtering by Bloom rating
+  When I press "Understand"
   And I check "Evaluate"
   And I press "Search"
-  Then I should see "understand question"
-  And I should see "evaluate question"
-  And I should not see "analyze question"
+  Then I should see "No questions matched your search criteria"
+
+Scenario: filtering by multiple ratings
+  When I press "Evaluate"
+  And I check "Understand"
+  And I check "Evaluate"
+  And I press "Search"
+  Then I should see "Which of the following"
+  And I should not see "No questions matched your search criteria"
 
 Scenario: no matching results for Bloom Taxonomy rating
-  When I check "Create"
+  When I check "Remember"
   And I press "Search"
-  Then I should see "No results found"
+  Then I should see "No questions matched your search criteria"
