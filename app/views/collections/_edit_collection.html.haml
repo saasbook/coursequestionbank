@@ -14,8 +14,6 @@
   = render :partial=> 'form', locals: {:collection => collection}
   
   = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{collection.id}", :class => 'check_form' do
-    = check_box_tag 'check_all', 'yes', false
-    = "Check All"
     = text_field_tag :tag_names, nil, :id => "multiple_tag_names_#{collection.id}", :class => 'form-control', :placeholder => 'tag 1, tag 2'
     = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
 
