@@ -1,6 +1,6 @@
 
 - if !local_assigns[:check_box_form].nil?
-  %td= check_box_tag "checked_problems[#{problem.id}]", 0, false, id: "checked_problems_#{problem.id}", class: "check_tags", form: check_box_form
+  %td= check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}", class: "checkbox check_box_#{check_group}", form: check_box_form
 
 %td
   = problem.html5.html_safe

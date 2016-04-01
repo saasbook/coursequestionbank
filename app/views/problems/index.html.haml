@@ -9,8 +9,6 @@
 
   - else
     = form_tag update_multiple_tags_path, :id => 'update_multiple_tags', :class => 'check_form' do
-      = check_box_tag 'check_all', 'yes', false
-      = "Check All"
       = text_field_tag :tag_names, nil, :id => 'multiple_tag_names', :class => 'form-control', :placeholder => 'tag 1, tag 2'
       = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
       
@@ -18,7 +16,7 @@
       %table.table.table-striped
         %thead
           %tr
-            %th
+            %th= check_box_tag nil, 1, false, :id => 'check_all_1', :class => 'checkbox check_all', :style => 'display: none'
             %th Question Text
             %th Collections
             %th Tags
@@ -26,7 +24,7 @@
         %tbody
           - @problems.select{|p| can? :read, p}.each do |problem|
             %tr
-              = render :partial => 'problem_row', :locals => {:problem => problem, :check_box_form => 'update_multiple_tags'}
+              = render :partial => 'problem_row', :locals => {:problem => problem, :check_box_form => 'update_multiple_tags', :check_group => 1}
   
     %div.row#page_options
       %div.col-xs-6
