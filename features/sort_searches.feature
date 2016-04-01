@@ -23,12 +23,12 @@ Background:
   
 Scenario: sort by last used
   When I choose sort by "Last Used"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "text1" before "text5"
 
 Scenario: sort by problem type: true/false
   When I check "True/False"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "text4"
   And I should not see "text1"
   And I should not see "text2"
@@ -37,7 +37,7 @@ Scenario: sort by problem type: true/false
 
 Scenario: sort by problem type: fill_in
   When I check "Fill-in"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "text1"
   And I should not see "text2"
   And I should not see "text3"
@@ -46,7 +46,7 @@ Scenario: sort by problem type: fill_in
 
 Scenario: sort by problem type: choice_answer
   When I check "Multiple choice"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "text2"
   And I should not see "text1"
   And I should not see "text3"
@@ -55,7 +55,7 @@ Scenario: sort by problem type: choice_answer
 
 Scenario: sort by problem type: select_multiple
   When I check "Select multiple"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "text3"
   And I should not see "text1"
   And I should not see "text2"
@@ -64,7 +64,7 @@ Scenario: sort by problem type: select_multiple
 
 Scenario: sort by problem type: dropdown
   When I check "Dropdown"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "text5"
   And I should not see "text1"
   And I should not see "text2"
@@ -74,5 +74,5 @@ Scenario: sort by problem type: dropdown
 Scenario: search returns no results
     And I am on the CourseQuestionBank home page
     When I fill in "Search Keywords" with "nonexistent"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "No questions matched your search criteria"

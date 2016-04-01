@@ -12,5 +12,5 @@ Scenario: giving newly uploaded questions Bloom Taxonomy ratings
   When I press "Remember"
   Then I should be on the problems page
   When I check "Remember"
-  And I press "Apply"
+  And I press "Search"
   Then I should not see "No questions matched your search criteria"

@@ -49,4 +49,4 @@
         = check_box_tag "bloom_category[#{category}]", 1, !!(session[:filters][:bloom_category].include? category), class: 'checkbox', id: "bloom_category_#{category}"
         = label_tag "bloom_category_#{category}", category
 
-  = submit_tag 'Apply', :class => 'btn btn-primary'
+  = submit_tag 'Search', :class => 'btn btn-primary'

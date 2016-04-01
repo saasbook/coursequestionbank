@@ -16,20 +16,20 @@ Feature: Search questions by question text
 
   Scenario: searching by question text
     When I fill in "Search Keywords" with "HyperText Transfer Protocol"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "RDBMS"
     And I should not see "implied port number"
 
   Scenario: search by both question text and tag
     When I fill in "Search Keywords" with "URI"
     And I fill in "Tags" with "test_tag"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "implied port number"
     And I should not see "handling views"
 
   Scenario: search by text that doesn't match any questions (sad path)
     When I fill in "Search Keywords" with "Barney the purple dinosaur"
-    And I press "Apply"
+    And I press "Search"
     Then I should see "No questions matched your search criteria"
     And I should not see "handling views"
     And I should not see "implied port number"

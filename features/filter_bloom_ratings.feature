@@ -10,19 +10,19 @@ Background:
 
 Scenario: filtering by Bloom rating
   When I check "Understand"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "understand question"
   And I should not see "evaluate question"
 
 Scenario: filtering by multiple ratings
   When I check "Understand"
   And I check "Evaluate"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "understand question"
   And I should see "evaluate question"
   And I should not see "analyze question"
 
 Scenario: no matching results for Bloom Taxonomy rating
   When I check "Create"
-  And I press "Apply"
+  And I press "Search"
   Then I should see "No results found"
