@@ -384,3 +384,7 @@ end
 Then(/^I should see the text from '.*.txt'$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
+
+Then /^(?:|I )should see a button "([^\"]*)"$/ do |text|
+  should have_button text
+end

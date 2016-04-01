@@ -40,4 +40,13 @@
       = check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: 'checkbox', id: 'collections_0'
       = label_tag 'collections_0', 'All Collections'
   
-  = submit_tag 'Apply', :class => 'btn btn-primary'
+  %hr
+
+  %div.form-group
+    = label_tag :bloom_category, 'Bloom category:'
+    - @all_bloom_categories.each do |category|
+      %div.filter_option
+        = check_box_tag "bloom_category[#{category}]", 1, !!(session[:filters][:bloom_category].include? category), class: 'checkbox', id: "bloom_category_#{category}"
+        = label_tag "bloom_category_#{category}", category
+
+  = submit_tag 'Search', :class => 'btn btn-primary'

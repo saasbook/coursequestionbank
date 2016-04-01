@@ -7,6 +7,7 @@ class ProblemsController < ApplicationController
    'sort_by' => 'Relevancy',
    'problem_type' => [],
    'collections' => [],
+   'bloom_category' => [],
    'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
@@ -44,6 +45,13 @@ class ProblemsController < ApplicationController
       session[:filters][:collections] = []
     end
 
+    session[:filters][:bloom_category] = []
+    if params[:bloom_category]
+      params[:bloom_category].each do |key, value|
+          session[:filters][:bloom_category] << key if value == "1"
+      end
+    end
+
     redirect_to problems_path
   end
 
@@ -57,6 +65,7 @@ class ProblemsController < ApplicationController
 
     @sort_by_options = Problem.sort_by_options
     @all_problem_types = Problem.all_problem_types
+    @all_bloom_categories = Problem.all_bloom_categories
   end
 
   def create
@@ -144,5 +153,12 @@ class ProblemsController < ApplicationController
   def supersede
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
+  end
+  
+  def bloom_categorize
+    @problem = Problem.find(params[:id])
+    category = params[:category]
+    @problem.bloom_categorize(category)
+    redirect_to problems_path
   end
 end

@@ -15,6 +15,7 @@ Coursequestionbank::Application.routes.draw do
   post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
   post 'update_multiple_tags' => 'problems#update_multiple_tags'
   get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
+  post 'problems/:id/bloom_categorize/:category' => 'problems#bloom_categorize', :as => 'bloom_categorize'
 
   get 'profile' => 'instructors#show', :as => 'profile'
   post 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
