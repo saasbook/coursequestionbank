@@ -39,12 +39,12 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 
 .add_tags_form input {
   width: 90px;
-  padding: 0 6px;
 }
 
 
 .additional {
-  font-size: 80%
+  font-size: 80%;
+  margin-top: 15px;
 }
 
 .additional > div {
@@ -62,14 +62,8 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   margin: 0;
 }
 
-.highlighted-button {
-  background-color: #BED6E6;
-  font-weight: bold;
-  // color: red;
-}
-
-.not-highlighted-button {
-  opacity: 0.6;
+.bloom-button {
+  border-radius: 0;
 }
 
 .prob-collection {

@@ -1,6 +1,8 @@
 
 %div.section_title 
-  %h3 Collection #{@collection.name}
+  %h3 #{@collection.is_public ? 'Public' : 'Private'} Collection #{@collection.name}
+  - if @collection.is_public
+    %h4= @collection.instructor.name
   %h4= @collection.description
 
 %div.section_options

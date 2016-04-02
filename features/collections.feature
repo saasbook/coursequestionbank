@@ -12,7 +12,7 @@ Feature: collections that we can add problems to
     When I follow "New collection"
     And I fill in "collection_name" with "yolo"
     And I press "Create"
-    Then I should be on the dashboard
+    And I am on the dashboard
     And I add problem containing 'Raffi' to collection 'yolo'
     And I should see Collection 'yolo' in the database
 
@@ -26,7 +26,7 @@ Feature: collections that we can add problems to
     When I follow "New collection"
     And I fill in "collection_name" with "yolo"
     And I press "Create"
-    Then I should be on the dashboard
+    And I am on the dashboard
     And I add problem containing 'Rails' to collection 'yolo'
     And I should see Collection 'yolo' in the database
     And I remove problem containing 'Rails' to collection 'yolo'

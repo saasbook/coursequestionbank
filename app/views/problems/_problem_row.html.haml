@@ -4,33 +4,33 @@
 
 %td
   = problem.html5.html_safe
-  
-  %hr
+
   %div.additional
     - if can? :set_privacy, problem
       %div.prob_privacy
         = button_to (problem.is_public ? 'Public' : 'Private'),
           set_problem_privacy_path(:id => problem.id, :privacy => problem.is_public ? 'private' : 'public'),
           :class => 'btn btn-default'
-  
+
     %div Created #{problem.created_date} by #{problem.instructor.name}
-    
+
     %div
       Collections:
       - problem.collections.select{|c| can? :read, c}.each do |collection|
         = link_to "#{collection.name.truncate(35)}", collection_path(:id => collection.id), :class => 'btn btn-link prob-collection', :title => collection.name
-    
-    %div
+
+    %div.bloom-buttons
       Bloom Category:
       - Problem.all_bloom_categories.each do |category|
-        = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "btn #{'not-highlighted-button' if problem.bloom_category != category} btn-default #{'highlighted-button' if problem.bloom_category == category}"
-    
+        = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "bloom-button btn #{problem.bloom_category == category ? 'btn-info' : 'btn-default'}"
+
     %div
+      %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= problem.ruql_source
       %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "",
-              :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default", 
+              :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
               :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
         Clip Source Code
-  
+
       = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button btn btn-default"
       %div{:class => "supersede_form", :style => "display: none"}
         = render :partial => 'problems/supersede_form', :locals => {:problem => problem}

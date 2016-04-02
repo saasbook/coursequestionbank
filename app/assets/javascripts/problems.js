@@ -45,7 +45,6 @@ var AddTags = {
     });
   }
 };
-
 $(AddTags.setup);
 
 
@@ -54,7 +53,6 @@ var RemoveTags = {
     $('.remove_tag').submit(function() {
       $(this).parent().remove();
       $.ajax({
-        context: this,
         url: $(this).attr('action'),
         type: 'POST',
         data: $(this).serialize()
@@ -63,5 +61,49 @@ var RemoveTags = {
     });
   }
 };
-
 $(RemoveTags.setup);
+
+
+var ChangePrivacy = {
+  setup: function() {
+    $('.prob_privacy form').submit(function() {
+      var button = $(this).find('input[type="submit"]');
+      button.attr('value', button.attr('value') == 'Public' ? 'Private' : 'Public');
+      $.ajax({
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: $(this).serialize()
+      });
+      return false;
+    });
+  }
+};
+$(ChangePrivacy.setup);
+
+
+var ChangeBloom = {
+  setup: function() {
+    $('.bloom-buttons').each(function() {
+      var container = $(this);
+      container.find('form').submit(function() {
+        
+        var this_button = $(this).find('.bloom-button');
+        container.find('.bloom-button').each(function() {
+          $(this).removeClass('btn-default btn-info');
+          if ($(this).is(this_button))
+            $(this).addClass('btn-info');
+          else
+            $(this).addClass('btn-default');
+        });
+        
+        $.ajax({
+          url: $(this).attr('action'),
+          type: 'POST',
+          data: $(this).serialize()
+        });
+        return false;
+      });
+    });
+  }
+};
+$(ChangeBloom.setup);

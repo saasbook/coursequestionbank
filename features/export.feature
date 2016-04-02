@@ -17,7 +17,7 @@ Feature: Export a collection
     When I follow "New collection"
     And I fill in "collection_name" with "yolo"
     And I press "Create"
-    Then I should be on the dashboard
+    And I am on the dashboard
     And I follow "yolo"
     And I follow "Export"
     Then I should see "Cannot export an empty collection! Add some questions to your collection"

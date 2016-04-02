@@ -36,7 +36,7 @@ class Problem < ActiveRecord::Base
       'MultipleChoice' => 'Multiple choice', 'SelectMultiple' => 'Select multiple',
       'TrueFalse' => 'True/False'}
   end
-  
+
   def self.all_bloom_categories
     %w{Remember Understand Apply Evaluate}
   end
@@ -68,7 +68,7 @@ class Problem < ActiveRecord::Base
     answers = json_hash["answers"]
     return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
     result << ruql_question_header(json_hash)
-    result << "\n  text '" + json_hash["question_text"] + "'"
+    result << "\n  text " + json_hash["question_text"].inspect
     answers.each do |answer| # answers first
       result << ruql_answer_line(answer) if answer["correct"]
     end
@@ -81,13 +81,13 @@ class Problem < ActiveRecord::Base
 
   def ruql_true_false(json_hash)
     line = "truefalse "
-    line += "'" + json_hash["question_text"] + "', "
+    line += json_hash["question_text"].inspect
     json_hash["answers"].each do |answer|
       if answer["correct"]
-        line += answer["answer_text"].downcase
+        line += answer["answer_text"].inspect
       end
       if answer["explanation"]
-        line += ', :explanation => "' + answer["explanation"] + '"'
+        line += ', :explanation => ' + answer["explanation"].inspect
       end
     end
     return line
@@ -109,9 +109,9 @@ class Problem < ActiveRecord::Base
   def ruql_answer_line(answer)
     line = "\n  "
     line += answer["correct"] ? "answer" : "distractor"
-    line += " '" + answer["answer_text"] + "'"
+    line += ' ' + answer["answer_text"].inspect
     if answer["explanation"]
-      line += ', :explanation => "' + answer["explanation"] + '"'
+      line += ', :explanation => ' + answer["explanation"].inspect
     end
     return line
   end
@@ -132,7 +132,7 @@ class Problem < ActiveRecord::Base
     problem
   end
 
-  def self.filter(user, filters)
+  def self.filter(user, filters, bump_problem)
     problems = Problem.search do
       any_of do
         with(:instructor_id, user.id)
@@ -150,7 +150,7 @@ class Problem < ActiveRecord::Base
           end
         end
       end
-      
+
       if !filters[:bloom_category].empty?
         any_of do
           filters[:bloom_category].each do |category|
@@ -180,7 +180,12 @@ class Problem < ActiveRecord::Base
       paginate :page => filters['page'], :per_page => filters['per_page']
     end
 
-    problems.results
+    results = problems.results
+    if !bump_problem.nil?
+      results.reject! {|p| p.id == bump_problem.id}
+      results.insert(0, bump_problem)
+    end
+    return results
   end
 
   def supersede(user, source)
@@ -209,7 +214,7 @@ class Problem < ActiveRecord::Base
   def add_tags(tag_names)
     tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
-  
+
   def bloom_categorize(category)
     self.bloom_category = category
     save
