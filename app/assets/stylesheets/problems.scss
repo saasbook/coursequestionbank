@@ -1,5 +1,5 @@
 
-ol.questions { list-style-type: none; font-size: 90%; }
+ol.questions { list-style-type: none; font-size: 90%; padding-left: 0; }
 li.question { page-break-inside: avoid; }
 li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
 li.selectmultiple  ol.answers { list-style-type: lower-alpha;  }
@@ -8,6 +8,11 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 .incorrect { color: red }
 .explanation { font-style: italic }
 .instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }
+
+
+.problem_view {
+  padding-left: 40px;
+}
 
 
 .tag {
