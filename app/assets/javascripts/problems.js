@@ -81,8 +81,9 @@ var ChangePrivacy = {
     $('.prob_privacy form').submit(function() {
       var button = $(this).find('input[type="submit"]');
       button.attr('value', button.attr('value') == 'Public' ? 'Private' : 'Public');
+      var action = $(this).attr('action');
       $.ajax({
-        url: $(this).attr('action'),
+        url: action.slice(0, action.lastIndexOf('/')) + '/' + button.attr('value'),
         type: 'POST',
         data: $(this).serialize()
       });
