@@ -22,7 +22,7 @@
     %div.bloom-buttons
       Bloom Category:
       - Problem.all_bloom_categories.each do |category|
-        = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "btn #{problem.bloom_category == category ? 'btn-info' : 'btn-default'}"
+        = button_to category, bloom_categorize_path(id: problem.id, category: category), :class => "bloom-button btn #{problem.bloom_category == category ? 'btn-info' : 'btn-default'}"
 
     %div
       %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= problem.ruql_source

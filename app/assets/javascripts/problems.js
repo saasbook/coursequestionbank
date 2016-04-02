@@ -87,8 +87,8 @@ var ChangeBloom = {
       var container = $(this);
       container.find('form').submit(function() {
         
-        var this_button = $(this).find('input[type="submit"]');
-        container.find('form input[type="submit"]').each(function() {
+        var this_button = $(this).find('.bloom-button');
+        container.find('.bloom-button').each(function() {
           $(this).removeClass('btn-default btn-info');
           if ($(this).is(this_button))
             $(this).addClass('btn-info');

@@ -62,9 +62,9 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   margin: 0;
 }
 
-// .bloom-selected, .bloom-selected:link, .bloom-selected:visited, .bloom-selected:hover, .bloom-selected:active {
-//   color: red;
-// }
+.bloom-button {
+  border-radius: 0;
+}
 
 .prob-collection {
   font-size: inherit;

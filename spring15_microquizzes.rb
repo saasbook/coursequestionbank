@@ -84,7 +84,7 @@ class Student
        concatenate strings.
 EOq1
 
-    answer '<tt>@first + " " + @last</tt>',
+    answer '<tt>@first + " " + @last</tt>'
     :explanation => '<tt>@first</tt> and <tt>@last</tt> are instance
         variables, so this statement works.'
     answer '<tt>self.first + " " + self.last</tt>',
