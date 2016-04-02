@@ -1,11 +1,6 @@
 
 var Supersession = {
   setup: function() {
-    $('.supersede_button').click(function() {
-      $(this).parent().children('.supersede_form').toggle();
-      return false;
-    });
-    
     $('.supersede_form form').submit(function(e) {
       $.ajax({
           context: this,
@@ -23,20 +18,27 @@ var Supersession = {
     });
   }
 };
-
 $(Supersession.setup);
 
-var History = {
+
+var AdditionalHidden = {
   setup: function() {
-    $('.history_button').click(function() {
-      $(this).parent().children('.history_list').toggle();
-      return false;
+    $('.additional').each(function() {
+      var problem = $(this);
+      problem.find('.supersede_button').click(function() {
+        problem.find('.supersede_form').toggle();
+        problem.find('.history_list').hide();
+        return false;
+      });
+      problem.find('.history_button').click(function() {
+        problem.find('.supersede_form').hide();
+        problem.find('.history_list').toggle();
+        return false;
+      });
     });
-      return false;
   }
 };
-
-$(History.setup);
+$(AdditionalHidden.setup);
 
 
 var AddTags = {
