@@ -34,6 +34,10 @@
       = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => "supersede_button btn btn-default"
       %div{:class => "supersede_form", :style => "display: none"}
         = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
+       
+      = link_to "See Version History", history_path(:id => problem.id), :id => "history_button_#{problem.id}", :class => "history_button btn btn-default"
+      %div{:class => "history_list", :style => "display: none"}
+        = render :partial => 'problems/history_list', :locals => {:problem => problem}
 
 %td
   %div{:id => "all_tags_#{problem.id}", :class => 'tag_list'}

@@ -26,6 +26,18 @@ var Supersession = {
 
 $(Supersession.setup);
 
+var History = {
+  setup: function() {
+    $('.history_button').click(function() {
+      $(this).parent().children('.history_list').toggle();
+      return false;
+    });
+      return false;
+  }
+};
+
+$(History.setup);
+
 
 var AddTags = {
   setup: function() {
