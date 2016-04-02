@@ -156,7 +156,7 @@ class ProblemsController < ApplicationController
     @problem.bloom_categorize(category)
     flash[:notice] = "Bloom category set."
     flash[:bump_problem] = @problem.id
-    redirect_to problems_path
+    redirect_to :back
   end
   
   def set_privacy
