@@ -1,7 +1,7 @@
 
 quiz 'History Test' do
   choice_answer do
-    text "Witch of the following best identifies the four basic operations supported by RDBMS?"
+    text "This was the original version: Witch of the following best identifies the four basic operations supported by RDBMS?"
     distractor "HTTP", :explanation => 'HTTP stands for HyperText Transfer Protocol, which is used to transfer SaaS content to browsers.'
     distractor "Get, Put, Post, Delete", :explanation => 'These are four of the methods or "verbs" used by HTTP.'
     answer "CRUD", :explanation => 'Create, Read, Update, Delete are the four basic database operations commonly performed by SaaS apps.'

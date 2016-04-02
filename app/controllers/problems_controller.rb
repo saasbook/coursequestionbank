@@ -150,6 +150,14 @@ class ProblemsController < ApplicationController
     @ruql_source = flash[:ruql_source]
   end
   
+  def history
+    @problem = Problem.find(params[:id])
+    @prev_problem = @problem.previous_version
+    while @problem.previous_version != nil
+      @problems.push(@prev_problem)
+    end
+  end
+  
   def bloom_categorize
     @problem = Problem.find(params[:id])
     category = params[:category]
