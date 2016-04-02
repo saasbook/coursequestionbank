@@ -219,4 +219,9 @@ class Problem < ActiveRecord::Base
     self.bloom_category = category
     save
   end
+  
+  def history
+    return [] if previous_version == nil
+    return [previous_version] + previous_version.history
+  end
 end
