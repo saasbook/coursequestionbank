@@ -12,6 +12,11 @@ script:
   - bundle exec rake spec
 after_script:
   - bundle exec sunspot-solr stop
+  
+# blacklist
+branches:
+  only:
+    - iter2-2_jesmin
 
 language: ruby
 rvm:
