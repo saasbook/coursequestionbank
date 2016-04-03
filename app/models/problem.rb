@@ -1,3 +1,5 @@
+require 'ruql_renderer'
+
 class Problem < ActiveRecord::Base
   attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :bloom_category
   has_and_belongs_to_many :tags
@@ -26,7 +28,7 @@ class Problem < ActiveRecord::Base
     string    :tag_names, :multiple => true do
       tags.map(&:name)
     end
-    integer :collection_ids, :multiple => true do
+    integer   :collection_ids, :multiple => true do
       collections.map(&:id)
     end
   end
@@ -62,57 +64,7 @@ class Problem < ActiveRecord::Base
   end
 
   def ruql_source
-    result = ""
-    return "" if self.json == nil || self.json.length <= 2
-    json_hash = JSON.parse(self.json)
-    answers = json_hash["answers"]
-    return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
-    result << ruql_question_header(json_hash)
-    result << "\n  text " + json_hash["question_text"].inspect
-    answers.each do |answer| # answers first
-      result << ruql_answer_line(answer) if answer["correct"]
-    end
-    answers.each do |answer| # distractors second
-      result << ruql_answer_line(answer) if !answer["correct"]
-    end
-    result << "\nend"
-    return result
-  end
-
-  def ruql_true_false(json_hash)
-    line = "truefalse "
-    line += json_hash["question_text"].inspect
-    json_hash["answers"].each do |answer|
-      if answer["correct"]
-        line += answer["answer_text"].inspect
-      end
-      if answer["explanation"]
-        line += ', :explanation => ' + answer["explanation"].inspect
-      end
-    end
-    return line
-  end
-
-  def ruql_question_header(json_hash)
-    line = case json_hash["question_type"]
-      when "SelectMultiple" then "select_multiple"
-      when "MultipleChoice" then "choice_answer"
-      when "FillIn" then "fill_in"
-      else ""
-    end
-    options = ['randomize', 'raw'].select{|x| json_hash[x]}.map{|x| ":#{x} => true"}.join(', ')
-    line += ' ' + options if options != ''
-    return line + " do"
-  end
-
-  def ruql_answer_line(answer)
-    line = "\n  "
-    line += answer["correct"] ? "answer" : "distractor"
-    line += ' ' + answer["answer_text"].inspect
-    if answer["explanation"]
-      line += ', :explanation => ' + answer["explanation"].inspect
-    end
-    return line
+    return RuqlRenderer.render_from_json(self.json)
   end
 
   def self.from_JSON(instructor, json_source)
