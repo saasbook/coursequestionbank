@@ -128,8 +128,12 @@ class ProblemsController < ApplicationController
       problem.save
     end
     
-    flash[:bump_problem] = problem.id if !request.xhr?
-    redirect_to :back
+    if request.xhr?
+      render :nothing => true
+    else
+      flash[:bump_problem] = problem.id
+      redirect_to :back
+    end
   end
 
   def add_tags
@@ -149,11 +153,13 @@ class ProblemsController < ApplicationController
     problem = Problem.find(params[:id])
     tags = self.class.parse_list params[:tag_names]
     tags.each { |tag| problem.remove_tag tag }
-    if !request.xhr?
+    if request.xhr?
+      render :nothing => true
+    else
       flash[:notice] = "Tags removed"
       flash[:bump_problem] = problem.id
+      redirect_to :back
     end
-    redirect_to :back
   end
   
   def update_multiple_tags
