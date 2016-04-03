@@ -9,6 +9,15 @@ class Collection < ActiveRecord::Base
   def add_problem(problem)
     problems << problem if not problems.include? problem
   end
+  
+  def set_attributes(params)
+    self.name = params[:name] if params[:name] != nil
+    self.description = params[:description] if params[:description] != nil
+    self.is_public = params[:is_public] if params[:is_public] != nil
+    if ['Public', 'Private'].include? params[:privacy]
+      self.is_public = params[:privacy] == 'Public'
+    end
+  end
 
   def export(format)
     if problems.empty? 

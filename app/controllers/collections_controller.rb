@@ -20,10 +20,14 @@ class CollectionsController < ApplicationController
 
   # creates a new collection with user specified values and sets as current collection
   def create
-    collection_hash = params[:collection]
-    if not (collection = @current_user.collections.create(collection_hash)).valid?
+    collection = @current_user.collections.create
+    collection.set_attributes(params)
+    
+    if not collection.valid?
       collection_errors(collection)
       redirect_to :back and return
+    else
+      collection.save
     end
     redirect_to collection_path(:id => collection.id)
   end
@@ -35,13 +39,7 @@ class CollectionsController < ApplicationController
 
   def update
     collection = Collection.find(params[:id])
-    
-    collection.name = params[:name] if params[:name] != nil
-    collection.description = params[:description] if params[:description] != nil
-    collection.is_public = params[:is_public] if params[:is_public] != nil
-    if ['Public', 'Private'].include? params[:privacy]
-      collection.is_public = params[:privacy] == 'Public'
-    end
+    collection.set_attributes(params)
     
     if not collection.valid?
       collection_errors(collection)
@@ -83,8 +81,7 @@ class CollectionsController < ApplicationController
 
     if not @html_code
       flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection first!'
-      flash.keep
-      redirect_to edit_collection_path( id: params[:id])
+      redirect_to :back
     end
   end
   
