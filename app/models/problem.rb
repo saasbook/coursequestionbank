@@ -100,9 +100,8 @@ class Problem < ActiveRecord::Base
       when "FillIn" then "fill_in"
       else ""
     end
-    if json_hash["randomize"]
-      line += ' :randomize => true'
-    end
+    options = ['randomize', 'raw'].select{|x| json_hash[x]}.map{|x| ":#{x} => true"}.join(', ')
+    line += ' ' + options if options != ''
     return line + " do"
   end
 
