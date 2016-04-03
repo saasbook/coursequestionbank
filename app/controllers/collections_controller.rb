@@ -65,6 +65,8 @@ class CollectionsController < ApplicationController
   def export
     @collection = Collection.find(params[:id])
     
+    @ruql_code = @collection.export('ruql')
+    
     @html_code = @collection.export('Html5')
 
     begin

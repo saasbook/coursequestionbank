@@ -14,8 +14,19 @@ class Collection < ActiveRecord::Base
     if problems.empty? 
       return nil
     else 
-      export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
-      export_quiz.render_with(format)
+      if format == 'ruql'
+        print_name = (description.nil? || description.strip.empty?) ? name : name + ': ' + description
+        source = "quiz #{print_name.inspect} do\n"
+        problems.each do |prob|
+          prob_source = prob.ruql_source
+          prob_source = prob_source.lines.map{|x| '  ' + x}.join
+          source += "\n#{prob_source}\n"
+        end
+        source += "\nend"
+      else
+        export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
+        export_quiz.render_with(format)
+      end
     end
   end
 

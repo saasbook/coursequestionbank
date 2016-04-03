@@ -15,26 +15,34 @@
     // %li
     //   %a{"data-toggle" => "tab", :href => "#sectionA"} Preview Quiz
     %li.active
-      %a{"data-toggle" => "tab", :href => "#sectionB"} HTML Code
+      %a{"data-toggle" => "tab", :href => "#section_ruql"} RuQL Code
     %li
-      %a{"data-toggle" => "tab", :href => "#sectionC"} EdX Code
+      %a{"data-toggle" => "tab", :href => "#section_html"} HTML Code
     %li
-      %a{"data-toggle" => "tab", :href => "#sectionD"} AutoQCM Code
+      %a{"data-toggle" => "tab", :href => "#section_edx"} EdX Code
+    %li
+      %a{"data-toggle" => "tab", :href => "#section_autocqm"} AutoQCM Code
   
   %div.tab-content#export-content
     // #sectionA.tab-pane.fade.in.active
     //   %h3 Preview Quiz
     //   %h6
     //     = @html_code.html_safe
-    %div#sectionB.tab-pane.active
+    %div#section_ruql.tab-pane.active
+      %h3 RuQL Code
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @ruql_code
+    %div#section_html.tab-pane
       %h3 HTML Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true'}
-        = @html_code
-    %div#sectionC.tab-pane
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @html_code
+    %div#section_edx.tab-pane
       %h3 EdX Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true'}
-        = @edx_code
-    %div#sectionD.tab-pane
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @edx_code
+    %div#section_autocqm.tab-pane
       %h3 AutoQCM Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true'}
-        = @autoqcm_code
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @autoqcm_code
+
+    
