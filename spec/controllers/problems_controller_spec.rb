@@ -44,22 +44,6 @@ describe ProblemsController do
 		end
 	end
 	
-	describe 'set_privacy' do
-		before do
-			@instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
-			session[:user_id] = @instructor.id
-		end
-		
-		it 'should set privacy' do
-			problem = @instructor.problems.create(:is_public => false)
-			
-			request.env["HTTP_REFERER"] = '/problems'
-			post :set_privacy, :id => problem.id, :privacy => 'public'
-			
-			expect(Problem.find(problem.id).is_public).to eq(true)
-		end
-	end
-	
 	describe 'update_multiple_tags' do
     before do
       @instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")

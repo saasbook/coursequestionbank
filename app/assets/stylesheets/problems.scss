@@ -58,18 +58,18 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 }
 
 
-.prob_privacy {
+.prob-right {
   float: right;
   margin-top: 0;
   margin-left: 5px;
 }
 
-.prob_privacy form, .bloom-buttons form {
+.prob_privacy, .prob_obsolete, .bloom-buttons form {
   display: inline-block;
   margin: 0;
 }
 
-.bloom-button, .privacy-button {
+.bloom-button, .privacy-button, .obsolete-button {
   border-radius: 0;
 }
 

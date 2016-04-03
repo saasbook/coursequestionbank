@@ -8,11 +8,18 @@
   %div.problem_view= problem.html5.html_safe
 
   %div.additional
-    - if can? :set_privacy, problem
-      %div.prob_privacy
-        = form_tag problem_path(:id => problem.id), :method => :put do
+    %div.prob-right
+      - if can? :set_privacy, problem
+        = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_privacy' do
           = hidden_field_tag :privacy, (problem.is_public ? 'private' : 'public'), :id => nil
           = submit_tag (problem.is_public ? 'Public' : 'Private'), :class => 'btn btn-default privacy-button'
+      
+      = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_obsolete' do
+        = hidden_field_tag :obsolete, problem.obsolete ? '0' : '1', :id => nil
+        - if can? :set_privacy, problem
+          = submit_tag (problem.obsolete ? 'Obsolete' : 'Mark obsolete'), :class => 'btn btn-default obsolete-button'
+        - elsif problem.obsolete
+          = submit_tag 'Obsolete', :class => 'btn btn-default obsolete-button', :disabled => true
 
     %div Created #{problem.created_date} by #{problem.instructor.name}
 

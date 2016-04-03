@@ -80,7 +80,7 @@ $(RemoveTags.setup);
 
 var ChangePrivacy = {
   setup: function() {
-    $('.prob_privacy form').submit(function() {
+    $('.prob_privacy').submit(function() {
       var button = $(this).find('input[type="submit"]');
       var newValue = button.attr('value') == 'Public' ? 'Private' : 'Public';
       button.attr('value', newValue);

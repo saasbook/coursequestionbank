@@ -77,7 +77,6 @@ class ProblemsController < ApplicationController
         else
           flash[:error] = "Error in problem source: #{e.message}"
           flash[:ruql_source] = params[:ruql_source]
-          flash.keep
           redirect_to :back
         end
         return
@@ -107,6 +106,13 @@ class ProblemsController < ApplicationController
       end
       problem.save
       flash[:notice] = "Problem changed to #{privacy}" if !request.xhr?
+    end
+    
+    if !params[:obsolete].nil?
+      authorize! :set_obsolete, problem
+      problem.obsolete = params[:obsolete] == '1'
+      problem.save
+      flash[:notice] = "Problem marked as #{'not ' if !problem.obsolete}obsolete" if !request.xhr?
     end
     
     if !params[:category].nil?
