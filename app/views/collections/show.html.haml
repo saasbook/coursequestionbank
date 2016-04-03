@@ -1,9 +1,9 @@
 
 %div.section_title 
   %h3 #{@collection.is_public ? 'Public' : 'Private'} Collection #{@collection.name}
-  - if @collection.is_public
-    %h4= @collection.instructor.name
   %h4= @collection.description
+  - if @collection.is_public
+    %h5= @collection.instructor.name
 
 %div.section_options
   - if can? :manage, @collection

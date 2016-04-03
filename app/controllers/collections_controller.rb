@@ -1,9 +1,9 @@
 class CollectionsController < ApplicationController
   load_and_authorize_resource
-  after_filter :set_current_collection
+  # after_filter :set_current_collection
 
-  def set_current_collection
-  end
+  # def set_current_collection
+  # end
 
   def new
     @collection = Collection.new
@@ -56,28 +56,34 @@ class CollectionsController < ApplicationController
   def destroy
     Collection.find(params[:id]).destroy
     flash[:notice] = 'Collection deleted'
-    flash.keep
     redirect_to profile_path
+  end
+  
+  def add_problems
+    collection = Collection.find(params[:id])
+    problem_ids = self.class.parse_list params[:problem_ids]
+    problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
+    problems.each {|p| collection.problems << p if !collection.problems.include?(p)}
+    flash[:notice] = "Problems added"
+    redirect_to :back
+  end
+  
+  def remove_problems
+    collection = Collection.find(params[:id])
+    problem_ids = self.class.parse_list params[:problem_ids]
+    problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
+    problems.each {|p| collection.problems.delete(p) if collection.problems.include?(p)}
+    flash[:notice] = "Problems removed"
+    redirect_to :back
   end
 
   def export
     @collection = Collection.find(params[:id])
     
     @ruql_code = @collection.export('ruql')
-    
     @html_code = @collection.export('Html5')
-
-    begin
-      @edx_code = @collection.export('EdXml')
-    rescue RuntimeError
-      @edx_code = 'EdX not available'
-    end
-
-    begin
-      @autoqcm_code = @collection.export('AutoQCM')
-    rescue RuntimeError
-      @autoqcm_code = 'AutoQCM not available'
-    end
+    @edx_code = @collection.export('EdXml')
+    @autoqcm_code = @collection.export('AutoQCM')
 
     if not @html_code
       flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection first!'
@@ -93,25 +99,6 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
   end
-
-  # def checked_problems
-  #   redirect_to problems_path
-  #   collection = Collection.find(params[:dropdown])
-  #   collection_size = collection.problems.size
-  #   if params['add_problems'] and params[:checked_problems].present?
-  #     # if params[:checked_problems].class == String
-  #     #   update_multiple_tags
-  #     #   return
-  #     # end
-  #     params[:checked_problems].each {|problem_id, value| collection.problems << Problem.find(problem_id)}
-  #     flash[:notice] = "#{collection.problems.size - collection_size} of #{params[:checked_problems].size } problems added to collection: #{collection.name}. If not all were added, you are trying to add a duplicate to the collection"
-  #   elsif params[:checked_problems].present? #for delete route
-  #     params[:checked_problems].each {|problem_id, value| Problem.find(problem_id).destroy}
-  #     flash[:notice] = 'Problems successfully deleted'
-  #   end
-  #   flash.keep
-  #   redirect_to problems_path
-  # end
 
   rescue_from CanCan::AccessDenied do |exception|
     flash[:notice] = exception.message

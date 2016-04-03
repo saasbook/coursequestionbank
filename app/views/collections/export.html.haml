@@ -3,9 +3,9 @@
   %h3 
     Export Collection
     = link_to @collection.name, collection_path(:id => @collection.id)
-  - if @collection.is_public
-    %h4= @collection.instructor.name
   %h4= @collection.description
+  - if @collection.is_public
+    %h5= @collection.instructor.name
   
 %div.section_options
   = link_to "Preview quiz", preview_path(:id => @collection.id), :class => 'btn btn-info'

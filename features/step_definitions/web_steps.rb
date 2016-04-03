@@ -68,12 +68,12 @@ When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
   steps %Q{
     Given I am on the dashboard
     And I follow "New collection"
-    And I fill in "collection_name" with "#{name}"
+    And I fill in "name" with "#{name}"
     And I press "Create"
   }
-  if optional.strip == 'and mark it as current'
-    visit mark_as_current_path(:id => Collection.find_by_name(name).id)
-  end
+  # if optional.strip == 'and mark it as current'
+  #   visit mark_as_current_path(:id => Collection.find_by_name(name).id)
+  # end
 end
 
 When /^(?:|I )authorize '(.*)'/ do |user|

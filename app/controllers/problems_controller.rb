@@ -25,7 +25,7 @@ class ProblemsController < ApplicationController
     session[:filters] = session[:filters].merge params.slice(:search, :tags, :sort_by)
 
     if session[:filters][:tags].is_a? String
-      session[:filters][:tags] = Tag.parse_list session[:filters][:tags]
+      session[:filters][:tags] = self.class.parse_list session[:filters][:tags]
     end
 
     session[:filters][:problem_type] = []
@@ -92,23 +92,9 @@ class ProblemsController < ApplicationController
     end
   end
 
-  def remove_from_collection
-    collection = Collection.find(params[:collection_id])
-    problem_to_remove = Problem.find(params[:id])
-    if collection.problems.include? problem_to_remove
-      collection.problems.delete(problem_to_remove)
-      collection.save
-      flash[:notice] = "problem successfully removed from #{collection.name}"
-    else
-      flash[:notice] = "the problem you attempted to remove does not exist in #{collection.name}"
-    end
-    flash.keep
-    redirect_to edit_collection_path(:id => collection.id)
-  end
-
   def add_tags
     problem = Problem.find(params[:id])
-    tags = Tag.parse_list params[:tag_names]
+    tags = self.class.parse_list params[:tag_names]
     added = problem.add_tags(tags)
     if request.xhr?
       render :partial => "tags", locals: { problem: problem }
@@ -121,7 +107,7 @@ class ProblemsController < ApplicationController
 
   def remove_tags
     problem = Problem.find(params[:id])
-    tags = Tag.parse_list params[:tag_names]
+    tags = self.class.parse_list params[:tag_names]
     tags.each { |tag| problem.remove_tag tag }
     flash[:notice] = "Tags removed"
     flash[:bump_problem] = problem.id
@@ -129,7 +115,7 @@ class ProblemsController < ApplicationController
   end
   
   def update_multiple_tags
-    new_tags = Tag.parse_list params[:tag_names]
+    new_tags = self.class.parse_list params[:tag_names]
     selected = params[:checked_problems] ? params[:checked_problems].keys : []
     if new_tags == []
       flash[:error] = "You need to enter a tag."
@@ -152,10 +138,7 @@ class ProblemsController < ApplicationController
   
   def history
     @problem = Problem.find(params[:id])
-    @prev_problem = @problem.previous_version
-    while @problem.previous_version != nil
-      @problems.push(@prev_problem)
-    end
+    @history = @problem.history
   end
   
   def bloom_categorize

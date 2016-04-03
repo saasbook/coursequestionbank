@@ -20,5 +20,10 @@ class ApplicationController < ActionController::Base
   	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
     redirect_to login_path, :alert => exception.message
   end
+  
+  
+  def self.parse_list(string)
+    string ? string.split(',').map(&:strip).reject(&:empty?) : []
+  end
 
 end

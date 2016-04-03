@@ -15,7 +15,7 @@ Feature: Export a collection
 
   Scenario: Export a quiz unsuccessfully
     When I follow "New collection"
-    And I fill in "collection_name" with "yolo"
+    And I fill in "name" with "yolo"
     And I press "Create"
     And I am on the dashboard
     And I follow "yolo"

@@ -37,7 +37,7 @@ class Ability
       can [:read, :supersede, :add_tags, :remove_tags, :bloom_categorize], Problem, :is_public => true
       
       can :manage, Collection, :instructor_id => user.id
-      can :read, Collection, :is_public => true
+      can [:read, :export, :preview], Collection, :is_public => true
     end
   end
 end

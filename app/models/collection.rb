@@ -6,10 +6,6 @@ class Collection < ActiveRecord::Base
   # scope :collection, ->(collection_name) { where(name: collection_name) }
   scope :mine_or_public, ->(user) {where('instructor_id=? OR is_public=?', "#{user.id}", 'true')}
 
-  def add_problem(problem)
-    problems << problem if not problems.include? problem
-  end
-  
   def set_attributes(params)
     self.name = params[:name] if params[:name] != nil
     self.description = params[:description] if params[:description] != nil
