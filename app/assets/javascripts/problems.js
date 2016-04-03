@@ -82,11 +82,13 @@ var ChangePrivacy = {
   setup: function() {
     $('.prob_privacy form').submit(function() {
       var button = $(this).find('input[type="submit"]');
-      button.attr('value', button.attr('value') == 'Public' ? 'Private' : 'Public');
-      var action = $(this).attr('action');
+      var newValue = button.attr('value') == 'Public' ? 'Private' : 'Public';
+      button.attr('value', newValue);
+      $(this).find('input[name="privacy"]').attr('value', button.attr('value'));
+      var data = $(this).serialize();
       $.ajax({
-        url: action.slice(0, action.lastIndexOf('/')) + '/' + button.attr('value'),
-        type: 'POST',
+        url: $(this).attr('action'),
+        type: 'PUT',
         data: $(this).serialize()
       });
       return false;
@@ -101,21 +103,38 @@ var ChangeBloom = {
     $('.bloom-buttons').each(function() {
       var container = $(this);
       container.find('form').submit(function() {
-        
-        var this_button = $(this).find('.bloom-button');
-        container.find('.bloom-button').each(function() {
-          $(this).removeClass('btn-default btn-info');
-          if ($(this).is(this_button))
-            $(this).addClass('btn-info');
-          else
-            $(this).addClass('btn-default');
-        });
-        
         $.ajax({
           url: $(this).attr('action'),
-          type: 'POST',
+          type: 'PUT',
           data: $(this).serialize()
         });
+        
+        var button = $(this).find('input[type="submit"]');
+        var category = $(this).find('input[name="category"]').attr('value');
+        
+        // Reset all buttons to default action
+        container.find('form').each(function() {
+          var my_button = $(this).find('input[type="submit"]');
+          var my_category_field = $(this).find('input[name="category"]');
+          my_category_field.attr('value', my_button.attr('value'));
+        });
+        
+        // Set 'none' action for current button if appropriate
+        var category_field = $(this).find('input[name="category"]');
+        if (category != 'none')
+          category_field.attr('value', 'none');
+        
+        // Stylize buttons based on action
+        container.find('form').each(function() {
+          var button = $(this).find('input[type="submit"]');
+          var category = $(this).find('input[name="category"]').attr('value');
+          button.removeClass('btn-default btn-info');
+          if (category == 'none')
+            button.addClass('btn-info');
+          else
+            button.addClass('btn-default');
+        });
+        
         return false;
       });
     });

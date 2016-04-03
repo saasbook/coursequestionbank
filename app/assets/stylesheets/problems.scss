@@ -57,29 +57,20 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   margin: 5px 0;
 }
 
-.additional .prob_privacy {
+
+.prob_privacy {
   float: right;
   margin-top: 0;
   margin-left: 5px;
 }
 
-.additional .button_to {
+.prob_privacy form, .bloom-buttons form {
   display: inline-block;
   margin: 0;
 }
 
-.bloom-button {
+.bloom-button, .privacy-button {
   border-radius: 0;
-}
-
-.highlighted-button {
-  background-color: #BED6E6;
-  font-weight: bold;
-  // color: red;
-}
-
-.not-highlighted-button {
-  opacity: 0.6;
 }
 
 .prob-collection {
@@ -94,9 +85,4 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   padding: 10px;
   margin: 15px;
   border-radius: 4px;
-}
-
-.old_problem {
-  // padding-left: 600px;
-  display: none;
 }

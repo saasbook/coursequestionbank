@@ -91,6 +91,40 @@ class ProblemsController < ApplicationController
       redirect_to problems_path
     end
   end
+  
+  def update
+    problem = Problem.find(params[:id])
+    
+    if !params[:privacy].nil?
+      authorize! :set_privacy, problem
+      privacy = params[:privacy].downcase.strip
+      if privacy == 'public'
+        problem.is_public = true
+      elsif privacy == 'private'
+        problem.is_public = false
+      else
+        return
+      end
+      problem.save
+      flash[:notice] = "Problem changed to #{privacy}" if !request.xhr?
+    end
+    
+    if !params[:category].nil?
+      category = params[:category].downcase.strip
+      category[0] = category[0].upcase
+      if Problem.all_bloom_categories.include? category
+        problem.bloom_category = category
+        flash[:notice] = "Bloom category set to #{category}" if !request.xhr?
+      elsif category == 'None'
+        problem.bloom_category = nil
+        flash[:notice] = "Bloom category removed" if !request.xhr?
+      end
+      problem.save
+    end
+    
+    flash[:bump_problem] = problem.id if !request.xhr?
+    redirect_to :back
+  end
 
   def add_tags
     problem = Problem.find(params[:id])
@@ -141,34 +175,5 @@ class ProblemsController < ApplicationController
   def history
     @problem = Problem.find(params[:id])
     @history = @problem.history
-  end
-  
-  def bloom_categorize
-    @problem = Problem.find(params[:id])
-    category = params[:category]
-    @problem.bloom_categorize(category)
-    if !request.xhr?
-      flash[:notice] = "Bloom category set."
-      flash[:bump_problem] = @problem.id
-    end
-    redirect_to :back
-  end
-  
-  def set_privacy
-    problem = Problem.find(params[:id])
-    privacy = params[:privacy].downcase.strip
-    if privacy == 'public'
-      problem.is_public = true
-    elsif privacy == 'private'
-      problem.is_public = false
-    else
-      return
-    end
-    problem.save
-    if !request.xhr?
-      flash[:notice] = "Problem changed to #{privacy}"
-      flash[:bump_problem] = problem.id
-    end
-    redirect_to :back
   end
 end
