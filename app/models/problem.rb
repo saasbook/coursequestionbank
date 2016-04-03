@@ -1,7 +1,7 @@
 require 'ruql_renderer'
 
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :bloom_category
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -23,6 +23,7 @@ class Problem < ActiveRecord::Base
     time      :updated_at
     string    :problem_type
     time      :created_date
+    boolean   :obsolete
     string    :bloom_category
 
     string    :tag_names, :multiple => true do

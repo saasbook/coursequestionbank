@@ -109,8 +109,10 @@ class ProblemsController < ApplicationController
     problem = Problem.find(params[:id])
     tags = self.class.parse_list params[:tag_names]
     tags.each { |tag| problem.remove_tag tag }
-    flash[:notice] = "Tags removed"
-    flash[:bump_problem] = problem.id
+    if !request.xhr?
+      flash[:notice] = "Tags removed"
+      flash[:bump_problem] = problem.id
+    end
     redirect_to :back
   end
   
@@ -145,8 +147,10 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
     category = params[:category]
     @problem.bloom_categorize(category)
-    flash[:notice] = "Bloom category set."
-    flash[:bump_problem] = @problem.id
+    if !request.xhr?
+      flash[:notice] = "Bloom category set."
+      flash[:bump_problem] = @problem.id
+    end
     redirect_to :back
   end
   
@@ -161,8 +165,10 @@ class ProblemsController < ApplicationController
       return
     end
     problem.save
-    flash[:notice] = "Problem changed to #{privacy}"
-    flash[:bump_problem] = problem.id
+    if !request.xhr?
+      flash[:notice] = "Problem changed to #{privacy}"
+      flash[:bump_problem] = problem.id
+    end
     redirect_to :back
   end
 end
