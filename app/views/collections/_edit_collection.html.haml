@@ -10,22 +10,9 @@
       Delete Collection
       
 
-%div#tag_collection.section_body
-  = render :partial=> 'form', locals: {:collection => collection}
+%div.section_body
+  = render :partial => 'collections/form', :locals => {:collection => collection}
   
-  = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{collection.id}", :class => 'check_form' do
-    = text_field_tag :tag_names, nil, :id => "multiple_tag_names_#{collection.id}", :class => 'form-control', :placeholder => 'tag 1, tag 2'
-    = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
-
-  %div.table-responsive.problem_table
-    %table.table.table-striped
-      %thead
-        %tr
-          %th= check_box_tag nil, 1, false, :id => "check_all_#{collection.id}", :class => 'checkbox check_all', :style => 'display: none'
-          %th Question Text
-          %th Tags
-      
-      %tbody
-        - collection.problems.select{|p| can? :read, p}.each do |problem|
-          %tr
-            = render :partial => 'problems/problem_row', :locals => {:problem => problem, :check_box_form => "update_multiple_tags_#{collection.id}", :check_group => collection.id}
+  = render :partial => 'problems/problem_table', 
+            :locals => {:problems => collection.problems, :columns => [:checkbox, :problem, :tags],
+                        :group_id => collection.id, :empty_msg => 'This collection is empty'}
