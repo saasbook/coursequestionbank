@@ -1,27 +1,40 @@
-.export-tabs
+
+%div.section_title 
+  %h3 
+    Export Collection
+    = link_to @collection.name, collection_path(:id => @collection.id)
+  - if @collection.is_public
+    %h4= @collection.instructor.name
+  %h4= @collection.description
+  
+%div.section_options
+  = link_to "Preview quiz", preview_path(:id => @collection.id), :class => 'btn btn-info'
+
+%div.section_body.section_body_pad
   %ul.nav.nav-tabs
+    // %li
+    //   %a{"data-toggle" => "tab", :href => "#sectionA"} Preview Quiz
     %li.active
-      %a{"data-toggle" => "tab", :href => "#sectionA"} Preview Quiz
-    %li
       %a{"data-toggle" => "tab", :href => "#sectionB"} HTML Code
     %li
       %a{"data-toggle" => "tab", :href => "#sectionC"} EdX Code
     %li
       %a{"data-toggle" => "tab", :href => "#sectionD"} AutoQCM Code
-  .tab-content
-    #sectionA.tab-pane.fade.in.active
-      %h3 Preview Quiz
-      %h6
-        = @html_code.html_safe
-    #sectionB.tab-pane.fade
+  
+  %div.tab-content#export-content
+    // #sectionA.tab-pane.fade.in.active
+    //   %h3 Preview Quiz
+    //   %h6
+    //     = @html_code.html_safe
+    %div#sectionB.tab-pane.active
       %h3 HTML Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+      %textarea{:wrap => 'hard', 'readonly' => 'true'}
         = @html_code
-    #sectionC.tab-pane.fade.in.active
+    %div#sectionC.tab-pane
       %h3 EdX Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+      %textarea{:wrap => 'hard', 'readonly' => 'true'}
         = @edx_code
-    #sectionD.tab-pane.fade
+    %div#sectionD.tab-pane
       %h3 AutoQCM Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
+      %textarea{:wrap => 'hard', 'readonly' => 'true'}
         = @autoqcm_code

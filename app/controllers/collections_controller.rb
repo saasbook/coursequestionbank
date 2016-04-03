@@ -63,17 +63,18 @@ class CollectionsController < ApplicationController
   end
 
   def export
-
-    @html_code = Collection.find(params[:id]).export('Html5')
+    @collection = Collection.find(params[:id])
+    
+    @html_code = @collection.export('Html5')
 
     begin
-      @edx_code = Collection.find(params[:id]).export('EdXml')
+      @edx_code = @collection.export('EdXml')
     rescue RuntimeError
       @edx_code = 'EdX not available'
     end
 
     begin
-      @autoqcm_code = Collection.find(params[:id]).export('AutoQCM')
+      @autoqcm_code = @collection.export('AutoQCM')
     rescue RuntimeError
       @autoqcm_code = 'AutoQCM not available'
     end
@@ -83,6 +84,11 @@ class CollectionsController < ApplicationController
       flash.keep
       redirect_to edit_collection_path( id: params[:id])
     end
+  end
+  
+  def preview
+    html_code = Collection.find(params[:id]).export('Html5')
+    render :text => html_code
   end
 
   def finalize_upload
