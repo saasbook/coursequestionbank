@@ -22,7 +22,7 @@ class InstructorsController < ApplicationController
     elsif params[:permission] == "deny"
       user.update_attributes(privilege: "denied")
     end
-      redirect_to admin_path
+    redirect_to admin_path
   end
 
   def add_to_whitelist
