@@ -98,6 +98,7 @@ class CollectionsController < ApplicationController
 
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
+    @collections.each{|c| authorize! :read, c}
   end
 
   rescue_from CanCan::AccessDenied do |exception|
