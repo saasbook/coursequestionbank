@@ -62,4 +62,38 @@ describe ProblemsController do
       expect(Problem.find(problem2).tags.size).to eq(2)
     end
   end
+  
+  describe 'update' do
+  	before do
+      @instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+			session[:user_id] = @instructor.id
+			request.env["HTTP_REFERER"] = '/problems'
+			@problem = @instructor.problems.create.id
+    end
+    
+    it 'should set privacy to public' do
+    	post :update, :id => @problem, :privacy => 'public'
+    	expect(Problem.find(@problem).is_public).to eq(true)
+    end
+    
+    it 'should set privacy to private' do
+    	post :update, :id => @problem, :privacy => 'private'
+    	expect(Problem.find(@problem).is_public).to eq(false)
+    end
+    
+    it 'should set obsolete' do
+    	post :update, :id => @problem, :obsolete => '1'
+    	expect(Problem.find(@problem).obsolete).to eq(true)
+    end
+    
+    it 'should set bloom category' do
+    	post :update, :id => @problem, :category => 'Understand'
+    	expect(Problem.find(@problem).bloom_category).to eq('Understand')
+    end
+    
+    it 'should unset bloom category' do
+    	post :update, :id => @problem, :category => 'none'
+    	expect(Problem.find(@problem).bloom_category).to eq(nil)
+    end
+  end
 end
