@@ -111,6 +111,14 @@ When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection
   end
 end
 
+When(/^I check problem containing "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I have added problem containing "(.*?)" to "(.*?)"$/) do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
+end
+
 When /^I follow "(.*)" for problem containing "(.*)"/ do |link_id, problem_text|
   problem = problems_with_text(problem_text)[0].id
   click_link("#{link_id}_#{problem}")
