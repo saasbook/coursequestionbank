@@ -54,11 +54,15 @@ class Problem < ActiveRecord::Base
     end
 
     if json and !json.empty?
-      question = Question.from_JSON(self.json)
-      quiz = Quiz.new("", :questions => [question])
-      quiz.render_with("Html5", {'template' => 'preview.html.erb'})
-      self.update_attributes(:rendered_text => quiz.output)
-      quiz.output
+      begin
+        question = Question.from_JSON(self.json)
+        quiz = Quiz.new("", :questions => [question])
+        quiz.render_with("Html5", {'template' => 'preview.html.erb'})
+        self.update_attributes(:rendered_text => quiz.output)
+        quiz.output
+      rescue
+        return 'There was a problem rendering this question'
+      end
     else
       'This question could not be displayed (no JSON found)'
     end
