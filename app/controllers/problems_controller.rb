@@ -8,6 +8,7 @@ class ProblemsController < ApplicationController
    'problem_type' => [],
    'collections' => [],
    'bloom_category' => [],
+   'show_obsolete' => false,
    'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
@@ -51,6 +52,8 @@ class ProblemsController < ApplicationController
     if session[:filters][:collections].include?(0)
       session[:filters][:collections] = []
     end
+    
+    session[:filters][:show_obsolete] = params[:show_obsolete] == "1"
 
     redirect_to problems_path
   end

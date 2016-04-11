@@ -122,6 +122,10 @@ class Problem < ActiveRecord::Base
           end
         end
       end
+      
+      if !filters[:show_obsolete]
+        with(:obsolete, false)
+      end
 
       fulltext filters[:search]
 

@@ -36,9 +36,9 @@
       %div.filter_option
         = check_box_tag "bloom_category[#{category}]", 1, !!(session[:filters][:bloom_category].include? category), class: 'checkbox', id: "bloom_category_#{category}"
         = label_tag "bloom_category_#{category}", category
-
+        
   %hr
-
+  
   %div.form-group
     = label_tag :collections, 'Collections:'
     - @collections.each do |collection|
@@ -49,4 +49,10 @@
       = check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: 'checkbox', id: 'collections_0'
       = label_tag 'collections_0', 'All Collections'
 
-  = submit_tag 'Search', :class => 'btn btn-primary'
+  %hr
+  
+  %div.form-group
+    %div.filter_option
+      = check_box_tag :show_obsolete, 1, !!session[:filters][:show_obsolete], class: 'checkbox'
+      = label_tag :show_obsolete, 'Show obsolete'
+    = submit_tag 'Search', :class => 'btn btn-primary'
