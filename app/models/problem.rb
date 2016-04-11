@@ -124,7 +124,7 @@ class Problem < ActiveRecord::Base
       end
       
       if !filters[:show_obsolete]
-        with(:obsolete, false)
+        without(:obsolete, true)
       end
 
       fulltext filters[:search]
