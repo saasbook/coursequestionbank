@@ -52,7 +52,7 @@
         = link_to "See Version History", problem_history_path(:id => problem.id), :id => "history_button_#{problem.id}", :class => 'history_button btn btn-default'
 
     %div.supersede_form{:style => 'display: none'}
-      = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
+      = render :partial => 'problems/new_form', :locals => {:previous => problem}
 
     %div.history_list{:style => 'display: none'}
       = render :partial => 'problems/history_list', :locals => {:problem => problem}

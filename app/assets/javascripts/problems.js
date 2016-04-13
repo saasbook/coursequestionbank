@@ -11,7 +11,7 @@ var Supersession = {
             if (data.error == null)
               window.location.href = '/problems';
             else
-              $(this).children('.message').text(data.error);
+              $(this).find('.message').text(data.error);
           }
       });
       return false;

@@ -148,14 +148,14 @@ class Problem < ActiveRecord::Base
     return results
   end
 
-  def supersede(user, source)
-    new_problem = RuqlReader.read_problem(user, source)
-    new_problem.previous_version = self
-    new_problem.is_public = self.is_public
-    new_problem.tags += tags
-    new_problem.save
-    new_problem
-  end
+  # def supersede(user, source)
+  #   new_problem = RuqlReader.read_problem(user, source)
+  #   new_problem.previous_version = self
+  #   new_problem.is_public = self.is_public
+  #   new_problem.tags += tags
+  #   new_problem.save
+  #   new_problem
+  # end
 
   def add_tag(tag_name)
     return false if tag_name.strip == ""

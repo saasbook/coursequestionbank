@@ -68,27 +68,31 @@ class ProblemsController < ApplicationController
   end
 
   def create
-    if params[:previous_version] != nil
-      previous_version = Problem.find(params[:previous_version])
-
-      begin
-        flash[:bump_problem] = previous_version.supersede(@current_user, params[:ruql_source])
-
-      rescue Exception => e
-        if request.xhr?
-          render json: {'error' => e.message}
-        else
-          flash[:error] = "Error in problem source: #{e.message}"
-          flash[:ruql_source] = params[:ruql_source]
-          redirect_to :back
-        end
-        return
+    previous_version = Problem.find_by_id(params[:previous_version])
+    
+    begin
+      problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
+      problem.previous_version = previous_version
+      problem.is_public = previous_version ? previous_version.is_public : false
+      problem.bloom_category = previous_version.bloom_category if previous_version
+      problem.save
+      problem.add_tags(self.class.parse_list params[:tag_names])
+      flash[:bump_problem] = problem.id
+    
+    rescue Exception => e
+      if request.xhr?
+        render :json => {'error' => e.message}
+      else
+        flash[:error] = "Error in problem source: #{e.message}"
+        flash[:ruql_source] = params[:ruql_source]
+        redirect_to :back
       end
+      return
     end
 
     flash[:notice] = "Question created"
     if request.xhr?
-      render json: {'error' => nil}
+      render :json => {'error' => nil}
     else
       redirect_to problems_path
     end

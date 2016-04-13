@@ -5,4 +5,4 @@
     = @problem.html5.html_safe
     %div.additional Created #{@problem.created_date} by #{@problem.instructor.name}
   
-  = render :partial => 'supersede_form', :locals => {:problem => @problem}
+  = render :partial => 'new_form', :locals => {:previous => @problem}
