@@ -35,7 +35,7 @@ class ProblemsController < ApplicationController
           session[:filters][:problem_type] << key if value == "1"
       end
     end
-    
+
     session[:filters][:bloom_category] = []
     if params[:bloom_category]
       params[:bloom_category].each do |key, value|
@@ -52,7 +52,7 @@ class ProblemsController < ApplicationController
     if session[:filters][:collections].include?(0)
       session[:filters][:collections] = []
     end
-    
+
     session[:filters][:show_obsolete] = params[:show_obsolete] == "1"
 
     redirect_to problems_path
@@ -69,7 +69,7 @@ class ProblemsController < ApplicationController
 
   def create
     previous_version = Problem.find_by_id(params[:previous_version])
-    
+
     begin
       problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
       problem.previous_version = previous_version
@@ -78,7 +78,7 @@ class ProblemsController < ApplicationController
       problem.save
       problem.add_tags(self.class.parse_list params[:tag_names])
       flash[:bump_problem] = problem.id
-    
+
     rescue Exception => e
       if request.xhr?
         render :json => {'error' => e.message}
@@ -97,10 +97,10 @@ class ProblemsController < ApplicationController
       redirect_to problems_path
     end
   end
-  
+
   def update
     problem = Problem.find(params[:id])
-    
+
     if !params[:privacy].nil?
       authorize! :set_privacy, problem
       privacy = params[:privacy].downcase.strip
@@ -114,14 +114,14 @@ class ProblemsController < ApplicationController
       problem.save
       flash[:notice] = "Problem changed to #{privacy}" if !request.xhr?
     end
-    
+
     if !params[:obsolete].nil?
       authorize! :set_obsolete, problem
       problem.obsolete = params[:obsolete] == '1'
       problem.save
       flash[:notice] = "Problem marked as #{'not ' if !problem.obsolete}obsolete" if !request.xhr?
     end
-    
+
     if !params[:category].nil?
       category = params[:category].downcase.strip
       category[0] = category[0].upcase
@@ -134,7 +134,21 @@ class ProblemsController < ApplicationController
       end
       problem.save
     end
-    
+
+    if !params[:collection].nil?
+      collection_id = params[:collection]
+      target_collection = Collection.find(collection_id)
+      current = problem.collections
+      if !current.include? target_collection
+        current.push(target_collection)
+        flash[:notice] = "Problem added to #{target_collection.name}" if !request.xhr?
+      else
+        current.delete(target_collection)
+        flash[:notice] = "Problem removed from #{target_collection.name}" if !request.xhr?
+      end
+      problem.save
+    end
+
     if request.xhr?
       render :nothing => true
     else
@@ -168,7 +182,7 @@ class ProblemsController < ApplicationController
       redirect_to :back
     end
   end
-  
+
   def update_multiple_tags
     new_tags = self.class.parse_list params[:tag_names]
     selected = params[:checked_problems] ? params[:checked_problems].keys : []
@@ -185,12 +199,12 @@ class ProblemsController < ApplicationController
     end
     redirect_to :back
   end
-  
+
   def supersede
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
   end
-  
+
   def history
     @problem = Problem.find(params[:id])
     @history = @problem.history

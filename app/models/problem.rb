@@ -122,7 +122,7 @@ class Problem < ActiveRecord::Base
           end
         end
       end
-      
+
       if !filters[:show_obsolete]
         without(:obsolete, true)
       end
@@ -175,9 +175,24 @@ class Problem < ActiveRecord::Base
   def add_tags(tag_names)
     tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
-  
+
   def history
     return [] if previous_version == nil
     return [previous_version] + previous_version.history
+  end
+
+  def is_in_collection(collection_id)
+    for c in self.collections
+      return true if collection_id == c.id
+    end
+    return false
+  end
+
+  def non_owned_collections(user_id)
+    results = []
+    for c in self.collections
+      results << c if c.instructor_id != user_id
+    end
+    return results
   end
 end
