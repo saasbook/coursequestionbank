@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160403190021) do
+ActiveRecord::Schema.define(:version => 20160414041348) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -33,11 +33,9 @@ ActiveRecord::Schema.define(:version => 20160403190021) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
-    t.string   "privilege"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "current_collection"
-    t.string   "type"
     t.string   "provider_image"
     t.string   "provider_email"
     t.string   "username"
@@ -84,8 +82,9 @@ ActiveRecord::Schema.define(:version => 20160403190021) do
   create_table "whitelists", :force => true do |t|
     t.string   "username"
     t.string   "privilege"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "provider",   :default => "github"
   end
 
 end
