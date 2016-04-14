@@ -21,7 +21,7 @@ class Instructor < ActiveRecord::Base
   
   def privilege
     whitelist = Whitelist.where(:username => username, :provider => provider)[0]
-    whitelist ? whitelist.privilege : "default"
+    whitelist ? (whitelist.privilege || "default") : "default"
   end
 
   def admin?

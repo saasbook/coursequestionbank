@@ -87,7 +87,7 @@ class CollectionsController < ApplicationController
 
     if not @html_code
       flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection first!'
-      redirect_to :back
+      redirect_to collection_path(:id => @collection.id)
     end
   end
   
@@ -99,10 +99,5 @@ class CollectionsController < ApplicationController
   def finalize_upload
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
     @collections.each{|c| authorize! :read, c}
-  end
-
-  rescue_from CanCan::AccessDenied do |exception|
-    flash[:notice] = exception.message
-    redirect_to profile_path, :alert => exception.message
   end
 end
