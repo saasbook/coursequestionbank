@@ -38,3 +38,26 @@
 //       = select_tag(:access, options_for_select(["instructor", "admin"]), class: 'form-control')
     
 //       = submit_tag 'Add', :id => "whitelist_submit", :class => 'btn btn-info'
+
+
+%div.section_title 
+  %h3 Administration
+
+%div.section_options
+  %p.btn.btn-primary Disable whitelist
+
+%div.section_body.section_body_pad
+  %div.table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Username
+          %th Provider
+          %th Privilege
+      
+      %tbody
+        - Whitelist.all.each do |entry|
+          %tr
+            %td= entry.username
+            %td= entry.provider
+            %td= entry.privilege
