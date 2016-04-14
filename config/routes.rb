@@ -18,9 +18,9 @@ Coursequestionbank::Application.routes.draw do
   get 'problems/:id/history' => 'problems#view_history', :as => 'problem_history'
 
   get 'profile' => 'instructors#show', :as => 'profile'
-  get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
-  get 'admin/:permission/:id' => 'instructors#authorize', :as => 'authorize'
-  get 'admin/add/to/whitelist' => 'instructors#add_to_whitelist', :as => 'whitelist'
+  get 'admin' => 'instructors#admin', :as => 'admin'
+  # get 'admin/:permission/:id' => 'instructors#authorize', :as => 'authorize'
+  # get 'admin/add/to/whitelist' => 'instructors#add_to_whitelist', :as => 'whitelist'
   
   resources :collections
   post 'collections/:id/problems/add' => 'collections#add_problems'

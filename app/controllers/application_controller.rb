@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  # load_and_authorize_resource
   #alias_method :current_user, :set_current_user
 
   before_filter :set_current_user
@@ -23,7 +22,7 @@ class ApplicationController < ActionController::Base
       redirect_to login_path
     else
       flash[:notice] = "You don't have permission to access this page."
-      redirect_to request.referer.present? ? :back : profile_path
+      redirect_to request.referer.present? ? :back : problems_path
     end
   end
   

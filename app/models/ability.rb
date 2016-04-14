@@ -30,7 +30,7 @@ class Ability
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
     user ||= Instructor.new
     if user.admin?
-      can :manage, Instructor
+      can :manage, Whitelist
     end
     if user.admin? or user.instructor?
       can :manage, Problem, :instructor_id => user.id
