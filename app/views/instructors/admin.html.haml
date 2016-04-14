@@ -43,21 +43,27 @@
 %div.section_title 
   %h3 Administration
 
+
 %div.section_options
   %p.btn.btn-primary Disable whitelist
 
+
 %div.section_body.section_body_pad
-  %div.table-responsive
-    %table.table
-      %thead
-        %tr
-          %th Username
-          %th Provider
-          %th Privilege
-      
-      %tbody
-        - Whitelist.all.each do |entry|
+  
+  %form.whitelist-form
+    = submit_tag 'Update whitelist', :class => 'btn btn-primary'
+  
+    %div.table-responsive
+      %table.table
+        %thead
           %tr
-            %td= entry.username
-            %td= entry.provider
-            %td= entry.privilege
+            %th Username
+            %th Provider
+            %th Privilege
+        
+        %tbody
+          - Whitelist.all.each do |entry|
+            %tr
+              %td= text_field_tag "name me", nil, :id => nil, :class => 'form-control', :value => entry.username
+              %td= select_tag "name me", options(Whitelist.providers, entry.provider), :id => nil, :class => 'form-control'
+              %td= select_tag "name me", options(Whitelist.privilege_levels, entry.privilege), :id => nil, :class => 'form-control'
