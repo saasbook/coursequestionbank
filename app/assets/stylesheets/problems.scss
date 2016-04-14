@@ -1,5 +1,5 @@
 
-ol.questions { list-style-type: none; font-size: 90%; }
+ol.questions { list-style-type: none; font-size: 90%; padding-left: 0; }
 li.question { page-break-inside: avoid; }
 li.multiplechoice  ol.answers { list-style-type: lower-alpha; }
 li.selectmultiple  ol.answers { list-style-type: lower-alpha;  }
@@ -8,6 +8,11 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 .incorrect { color: red }
 .explanation { font-style: italic }
 .instructions { clear: both; border: 1px solid black; align: center; padding: 2ex; margin: 2ex; }
+
+
+.problem_view {
+  padding-left: 40px;
+}
 
 
 .tag {
@@ -38,7 +43,8 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 }
 
 .add_tags_form input {
-  width: 90px;
+  width: 100%;
+  margin-top: 20px;
 }
 
 
@@ -51,19 +57,20 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   margin: 5px 0;
 }
 
-.additional .prob_privacy {
+
+div.prob-right {
   float: right;
   margin-top: 0;
   margin-left: 5px;
 }
 
-.additional .button_to {
+.prob_privacy, .prob_obsolete, .collection-buttons form, .collections-from-others form, .bloom-buttons form {
   display: inline-block;
   margin: 0;
 }
 
-.bloom-button {
-  border-radius: 0;
+.bloom-button, .privacy-button, .obsolete-button, .collection-button {
+  // border-radius: 0;
 }
 
 .prob-collection {
@@ -78,9 +85,4 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
   padding: 10px;
   margin: 15px;
   border-radius: 4px;
-}
-
-.source_field {
-  font-family: monospace;
-  width: 100%;
 }

@@ -1,0 +1,15 @@
+%div.collection-buttons
+  Your Collections:
+  - @current_user.collections.each do |collection|
+    = form_tag problem_path(:id => problem.id), :method => :put do
+      - selected = problem.is_in_collection(collection.id)
+      = hidden_field_tag :collection, collection.id, :id => nil
+      = submit_tag collection.name, :class => "collection-button btn #{selected ? 'btn-info' : 'btn-default'}"
+
+- others = problem.non_owned_collections(@current_user.id)
+- if !others.empty?
+  %div.collections-from-others
+    Collections from Others:
+    - others.each do |collection|
+      - selected = problem.is_in_collection(collection.id)
+      %button{:class => "btn #{selected ? 'btn-info' : 'btn-default'}"} #{collection.name}

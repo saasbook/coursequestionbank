@@ -15,21 +15,21 @@ Coursequestionbank::Application.routes.draw do
   post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
   post 'update_multiple_tags' => 'problems#update_multiple_tags'
   get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
-  post 'problems/:id/bloom_categorize/:category' => 'problems#bloom_categorize', :as => 'bloom_categorize'
-  post 'problems/:id/privacy/:privacy' => 'problems#set_privacy', :as => 'set_problem_privacy'
+  get 'problems/:id/history' => 'problems#view_history', :as => 'problem_history'
 
   get 'profile' => 'instructors#show', :as => 'profile'
-  post 'add_problem' => 'problems#add_to_collection', :as => 'add_problem'
-  post 'remove_problem' => 'problems#remove_from_collection'
-  
-  resources :collections
-  get 'mark_as_current' => 'instructors#mark_as_current'
   get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
   get 'admin/:permission/:id' => 'instructors#authorize', :as => 'authorize'
   get 'admin/add/to/whitelist' => 'instructors#add_to_whitelist', :as => 'whitelist'
-  get 'export' => 'collections#export'
+  
+  resources :collections
+  post 'collections/:id/problems/add' => 'collections#add_problems'
+  post 'collections/:id/problems/remove' => 'collections#remove_problems'
+  # get 'mark_as_current' => 'instructors#mark_as_current'
+  get 'collections/:id/export' => 'collections#export', :as => 'export'
+  get 'collections/:id/preview' => 'collections#preview', :as => 'preview'
   get 'finalize_upload' => 'collections#finalize_upload'
-  post 'update_all' => 'collections#update_all'
+  # post 'update_all' => 'collections#update_all'
   # match 'checked_problems' => 'collections#checked_problems'
 
 

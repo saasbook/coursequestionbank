@@ -12,19 +12,18 @@
 
   %body
     %div#header
-      %h1#banner
-        = link_to 'Course Question Bank', problems_path
-
-      - if @current_user
-        %ul#navbar
-          %li#welcome_message Welcome, #{user_display_name(@current_user)}!
-          %li= link_to 'Home', problems_path, :class => 'btn btn-link'
-          %li= link_to 'My Collections', profile_path, :class => 'btn btn-link'
-          - if can? :manage, Instructor
-            %li= link_to 'Admin', admin_path, :class => 'btn btn-link'
-          %li
-            = form_tag logout_path, :method => :post do
-              = submit_tag 'Log Out', :class => 'btn btn-link'
+      #banner
+        = link_to image_tag('foxinboxheader.png'), problems_path
+        - if @current_user
+          #welcome_message Welcome, #{user_display_name(@current_user)}!
+          %ul
+            %li= link_to 'Home', problems_path, :class => 'btn btn-info'
+            %li= link_to 'My Collections', profile_path, :class => 'btn btn-info'
+            - if can? :manage, Instructor
+              %li= link_to 'Admin', admin_path, :class => 'btn btn-info'
+            %li
+              = form_tag logout_path, :method => :post do
+                = submit_tag 'Log Out', :class => 'btn btn-info'
     
       %div#flash_message
         - if flash[:notice]

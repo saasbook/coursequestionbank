@@ -6,8 +6,9 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-@instructor = Instructor.create(name: "Example User", provider: "github", uid: "1234", username: "test", privilege: "admin")
-@nub = Instructor.create(name: "noob", provider: "github", uid: "1234", username: "noob", privilege: "default")
+@instructor = Instructor.create(name: "Example User", provider: "github", uid: "1234", username: "test")
+Whitelist.create(username: "test", provider: "github", privilege: "admin")
+@nub = Instructor.create(name: "noob", provider: "github", uid: "1234", username: "noob")
 # @tag1 = Tag.create(name: "quiz 1")
 # @tag2 = Tag.create(name: "quiz 2")
 # @tag3 = Tag.create(name: "quiz 3")

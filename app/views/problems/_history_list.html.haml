@@ -1,0 +1,5 @@
+- problem.history.each do |prob|
+  - if can? :read, prob
+    = prob.html5.html_safe
+  - else
+    Private problem

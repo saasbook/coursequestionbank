@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160401072455) do
+ActiveRecord::Schema.define(:version => 20160414041348) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -33,11 +33,9 @@ ActiveRecord::Schema.define(:version => 20160401072455) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
-    t.string   "privilege"
     t.datetime "created_at",         :null => false
     t.datetime "updated_at",         :null => false
     t.integer  "current_collection"
-    t.string   "type"
     t.string   "provider_image"
     t.string   "provider_email"
     t.string   "username"
@@ -57,16 +55,12 @@ ActiveRecord::Schema.define(:version => 20160401072455) do
     t.text     "json"
     t.integer  "previous_version_id"
     t.string   "bloom_category"
+    t.boolean  "obsolete"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
     t.integer "problem_id"
     t.integer "tag_id"
-  end
-
-  create_table "ruql_readers", :force => true do |t|
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
   end
 
   create_table "sessions", :force => true do |t|
@@ -88,8 +82,9 @@ ActiveRecord::Schema.define(:version => 20160401072455) do
   create_table "whitelists", :force => true do |t|
     t.string   "username"
     t.string   "privilege"
-    t.datetime "created_at", :null => false
-    t.datetime "updated_at", :null => false
+    t.datetime "created_at",                       :null => false
+    t.datetime "updated_at",                       :null => false
+    t.string   "provider",   :default => "github"
   end
 
 end

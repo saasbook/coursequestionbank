@@ -6,16 +6,32 @@ class Collection < ActiveRecord::Base
   # scope :collection, ->(collection_name) { where(name: collection_name) }
   scope :mine_or_public, ->(user) {where('instructor_id=? OR is_public=?', "#{user.id}", 'true')}
 
-  def add_problem(problem)
-    problems << problem if not problems.include? problem
+  def set_attributes(params)
+    self.name = params[:name] if params[:name] != nil
+    self.description = params[:description] if params[:description] != nil
+    self.is_public = params[:is_public] if params[:is_public] != nil
+    if ['Public', 'Private'].include? params[:privacy]
+      self.is_public = params[:privacy] == 'Public'
+    end
   end
 
   def export(format)
     if problems.empty? 
       return nil
     else 
-      export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
-      export_quiz.render_with(format)
+      if format == 'ruql'
+        print_name = (description.nil? || description.strip.empty?) ? name : name + ': ' + description
+        source = "quiz #{print_name.inspect} do\n"
+        problems.each do |prob|
+          prob_source = prob.ruql_source
+          prob_source = prob_source.lines.map{|x| '  ' + x}.join
+          source += "\n#{prob_source}\n"
+        end
+        source += "\nend"
+      else
+        export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
+        export_quiz.render_with(format)
+      end
     end
   end
 

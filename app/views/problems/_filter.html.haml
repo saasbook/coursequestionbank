@@ -1,24 +1,24 @@
 = form_tag set_filters_path, :method => :post, :id => 'filter-form' do
-  
+
   %div.form-group
     = label_tag :search, 'Search Keywords:'
     = text_field_tag :search, session[:filters][:search], class: 'form-control', placeholder: 'Search'
-    
+
   %hr
-    
+
   %div.form-group
     = label_tag :tags, 'Tags:'
     = text_field_tag :tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: 'e.g.: tag 1, tag 2'
 
   %hr
-  
+
   %div.form-group
     = label_tag :sort_by, 'Sort by:'
     - Problem.sort_by_options.each do |option|
       %div.filter_option
         = radio_button_tag :sort_by, option, !!(session[:filters][:sort_by] == option), class: 'radio', id: "sort_by_#{option}"
         = label_tag "sort_by_#{option}", option
-  
+
   %hr
 
   %div.form-group
@@ -49,4 +49,11 @@
       = check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: 'checkbox', id: 'collections_0'
       = label_tag 'collections_0', 'All Collections'
 
-  = submit_tag 'Search', :class => 'btn btn-primary'
+  %hr
+
+  %div.form-group
+    %div.filter_option
+      = check_box_tag :show_obsolete, 1, !!session[:filters][:show_obsolete], class: 'checkbox'
+      = label_tag :show_obsolete, 'Show obsolete'
+    %br
+    = submit_tag 'Search', :class => 'btn btn-primary'

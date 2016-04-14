@@ -1,27 +1,48 @@
-.export-tabs
+
+%div.section_title 
+  %h3 
+    Export Collection
+    = link_to @collection.name, collection_path(:id => @collection.id)
+  %h4= @collection.description
+  - if @collection.is_public
+    %h5= @collection.instructor.name
+  
+%div.section_options
+  = link_to "Preview quiz", preview_path(:id => @collection.id), :class => 'btn btn-info'
+
+%div.section_body.section_body_pad
   %ul.nav.nav-tabs
+    // %li
+    //   %a{"data-toggle" => "tab", :href => "#sectionA"} Preview Quiz
     %li.active
-      %a{"data-toggle" => "tab", :href => "#sectionA"} Preview Quiz
+      %a{"data-toggle" => "tab", :href => "#section_ruql"} RuQL Code
     %li
-      %a{"data-toggle" => "tab", :href => "#sectionB"} HTML Code
+      %a{"data-toggle" => "tab", :href => "#section_html"} HTML Code
     %li
-      %a{"data-toggle" => "tab", :href => "#sectionC"} EdX Code
+      %a{"data-toggle" => "tab", :href => "#section_edx"} EdX Code
     %li
-      %a{"data-toggle" => "tab", :href => "#sectionD"} AutoQCM Code
-  .tab-content
-    #sectionA.tab-pane.fade.in.active
-      %h3 Preview Quiz
-      %h6
-        = @html_code.html_safe
-    #sectionB.tab-pane.fade
+      %a{"data-toggle" => "tab", :href => "#section_autocqm"} AutoQCM Code
+  
+  %div.tab-content#export-content
+    // #sectionA.tab-pane.fade.in.active
+    //   %h3 Preview Quiz
+    //   %h6
+    //     = @html_code.html_safe
+    %div#section_ruql.tab-pane.active
+      %h3 RuQL Code
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @ruql_code
+    %div#section_html.tab-pane
       %h3 HTML Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-        = @html_code
-    #sectionC.tab-pane.fade.in.active
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @html_code
+    %div#section_edx.tab-pane
       %h3 EdX Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-        = @edx_code
-    #sectionD.tab-pane.fade
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @edx_code
+    %div#section_autocqm.tab-pane
       %h3 AutoQCM Code
-      %textarea{:wrap => 'hard', 'readonly' => 'true', :id => "thetextarea"}
-        = @autoqcm_code
+      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
+        = preserve @autoqcm_code
+
+    

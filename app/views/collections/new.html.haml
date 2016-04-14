@@ -1,14 +1,7 @@
-%div.col-md-12
-  %div.table-responsive
-    %h2 Create New Collection
 
-    = form_for(@collection, :html => {:class => 'form-inline'}) do |f|
-      = f.label :name
-      = f.text_field :name, :class => 'form-control'
-      = f.label :description
-      = f.text_field :description, :class => 'form-control'
-      = f.select :color, ['Red', 'Blue', 'Green', 'Yellow', 'Black', 'Purple'], :class => 'form-control'
-      = f.label 'Mark as public?'
-      = f.check_box :is_public, :class => 'form-control'
-      %div.form-group
-        = f.submit 'Create', class: 'btn btn-primary'
+%h3.section_title 
+  New Collection
+
+
+%div.section_body
+  = render :partial => 'collections/form', :locals => {:collection => @collection, :new => true}

@@ -1,9 +1,9 @@
 class Instructor < ActiveRecord::Base
 
-  attr_accessible :privilege, :name, :username, :uid, :provider, :provider_image, :provider_email, :current_collection
+  attr_accessible :name, :username, :uid, :provider, :provider_image, :provider_email, :current_collection
   has_many :collections
   has_many :problems
-  
+
   scope :username, ->(instructor) { where(name: instructor) }
   scope :nonadmin, -> { where(privilege: "default") }
 
@@ -19,10 +19,16 @@ class Instructor < ActiveRecord::Base
       user.username = auth["info"]["nickname"]
       user.provider_image = auth["info"]["image"]
       user.provider_email = auth["info"]["email"]
-      @whitelisted_user = Whitelist.find_by_username(user.username)
-      user.privilege = @whitelisted_user.privilege if @whitelisted_user
-      user.privilege ||= "default"
+      # @whitelisted_user = Whitelist.find_by_username(user.username)
+      # @whitelisted_user = Whitelist.create(username: user.username, privilege: "instructor")
+      # user.privilege = @whitelisted_user.privilege if @whitelisted_user
+      # user.privilege ||= "default"
     end
+  end
+  
+  def privilege
+    whitelist = Whitelist.where(:username => username, :provider => provider)[0]
+    whitelist ? whitelist.privilege : "default"
   end
 
   def admin?
@@ -31,5 +37,14 @@ class Instructor < ActiveRecord::Base
 
   def instructor?
     return privilege == "instructor"
+  end
+
+  def all_owned_collections
+    return self.collections
+    result = []
+    for c in self.collections
+      result << c.name
+    end
+    return result
   end
 end

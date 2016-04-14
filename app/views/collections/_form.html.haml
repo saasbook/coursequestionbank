@@ -16,7 +16,13 @@
 //       Export
 
 
-= form_tag collection_path(:id => collection.id), :method => :put, :class => 'collection_form form-horizontal' do
+- if local_assigns[:new]
+  - submit_path = [collections_path, :post]
+- else
+  - submit_path = [collection_path(:id => collection.id), :put]
+
+
+= form_tag submit_path[0], :method => submit_path[1], :class => 'collection_form form-horizontal' do
   
   %div.form-group
     = label_tag :name, 'Name:', :class => 'col-xs-12 col-sm-2 control-label'
@@ -31,7 +37,7 @@
   %div.form-group
     %div.col-sm-2
     %div.col-sm-10.col-xs-12
-      = select_tag :privacy, privacy_options(collection.is_public).html_safe, :class => 'form-control', :style => 'width: 100px'
+      = select_tag :privacy, privacy_options(collection.is_public).html_safe, :id => nil, :class => 'form-control', :style => 'width: 100px'
   
   // %div.form-group
   //   = label_tag :is_public, 'Public:', :class => 'col-xs-12 col-sm-2 control-label'
@@ -41,4 +47,4 @@
   %div.form-group
     %div.col-sm-2
     %div.col-sm-10.col-xs-12
-      = submit_tag 'Update', :class => 'btn btn-primary'
+      = submit_tag (local_assigns[:new] ? 'Create' : 'Update'), :class => 'btn btn-primary'

@@ -1,0 +1,30 @@
+
+- problems = problems.select{|p| can? :read, p}
+- group_id = local_assigns[:group_id].nil? ? 0 : group_id
+
+- if problems.empty? and !local_assigns[:empty_msg].nil?
+  %h3= empty_msg
+  
+- else
+  - if columns.include? :checkbox
+    = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{group_id}", :class => 'check_form' do
+      = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2'
+      = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
+
+  %div.table-responsive.problem_table
+    %table.table.table-striped
+      %thead
+        %tr
+          - columns.each do |col|
+            - if col == :checkbox
+              %th= check_box_tag nil, 1, false, :id => "check_all_#{group_id}", :class => 'checkbox check_all', :style => 'display: none'
+            - elsif col == :problem
+              %th Question Text
+            - elsif col == :tags
+              %th Tags
+
+      %tbody
+        - problems.each do |problem|
+          %tr
+            - columns.each do |col|
+              %td= render :partial => 'problems/problem_data', :locals => {:problem => problem, :column => col, :group_id => group_id}

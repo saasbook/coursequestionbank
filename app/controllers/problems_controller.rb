@@ -8,6 +8,7 @@ class ProblemsController < ApplicationController
    'problem_type' => [],
    'collections' => [],
    'bloom_category' => [],
+   'show_obsolete' => false,
    'per_page' => 60, 'page' => 1 })
 
   def set_filter_options
@@ -25,7 +26,7 @@ class ProblemsController < ApplicationController
     session[:filters] = session[:filters].merge params.slice(:search, :tags, :sort_by)
 
     if session[:filters][:tags].is_a? String
-      session[:filters][:tags] = Tag.parse_list session[:filters][:tags]
+      session[:filters][:tags] = self.class.parse_list session[:filters][:tags]
     end
 
     session[:filters][:problem_type] = []
@@ -34,7 +35,7 @@ class ProblemsController < ApplicationController
           session[:filters][:problem_type] << key if value == "1"
       end
     end
-    
+
     session[:filters][:bloom_category] = []
     if params[:bloom_category]
       params[:bloom_category].each do |key, value|
@@ -52,6 +53,8 @@ class ProblemsController < ApplicationController
       session[:filters][:collections] = []
     end
 
+    session[:filters][:show_obsolete] = params[:show_obsolete] == "1"
+
     redirect_to problems_path
   end
 
@@ -64,51 +67,104 @@ class ProblemsController < ApplicationController
     @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem]))
   end
 
+  def new
+    @ruql_source = flash[:ruql_source]
+  end
+
   def create
-    if params[:previous_version] != nil
-      previous_version = Problem.find(params[:previous_version])
+    previous_version = Problem.find_by_id(params[:previous_version])
 
-      begin
-        flash[:bump_problem] = previous_version.supersede(@current_user, params[:ruql_source])
+    begin
+      problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
+      problem.previous_version = previous_version
+      problem.is_public = previous_version ? previous_version.is_public : false
+      problem.bloom_category = previous_version.bloom_category if previous_version
+      problem.save
+      problem.add_tags(self.class.parse_list params[:tag_names])
+      flash[:bump_problem] = problem.id
 
-      rescue Exception => e
-        if request.xhr?
-          render json: {'error' => e.message}
-        else
-          flash[:error] = "Error in problem source: #{e.message}"
-          flash[:ruql_source] = params[:ruql_source]
-          flash.keep
-          redirect_to :back
-        end
-        return
+    rescue Exception => e
+      if request.xhr?
+        render :json => {'error' => e.message}
+      else
+        flash[:error] = "Error in problem source: #{e.message}"
+        flash[:ruql_source] = params[:ruql_source]
+        redirect_to :back
       end
+      return
     end
 
     flash[:notice] = "Question created"
     if request.xhr?
-      render json: {'error' => nil}
+      render :json => {'error' => nil}
     else
       redirect_to problems_path
     end
   end
 
-  def remove_from_collection
-    collection = Collection.find(params[:collection_id])
-    problem_to_remove = Problem.find(params[:id])
-    if collection.problems.include? problem_to_remove
-      collection.problems.delete(problem_to_remove)
-      collection.save
-      flash[:notice] = "problem successfully removed from #{collection.name}"
-    else
-      flash[:notice] = "the problem you attempted to remove does not exist in #{collection.name}"
+  def update
+    problem = Problem.find(params[:id])
+
+    if !params[:privacy].nil?
+      authorize! :set_privacy, problem
+      privacy = params[:privacy].downcase.strip
+      if privacy == 'public'
+        problem.is_public = true
+      elsif privacy == 'private'
+        problem.is_public = false
+      else
+        return
+      end
+      problem.save
+      flash[:notice] = "Problem changed to #{privacy}" if !request.xhr?
     end
-    flash.keep
-    redirect_to edit_collection_path(:id => collection.id)
+
+    if !params[:obsolete].nil?
+      authorize! :set_obsolete, problem
+      problem.obsolete = params[:obsolete] == '1'
+      problem.save
+      flash[:notice] = "Problem marked as #{'not ' if !problem.obsolete}obsolete" if !request.xhr?
+    end
+
+    if !params[:category].nil?
+      authorize! :bloom_categorize, problem
+      category = params[:category].downcase.strip
+      category[0] = category[0].upcase
+      if Problem.all_bloom_categories.include? category
+        problem.bloom_category = category
+        flash[:notice] = "Bloom category set to #{category}" if !request.xhr?
+      elsif category == 'None'
+        problem.bloom_category = nil
+        flash[:notice] = "Bloom category removed" if !request.xhr?
+      end
+      problem.save
+    end
+
+    if !params[:collection].nil?
+      collection_id = params[:collection]
+      target_collection = Collection.find(collection_id)
+      current = problem.collections
+      if !current.include? target_collection
+        current.push(target_collection)
+        flash[:notice] = "Problem added to #{target_collection.name}" if !request.xhr?
+      else
+        current.delete(target_collection)
+        flash[:notice] = "Problem removed from #{target_collection.name}" if !request.xhr?
+      end
+      problem.save
+    end
+
+    if request.xhr?
+      render :nothing => true
+    else
+      flash[:bump_problem] = problem.id
+      redirect_to :back
+    end
   end
 
   def add_tags
     problem = Problem.find(params[:id])
-    tags = Tag.parse_list params[:tag_names]
+    tags = self.class.parse_list params[:tag_names]
     added = problem.add_tags(tags)
     if request.xhr?
       render :partial => "tags", locals: { problem: problem }
@@ -121,15 +177,19 @@ class ProblemsController < ApplicationController
 
   def remove_tags
     problem = Problem.find(params[:id])
-    tags = Tag.parse_list params[:tag_names]
+    tags = self.class.parse_list params[:tag_names]
     tags.each { |tag| problem.remove_tag tag }
-    flash[:notice] = "Tags removed"
-    flash[:bump_problem] = problem.id
-    redirect_to :back
+    if request.xhr?
+      render :nothing => true
+    else
+      flash[:notice] = "Tags removed"
+      flash[:bump_problem] = problem.id
+      redirect_to :back
+    end
   end
-  
+
   def update_multiple_tags
-    new_tags = Tag.parse_list params[:tag_names]
+    new_tags = self.class.parse_list params[:tag_names]
     selected = params[:checked_problems] ? params[:checked_problems].keys : []
     if new_tags == []
       flash[:error] = "You need to enter a tag."
@@ -144,34 +204,14 @@ class ProblemsController < ApplicationController
     end
     redirect_to :back
   end
-  
+
   def supersede
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
   end
-  
-  def bloom_categorize
+
+  def view_history
     @problem = Problem.find(params[:id])
-    category = params[:category]
-    @problem.bloom_categorize(category)
-    flash[:notice] = "Bloom category set."
-    flash[:bump_problem] = @problem.id
-    redirect_to :back
-  end
-  
-  def set_privacy
-    problem = Problem.find(params[:id])
-    privacy = params[:privacy].downcase.strip
-    if privacy == 'public'
-      problem.is_public = true
-    elsif privacy == 'private'
-      problem.is_public = false
-    else
-      return
-    end
-    problem.save
-    flash[:notice] = "Problem changed to #{privacy}"
-    flash[:bump_problem] = problem.id
-    redirect_to :back
+    @history = @problem.history
   end
 end

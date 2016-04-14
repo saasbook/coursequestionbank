@@ -68,12 +68,12 @@ When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
   steps %Q{
     Given I am on the dashboard
     And I follow "New collection"
-    And I fill in "collection_name" with "#{name}"
+    And I fill in "name" with "#{name}"
     And I press "Create"
   }
-  if optional.strip == 'and mark it as current'
-    visit mark_as_current_path(:id => Collection.find_by_name(name).id)
-  end
+  # if optional.strip == 'and mark it as current'
+  #   visit mark_as_current_path(:id => Collection.find_by_name(name).id)
+  # end
 end
 
 When /^(?:|I )authorize '(.*)'/ do |user|
@@ -105,10 +105,14 @@ When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem
   collection.save
 end
 
-When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection|
-  problems_with_text(problem_text, collection).each do |problem|
+When /^I check problem containing "(.*)"/ do |problem_text|
+  problems_with_text(problem_text).each do |problem|
     check("checked_problems_#{problem.id}")
   end
+end
+
+Given(/^I have added problem containing "(.*?)" to "(.*?)"$/) do |arg1, arg2|
+  pending # express the regexp above with the code you wish you had
 end
 
 When /^I follow "(.*)" for problem containing "(.*)"/ do |link_id, problem_text|

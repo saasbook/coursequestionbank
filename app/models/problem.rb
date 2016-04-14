@@ -1,5 +1,7 @@
+require 'ruql_renderer'
+
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :bloom_category
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -21,12 +23,13 @@ class Problem < ActiveRecord::Base
     time      :updated_at
     string    :problem_type
     time      :created_date
+    boolean   :obsolete
     string    :bloom_category
 
     string    :tag_names, :multiple => true do
       tags.map(&:name)
     end
-    integer :collection_ids, :multiple => true do
+    integer   :collection_ids, :multiple => true do
       collections.map(&:id)
     end
   end
@@ -51,69 +54,22 @@ class Problem < ActiveRecord::Base
     end
 
     if json and !json.empty?
-      question = Question.from_JSON(self.json)
-      quiz = Quiz.new("", :questions => [question])
-      quiz.render_with("Html5", {'template' => 'preview.html.erb'})
-      self.update_attributes(:rendered_text => quiz.output)
-      quiz.output
+      begin
+        question = Question.from_JSON(self.json)
+        quiz = Quiz.new("", :questions => [question])
+        quiz.render_with("Html5", {'template' => 'preview.html.erb'})
+        self.update_attributes(:rendered_text => quiz.output)
+        quiz.output
+      rescue
+        return 'There was a problem rendering this question'
+      end
     else
       'This question could not be displayed (no JSON found)'
     end
   end
 
   def ruql_source
-    result = ""
-    return "" if self.json == nil || self.json.length <= 2
-    json_hash = JSON.parse(self.json)
-    answers = json_hash["answers"]
-    return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
-    result << ruql_question_header(json_hash)
-    result << "\n  text " + json_hash["question_text"].inspect
-    answers.each do |answer| # answers first
-      result << ruql_answer_line(answer) if answer["correct"]
-    end
-    answers.each do |answer| # distractors second
-      result << ruql_answer_line(answer) if !answer["correct"]
-    end
-    result << "\nend"
-    return result
-  end
-
-  def ruql_true_false(json_hash)
-    line = "truefalse "
-    line += json_hash["question_text"].inspect
-    json_hash["answers"].each do |answer|
-      if answer["correct"]
-        line += answer["answer_text"].inspect
-      end
-      if answer["explanation"]
-        line += ', :explanation => ' + answer["explanation"].inspect
-      end
-    end
-    return line
-  end
-
-  def ruql_question_header(json_hash)
-    line = case json_hash["question_type"]
-      when "SelectMultiple" then "select_multiple"
-      when "MultipleChoice" then "choice_answer"
-      when "FillIn" then "fill_in"
-      else ""
-    end
-    if json_hash["randomize"]
-      line += ' :randomize => true'
-    end
-    return line + " do"
-  end
-
-  def ruql_answer_line(answer)
-    line = "\n  "
-    line += answer["correct"] ? "answer" : "distractor"
-    line += ' ' + answer["answer_text"].inspect
-    if answer["explanation"]
-      line += ', :explanation => ' + answer["explanation"].inspect
-    end
-    return line
+    return RuqlRenderer.render_from_json(self.json)
   end
 
   def self.from_JSON(instructor, json_source)
@@ -167,6 +123,10 @@ class Problem < ActiveRecord::Base
         end
       end
 
+      if !filters[:show_obsolete]
+        without(:obsolete, true)
+      end
+
       fulltext filters[:search]
 
       if filters[:sort_by] == 'Relevancy'
@@ -188,13 +148,14 @@ class Problem < ActiveRecord::Base
     return results
   end
 
-  def supersede(user, source)
-    new_problem = RuqlReader.read_problem(user, source)
-    new_problem.previous_version = self
-    new_problem.is_public = self.is_public
-    new_problem.save
-    new_problem
-  end
+  # def supersede(user, source)
+  #   new_problem = RuqlReader.read_problem(user, source)
+  #   new_problem.previous_version = self
+  #   new_problem.is_public = self.is_public
+  #   new_problem.tags += tags
+  #   new_problem.save
+  #   new_problem
+  # end
 
   def add_tag(tag_name)
     return false if tag_name.strip == ""
@@ -215,8 +176,23 @@ class Problem < ActiveRecord::Base
     tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
 
-  def bloom_categorize(category)
-    self.bloom_category = category
-    save
+  def history
+    return [] if previous_version == nil
+    return [previous_version] + previous_version.history
+  end
+
+  def is_in_collection(collection_id)
+    for c in self.collections
+      return true if collection_id == c.id
+    end
+    return false
+  end
+
+  def non_owned_collections(user_id)
+    results = []
+    for c in self.collections
+      results << c if c.instructor_id != user_id
+    end
+    return results
   end
 end
