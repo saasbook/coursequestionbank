@@ -66,6 +66,10 @@ class ProblemsController < ApplicationController
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem]))
   end
+  
+  def new
+    @ruql_source = flash[:ruql_source]
+  end
 
   def create
     previous_version = Problem.find_by_id(params[:previous_version])
@@ -123,6 +127,7 @@ class ProblemsController < ApplicationController
     end
     
     if !params[:category].nil?
+      authorize! :bloom_categorize, problem
       category = params[:category].downcase.strip
       category[0] = category[0].upcase
       if Problem.all_bloom_categories.include? category
@@ -191,7 +196,7 @@ class ProblemsController < ApplicationController
     @ruql_source = flash[:ruql_source]
   end
   
-  def history
+  def view_history
     @problem = Problem.find(params[:id])
     @history = @problem.history
   end
