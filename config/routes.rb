@@ -21,6 +21,7 @@ Coursequestionbank::Application.routes.draw do
   get 'admin' => 'instructors#admin', :as => 'admin'
   post 'admin/whitelist' => 'instructors#update_whitelist', :as => 'update_whitelist'
   delete 'admin/whitelist/:id' => 'instructors#delete_whitelist_entry', :as => 'whitelist_entry'
+  post 'admin/whitelist/toggle' => 'instructors#toggle_whitelist', :as => 'toggle_whitelist'
   
   resources :collections
   post 'collections/:id/problems/add' => 'collections#add_problems'

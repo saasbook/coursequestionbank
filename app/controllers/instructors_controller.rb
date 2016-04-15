@@ -63,5 +63,12 @@ class InstructorsController < ApplicationController
     flash[:notice] = 'Whitelist entry removed'
     redirect_to :back
   end
+  
+  def toggle_whitelist
+    authorize! :manage, Whitelist
+    Whitelist.is_enabled = !Whitelist.is_enabled
+    flash[:notice] = Whitelist.is_enabled ? 'Whitelist enabled.' : 'Whitelist disabled.'
+    redirect_to :back
+  end
 
 end

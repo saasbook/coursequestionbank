@@ -8,4 +8,12 @@ class Whitelist < ActiveRecord::Base
   def self.privilege_levels
     %w{admin instructor}
   end
+  
+  def self.is_enabled
+    !!Setting.whitelist
+  end
+  
+  def self.is_enabled=(value)
+    Setting.whitelist = !!value
+  end
 end
