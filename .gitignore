@@ -6,6 +6,7 @@
 
 text.rb
 coursequestionbank_test
+config/initializers/omniauth.rb
 # Ignore bundler config
 /.bundle
 
