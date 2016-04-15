@@ -10,8 +10,12 @@ Scenario: Uploading a question with a new universal ID
   Given I have uploaded 'new_universal_id.txt'
   And I am on the home page
   And I follow "View 60"
-  When I follow "supersede_button" for problem containing "This problem had a provided universal ID."
-  Then I should see "baa214b01b59a06a1c5c01a0d77bab38757193cb3a9dd07dfb86ad481cb900ea"
+  Then the problem containing "Which of the following best identifies the four basic operations supported by RDBMS?" should have a non-empty uuid
+  When I follow "supersede_button" for problem containing "Which of the following best identifies the four basic operations supported by RDBMS?"
+  And I fill in "ruql_source" with text of "new_universal_id2.txt"
+  And I press "Supersede question"
+  Then I should be on the problems page
+  Then the problem containing "Witch of the following best identifies the four basic operations supported by RDBMS?" should have the uuid of the original problem
 
 Scenario: Uploading a question with an existing universal ID gets rejected (sad path)
   Given I have uploaded 'new_universal_id.txt'

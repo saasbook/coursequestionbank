@@ -1,7 +1,7 @@
 require 'ruql_renderer'
 
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category, :uuid
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -25,6 +25,7 @@ class Problem < ActiveRecord::Base
     time      :created_date
     boolean   :obsolete
     string    :bloom_category
+    string    :uuid
 
     string    :tag_names, :multiple => true do
       tags.map(&:name)
@@ -79,7 +80,8 @@ class Problem < ActiveRecord::Base
                           json: json_source,
                           is_public: false,
                           problem_type: json_hash["question_type"],
-                          created_date: Time.now)
+                          created_date: Time.now,
+                          uuid: SecureRandom.uuid)
     problem.instructor = instructor
     json_hash["question_tags"].each do |tag_name|
       tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
