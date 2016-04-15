@@ -1,4 +1,17 @@
 
-.whitelist-form input[type="submit"] {
-  margin-bottom: 20px;
+.whitelist-table form {
+  margin: 0;
+}
+
+.whitelist-table th {
+  // border: none!important;
+}
+
+#whitelist-new {
+  // border-bottom: 2px solid #ddd;
+}
+
+#whitelist-new td {
+  // padding-top: 30px;
+  padding-bottom: 30px;
 }

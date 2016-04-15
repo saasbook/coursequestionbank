@@ -51,7 +51,7 @@
 %div.section_body.section_body_pad
   
   %div.table-responsive
-    %table.table
+    %table.table.whitelist-table
       %thead
         %tr
           %th Username
@@ -61,13 +61,14 @@
           %th
       
       %tbody
-        %tr
+        %tr#whitelist-new
           %td= text_field_tag :username, nil, :id => nil, :class => 'form-control', :form => "whitelist-form-new", :placeholder => 'Username'
           %td= select_tag :provider, options(Whitelist.providers, 'Provider'), :id => nil, :class => 'form-control', :form => "whitelist-form-new"
           %td= select_tag :privilege, options(Whitelist.privilege_levels, 'Privilege'), :id => nil, :class => 'form-control', :form => "whitelist-form-new"
           %td
             = form_tag update_whitelist_path, :id => "whitelist-form-new" do
               = submit_tag 'Add to whitelist', :class => 'btn btn-primary'
+          %td
 
         - @whitelist.each do |entry|
           %tr
