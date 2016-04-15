@@ -59,23 +59,23 @@ class CollectionsController < ApplicationController
     redirect_to profile_path
   end
   
-  def add_problems
-    collection = Collection.find(params[:id])
-    problem_ids = self.class.parse_list params[:problem_ids]
-    problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
-    problems.each {|p| collection.problems << p if !collection.problems.include?(p)}
-    flash[:notice] = "Problems added"
-    redirect_to :back
-  end
+  # def add_problems
+  #   collection = Collection.find(params[:id])
+  #   problem_ids = self.class.parse_list params[:problem_ids]
+  #   problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
+  #   problems.each {|p| collection.problems << p if !collection.problems.include?(p)}
+  #   flash[:notice] = "Problems added"
+  #   redirect_to :back
+  # end
   
-  def remove_problems
-    collection = Collection.find(params[:id])
-    problem_ids = self.class.parse_list params[:problem_ids]
-    problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
-    problems.each {|p| collection.problems.delete(p) if collection.problems.include?(p)}
-    flash[:notice] = "Problems removed"
-    redirect_to :back
-  end
+  # def remove_problems
+  #   collection = Collection.find(params[:id])
+  #   problem_ids = self.class.parse_list params[:problem_ids]
+  #   problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
+  #   problems.each {|p| collection.problems.delete(p) if collection.problems.include?(p)}
+  #   flash[:notice] = "Problems removed"
+  #   redirect_to :back
+  # end
 
   def export
     @collection = Collection.find(params[:id])

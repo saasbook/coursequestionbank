@@ -80,7 +80,6 @@ class ProblemsController < ApplicationController
       problem.previous_version = previous_version
       problem.is_public = previous_version ? previous_version.is_public : false
       problem.bloom_category = previous_version.bloom_category if previous_version
-      problem.uuid = previous_version ? previous_version.uuid : SecureRandom.uuid
       problem.save
       problem.add_tags(self.class.parse_list params[:tag_names])
       flash[:bump_problem] = problem.id
@@ -143,14 +142,14 @@ class ProblemsController < ApplicationController
     end
 
     if !params[:collection].nil?
-      collection_id = params[:collection]
-      target_collection = Collection.find(collection_id)
-      current = problem.collections
-      if !current.include? target_collection
-        current.push(target_collection)
+      target_collection = Collection.find(params[:collection])
+      if !target_collection.problems.include? problem
+        authorize! :add_problems, target_collection
+        target_collection.problems << problem
         flash[:notice] = "Problem added to #{target_collection.name}" if !request.xhr?
       else
-        current.delete(target_collection)
+        authorize! :remove_problems, target_collection
+        target_collection.problems.delete(problem)
         flash[:notice] = "Problem removed from #{target_collection.name}" if !request.xhr?
       end
       problem.save

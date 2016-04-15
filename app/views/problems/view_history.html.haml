@@ -1,0 +1,7 @@
+
+%h4 History for question:
+%div.problem_box
+  = @problem.html5.html_safe
+  %div.additional Created #{@problem.created_date} by #{@problem.instructor.name}
+
+= render :partial => 'problems/history_list', :locals => {:problem => @problem}

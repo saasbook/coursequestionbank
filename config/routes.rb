@@ -24,8 +24,8 @@ Coursequestionbank::Application.routes.draw do
   post 'admin/whitelist/toggle' => 'instructors#toggle_whitelist', :as => 'toggle_whitelist'
   
   resources :collections
-  post 'collections/:id/problems/add' => 'collections#add_problems'
-  post 'collections/:id/problems/remove' => 'collections#remove_problems'
+  # post 'collections/:id/problems/add' => 'collections#add_problems'
+  # post 'collections/:id/problems/remove' => 'collections#remove_problems'
   # get 'mark_as_current' => 'instructors#mark_as_current'
   get 'collections/:id/export' => 'collections#export', :as => 'export'
   get 'collections/:id/preview' => 'collections#preview', :as => 'preview'

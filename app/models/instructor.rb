@@ -31,13 +31,4 @@ class Instructor < ActiveRecord::Base
   def instructor?
     return privilege == "instructor"
   end
-
-  def all_owned_collections
-    return self.collections
-    result = []
-    for c in self.collections
-      result << c.name
-    end
-    return result
-  end
 end
