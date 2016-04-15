@@ -8,12 +8,16 @@ Background:
   And I am on the admin panel
 
 Scenario: Admin sees a list of whitelisted users
-  When I fill in "username" with "NEWADMIN"
-  And I press "Add"
-  Then I should see "Successfully added user"
-  And I should see "NEWADMIN"
+  When I fill in "new-username" with "new_admin"
+  And I select "github" from "new-provider"
+  And I select "admin" from "new-privilege"
+  And I press "new-submit"
+  Then I should see "Whitelist updated"
+  And I should see "new_admin"
 
-Scenario: Admin sees an empty whitelist (sad path)
-  When I am on the admin panel
-  Then I should see "No other users on the whitelist."
-  Then I should not see "NEWADMIN"
+Scenario: Admin can't change his own privilege
+  When I fill in "new-username" with "test"
+  And I select "github" from "new-provider"
+  And I select "instructor" from "new-privilege"
+  And I press "new-submit"
+  Then I should see "Can't change your own privilege level"

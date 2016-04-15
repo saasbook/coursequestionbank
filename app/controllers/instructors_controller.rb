@@ -23,6 +23,11 @@ class InstructorsController < ApplicationController
     provider = params[:provider]
     privilege = params[:privilege]
     
+    if username == @current_user.username and provider == @current_user.provider and privilege != @current_user.privilege
+      flash[:error] = "Can't change your own privilege level"
+      redirect_to :back and return
+    end
+    
     if username == ''
       flash[:error] = 'Please enter a username.'
       redirect_to :back and return

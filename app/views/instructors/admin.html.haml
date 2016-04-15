@@ -72,10 +72,12 @@
 
         - @whitelist.each do |entry|
           %tr
-            %td= text_field_tag :username, nil, :id => nil, :class => 'form-control', :value => entry.username, :form => "whitelist-form-#{entry.id}"
-            %td= select_tag :provider, options(Whitelist.providers, entry.provider), :id => nil, :class => 'form-control', :form => "whitelist-form-#{entry.id}"
+            %td= entry.username
+            %td= entry.provider
             %td= select_tag :privilege, options(Whitelist.privilege_levels, entry.privilege), :id => nil, :class => 'form-control', :form => "whitelist-form-#{entry.id}"
             %td
               = form_tag update_whitelist_path, :id => "whitelist-form-#{entry.id}" do
+                = hidden_field_tag :username, entry.username, :id => nil
+                = hidden_field_tag :provider, entry.provider, :id => nil
                 = submit_tag 'Update', :class => 'btn btn-primary'
             %td X
