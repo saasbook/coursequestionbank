@@ -50,20 +50,23 @@
 
 %div.section_body.section_body_pad
   
-  %form.whitelist-form
-    = submit_tag 'Update whitelist', :class => 'btn btn-primary'
-  
-    %div.table-responsive
-      %table.table
-        %thead
+  %div.table-responsive
+    %table.table
+      %thead
+        %tr
+          %th Username
+          %th Provider
+          %th Privilege
+          %th
+          %th
+      
+      %tbody
+        - @whitelist.each do |entry|
           %tr
-            %th Username
-            %th Provider
-            %th Privilege
-        
-        %tbody
-          - Whitelist.all.each do |entry|
-            %tr
-              %td= text_field_tag "name me", nil, :id => nil, :class => 'form-control', :value => entry.username
-              %td= select_tag "name me", options(Whitelist.providers, entry.provider), :id => nil, :class => 'form-control'
-              %td= select_tag "name me", options(Whitelist.privilege_levels, entry.privilege), :id => nil, :class => 'form-control'
+            %td= text_field_tag :username, nil, :id => nil, :class => 'form-control', :value => entry.username, :form => "whitelist-form-#{entry.id}"
+            %td= select_tag :provider, options(Whitelist.providers, entry.provider), :id => nil, :class => 'form-control', :form => "whitelist-form-#{entry.id}"
+            %td= select_tag :privilege, options(Whitelist.privilege_levels, entry.privilege), :id => nil, :class => 'form-control', :form => "whitelist-form-#{entry.id}"
+            %td
+              = form_tag update_whitelist_path, :id => "whitelist-form-#{entry.id}" do
+                = submit_tag 'Update', :class => 'btn btn-primary'
+            %td X

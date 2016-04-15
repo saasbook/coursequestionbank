@@ -20,7 +20,7 @@ class Instructor < ActiveRecord::Base
   end
   
   def privilege
-    whitelist = Whitelist.where(:username => username, :provider => provider)[0]
+    whitelist = Whitelist.find_by_username_and_provider(username, provider)
     whitelist ? whitelist.privilege : nil
   end
 
