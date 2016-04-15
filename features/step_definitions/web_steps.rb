@@ -41,6 +41,10 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
+Given /^the whitelist is (enabled|disabled)$/ do |option|
+  Whitelist.is_enabled = option == 'enabled'
+end
+
 Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil

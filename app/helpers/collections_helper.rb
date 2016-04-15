@@ -4,7 +4,7 @@ module CollectionsHelper
   end
   
   def privacy_options(is_public)
-    attr = {true => ' selected="selected"', false => ''}
+    attr = {true => ' selected', false => ''}
     "<option#{attr[is_public]}>Public</option><option#{attr[!is_public]}>Private</option>"
   end
 end

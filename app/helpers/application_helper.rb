@@ -6,4 +6,17 @@ module ApplicationHelper
       user.provider + ' user'
     end
   end
+  
+  def options(options, selected=nil)
+    result = ""
+    if !options.include?(selected)
+      result += "<option selected disabled hidden>#{selected}</option>"
+    end
+    options.each do |option|
+      result += option == selected ? '<option selected>' : '<option>'
+      result += option
+      result += '</option>'
+    end
+    result.html_safe
+  end
 end

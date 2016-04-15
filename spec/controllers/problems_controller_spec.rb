@@ -13,7 +13,8 @@ describe ProblemsController do
 	
 	describe 'add_tags' do
 		before do
-			@instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+			@instructor = Instructor.create(:username => "bar", :provider => 'github')
+      Whitelist.create(:username => @instructor.username, :provider => @instructor.provider, :privilege => 'admin')
 			session[:user_id] = @instructor.id
 		end
 		
@@ -29,7 +30,8 @@ describe ProblemsController do
 	
 	describe 'remove_tags' do
 		before do
-			@instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+			@instructor = Instructor.create(:username => "bar", :provider => 'github')
+      Whitelist.create(:username => @instructor.username, :provider => @instructor.provider, :privilege => 'admin')
 			session[:user_id] = @instructor.id
 		end
 		
@@ -46,7 +48,8 @@ describe ProblemsController do
 	
 	describe 'update_multiple_tags' do
     before do
-      @instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+      @instructor = Instructor.create(:username => "bar", :provider => 'github')
+      Whitelist.create(:username => @instructor.username, :provider => @instructor.provider, :privilege => 'admin')
 			session[:user_id] = @instructor.id
     end
     
@@ -65,7 +68,8 @@ describe ProblemsController do
   
   describe 'update' do
   	before do
-      @instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+      @instructor = Instructor.create(:username => "bar", :provider => 'github')
+      Whitelist.create(:username => @instructor.username, :provider => @instructor.provider, :privilege => 'admin')
 			session[:user_id] = @instructor.id
 			request.env["HTTP_REFERER"] = '/problems'
 			@problem = @instructor.problems.create.id

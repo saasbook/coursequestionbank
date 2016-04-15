@@ -4,7 +4,8 @@ describe CollectionsController do
   
   describe 'add/remove multiple problems' do
     before do
-      @instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+      @instructor = Instructor.create(:username => "bar", :provider => 'github')
+      Whitelist.create(:username => @instructor.username, :provider => @instructor.provider, :privilege => 'admin')
 			session[:user_id] = @instructor.id
 			@collection = @instructor.collections.create(:name => 'col name').id
     end

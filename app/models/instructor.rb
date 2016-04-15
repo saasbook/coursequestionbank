@@ -4,9 +4,6 @@ class Instructor < ActiveRecord::Base
   has_many :collections
   has_many :problems
 
-  scope :username, ->(instructor) { where(name: instructor) }
-  scope :nonadmin, -> { where(privilege: "default") }
-
   def self.create_with_omniauth(auth)
     create! do |user|
       user.provider = auth["provider"]
@@ -19,16 +16,12 @@ class Instructor < ActiveRecord::Base
       user.username = auth["info"]["nickname"]
       user.provider_image = auth["info"]["image"]
       user.provider_email = auth["info"]["email"]
-      # @whitelisted_user = Whitelist.find_by_username(user.username)
-      # @whitelisted_user = Whitelist.create(username: user.username, privilege: "instructor")
-      # user.privilege = @whitelisted_user.privilege if @whitelisted_user
-      # user.privilege ||= "default"
     end
   end
   
   def privilege
-    whitelist = Whitelist.where(:username => username, :provider => provider)[0]
-    whitelist ? whitelist.privilege : "default"
+    whitelist = Whitelist.find_by_username_and_provider(username, provider)
+    whitelist ? whitelist.privilege : nil
   end
 
   def admin?

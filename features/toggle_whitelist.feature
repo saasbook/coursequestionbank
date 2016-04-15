@@ -5,14 +5,21 @@ Feature: Admin can enable or disable a whitelist for access to the app
 
 Background:
   Given I am signed in with uid "1234" and provider "github"
-  And I am on the admin page
 
 Scenario: Admin enables whitelist restrictions
-  When I am on the admin panel
-  And I press "Enforce Whitelist"
-  Then I should see "Whitelist is enforced. Only whitelisted users can log in."
+  Given the whitelist is disabled
+  And I am on the admin page
+  And I press "Enable whitelist"
+  Then I should see "Whitelist enabled"
+  Given I am signed in with uid "4321" and provider "github"
+  And I am on the problems page
+  Then I should be on the login page
 
 Scenario: Admin disables whitelist restrictions
-  When I am on the admin panel
-  And I press "Disable Whitelist"
-  Then I should see "Whitelist is disabled. Any public user can log in."
+  Given the whitelist is enabled
+  And I am on the admin page
+  And I press "Disable whitelist"
+  Then I should see "Whitelist disabled"
+  Given I am signed in with uid "4321" and provider "github"
+  And I am on the problems page
+  Then I should be on the problems page

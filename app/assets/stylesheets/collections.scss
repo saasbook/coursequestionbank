@@ -1,40 +1,18 @@
 
-.section_title {
-  display: inline-block;
-}
-
-.section_options {
-  float: right;
-  margin: 20px 0 10px;
-}
-
-.section_options * {
-  display: inline-block;
-}
-
-.section_options .btn {
-  margin-left: 10px;
-}
-
-.section_body {
-  clear: right;
-}
-
-.section_body_pad {
-  padding-top: 20px;
-}
-
-
 .collection_form .form-group * {
   display: inline-block;
 }
 
 .collection_form input[name="name"] {
-  width: 250px;
+  max-width: 250px;
 }
 
-.collection_form input[name="description"] {
-  width: 500px;
+.collection_form textarea[name="description"] {
+  width: 100%;
+}
+
+.collection_form select[name="privacy"] {
+  width: 100px;
 }
 
 
