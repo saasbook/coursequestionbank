@@ -29,7 +29,7 @@ class InstructorsController < ApplicationController
     elsif !Whitelist.providers.include?(provider)
       flash[:error] = 'Please select a provider.'
       redirect_to :back and return
-    else
+    elsif !Whitelist.privilege_levels.include?(privilege)
       flash[:error] = 'Please select a privilege level.'
       redirect_to :back and return
     end
