@@ -80,4 +80,7 @@
                 = hidden_field_tag :username, entry.username, :id => nil
                 = hidden_field_tag :provider, entry.provider, :id => nil
                 = submit_tag 'Update', :class => 'btn btn-primary'
-            %td X
+            %td
+              = form_tag whitelist_entry_path(:id => entry.id), :method => :delete do
+                = button_tag :type => 'submit', :class => 'clr-button' do
+                  %span.glyphicon.glyphicon-remove

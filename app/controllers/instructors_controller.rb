@@ -49,5 +49,19 @@ class InstructorsController < ApplicationController
     flash[:notice] = 'Whitelist updated.'
     redirect_to :back
   end
+  
+  def delete_whitelist_entry
+    authorize! :manage, Whitelist
+    whitelist = Whitelist.find(params[:id])
+    
+    if whitelist.username == @current_user.username and whitelist.provider == @current_user.provider
+      flash[:error] = "Can't change your own privilege level"
+      redirect_to :back and return
+    end
+    
+    whitelist.destroy
+    flash[:notice] = 'Whitelist entry removed'
+    redirect_to :back
+  end
 
 end
