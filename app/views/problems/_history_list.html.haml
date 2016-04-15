@@ -1,5 +1,6 @@
 - problem.history.each do |prob|
+  %hr
   - if can? :read, prob
     = prob.html5.html_safe
   - else
-    Private problem
+    %p Private problem
