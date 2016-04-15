@@ -9,8 +9,8 @@ module ApplicationHelper
   
   def options(options, selected=nil)
     result = ""
-    if selected.nil?
-      result += '<option selected disabled hidden style="display: none" value=""></option>'
+    if !options.include?(selected)
+      result += "<option selected disabled hidden>#{selected}</option>"
     end
     options.each do |option|
       result += option == selected ? '<option selected>' : '<option>'

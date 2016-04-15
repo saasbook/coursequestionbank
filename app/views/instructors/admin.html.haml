@@ -61,6 +61,14 @@
           %th
       
       %tbody
+        %tr
+          %td= text_field_tag :username, nil, :id => nil, :class => 'form-control', :form => "whitelist-form-new", :placeholder => 'Username'
+          %td= select_tag :provider, options(Whitelist.providers, 'Provider'), :id => nil, :class => 'form-control', :form => "whitelist-form-new"
+          %td= select_tag :privilege, options(Whitelist.privilege_levels, 'Privilege'), :id => nil, :class => 'form-control', :form => "whitelist-form-new"
+          %td
+            = form_tag update_whitelist_path, :id => "whitelist-form-new" do
+              = submit_tag 'Add to whitelist', :class => 'btn btn-primary'
+
         - @whitelist.each do |entry|
           %tr
             %td= text_field_tag :username, nil, :id => nil, :class => 'form-control', :value => entry.username, :form => "whitelist-form-#{entry.id}"
