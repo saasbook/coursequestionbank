@@ -1,40 +1,45 @@
-%div.container-fluid
-  %h4 Your current permission level is #{@current_user.privilege}. 
-  -if @unauthorized_users.empty?
-    %p There are currently no users pending authorization.
-  -else
-    %p The following users have requested access to the site. Please authorize or deny access.
+%div.section_title 
+  %h3 Manage Whitelist
 
-    %div.table-responsive
-      %table.table.table-striped#problems
-        %thead
-          %tr
-          %th
+%div.section_options
+  = form_tag toggle_whitelist_path do
+    = button_tag :type => 'submit', :class => 'btn btn-primary' do
+      = Whitelist.is_enabled ? 'Disable whitelist' : 'Enable whitelist'
+
+
+%div.section_body.section_body_pad
+  
+  %div.table-responsive
+    %table.table.whitelist-table
+      %thead
+        %tr
           %th Username
-          %th Name
-          %th Email
           %th Provider
+          %th Privilege
           %th
-        %tbody
-          - @unauthorized_users.each do |user|
-            %tr
-            %td= image_tag user.provider_image, size: "30x30"
-            %td= link_to user.username, "https://github.com/#{user.username}"
-            %td= user.name
-            %td= user.provider_email
-            %td= user.provider
-            %td
-              =link_to 'authorize', authorize_path("authorize", user), :class => 'btn btn-info', :id=> 'authorize'
-              =link_to 'deny', authorize_path("deny", user), :method=> :get, :class => 'btn btn-warning', :id=> 'deny'
+          %th
+      
+      %tbody
+        %tr#whitelist-new
+          %td= text_field_tag :username, nil, :id => 'new-username', :class => 'form-control', :form => "whitelist-form-new", :placeholder => 'Username'
+          %td= select_tag :provider, options(Whitelist.providers, 'Provider'), :id => 'new-provider', :class => 'form-control', :form => "whitelist-form-new"
+          %td= select_tag :privilege, options(Whitelist.privilege_levels, 'Privilege'), :id => 'new-privilege', :class => 'form-control', :form => "whitelist-form-new"
+          %td
+            = form_tag update_whitelist_path, :id => "whitelist-form-new" do
+              = submit_tag 'Add to whitelist', :class => 'btn btn-primary', :id => 'new-submit'
+          %td
 
-  %hr
-  %h4 Give permisions to users manually:
-  = form_tag whitelist_path, :method => :get, :id => "whitelist_form", class: 'form-inline' do
-    %div.form-group
-      = label_tag(:username, "Github Username:")
-      = text_field_tag(:username, params[:username], class: 'form-control', placeholder: "GitHub username")
-    %div.form-group
-      = label_tag(:privilege, "Access level:")
-      = select_tag(:access, options_for_select(["instructor", "admin"]), class: 'form-control')
-    
-      = submit_tag 'Add', :id => "whitelist_submit", :class => 'btn btn-info'
+        - @whitelist.each do |entry|
+          %tr
+            %td= entry.username
+            %td= entry.provider
+            %td= select_tag :privilege, options(Whitelist.privilege_levels, entry.privilege), :id => nil, :class => 'form-control', :form => "whitelist-form-#{entry.id}"
+            %td
+              = form_tag update_whitelist_path, :id => "whitelist-form-#{entry.id}" do
+                = hidden_field_tag :username, entry.username, :id => nil
+                = hidden_field_tag :provider, entry.provider, :id => nil
+                = submit_tag 'Update', :class => 'btn btn-primary'
+            %td
+              = form_tag whitelist_entry_path(:id => entry.id), :method => :delete do
+                = button_tag :type => 'submit', :class => 'clr-button' do
+                  %span.glyphicon.glyphicon-remove

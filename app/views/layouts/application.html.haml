@@ -18,8 +18,9 @@
           #welcome_message Welcome, #{user_display_name(@current_user)}!
           %ul
             %li= link_to 'Home', problems_path, :class => 'btn btn-info'
-            %li= link_to 'My Collections', profile_path, :class => 'btn btn-info'
-            - if can? :manage, Instructor
+            - if can? :manage, Collection
+              %li= link_to 'My Collections', profile_path, :class => 'btn btn-info'
+            - if can? :manage, Whitelist
               %li= link_to 'Admin', admin_path, :class => 'btn btn-info'
             %li
               = form_tag logout_path, :method => :post do

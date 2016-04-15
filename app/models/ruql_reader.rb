@@ -26,7 +26,7 @@ class RuqlReader
     quiz = Quiz.new(nil)
     quiz.instance_eval(source)
     problems_json = quiz.render_with("JSON", {})
-    raise 'Supersession source must contain exactly one question.' unless problems_json.size == 1
+    raise 'Question source must contain exactly one question.' unless problems_json.size == 1
     Problem.from_JSON(user, problems_json[0])
   end
 end

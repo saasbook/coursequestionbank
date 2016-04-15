@@ -2,9 +2,10 @@ require 'spec_helper'
 
 describe Problem do
   	it 'should store problem associated with instructor' do
-  		@instructor = Instructor.create(:privilege => "admin", :name => "bar", :uid => "11111")
+  		@instructor = Instructor.create(:username => "bar", :provider => 'github')
+      Whitelist.create(:username => @instructor.username, :provider => @instructor.provider, :privilege => 'admin')
   		@problem = @instructor.problems.create(:text => "foo")
-  		expect(Problem.find_by_text("foo").instructor_id).to eq(Instructor.find_by_uid("11111").id)
+  		expect(Problem.find_by_text("foo").instructor_id).to eq(@instructor.id)
 	end
 	
 	describe 'add_tag' do

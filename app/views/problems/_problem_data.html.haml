@@ -13,7 +13,7 @@
         = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_privacy' do
           = hidden_field_tag :privacy, (problem.is_public ? 'private' : 'public'), :id => nil
           = submit_tag (problem.is_public ? 'Public' : 'Private'), :class => 'btn btn-default privacy-button'
-      
+
       = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_obsolete' do
         = hidden_field_tag :obsolete, problem.obsolete ? '0' : '1', :id => nil
         - if can? :set_privacy, problem
@@ -22,11 +22,8 @@
           = submit_tag 'Obsolete', :class => 'btn btn-default obsolete-button', :disabled => true
 
     %div Created #{problem.created_date} by #{problem.instructor.name}
-
-    %div
-      Collections:
-      - problem.collections.select{|c| can? :read, c}.each do |collection|
-        = link_to "#{collection.name.truncate(35)}", collection_path(:id => collection.id), :class => 'btn btn-link prob-collection', :title => collection.name
+    
+    %div UUID: #{problem.uuid}
 
     %div.bloom-buttons
       Bloom Category:
@@ -39,7 +36,10 @@
             = hidden_field_tag :category, category, :id => nil
           = submit_tag category, :class => "bloom-button btn #{selected ? 'btn-info' : 'btn-default'}"
 
+    = render :partial => 'problems/collection_buttons', :locals => {:problem => problem}
+
     %div
+      Supersession:
       %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= problem.ruql_source
       %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "",
               :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
@@ -52,7 +52,7 @@
         = link_to "See Version History", problem_history_path(:id => problem.id), :id => "history_button_#{problem.id}", :class => 'history_button btn btn-default'
 
     %div.supersede_form{:style => 'display: none'}
-      = render :partial => 'problems/supersede_form', :locals => {:problem => problem}
+      = render :partial => 'problems/new_form', :locals => {:previous => problem}
 
     %div.history_list{:style => 'display: none'}
       = render :partial => 'problems/history_list', :locals => {:problem => problem}

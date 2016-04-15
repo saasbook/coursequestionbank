@@ -15,16 +15,17 @@ Coursequestionbank::Application.routes.draw do
   post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
   post 'update_multiple_tags' => 'problems#update_multiple_tags'
   get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
-  get 'problems/:id/history' => 'problems#history', :as => 'problem_history'
+  get 'problems/:id/history' => 'problems#view_history', :as => 'problem_history'
 
   get 'profile' => 'instructors#show', :as => 'profile'
-  get 'admin' => 'instructors#show_unauthorized', :as => 'admin'
-  get 'admin/:permission/:id' => 'instructors#authorize', :as => 'authorize'
-  get 'admin/add/to/whitelist' => 'instructors#add_to_whitelist', :as => 'whitelist'
+  get 'admin' => 'instructors#admin', :as => 'admin'
+  post 'admin/whitelist' => 'instructors#update_whitelist', :as => 'update_whitelist'
+  delete 'admin/whitelist/:id' => 'instructors#delete_whitelist_entry', :as => 'whitelist_entry'
+  post 'admin/whitelist/toggle' => 'instructors#toggle_whitelist', :as => 'toggle_whitelist'
   
   resources :collections
-  post 'collections/:id/problems/add' => 'collections#add_problems'
-  post 'collections/:id/problems/remove' => 'collections#remove_problems'
+  # post 'collections/:id/problems/add' => 'collections#add_problems'
+  # post 'collections/:id/problems/remove' => 'collections#remove_problems'
   # get 'mark_as_current' => 'instructors#mark_as_current'
   get 'collections/:id/export' => 'collections#export', :as => 'export'
   get 'collections/:id/preview' => 'collections#preview', :as => 'preview'

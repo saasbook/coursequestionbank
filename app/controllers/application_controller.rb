@@ -1,6 +1,5 @@
 class ApplicationController < ActionController::Base
   protect_from_forgery
-  # load_and_authorize_resource
   #alias_method :current_user, :set_current_user
 
   before_filter :set_current_user
@@ -8,8 +7,8 @@ class ApplicationController < ActionController::Base
   protected # prevents method from being invoked by a route
   def set_current_user
     @current_user ||= Instructor.find_by_id(session[:user_id])
-    authorize! :read, Problem
     redirect_to login_path and return unless @current_user
+    authorize! :read, Problem
   end
 
   def current_ability
@@ -17,8 +16,14 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-  	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
-    redirect_to login_path, :alert => exception.message
+    if cannot? :read, Problem
+    	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
+    	session.delete(:user_id)
+      redirect_to login_path
+    else
+      flash[:notice] = "You don't have permission to access this page."
+      redirect_to request.referer.present? ? :back : problems_path
+    end
   end
   
   

@@ -43,7 +43,7 @@ li.truefalse ol.answers { list-style-type: lower-alpha; }
 }
 
 .add_tags_form input {
-  width: 90px;
+  width: 100%;
   margin-top: 20px;
 }
 
@@ -64,19 +64,24 @@ div.prob-right {
   margin-left: 5px;
 }
 
-.prob_privacy, .prob_obsolete, .bloom-buttons form {
+.prob_privacy, .prob_obsolete, .collection-buttons form, .collections-from-others form, .bloom-buttons form {
   display: inline-block;
-  margin: 0;
+  margin: 2px 0;
 }
 
-.bloom-button, .privacy-button, .obsolete-button {
-  border-radius: 0;
+// .prob-collection {
+//   font-size: inherit;
+//   border: none;
+//   padding: 0 10px;
+// }
+
+div.history_list {
+  margin-left: 50px;
+  padding-left: 15px;
 }
 
-.prob-collection {
-  font-size: inherit;
-  border: none;
-  padding: 0 10px;
+.history_list > hr {
+  margin: 10px 0;
 }
 
 

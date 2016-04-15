@@ -9,12 +9,8 @@ Feature: Administrator panel for authorizing users
 
   Scenario: visit the admin panel and add a user
     When I am on the admin panel
-    Then I should see "Your current permission level is admin"
-    When I fill in "username" with "RAILSDOESNTSCALE" 
-    And I press "Add"
-    Then I should see "Successfully added user" 
-
-  Scenario: give a nub access
-    When I am on the admin panel
-    Then I should see "noob"
-    Then I authorize 'noob'
+    When I fill in "new-username" with "RAILSDOESNTSCALE"
+    And I select "github" from "new-provider"
+    And I select "instructor" from "new-privilege"
+    And I press "new-submit"
+    Then I should see "Whitelist updated"

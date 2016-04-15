@@ -162,6 +162,8 @@ GEM
       activesupport (= 3.2.16)
       bundler (~> 1.0)
       railties (= 3.2.16)
+    rails-settings-cached (0.2.4)
+      rails (>= 3.0.0)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -245,6 +247,7 @@ DEPENDENCIES
   progress_bar
   rack_session_access
   rails (= 3.2.16)
+  rails-settings-cached (= 0.2.4)
   rails_12factor
   rspec-rails
   ruql!

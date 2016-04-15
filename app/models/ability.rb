@@ -30,11 +30,11 @@ class Ability
     # https://github.com/ryanb/cancan/wiki/Defining-Abilities
     user ||= Instructor.new
     if user.admin?
-      can :manage, Instructor
+      can :manage, Whitelist
     end
-    if user.admin? or user.instructor?
+    if !Whitelist.is_enabled or user.admin? or user.instructor?
       can :manage, Problem, :instructor_id => user.id
-      can [:read, :update, :supersede, :add_tags, :remove_tags, :bloom_categorize], Problem, :is_public => true
+      can [:read, :update, :supersede, :view_history, :add_tags, :remove_tags, :bloom_categorize], Problem, :is_public => true
       
       can :manage, Collection, :instructor_id => user.id
       can [:read, :export, :preview], Collection, :is_public => true

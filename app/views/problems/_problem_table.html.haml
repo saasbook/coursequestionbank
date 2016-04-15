@@ -9,7 +9,7 @@
   - if columns.include? :checkbox
     = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{group_id}", :class => 'check_form' do
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2'
-      = submit_tag 'Tag checked problems',  :class => 'btn btn-primary'
+      = submit_tag 'Tag checked problems', :class => 'btn btn-primary'
 
   %div.table-responsive.problem_table
     %table.table.table-striped

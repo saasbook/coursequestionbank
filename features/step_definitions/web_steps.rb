@@ -41,6 +41,10 @@ When /^(.*) within (.*[^:]):$/ do |step, parent, table_or_string|
   with_scope(parent) { When "#{step}:", table_or_string }
 end
 
+Given /^the whitelist is (enabled|disabled)$/ do |option|
+  Whitelist.is_enabled = option == 'enabled'
+end
+
 Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
   data_class = Object.const_get(datatype)
   assert data_class.find_by_name(name_value) #check this exists in database and is not nil
@@ -105,14 +109,10 @@ When /^(?:|I )remove problem containing '(.*)' to collection '(.*)'/ do |problem
   collection.save
 end
 
-When /^I check problem containing "(.*)" in "(.*)"/ do |problem_text, collection|
-  problems_with_text(problem_text, collection).each do |problem|
+When /^I check problem containing "(.*)"/ do |problem_text|
+  problems_with_text(problem_text).each do |problem|
     check("checked_problems_#{problem.id}")
   end
-end
-
-When(/^I check problem containing "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
 end
 
 Given(/^I have added problem containing "(.*?)" to "(.*?)"$/) do |arg1, arg2|

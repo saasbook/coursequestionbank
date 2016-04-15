@@ -17,6 +17,7 @@ gem 'json'
 gem 'will_paginate'
 gem 'sunspot_solr'
 gem "codeclimate-test-reporter", group: :test, require: nil
+gem "rails-settings-cached", "0.2.4"
 
 group :test do
   gem 'cucumber-rails', :require => false
@@ -35,6 +36,7 @@ end
 
 group :production do
   gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Gems used only for assets and not required
@@ -52,7 +54,6 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
 gem 'test-unit'
-gem 'rails_12factor' 
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
