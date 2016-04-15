@@ -72,6 +72,7 @@ class ProblemsController < ApplicationController
   end
 
   def create
+
     previous_version = Problem.find_by_id(params[:previous_version])
 
     begin
@@ -79,7 +80,6 @@ class ProblemsController < ApplicationController
       problem.previous_version = previous_version
       problem.is_public = previous_version ? previous_version.is_public : false
       problem.bloom_category = previous_version.bloom_category if previous_version
-      problem.uuid = previous_version ? previous_version.uuid : SecureRandom.uuid
       problem.save
       problem.add_tags(self.class.parse_list params[:tag_names])
       flash[:bump_problem] = problem.id

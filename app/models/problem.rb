@@ -80,7 +80,8 @@ class Problem < ActiveRecord::Base
                           json: json_source,
                           is_public: false,
                           problem_type: json_hash["question_type"],
-                          created_date: Time.now)
+                          created_date: Time.now,
+                          uuid: SecureRandom.uuid)
     problem.instructor = instructor
     json_hash["question_tags"].each do |tag_name|
       tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
