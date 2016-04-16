@@ -25,7 +25,9 @@ class Collection < ActiveRecord::Base
         problems.each do |prob|
           source_lines = prob.ruql_source.lines
           first_line, *rest_lines = *source_lines
-          first_line = "#{first_line.chomp} :question-uuid => #{(prob.uuid || -1).inspect}\n"
+          if prob.uuid
+            first_line = "#{first_line.chomp.chomp(' do')} :question_uuid => \"#{prob.uuid}\" do\n"
+          end
           prob_source = ([first_line] + rest_lines).map{|x| '  ' + x}.join
           source += "\n#{prob_source}\n"
         end
