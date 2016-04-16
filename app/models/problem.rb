@@ -81,7 +81,7 @@ class Problem < ActiveRecord::Base
                           is_public: false,
                           problem_type: json_hash["question_type"],
                           created_date: Time.now,
-                          uuid: SecureRandom.uuid)
+                          uuid: json_hash["question_uuid"].isempty? ? SecureRandom.uuid : json_hash["question_uuid"])
     problem.instructor = instructor
     json_hash["question_tags"].each do |tag_name|
       tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
