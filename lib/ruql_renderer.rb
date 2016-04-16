@@ -40,7 +40,7 @@ class RuqlRenderer
       when "FillIn" then "fill_in"
       else ""
     end
-    options = ['randomize', 'raw'].select{|x| json_hash[x]}.map{|x| ":#{x} => true"}.join(', ')
+    options = ['randomize', 'raw', 'question_uuid'].select{|x| json_hash[x]}.map{|x| ":#{x} => true"}.join(', ')
     line += ' ' + options if options != ''
     return line + " do"
   end
