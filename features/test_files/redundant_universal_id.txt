@@ -1,4 +1,4 @@
-quiz 'A few example questions' do
+quiz 'Redundant Quiz' do
   
   select_multiple :question_uuid => 'b804b480029121a507a47cc5135cae72e4f18289618f38254665d3e6a3bbd4a7' do
     text %q{This question has a duplicate uuid. This question should have been rejected.}
