@@ -17,14 +17,6 @@ Scenario: Superseded questions have new universal IDs
   When I follow "supersede_button" for problem containing "Rails doesn't scale"
   And I fill in "ruql_source" with text of "new_universal_id2.txt"
   And I press "Supersede question"
-  Then I should be on the problems page
+  And I am on the CourseQuestionBank home page
   Then the problem containing "Rails doesn't scale" should not have the uuid of the original problem
-  And I should not see "This should disappear"
-
-Scenario: Uploading a question with an existing universal ID gets rejected (sad path)
-  And I try to upload a file with a duplicate question
-  Given I press the upload button
-  Then I should see "Problems with universal IDs already in the database have been rejected."
-  And I am on the home page
-  And I follow "View 60"
-  Then I should not see "This question should have been rejected."
+  And I should not see "This part should disappear"
