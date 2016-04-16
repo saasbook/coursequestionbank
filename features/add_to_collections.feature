@@ -8,28 +8,12 @@ Background:
   And I have uploaded 'micro_quizzes.txt'
   And I am on the CourseQuestionBank home page
 
-Scenario: Add a problem to collection
-  When I check problem containing "Around 2007, the claim"
-  And I check "1/22/15 (W1 L2)"
-  When I press "Add to Collection"
-  Then I should see "Question added to collection"
-  When I follow "1/22/15 (W1 L2)"
-  Then I should see "Around 2007, the claim"
+Scenario: Remove a problem to collection
+  When I toggle collection "1/22/15 (W1 L2)" for problem containing "Around 2007, the claim"
+  Then I should see "Problem removed from 1/22/15 (W1 L2)"
 
-Scenario: Try to problem to collection twice (sad path)
-  Given I have added problem containing "Around 2007, the claim" to "1/22/15 (W1 L2)"
-  When I check problem containing "Around 2007, the claim"
-  And I check "1/22/15 (W1 L2)"
-  When I press "Add to Collection"
-  Then I should see "Error: problem already in collection"
-
-Scenario: No problem selected to add to collection (sad path)
-  When I check "1/22/15 (W1 L2)"
-  When I press "Add to Collection"
-  Then I should see "Error: you need to select a problem"
-
-Scenario: No collection selected (sad path)
-  Given I have added problem containing "Around 2007, the claim" to "1/22/15 (W1 L2)"
-  When I check problem containing "Around 2007, the claim"
-  When I press "Add to Collection"
-  Then I should see "Error: you need to select a collection"
+Scenario: Add problem to a collection
+  When I toggle collection "1/22/15 (W1 L2)" for problem containing "Around 2007, the claim"
+  Then I should see "Problem removed from 1/22/15 (W1 L2)"
+  When I toggle collection "1/22/15 (W1 L2)" for problem containing "Around 2007, the claim"
+  Then I should see "Problem added to 1/22/15 (W1 L2)"
