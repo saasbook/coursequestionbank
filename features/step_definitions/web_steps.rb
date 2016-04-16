@@ -129,6 +129,12 @@ When /^I press button "(.*)" for problem containing "(.*)"/ do |link_id, problem
   click_on("copy_source_button_#{problem}")
 end
 
+When /^I toggle collection "(.*)" for problem containing "(.*)"/ do |collection_name, problem_text|
+  problem = problems_with_text(problem_text)[0].id
+  collection = Collection.find_by_name(collection_name).id
+  click_on("toggle_collection_#{collection}_#{problem}")
+end
+
 When /^I choose sort by "(.*)"/ do |option|
   choose("sort_by_#{option}")
 end
