@@ -13,7 +13,7 @@
     %span.glyphicon.glyphicon-export
     Export
 
-%div.section_body.section_body_pad
+%div.section_body
   = render :partial => 'problems/problem_table', 
             :locals => {:problems => @collection.problems, :columns => [:checkbox, :problem, :tags],
                         :group_id => @collection.id, :empty_msg => 'This collection is empty'}

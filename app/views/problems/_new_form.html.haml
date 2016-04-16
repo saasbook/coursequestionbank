@@ -4,13 +4,14 @@
 - tags = (previous && previous.tags.map(&:name).join(', ')) || ''
 
 
-= form_tag problems_path, :method => :post, :class => 'form-horizontal' do
+= form_tag problems_path, :method => :post, :class => 'form-horizontal new-form' do
   - if previous
     = hidden_field_tag 'previous_version', previous.id, :id => nil
 
   %div.form-group
-    %div.col-xs-12
-      = text_area_tag :ruql_source, source, :class => 'source_field form-control', :rows => 15, :placeholder => 'Question source (in RuQL format)'
+    = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-1 control-label'
+    %div.col-xs-12.col-sm-10
+      = text_area_tag :ruql_source, source, :class => 'source_field form-control', :rows => 15, :placeholder => 'RuQL source code'
   
   %div.form-group
     = label_tag :tag_names, 'Tags:', :class => 'col-xs-12 col-sm-1 control-label'
@@ -18,7 +19,13 @@
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2', :value => (tags if tags != '')
   
   %div.form-group
-    %div.col-xs-12
+    %div.col-sm-1
+    %div.col-xs-12.col-sm-11
+      = select_tag :privacy, privacy_options(previous ? previous.is_public : false), :id => nil, :class => 'form-control'
+  
+  %div.form-group
+    %div.col-sm-1
+    %div.col-xs-12.col-sm-11
       %p.message
       - submit_msg = previous ? 'Supersede question' : 'Create question'
       = submit_tag submit_msg, :class => 'btn btn-primary'

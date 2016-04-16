@@ -37,7 +37,7 @@
   %div.form-group
     %div.col-sm-2
     %div.col-xs-12.col-sm-10
-      = select_tag :privacy, privacy_options(collection.is_public).html_safe, :id => nil, :class => 'form-control'
+      = select_tag :privacy, privacy_options(collection.is_public), :id => nil, :class => 'form-control'
   
   // %div.form-group
   //   = label_tag :is_public, 'Public:', :class => 'col-xs-12 col-sm-2 control-label'

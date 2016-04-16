@@ -75,13 +75,16 @@ div.prob-right {
 //   padding: 0 10px;
 // }
 
-div.history_list {
-  margin-left: 50px;
-  padding-left: 15px;
+div.hidden-additional {
+  margin-left: 65px;
 }
 
 .history_list > hr {
   margin: 10px 0;
+}
+
+.new-form select[name="privacy"] {
+  width: 100px;
 }
 
 

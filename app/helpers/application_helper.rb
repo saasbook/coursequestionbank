@@ -19,4 +19,8 @@ module ApplicationHelper
     end
     result.html_safe
   end
+  
+  def privacy_options(is_public)
+    options(['Public', 'Private'], is_public ? 'Public' : 'Private')
+  end
 end

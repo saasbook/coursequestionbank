@@ -51,10 +51,10 @@
       - if !problem.previous_version.nil?
         = link_to "See Version History", problem_history_path(:id => problem.id), :id => "history_button_#{problem.id}", :class => 'history_button btn btn-default'
 
-    %div.supersede_form{:style => 'display: none'}
+    %div.supersede_form.hidden-additional{:style => 'display: none'}
       = render :partial => 'problems/new_form', :locals => {:previous => problem}
 
-    %div.history_list{:style => 'display: none'}
+    %div.history_list.hidden-additional{:style => 'display: none'}
       = render :partial => 'problems/history_list', :locals => {:problem => problem}
 
 

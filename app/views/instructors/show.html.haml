@@ -8,7 +8,7 @@
 
 - if @collections.empty?
   %h4.section_body You have no collections.
-  
+
 - else
   %div.table-responsive.section_body
     %table.table.table-striped
@@ -28,7 +28,7 @@
             %td= collection.description
             %td= collection.last_used
             %td= collection.is_public ? 'Public' : 'Private'
-            
+
 
 // - if !@collections.empty?
 //   %div.col-md-12
