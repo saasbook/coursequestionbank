@@ -23,8 +23,10 @@ class Collection < ActiveRecord::Base
         print_name = (description.nil? || description.strip.empty?) ? name : name + ': ' + description
         source = "quiz #{print_name.inspect} do\n"
         problems.each do |prob|
-          prob_source = prob.ruql_source
-          prob_source = prob_source.lines.map{|x| '  ' + x}.join
+          source_lines = prob.ruql_source.lines
+          first_line, *rest_lines = *source_lines
+          first_line = "#{first_line.chomp} :question-uuid => #{(prob.uuid || -1).inspect}\n"
+          prob_source = ([first_line] + rest_lines).map{|x| '  ' + x}.join
           source += "\n#{prob_source}\n"
         end
         source += "\nend"
