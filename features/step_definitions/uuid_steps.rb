@@ -3,6 +3,6 @@ Then /^the problem containing "(.*)" should have a non-empty uuid/ do |problem_t
   assert @orig_prob_uuid
 end
 
-Then /^the problem containing "(.*)" should have the uuid of the original problem/ do |problem_text|
-  assert problems_with_text(problem_text)[0].uuid == @orig_prob_uuid
+Then /^the problem containing "(.*)" should not have the uuid of the original problem/ do |problem_text|
+  assert problems_with_text(problem_text)[0].uuid != @orig_prob_uuid
 end

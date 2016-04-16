@@ -15,7 +15,7 @@ Scenario: Uploading a question with a new universal ID
   And I fill in "ruql_source" with text of "new_universal_id2.txt"
   And I press "Supersede question"
   Then I should be on the problems page
-  Then the problem containing "Rails doesn't scale" should have the uuid of the original problem
+  Then the problem containing "Rails doesn't scale" should not have the uuid of the original problem
   And I should not see "This should disappear"
 
 Scenario: Uploading a question with an existing universal ID gets rejected (sad path)

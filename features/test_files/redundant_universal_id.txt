@@ -1,6 +1,6 @@
 quiz 'A few example questions' do
   
-  select_multiple do :question_uuid => b804b480029121a507a47cc5135cae72e4f18289618f38254665d3e6a3bbd4a7
+  select_multiple :question_uuid => 'b804b480029121a507a47cc5135cae72e4f18289618f38254665d3e6a3bbd4a7' do
     text %q{This question has a duplicate uuid. This question should have been rejected.}
     answer "Rails itself isn't the problem, but the original Ruby VM does have some performance problems that impede scaling for heavy server workloads."
     answer "Rails itself isn't the problem, but the development processes typically used around Rails don't scale well to large teams."
