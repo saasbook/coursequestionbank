@@ -1,13 +1,13 @@
 
 class RuqlRenderer
-  
-  def self.render_from_json(json_code)
+
+  def self.render_from_json(json_code, uuid)
     result = ""
     return "" if json_code == nil || json_code.length <= 2
     json_hash = JSON.parse(json_code)
     answers = json_hash["answers"]
     return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
-    result << ruql_question_header(json_hash)
+    result << ruql_question_header(json_hash, uuid)
     result << "\n  text " + json_hash["question_text"].inspect
     answers.each do |answer| # answers first
       result << ruql_answer_line(answer) if answer["correct"]
@@ -18,7 +18,7 @@ class RuqlRenderer
     result << "\nend"
     return result
   end
-  
+
   def self.ruql_true_false(json_hash)
     line = "truefalse "
     line += json_hash["question_text"].inspect
@@ -33,11 +33,11 @@ class RuqlRenderer
     return line
   end
 
-  def self.ruql_question_header(json_hash)
+  def self.ruql_question_header(json_hash, uuid)
     line = case json_hash["question_type"]
-      when "SelectMultiple" then "select_multiple"
-      when "MultipleChoice" then "choice_answer"
-      when "FillIn" then "fill_in"
+    when "SelectMultiple" then "select_multiple" + " :question_uuid => '" + uuid.to_s + "'"
+    when "MultipleChoice" then "choice_answer" + " :question_uuid => '" + uuid.to_s + "'"
+    when "FillIn" then "fill_in" + " :question_uuid => '" + uuid.to_s + "'"
       else ""
     end
     options = ['randomize', 'raw'].select{|x| json_hash[x]}.map{|x| ":#{x} => true"}.join(', ')
@@ -54,5 +54,5 @@ class RuqlRenderer
     end
     return line
   end
-    
+
 end
