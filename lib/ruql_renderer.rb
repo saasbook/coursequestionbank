@@ -34,10 +34,15 @@ class RuqlRenderer
   end
 
   def self.ruql_question_header(json_hash, uuid)
+    if uuid && uuid != '-1'
+      uuid_s = " :question_uuid => '" + uuid.to_s + "'"
+    else
+      uuid_s = ""
+    end
     line = case json_hash["question_type"]
-    when "SelectMultiple" then "select_multiple" + " :question_uuid => '" + uuid.to_s + "'"
-    when "MultipleChoice" then "choice_answer" + " :question_uuid => '" + uuid.to_s + "'"
-    when "FillIn" then "fill_in" + " :question_uuid => '" + uuid.to_s + "'"
+      when "SelectMultiple" then "select_multiple" + uuid_s
+      when "MultipleChoice" then "choice_answer" + uuid_s
+      when "FillIn" then "fill_in" + uuid_s
       else ""
     end
     options = ['randomize', 'raw'].select{|x| json_hash[x]}.map{|x| ":#{x} => true"}.join(', ')
