@@ -27,3 +27,6 @@ Scenario: Uploading a question with an existing universal ID gets rejected (sad 
   And I am on the home page
   And I follow "View 60"
   Then I should not see "This question should have been rejected."
+  And I am on the CourseQuestionBank home page
+  Then the problem containing "Rails doesn't scale" should not have the uuid of the original problem
+  And I should not see "This part should disappear"

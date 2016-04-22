@@ -10,5 +10,6 @@ Background:
   And I follow "View 60"
 
 Scenario: Viewing source code for a question with a universal ID
-  When I follow "supersede_button" for problem containing "Rails doesn't scale"
-  Then I should see "b804b480029121a507a47cc5135cae72e4f18289618f38254665d3e6a3bbd4a7"
+  Then I should see "UUID"
+  And I should see "Around 2007, the claim"
+  And I should not see "This part should disappear"
