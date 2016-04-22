@@ -423,10 +423,6 @@ Given(/^I have created an empty collection named "(.*?)"$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
-When(/^I select "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
-end
-
 Then(/^when I click "(.*?)" I should see "(.*?)"$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
 end
