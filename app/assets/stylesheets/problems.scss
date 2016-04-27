@@ -114,16 +114,22 @@ div.hidden-additional {
 }
 
 
+.new-problem-collections {
+  padding-top: 7px;
+}
+
 .new-problem-collection {
   display: inline-block;
+  margin-right: 15px;
 }
 
 .new-problem-collection label {
   font-weight: normal;
 }
 
-.new-problem-collection input {
+.new-problem-collection input[type="checkbox"] {
   display: inline-block;
+  min-height: inherit;
 }
 
 
