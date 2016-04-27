@@ -190,6 +190,7 @@ class Problem < ActiveRecord::Base
       tag_dups(problem_id, problem_uid) #tag original with its own uid
       dups.each { |dup_uid|  tag_dups(dup_id, problem_uid)}  
       flash[:notice] = "Duplicates found."
+      flash[:dups] = true
       return true
     end
     return false
@@ -198,7 +199,7 @@ class Problem < ActiveRecord::Base
   def tag_dups(dup_id, original_uid)
     #tag all dups with the id of the original and "dup"
     problem = Problem.find(dup_id)
-    tags = ["dups", original_uid.to_s]
+    tags = ["dup", original_uid.to_s]
     added = problem.add_tags(tags)
   end
 
