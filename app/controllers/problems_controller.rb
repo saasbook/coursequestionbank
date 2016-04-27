@@ -75,6 +75,14 @@ class ProblemsController < ApplicationController
     previous_version = Problem.find_by_id(params[:previous_version])
     privacy = params[:privacy] ? params[:privacy].strip.downcase : nil
     category = Problem.all_bloom_categories.include?(params[:category]) ? params[:category] : nil
+    collections = []
+    if params[:collections]
+      params[:collections].each do |key, value|
+        col = Collection.find(key)
+        authorize! :manage, col
+        collections << col
+      end
+    end
 
     begin
       problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
@@ -83,6 +91,7 @@ class ProblemsController < ApplicationController
       problem.bloom_category = category
       problem.save
       problem.add_tags(self.class.parse_list params[:tag_names])
+      collections.each {|c| c.problems << problem}
       flash[:bump_problem] = problem.id
 
     rescue Exception => e
