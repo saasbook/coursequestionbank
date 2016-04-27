@@ -74,12 +74,13 @@ class ProblemsController < ApplicationController
   def create
     previous_version = Problem.find_by_id(params[:previous_version])
     privacy = params[:privacy] ? params[:privacy].strip.downcase : nil
+    category = Problem.all_bloom_categories.include?(params[:category]) ? params[:category] : nil
 
     begin
       problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
       problem.previous_version = previous_version
       problem.is_public = privacy == 'public'
-      problem.bloom_category = previous_version.bloom_category if previous_version
+      problem.bloom_category = category
       problem.save
       problem.add_tags(self.class.parse_list params[:tag_names])
       flash[:bump_problem] = problem.id
