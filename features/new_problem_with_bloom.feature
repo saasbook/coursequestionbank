@@ -9,10 +9,10 @@ Background:
 
 Scenario: Specifying a bloom rating when creating question
   Given I am on the new problem page
-  Then I should see "Apply"
   When I fill in "ruql_source" with text of "history_test2.txt"
+  And I select "Understand" from "category"
   And I press "Create question"
   Given I am on the problems page
-  And I check "Apply"
-  And I press "search"
+  And I check "Understand"
+  And I press "Search"
   Then I should not see "No questions matched your search criteria"
