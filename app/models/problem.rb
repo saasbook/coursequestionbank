@@ -183,20 +183,21 @@ class Problem < ActiveRecord::Base
     return [previous_version] + previous_version.history
   end
   
-  def handle_dups(problem_uid)
-    dups = Problem.near_dups_of(problem_uid)
+  def handle_dups(problem_id)
+    dups = Problem.near_dups_of(problem_id)
+    problem_uid = Problem.find(problem_id).uuid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
     if !dups.nil?
-      tag_dups(problem_uid, problem_uid) #tag original with its own uid
-      dups.each { |dup_uid|  tag_dups(dup_uid, problem_uid)}  
+      tag_dups(problem_id, problem_uid) #tag original with its own uid
+      dups.each { |dup_uid|  tag_dups(dup_id, problem_uid)}  
       flash[:notice] = "Duplicates found."
       return true
     end
     return false
   end
   
-  def tag_dups(dup_uid, original_uid)
+  def tag_dups(dup_id, original_uid)
     #tag all dups with the id of the original and "dup"
-    problem = Problem.find(dup_uid)
+    problem = Problem.find(dup_id)
     tags = ["dups", original_uid.to_s]
     added = problem.add_tags(tags)
   end
@@ -217,4 +218,5 @@ class Problem < ActiveRecord::Base
     end
     return [results]
   end
+  
 end
