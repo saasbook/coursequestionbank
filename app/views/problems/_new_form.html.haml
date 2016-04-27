@@ -24,6 +24,14 @@
       = select_tag :category, options(Problem.all_bloom_categories, previous ? previous.bloom_category : nil), :id => nil, :class => 'form-control'
   
   %div.form-group
+    = label_tag nil, 'Collections:', :class => 'col-xs-12 col-sm-1 control-label'
+    %div.col-xs-12.col-sm-11
+      - Collection.accessible_by(current_ability, :manage).each do |collection|
+        %div.new-problem-collection
+          = check_box_tag "collections[#{collection.id}]", 1,  !!(collection.problems.include? previous), class: 'checkbox', id: "collections_#{collection.id}"
+          = label_tag "collections_#{collection.id}", collection.name
+  
+  %div.form-group
     %div.col-sm-1
     %div.col-xs-12.col-sm-11
       = select_tag :privacy, privacy_options(previous ? previous.is_public : false), :id => nil, :class => 'form-control'
