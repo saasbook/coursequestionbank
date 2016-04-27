@@ -19,6 +19,11 @@
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2', :value => (tags if tags != '')
   
   %div.form-group
+    = label_tag :ruql_source, 'Category:', :class => 'col-xs-12 col-sm-1 control-label'
+    %div.col-xs-12.col-sm-11
+      = select_tag :category, options(Problem.all_bloom_categories, previous ? previous.bloom_category : nil), :id => nil, :class => 'form-control'
+  
+  %div.form-group
     %div.col-sm-1
     %div.col-xs-12.col-sm-11
       = select_tag :privacy, privacy_options(previous ? previous.is_public : false), :id => nil, :class => 'form-control'
