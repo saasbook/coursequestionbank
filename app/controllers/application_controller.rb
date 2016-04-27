@@ -25,8 +25,8 @@ class ApplicationController < ActionController::Base
       redirect_to request.referer.present? ? :back : problems_path
     end
   end
-  
-  
+
+
   def self.parse_list(string)
     string ? string.split(',').map(&:strip).reject(&:empty?) : []
   end
