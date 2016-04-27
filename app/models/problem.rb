@@ -182,5 +182,23 @@ class Problem < ActiveRecord::Base
     return [] if previous_version == nil
     return [previous_version] + previous_version.history
   end
+  
+  def handle_dups(problem_uid)
+    dups = Problem.near_dups_of(problem_uid)
+    if !dups.nil?
+      tag_dups(problem_uid, problem_uid) #tag original with its own uid
+      dups.each { |dup_uid|  tag_dups(dup_uid, problem_uid)}  
+      flash[:notice] = "Duplicates found."
+      return true
+    end
+    return false
+  end
+  
+  def tag_dups(dup_uid, original_uid)
+    #tag all dups with the id of the original and "dup"
+    problem = Problem.find(dup_uid)
+    tags = ["dups", original_uid.to_s]
+    added = problem.add_tags(tags)
+  end
 
 end

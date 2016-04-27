@@ -215,4 +215,5 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
     @history = @problem.history
   end
+  
 end
