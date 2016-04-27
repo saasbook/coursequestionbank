@@ -201,4 +201,20 @@ class Problem < ActiveRecord::Base
     added = problem.add_tags(tags)
   end
 
+  def self.near_dups_of(current_user, problem_id)
+    target = Problem.find(problem_id)
+    target_json = JSON.parse(target.json)
+
+    from_you = current_user.problems
+    from_others = Problem.where(is_public: true)
+    search_set = (from_you + from_others).uniq
+    results = []
+    search_set.each do |other|
+      other_json = JSON.parse(other.json)
+      if target_json["question_text"] == other_json["question_text"]
+        results.push(other)
+      end
+    end
+    return [results]
+  end
 end
