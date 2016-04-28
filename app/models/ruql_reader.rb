@@ -10,8 +10,10 @@ class RuqlReader
       if collection
         problems_json.each do |problem_json|
           problem = Problem.from_JSON(user, problem_json)
+          # self.from_JSON(instructor, json_source)
           problem.collections << collection
           problem.save
+          Problem.handle_dups(user, problem.id) #check for dups
         end
         collection.save!
         collections.append collection

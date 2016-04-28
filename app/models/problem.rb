@@ -183,6 +183,24 @@ class Problem < ActiveRecord::Base
     return [previous_version] + previous_version.history
   end
 
+  def self.handle_dups(user, problem_id)
+    near_dups = Problem.near_dups_of(user, problem_id)
+    exact_dups = Problem.exact_title_match(user, problem_id)
+    problem_uid = Problem.find(problem_id).uuid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
+    if !exact_dups.empty? || !near_dups.empty?
+      tag_dups(problem_id, problem_uid) #tag original with its own uid
+      exact_dups.each { |dup_id|  tag_dups(dup_id, problem_uid)}
+      near_dups.each { |dup_id|  tag_dups(dup_id, problem_uid)}
+    end
+  end
+
+  def self.tag_dups(dup_id, original_uid)
+    #tag all dups with the uid of the original and "dup"
+    problem = Problem.find(dup_id)
+    tags = ["dup", original_uid.to_s]
+    problem.add_tags(tags)
+  end
+
   def self.exact_title_match(current_user, problem_id)
     target = Problem.find(problem_id)
     target_json = JSON.parse(target.json)
@@ -202,6 +220,7 @@ class Problem < ActiveRecord::Base
 
   def self.near_dups_of(current_user, problem_id)
     target = Problem.find(105)
+    target = Problem.find(problem_id)
     user_id = current_user.id
     similar_probs = Sunspot.more_like_this(target) do
       fields :json # Also limited by stopwords.txt
@@ -220,7 +239,7 @@ class Problem < ActiveRecord::Base
     matches[0..2].each do |m| # return top 3 matches
       results.push(m)
     end
-    byebug
     return results
   end
+
 end
