@@ -190,13 +190,12 @@ class Problem < ActiveRecord::Base
     to_tag = (exact_dups + near_dups).uniq
     tag_dups(problem_id, problem_uid) # tag new one with its own uid
     to_tag.each do |p|
-      tag_dups(p.id, problem_uid)
+      tag_dups(p, problem_uid)
     end
   end
 
-  def self.tag_dups(dup_id, original_uid)
+  def self.tag_dups(problem, original_uid)
     # tag all dups with the uid of the original and "dup"
-    problem = Problem.find(dup_id)
     tags = ["dup", original_uid.to_s]
     problem.add_tags(tags)
   end
