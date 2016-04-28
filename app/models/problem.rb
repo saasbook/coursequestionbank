@@ -16,7 +16,7 @@ class Problem < ActiveRecord::Base
   searchable do
     integer   :id
     text      :text
-    text      :json
+    text      :json, :more_like_this => true
     integer   :instructor_id
     boolean   :is_public
     time      :last_used
@@ -203,7 +203,7 @@ class Problem < ActiveRecord::Base
     problem.add_tags(tags)
   end
 
-  def self.near_dups_of(current_user, problem_id)
+  def self.exact_title_match(current_user, problem_id)
     target = Problem.find(problem_id)
     target_json = JSON.parse(target.json)
 
@@ -217,7 +217,31 @@ class Problem < ActiveRecord::Base
         results.push(other)
       end
     end
-    return [results]
+    return results
+  end
+
+  def self.near_dups_of(current_user, problem_id)
+    target = Problem.find(104)
+    user_id = current_user.id
+    similar_probs = Sunspot.more_like_this(target) do
+      fields :json # Also limited by stopwords.txt
+      any_of do
+        with(:instructor_id, user_id)
+        with(:is_public, true)
+      end
+      minimum_term_frequency 2
+      minimum_document_frequency 2
+      minimum_word_length 5
+      maximum_word_length 12
+    end
+
+    results = []
+    matches = similar_probs.results
+    matches[0..2].each do |m| # return top 3 matches
+      results.push(m)
+    end
+    byebug
+    return results
   end
   
 end
