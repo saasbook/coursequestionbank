@@ -17,8 +17,12 @@ coursequestionbank_test
 /tmp
 
 #ignore solr files:
-# /solr/
-#Added by Aaron. some custom others generated. 
+solr/*
+!solr/conf/schema.xml
+!solr/conf/solrconfig.xml
+!solr/conf/stopwords.txt
+
+#Added by Aaron. some custom others generated.
 config/mail.yml
 *.log
 *~
@@ -235,4 +239,3 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
-
