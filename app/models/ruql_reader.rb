@@ -13,7 +13,6 @@ class RuqlReader
           problem.collections << collection
           problem.save
           Problem.handle_dups(user, problem.id) #check for dups
-
         end
         collection.save!
         collections.append collection

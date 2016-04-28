@@ -1,0 +1,8 @@
+%h3.section_title 
+  Viewing Problems with Tag Dup
+  // = link_to collection.name, collection_path(:id => collection.id)
+  
+%div.section_body
+  = render :partial => 'problems/problem_table', 
+            :locals => {:problems => @collection.problems, :columns => [:checkbox, :problem, :tags],
+                        :group_id => @collection.id, :empty_msg => 'This collection is empty'}

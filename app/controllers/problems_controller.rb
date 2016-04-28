@@ -65,7 +65,6 @@ class ProblemsController < ApplicationController
   def index
     @collections = @current_user.collections
     @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem]))
-    # dups = Problem.near_dups_of(@current_user, 103)
   end
 
   def new
@@ -216,5 +215,5 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
     @history = @problem.history
   end
-  
+
 end
