@@ -184,18 +184,18 @@ class Problem < ActiveRecord::Base
   end
 
   def self.handle_dups(user, problem_id)
-    near_dups = Problem.near_dups_of(user, problem_id)
+    problem_uid = Problem.find(problem_id).uuid # CHANGE THIS TO UID WHEN MIGRATION COMPLETE
     exact_dups = Problem.exact_title_match(user, problem_id)
-    problem_uid = Problem.find(problem_id).uuid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
-    if !exact_dups.empty? || !near_dups.empty?
-      tag_dups(problem_id, problem_uid) #tag original with its own uid
-      exact_dups.each { |dup_id|  tag_dups(dup_id, problem_uid)}
-      near_dups.each { |dup_id|  tag_dups(dup_id, problem_uid)}
+    near_dups = Problem.near_dups_of(user, problem_id)
+    to_tag = (exact_dups + near_dups).uniq
+    tag_dups(problem_id, problem_uid) # tag new one with its own uid
+    to_tag.each do |p|
+      tag_dups(p.id, problem_uid)
     end
   end
 
   def self.tag_dups(dup_id, original_uid)
-    #tag all dups with the uid of the original and "dup"
+    # tag all dups with the uid of the original and "dup"
     problem = Problem.find(dup_id)
     tags = ["dup", original_uid.to_s]
     problem.add_tags(tags)
@@ -219,7 +219,6 @@ class Problem < ActiveRecord::Base
   end
 
   def self.near_dups_of(current_user, problem_id)
-    target = Problem.find(105)
     target = Problem.find(problem_id)
     user_id = current_user.id
     similar_probs = Sunspot.more_like_this(target) do
