@@ -201,7 +201,7 @@ class Problem < ActiveRecord::Base
   end
 
   def self.near_dups_of(current_user, problem_id)
-    target = Problem.find(104)
+    target = Problem.find(105)
     user_id = current_user.id
     similar_probs = Sunspot.more_like_this(target) do
       fields :json # Also limited by stopwords.txt
