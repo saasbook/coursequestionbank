@@ -23,7 +23,10 @@
 
     %div Created #{problem.created_date} by #{problem.instructor.name}
     
-    %div UUID: #{problem.uuid}
+    %div
+      UUID:
+      %span.previous_uuid #{problem.previous_version.uuid if problem.previous_version}
+      #{problem.uuid}
 
     %div.bloom-buttons
       Bloom Category:
