@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/jesmin-n/ruql
-  revision: 9376edaaeaabaf710ea4fe505f36166ec8d34945
+  revision: 2ba00efad6a2397be7a488e9276ca8ce920d4a89
   specs:
     ruql (0.0.5)
       builder
