@@ -188,6 +188,12 @@ class ProblemsController < ApplicationController
       redirect_to :back
     end
   end
+  
+  def view_tags
+    session[:filters][:tags] = [params[:tag_name]]
+    redirect_to problems_path
+  end
+
 
   def update_multiple_tags
     new_tags = self.class.parse_list params[:tag_names]
