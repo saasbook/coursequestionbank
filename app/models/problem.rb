@@ -1,7 +1,7 @@
 require 'ruql_renderer'
 
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category, :uuid
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category, :uid
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
@@ -25,7 +25,7 @@ class Problem < ActiveRecord::Base
     time      :created_date
     boolean   :obsolete
     string    :bloom_category
-    string    :uuid
+    string    :uid
 
     string    :tag_names, :multiple => true do
       tags.map(&:name)
@@ -70,8 +70,8 @@ class Problem < ActiveRecord::Base
   end
 
   def ruql_source
-    prev_uuid = self.previous_version ? self.previous_version.uuid : nil
-    return RuqlRenderer.render_from_json(self.json, self.uuid, prev_uuid)
+    prev_uid = self.previous_version ? self.previous_version.uid : nil
+    return RuqlRenderer.render_from_json(self.json, self.uid, prev_uid)
   end
 
   def self.from_JSON(instructor, json_source)
@@ -82,7 +82,7 @@ class Problem < ActiveRecord::Base
                           is_public: false,
                           problem_type: json_hash["question_type"],
                           created_date: Time.now,
-                          uuid: json_hash["question_uuid"].equal?(-1) ? SecureRandom.uuid : json_hash["question_uuid"])
+                          uid: json_hash["uid"].equal?(-1) ? SecureRandom.uuid : json_hash["uid"])
     problem.instructor = instructor
     json_hash["question_tags"].each do |tag_name|
       tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)

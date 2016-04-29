@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160415055501) do
+ActiveRecord::Schema.define(:version => 20160429232326) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(:version => 20160415055501) do
     t.integer  "previous_version_id"
     t.string   "bloom_category"
     t.boolean  "obsolete"
-    t.string   "uuid"
+    t.string   "uid"
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|

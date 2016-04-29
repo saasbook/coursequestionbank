@@ -73,11 +73,11 @@ class ProblemsController < ApplicationController
 
   def create
     previous_version = Problem.find_by_id(params[:previous_version])
-    parent_uuid = params[:parent_uuid]
-    if parent_uuid
-      parent = Problem.find_by_uuid(params[:parent_uuid])
+    parent_uid = params[:parent_uid]
+    if parent_uid
+      parent = Problem.find_by_uid(params[:parent_uid])
       if !parent
-        flash[:error] = "Could not find #{params[:parent_uuid]}, using default previous question"
+        flash[:error] = "Could not find #{params[:parent_uid]}, using default previous question"
       end
       previous_version = parent || previous_version
     end
