@@ -17,6 +17,11 @@
     = label_tag :tag_names, 'Tags:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2', :value => (tags if tags != '')
+
+  %div.form-group
+    = label_tag :parent_uuid, 'Parent UUID (optional):', :class => 'col-xs-12 col-sm-2 control-label'
+    %div.col-xs-12.col-sm-10
+      = text_field_tag :parent_uuid, nil, :class => 'form-control'
   
   %div.form-group
     = label_tag :ruql_source, 'Category:', :class => 'col-xs-12 col-sm-2 control-label'

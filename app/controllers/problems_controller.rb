@@ -73,6 +73,14 @@ class ProblemsController < ApplicationController
 
   def create
     previous_version = Problem.find_by_id(params[:previous_version])
+    parent_uuid = params[:parent_uuid]
+    if parent_uuid
+      parent = Problem.find_by_uuid(params[:parent_uuid])
+      if !parent
+        flash[:error] = "Could not find #{params[:parent_uuid]}, using default previous question"
+      end
+      previous_version = parent || previous_version
+    end
     privacy = params[:privacy] ? params[:privacy].strip.downcase : nil
     category = Problem.all_bloom_categories.include?(params[:category]) ? params[:category] : nil
     collections = []
@@ -105,7 +113,7 @@ class ProblemsController < ApplicationController
       return
     end
 
-    flash[:notice] = "Question created"
+    flash[:notice] = "Question created" if !flash[:error]
     if request.xhr?
       render :json => {'error' => nil}
     else
