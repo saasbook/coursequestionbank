@@ -420,7 +420,9 @@ Then(/^problem containing "(.*?)" should not have the tag "(.*?)"$/) do |arg1, a
 end
 
 Given(/^I have created an empty collection named "(.*?)"$/) do |arg1|
-  pending # express the regexp above with the code you wish you had
+  visit 'collections/new'
+  fill_in 'name', :with => arg1
+  click_button 'Create'
 end
 
 Then(/^when I click "(.*?)" I should see "(.*?)"$/) do |arg1, arg2|

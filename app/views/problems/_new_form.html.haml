@@ -9,23 +9,36 @@
     = hidden_field_tag 'previous_version', previous.id, :id => nil
 
   %div.form-group
-    = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-1 control-label'
+    = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
       = text_area_tag :ruql_source, source, :class => 'source_field form-control', :rows => 15, :placeholder => 'RuQL source code'
   
   %div.form-group
-    = label_tag :tag_names, 'Tags:', :class => 'col-xs-12 col-sm-1 control-label'
+    = label_tag :tag_names, 'Tags:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2', :value => (tags if tags != '')
   
   %div.form-group
-    %div.col-sm-1
-    %div.col-xs-12.col-sm-11
+    = label_tag :ruql_source, 'Category:', :class => 'col-xs-12 col-sm-2 control-label'
+    %div.col-xs-12.col-sm-10
+      = select_tag :category, options(Problem.all_bloom_categories, previous ? previous.bloom_category : nil), :id => nil, :class => 'form-control'
+  
+  %div.form-group
+    = label_tag nil, 'Collections:', :class => 'col-xs-12 col-sm-2 control-label'
+    %div.col-xs-12.col-sm-10.new-problem-collections
+      - Collection.accessible_by(current_ability, :manage).each do |collection|
+        %div.new-problem-collection
+          = check_box_tag "collections[#{collection.id}]", 1,  !!(collection.problems.include? previous), class: 'checkbox', id: "collections_#{collection.id}"
+          = label_tag "collections_#{collection.id}", collection.name.truncate(35), :title => collection.name
+  
+  %div.form-group
+    %div.col-sm-2
+    %div.col-xs-12.col-sm-10
       = select_tag :privacy, privacy_options(previous ? previous.is_public : false), :id => nil, :class => 'form-control'
   
   %div.form-group
-    %div.col-sm-1
-    %div.col-xs-12.col-sm-11
+    %div.col-sm-2
+    %div.col-xs-12.col-sm-10
       %p.message
       - submit_msg = previous ? 'Supersede question' : 'Create question'
       = submit_tag submit_msg, :class => 'btn btn-primary'
