@@ -70,8 +70,9 @@ class Problem < ActiveRecord::Base
   end
 
   def ruql_source
-    prev_uuid = self.previous_version ? self.previous_version.uuid : nil
-    return RuqlRenderer.render_from_json(self.json, self.uuid, prev_uuid)
+    new_uuid = SecureRandom.uuid
+    prev_uuid = self.uuid
+    return RuqlRenderer.render_from_json(self.json, new_uuid, prev_uuid)
   end
 
   def self.from_JSON(instructor, json_source)
