@@ -7,16 +7,9 @@ class RuqlRenderer
     json_hash = JSON.parse(json_code)
     answers = json_hash["answers"]
     return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
-<<<<<<< HEAD
-    result << ruql_question_header(json_hash, uuid)
-    if not uuid.blank?
-      result << "\n  uid " + uuid
-    end
-=======
     result << ruql_question_header(json_hash)
-    result << "\n  uuid #{uuid}" if uuid
-    result << "\n  # uuid #{prev_uuid}" if prev_uuid
->>>>>>> 9d77fad0ded6aa84fea9f9c39e1fa71ac0ecb1e0
+    result << "\n  uid #{uuid}" if uuid
+    result << "\n  # uid #{prev_uuid}" if prev_uuid
     result << "\n  text " + json_hash["question_text"].inspect
     answers.each do |answer| # answers first
       result << ruql_answer_line(answer) if answer["correct"]
