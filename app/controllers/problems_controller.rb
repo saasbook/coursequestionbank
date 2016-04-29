@@ -73,15 +73,33 @@ class ProblemsController < ApplicationController
 
   def create
     previous_version = Problem.find_by_id(params[:previous_version])
+    parent_uuid = params[:parent_uuid]
+    if parent_uuid
+      parent = Problem.find_by_uuid(params[:parent_uuid])
+      if !parent
+        flash[:error] = "Could not find #{params[:parent_uuid]}, using default previous question"
+      end
+      previous_version = parent || previous_version
+    end
     privacy = params[:privacy] ? params[:privacy].strip.downcase : nil
+    category = Problem.all_bloom_categories.include?(params[:category]) ? params[:category] : nil
+    collections = []
+    if params[:collections]
+      params[:collections].each do |key, value|
+        col = Collection.find(key)
+        authorize! :manage, col
+        collections << col
+      end
+    end
 
     begin
       problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
       problem.previous_version = previous_version
       problem.is_public = privacy == 'public'
-      problem.bloom_category = previous_version.bloom_category if previous_version
+      problem.bloom_category = category
       problem.save
       problem.add_tags(self.class.parse_list params[:tag_names])
+      collections.each {|c| c.problems << problem}
       flash[:bump_problem] = problem.id
 
     rescue Exception => e
@@ -95,7 +113,7 @@ class ProblemsController < ApplicationController
       return
     end
 
-    flash[:notice] = "Question created"
+    flash[:notice] = "Question created" if !flash[:error]
     if request.xhr?
       render :json => {'error' => nil}
     else

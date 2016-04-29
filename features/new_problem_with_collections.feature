@@ -10,10 +10,9 @@ Background:
 
 Scenario: Specifying a collection when creating question
   Given I am on the new problem page
-  Then I should see "Add to Collection"
   When I fill in "ruql_source" with text of "history_test2.txt"
-  And I press "Add to Collection"
-  And I press "History"
+  And I check "History"
   And I press "Create question"
-  Then when I click "My Collections" I should see "History"
-  And I should see "1" under "# Questions"
+  When I am on the profile page
+  And I follow "History"
+  And I should see "This is the previous version"

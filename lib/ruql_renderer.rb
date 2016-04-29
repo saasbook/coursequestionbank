@@ -1,16 +1,22 @@
 
 class RuqlRenderer
 
-  def self.render_from_json(json_code, uuid)
+  def self.render_from_json(json_code, uuid, prev_uuid)
     result = ""
     return "" if json_code == nil || json_code.length <= 2
     json_hash = JSON.parse(json_code)
     answers = json_hash["answers"]
     return ruql_true_false(json_hash) if json_hash["question_type"] == "TrueFalse"
+<<<<<<< HEAD
     result << ruql_question_header(json_hash, uuid)
     if not uuid.blank?
       result << "\n  uid " + uuid
     end
+=======
+    result << ruql_question_header(json_hash)
+    result << "\n  uuid #{uuid}" if uuid
+    result << "\n  # uuid #{prev_uuid}" if prev_uuid
+>>>>>>> 9d77fad0ded6aa84fea9f9c39e1fa71ac0ecb1e0
     result << "\n  text " + json_hash["question_text"].inspect
     answers.each do |answer| # answers first
       result << ruql_answer_line(answer) if answer["correct"]
@@ -36,7 +42,8 @@ class RuqlRenderer
     return line
   end
 
-  def self.ruql_question_header(json_hash, uuid)
+
+  def self.ruql_question_header(json_hash)
     line = case json_hash["question_type"]
       when "SelectMultiple" then "select_multiple"
       when "MultipleChoice" then "choice_answer"
