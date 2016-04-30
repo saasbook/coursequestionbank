@@ -24,6 +24,13 @@
     %div Created #{problem.created_date} by #{problem.instructor.name}
     
     %div UID: #{problem.uid}
+    
+    - if can? :set_previous, problem
+      %div
+        Previous version:
+        = form_tag problem_path(:id => problem.id), :method => :put, :class => 'previous-form' do
+          = text_field_tag :previous, nil, :id => nil, :class => 'form-control', :placeholder => 'Enter problem UID', 
+              :value => (problem.previous_version.uid if problem.previous_version)
 
     %div.bloom-buttons
       Bloom Category:
