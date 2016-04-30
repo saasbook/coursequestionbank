@@ -236,12 +236,12 @@ class Problem < ActiveRecord::Base
       maximum_word_length 12
     end
 
-    # results = []
+    results = []
     matches = similar_probs.results
-    # matches[0..2].each do |m| # return top 3 matches
-    #   results.push(m)
-    # end
-    return [matches[0]]
+    matches[0..2].each do |m| # return top 3 matches
+      results.push(m)
+    end
+    return results
   end
 
 end
