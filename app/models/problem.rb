@@ -191,9 +191,9 @@ class Problem < ActiveRecord::Base
     if !to_tag.empty?
       tag_dups(problem_id, problem_uid) #tag original with its own uid
       to_tag.each { |id|  tag_dups(id, problem_uid)}
+      return true # true for dups_found
     end
   end
-  
 
   def self.tag_dups(id, original_uid)
     # tag all dups with the uid of the original and "dup"
@@ -228,8 +228,8 @@ class Problem < ActiveRecord::Base
         with(:instructor_id, user_id)
         with(:is_public, true)
       end
-      minimum_term_frequency 2
-      minimum_document_frequency 2
+      minimum_term_frequency 1
+      minimum_document_frequency 1
       minimum_word_length 5
       maximum_word_length 12
     end
