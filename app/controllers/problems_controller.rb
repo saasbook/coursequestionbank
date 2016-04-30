@@ -226,7 +226,12 @@ class ProblemsController < ApplicationController
   end
 
   def view_tags
-    session[:filters][:tags] = [params[:tag_name]]
+    session[:filters] = HashWithIndifferentAccess.new(@@defaults)
+    @@defaults.each do |key, value|
+      session[:filters][key] = value
+    end
+    
+    session[:filters][:tags] = self.class.parse_list params[:tag_names]
     redirect_to problems_path
   end
 

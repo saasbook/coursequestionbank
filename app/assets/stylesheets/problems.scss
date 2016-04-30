@@ -39,10 +39,19 @@ th .check_all {
 
 .tag {
   display: inline-block;
-  background: #dddddd;
-  padding: 2px 4px;
-  border-radius: 3px;
-  margin: 2px 1px;
+}
+
+.tag a {
+  display: inline-block;
+  padding-right: 30px;
+}
+
+.remove_tag {
+  position: relative;
+  left: 100%;
+  margin-left: -20px;
+  margin-top: -23px;
+  width: 12px;
 }
 
 .tag .glyphicon {
@@ -53,12 +62,12 @@ th .check_all {
   width: 200px;
 }
 
-.tag * {
-  display: inline;
-  padding: 0px;
-  margin: 0px;
-  text-decoration: none;
-}
+// .tag * {
+//   display: inline;
+//   padding: 0px;
+//   margin: 0px;
+//   text-decoration: none;
+// }
 
 .add_tags_form {
   margin-top: 5px;
