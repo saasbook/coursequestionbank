@@ -25,7 +25,7 @@
             %li
               = form_tag logout_path, :method => :post do
                 = submit_tag 'Log Out', :class => 'btn btn-info'
-    
+
       %div#flash_message
         - if flash[:notice]
           %p.message= flash[:notice]

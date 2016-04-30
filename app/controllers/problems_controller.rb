@@ -101,6 +101,12 @@ class ProblemsController < ApplicationController
       problem.add_tags(self.class.parse_list params[:tag_names])
       collections.each {|c| c.problems << problem}
       flash[:bump_problem] = problem.id
+      Problem.reindex
+      Sunspot.commit
+      dups_found = Problem.handle_dups(@current_user, problem.id) #check for dups
+      if dups_found
+        flash[:notice] = "Near-duplicate question may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Click on tag to view potential matches. Mark undesired Questions as Obsolete. Remove dup tags when finished."
+      end
 
     rescue Exception => e
       if request.xhr?
@@ -113,7 +119,7 @@ class ProblemsController < ApplicationController
       return
     end
 
-    flash[:notice] = "Question created" if !flash[:error]
+    flash[:notice] = "Question created." if !flash[:notice]
     if request.xhr?
       render :json => {'error' => nil}
     else
@@ -207,6 +213,12 @@ class ProblemsController < ApplicationController
     end
   end
 
+  def view_tags
+    session[:filters][:tags] = [params[:tag_name]]
+    redirect_to problems_path
+  end
+
+
   def update_multiple_tags
     new_tags = self.class.parse_list params[:tag_names]
     selected = params[:checked_problems] ? params[:checked_problems].keys : []
@@ -233,4 +245,5 @@ class ProblemsController < ApplicationController
     @problem = Problem.find(params[:id])
     @history = @problem.history
   end
+
 end

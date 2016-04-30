@@ -16,7 +16,7 @@ class Problem < ActiveRecord::Base
   searchable do
     integer   :id
     text      :text
-    text      :json
+    text      :json, :more_like_this => true
     integer   :instructor_id
     boolean   :is_public
     time      :last_used
@@ -182,6 +182,65 @@ class Problem < ActiveRecord::Base
   def history
     return [] if previous_version == nil
     return [previous_version] + previous_version.history
+  end
+
+  def self.handle_dups(user, problem_id)
+    near_dups = Problem.near_dups_of(user, problem_id)
+    to_tag = (near_dups + Problem.exact_title_match(user, problem_id)).uniq
+    problem_uid = Problem.find(problem_id).uuid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
+    to_tag.delete(Problem.find(problem_id))
+    if !to_tag.empty?
+      tag_dups(problem_id, problem_uid) #tag original with its own uid
+      to_tag.each { |id|  tag_dups(id, problem_uid)}
+      return true # true for dups_found
+    end
+  end
+
+  def self.tag_dups(id, original_uid)
+    # tag all dups with the uid of the original and "dup"
+    problem = Problem.find(id)
+    tags = ["dup", original_uid.to_s]
+    problem.add_tags(tags)
+  end
+
+  def self.exact_title_match(current_user, problem_id)
+    target = Problem.find(problem_id)
+    target_json = JSON.parse(target.json)
+
+    from_you = current_user.problems
+    from_others = Problem.where(is_public: true)
+    search_set = (from_you + from_others).uniq
+    results = []
+    search_set.each do |other|
+      other_json = JSON.parse(other.json)
+      if target_json["question_text"] == other_json["question_text"]
+        results.push(other)
+      end
+    end
+    return results
+  end
+
+  def self.near_dups_of(current_user, problem_id)
+    target = Problem.find(problem_id)
+    user_id = current_user.id
+    similar_probs = Sunspot.more_like_this(target) do
+      fields :json # Also limited by stopwords.txt
+      any_of do
+        with(:instructor_id, user_id)
+        with(:is_public, true)
+      end
+      minimum_term_frequency 1
+      minimum_document_frequency 1
+      minimum_word_length 5
+      maximum_word_length 12
+    end
+
+    results = []
+    matches = similar_probs.results
+    matches[0..2].each do |m| # return top 3 matches
+      results.push(m)
+    end
+    return results
   end
 
 end
