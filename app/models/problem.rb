@@ -186,9 +186,10 @@ class Problem < ActiveRecord::Base
   end
 
   def self.handle_dups(user, problem_id)
+    byebug
     near_dups = Problem.near_dups_of(user, problem_id)
     to_tag = (near_dups + Problem.exact_title_match(user, problem_id)).uniq
-    problem_uid = Problem.find(problem_id).uuid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
+    problem_uid = Problem.find(problem_id).uid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
     to_tag.delete(Problem.find(problem_id))
     if !to_tag.empty?
       tag_dups(problem_id, problem_uid) #tag original with its own uid

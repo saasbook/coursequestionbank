@@ -21,7 +21,7 @@ class RuqlReader
         collection.save!
         collections.append collection
       else
-        raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that '
+        raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that.'
       end
     end
     [collections, dups_found]
