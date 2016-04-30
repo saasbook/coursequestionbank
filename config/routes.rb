@@ -10,10 +10,10 @@ Coursequestionbank::Application.routes.draw do
   post 'upload' => 'upload#upload', ":as" => 'upload'
 
   resources :problems
+  get 'problems/tags/:tag_names' => 'problems#view_tags', :as => 'view_tags'
   post 'problems/filters' => 'problems#set_filters', :as => 'set_filters'
   post 'problems/:id/tags/add' => 'problems#add_tags', :as => 'add_tags'
   post 'problems/:id/tags/remove' => 'problems#remove_tags', :as => 'remove_tags'
-  post 'problems/:id/tags/view' => 'problems#view_tags', :as => 'view_tags'
   post 'update_multiple_tags' => 'problems#update_multiple_tags'
   get 'problems/:id/supersede' => 'problems#supersede', :as => 'supersede'
   get 'problems/:id/history' => 'problems#view_history', :as => 'problem_history'

@@ -1,9 +1,6 @@
 - problem.tags.each do |tag|
   %div.tag
-    = form_tag view_tags_path(:id => problem.id), :method => :post do
-      = hidden_field_tag :tag_name, tag.name, :id => nil
-      = button_tag :type => 'submit', :class => 'clr-button' do
-        = tag.name
+    = link_to tag.name, view_tags_path(:tag_names => tag.name), :class => 'btn btn-info'
 
     = form_tag remove_tags_path(:id => problem.id), :method => :post, :class => 'remove_tag' do
       = hidden_field_tag :tag_names, tag.name, :id => nil

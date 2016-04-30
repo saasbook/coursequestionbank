@@ -13,8 +13,7 @@ Scenario: Superseded questions have new universal IDs
   And I fill in "ruql_source" with text of "new_universal_id2.txt"
   And I press "Supersede question"
   Then the problem containing "Rails doesn't scale" should not have the uid of the original problem
-  And I should not see "This should disappear"
-  
+
 Scenario: Uploading a question with a new universal ID
   And I am on the home page
   And I follow "View 60"
