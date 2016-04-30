@@ -13,6 +13,7 @@ class RuqlReader
           problem = Problem.from_JSON(user, problem_json)
           problem.collections << collection
           problem.save
+          Problem.reject_duplicate_uid(problem.id)
           Problem.reindex
           Sunspot.commit
           result = Problem.handle_dups(user, problem.id) #check for dups

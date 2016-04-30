@@ -21,7 +21,6 @@ Scenario: Uploading a question with a new universal ID
 
 Scenario: Uploading a question with an existing universal ID gets rejected (sad path)
   And I try to upload a file with a duplicate question
-  Given I press the upload button
   Then I should see "Problems with universal IDs already in the database have been rejected."
   And I am on the home page
   And I follow "View 60"

@@ -3,7 +3,8 @@ Given(/^I have selected a file to upload$/) do
 end
 
 Given(/^I press the upload button$/) do
-  click_button "Upload!"
+  puts page.body
+  click_button "Upload File"
 end
 
 Given(/^the upload fails$/) do
@@ -25,4 +26,3 @@ end
 Then(/^I should see a flash message asking me to select a file$/) do
   flash[:notice] = "Please select a file"
 end
-
