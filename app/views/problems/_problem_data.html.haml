@@ -24,6 +24,13 @@
     %div Created #{problem.created_date} by #{problem.instructor.name}
 
     %div UID: #{problem.uid}
+    
+    - if can? :set_previous, problem
+      %div
+        Previous version:
+        = form_tag problem_path(:id => problem.id), :method => :put, :class => 'previous-form' do
+          = text_field_tag :previous, nil, :id => nil, :class => 'form-control', :placeholder => 'Enter problem UID', 
+              :value => (problem.previous_version.uid if problem.previous_version)
 
     %div.bloom-buttons
       Bloom Category:
@@ -40,7 +47,7 @@
 
     %div
       Supersede:
-      %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= problem.ruql_source
+      %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= #{problem.ruql_source}
       %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "",
               :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
               :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
