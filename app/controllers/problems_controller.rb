@@ -172,6 +172,18 @@ class ProblemsController < ApplicationController
       end
       problem.save
     end
+    
+    if !params[:previous].nil?
+        authorize! :set_previous, problem
+        previous = Problem.find_by_uuid(params[:previous])
+        if previous
+          problem.previous_version = previous
+          problem.save
+          flash[:notice] = "Problem parent set to #{params[:previous]}" if !request.xhr?
+        else
+          flash[:error] = "Problem #{params[:previous]} not found" if !request.xhr?
+        end
+    end
 
     if request.xhr?
       render :nothing => true
