@@ -10,5 +10,5 @@ Background:
   And I follow "View 60"
 
 Scenario: Viewing source code for a question with a universal ID
-  Then I should see "uid 1234"
+  Then I should see "do uid"
   And I should see "Around 2007, the claim"
