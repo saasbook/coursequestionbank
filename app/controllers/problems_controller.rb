@@ -178,7 +178,7 @@ class ProblemsController < ApplicationController
       end
       problem.save
     end
-    
+
     if !params[:previous].nil?
         authorize! :set_previous, problem
         previous = Problem.find_by_uid(params[:previous])
@@ -230,7 +230,7 @@ class ProblemsController < ApplicationController
     @@defaults.each do |key, value|
       session[:filters][key] = value
     end
-    
+
     session[:filters][:tags] = self.class.parse_list params[:tag_names]
     redirect_to problems_path
   end
