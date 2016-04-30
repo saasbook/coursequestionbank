@@ -10,6 +10,5 @@ Background:
   And I follow "View 60"
 
 Scenario: Viewing source code for a question with a universal ID
-  Then I should see "UUID"
+  Then I should see "uid 1234"
   And I should see "Around 2007, the claim"
-  And I should not see "This part should disappear"
