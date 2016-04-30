@@ -14,7 +14,6 @@ Scenario: replacing a question with a new version
   And I fill in "ruql_source" with text of "history_test2.txt"
   And I press "Supersede question"
   Then I should be on the problems page
-  And I should see "Question created"
   And I should see "Witch"
   And I should see "Which of the following"
 

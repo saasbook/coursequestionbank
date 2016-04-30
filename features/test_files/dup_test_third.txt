@@ -1,0 +1,9 @@
+quiz 'Near Duplicate Test 3' do
+  choice_answer do
+    text "The quick brown fox jumped over the lazy cat"
+    answer "A"
+    distractor "B"
+    distractor "C"
+    distractor "D"
+  end
+end

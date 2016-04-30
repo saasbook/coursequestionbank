@@ -403,20 +403,18 @@ Then /^(?:|I )should see a button "([^\"]*)"$/ do |text|
   should have_button text
 end
 
-Then(/^problem containing "(.*?)" should have the tag "(.*?)"$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Then(/^the problem containing "(.*?)" should have the tag "(.*?)"$/) do |problem_text, tag|
+  problem = problems_with_text(problem_text)[0]
+  problem.tags[0].name.should =~ /#{tag}/
 end
 
 When(/^I mark problem with uid "(.*?)" as obsolete$/) do |arg1|
   pending # express the regexp above with the code you wish you had
 end
 
-Then(/^the problem containing "(.*?)" should not have the tag "(.*?)"$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
-end
-
-Then(/^problem containing "(.*?)" should not have the tag "(.*?)"$/) do |arg1, arg2|
-  pending # express the regexp above with the code you wish you had
+Then(/^the problem containing "(.*?)" should not have the tag "(.*?)"$/) do |problem_text, tag|
+  problem = problems_with_text(problem_text)[0] || ""
+  problem.tags[0].name.should_not == /#{tag}/
 end
 
 Given(/^I have created an empty collection named "(.*?)"$/) do |arg1|

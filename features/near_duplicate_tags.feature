@@ -5,19 +5,20 @@ Feature: User will see a 'dup' tag to resolve near-duplicate Problems
 
 Background:
   Given I am signed in with uid "1234" and provider "github"
-  And I have uploaded 'micro_quizzes.txt'
+  And I have uploaded 'dup_test_first.txt'
   And I am on the upload page
 
 Scenario: User tries to upload near duplicate
-  When I attach the file "micro_quizzes_dup.txt" to "file_upload"
+  When I attach the file "features/test_files/dup_test_third.txt" to "file_upload"
   And I press "Upload File"
-  Then I should see "Warning: possible duplicate found. Please resolve."
-  And I should be on the duplicate page
-  Then problem containing "Around 2007, the claim" should have the tag "dup"
+  Then I should see "Near-duplicate questions may have been uploaded"
+  Then the problem containing "The quick brown fox jumped over the lazy dog" should have the tag "dup"
+  And the problem containing "The quick brown fox jumped over the lazy cat" should have the tag "dup"
+  And I should be on the finalize upload page
 
 Scenario: User tries to upload different question (sad path, no duplicate detected)
   Given I am on the upload page
   And I attach the file "features/test_files/foo.txt" to "file_upload"
   And I press "Upload File"
   Then I should see "Upload successful!"
-  And problem containing "Around 2007, the claim" should not have the tag "dup"
+  And the problem containing "Which of the following best identifies" should not have the tag "dup"
