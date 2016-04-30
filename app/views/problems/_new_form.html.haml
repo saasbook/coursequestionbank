@@ -1,6 +1,6 @@
 
 - previous = local_assigns[:previous] || nil
-- source = @ruql_source || (previous && previous.ruql_source) || ''
+- source = (@ruql_source || '') || ((previous && previous.ruql_source) || '')
 - tags = (previous && previous.tags.map(&:name).join(', ')) || ''
 
 
@@ -12,7 +12,7 @@
     = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
       = text_area_tag :ruql_source, source, :class => 'source_field form-control', :rows => 15, :placeholder => 'RuQL source code'
-  
+
   %div.form-group
     = label_tag :tag_names, 'Tags:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
@@ -22,12 +22,12 @@
     = label_tag :parent_uuid, 'Parent UID (optional):', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
       = text_field_tag :parent_uuid, nil, :class => 'form-control'
-  
+
   %div.form-group
     = label_tag :ruql_source, 'Category:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
       = select_tag :category, options(Problem.all_bloom_categories, previous ? previous.bloom_category : nil), :id => nil, :class => 'form-control'
-  
+
   %div.form-group
     = label_tag nil, 'Collections:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10.new-problem-collections
@@ -35,12 +35,12 @@
         %div.new-problem-collection
           = check_box_tag "collections[#{collection.id}]", 1,  !!(collection.problems.include? previous), class: 'checkbox', id: "collections_#{collection.id}"
           = label_tag "collections_#{collection.id}", collection.name.truncate(35), :title => collection.name
-  
+
   %div.form-group
     %div.col-sm-2
     %div.col-xs-12.col-sm-10
       = select_tag :privacy, privacy_options(previous ? previous.is_public : false), :id => nil, :class => 'form-control'
-  
+
   %div.form-group
     %div.col-sm-2
     %div.col-xs-12.col-sm-10

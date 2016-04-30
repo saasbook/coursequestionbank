@@ -22,7 +22,7 @@
           = submit_tag 'Obsolete', :class => 'btn btn-default obsolete-button', :disabled => true
 
     %div Created #{problem.created_date} by #{problem.instructor.name}
-    
+
     %div UID: #{problem.uid}
 
     %div.bloom-buttons
@@ -40,7 +40,7 @@
 
     %div
       Supersede:
-      %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= problem.ruql_source
+      %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= #{problem.ruql_source}
       %button{"data-clipboard-target" => "source_#{problem.id}", "data-clipboard-text" => "",
               :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
               :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
