@@ -5,9 +5,6 @@
 
 
 = form_tag problems_path, :method => :post, :class => 'form-horizontal new-form' do
-  - if previous
-    = hidden_field_tag 'previous_version', previous.id, :id => nil
-
   %div.form-group
     = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
@@ -19,9 +16,9 @@
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2', :value => (tags if tags != '')
 
   %div.form-group
-    = label_tag :parent_uid, 'Parent UID (optional):', :class => 'col-xs-12 col-sm-2 control-label'
+    = label_tag :parent_uid, 'Parent:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
-      = text_field_tag :parent_uid, nil, :class => 'form-control'
+      = text_field_tag :parent_uid, nil, :id => nil, :class => 'form-control', :placeholder => 'Parent UID', :value => (previous.uid if previous)
 
   %div.form-group
     = label_tag :ruql_source, 'Category:', :class => 'col-xs-12 col-sm-2 control-label'

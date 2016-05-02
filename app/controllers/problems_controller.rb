@@ -72,15 +72,14 @@ class ProblemsController < ApplicationController
   end
 
   def create
-    previous_version = Problem.find_by_id(params[:previous_version])
     parent_uid = params[:parent_uid]
     if parent_uid
-      parent = Problem.find_by_uid(params[:parent_uid])
-      if !parent
+      previous_version = Problem.find_by_uid(params[:parent_uid])
+      if !previous_version
         flash[:error] = "Could not find #{params[:parent_uid]}, using default previous question"
       end
-      previous_version = parent || previous_version
     end
+    
     privacy = params[:privacy] ? params[:privacy].strip.downcase : nil
     category = Problem.all_bloom_categories.include?(params[:category]) ? params[:category] : nil
     collections = []
