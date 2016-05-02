@@ -112,7 +112,7 @@ class ProblemsController < ApplicationController
       if request.xhr?
         render :json => {'error' => e.message}
       else
-        flash[:error] = "Error in problem source: #{e.message}"
+        flash[:error] = "Error in problem source: #{e.message}. A Question's unique ID may already exist in database."
         flash[:ruql_source] = params[:ruql_source]
         redirect_to :back
       end

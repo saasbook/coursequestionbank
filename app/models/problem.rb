@@ -6,7 +6,7 @@ class Problem < ActiveRecord::Base
   belongs_to :instructor
   has_and_belongs_to_many :collections
   belongs_to :previous_version, class_name: 'Problem'
-
+  validates :uid, uniqueness: true
 
   scope :is_public, -> { where(is_public:  true) }
   scope :last_used, ->(t) { where(last_used: t) }
