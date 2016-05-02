@@ -28,7 +28,7 @@ class Collection < ActiveRecord::Base
         end
         source += "\nend"
       else
-        export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
+        export_quiz = Quiz.new(name, nil, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
         export_quiz.render_with(format)
       end
     end
