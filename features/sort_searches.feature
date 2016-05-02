@@ -8,19 +8,19 @@ Background:
   Given I am on the CourseQuestionBank home page
 
   Given the following problems exist:
-  | text         | last_used                              | problem_type   | created_date                              |
-  | text1        | datetime.now                           | FillIn         | datetime.now                              |
-  | text2        | datetime.now+datetime.timedelta(day=1) | MultipleChoice | datetime.now                              |
-  | text3        | datetime.now+datetime.timedelta(day=2) | SelectMultiple | datetime.now                              |
-  | text4        | datetime.now+datetime.timedelta(day=3) | TrueFalse      | datetime.now + datetime.timedelta(day=30) |
-  | text5        | datetime.now+datetime.timedelta(day=4) | Dropdown       | datetime.now                              |
-  
+  | text         | last_used                              | problem_type   | created_date                              | uid   |
+  | text1        | datetime.now                           | FillIn         | datetime.now                              | 1g3j2 |
+  | text2        | datetime.now+datetime.timedelta(day=1) | MultipleChoice | datetime.now                              | 5hfnn |
+  | text3        | datetime.now+datetime.timedelta(day=2) | SelectMultiple | datetime.now                              | 2h51h |
+  | text4        | datetime.now+datetime.timedelta(day=3) | TrueFalse      | datetime.now + datetime.timedelta(day=30) | 4h11k |
+  | text5        | datetime.now+datetime.timedelta(day=4) | Dropdown       | datetime.now                              | th2kv |
+
 #Scenario: sort search results by date added
  # When I check "date_added_checkbox"
   #Then I should see "text1" before "text4"
 
 #Scenario: sort by level of difficulty
-  
+
 Scenario: sort by last used
   When I choose sort by "Last Used"
   And I press "Search"
