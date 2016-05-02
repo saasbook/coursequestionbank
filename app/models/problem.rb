@@ -180,9 +180,9 @@ class Problem < ActiveRecord::Base
     tag_names.select{ |tag| add_tag tag }.map{ |tag| Tag.where(:name => tag)[0] }
   end
 
-  def history
-    return [] if previous_version == nil
-    return [previous_version] + previous_version.history
+  def history(max = 10)
+    return [] if previous_version == nil or max == 0
+    return [previous_version] + previous_version.history(max - 1)
   end
 
   def self.handle_dups(user, problem_id)
