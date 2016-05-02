@@ -1,10 +1,10 @@
 GIT
-  remote: https://github.com/jesmin-n/ruql
-  revision: 4d795980351c5967d48e3d923631a55999842bd8
+  remote: https://github.com/jshoe/ruql
+  revision: 7f7dbcd0ffb7d72948a1e737bf3cec3cee746222
   specs:
-    ruql (0.0.5)
-      builder
-      getopt
+    ruql (0.0.8)
+      builder (~> 3.0)
+      getopt (= 1.4.2)
 
 GIT
   remote: https://github.com/sunspot/sunspot.git
@@ -95,7 +95,7 @@ GEM
     execjs (2.5.2)
     faraday (0.9.1)
       multipart-post (>= 1.2, < 3)
-    getopt (1.4.3)
+    getopt (1.4.2)
     gherkin (2.12.2)
       multi_json (~> 1.3)
     haml (4.0.6)
