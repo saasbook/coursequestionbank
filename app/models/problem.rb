@@ -237,10 +237,8 @@ class Problem < ActiveRecord::Base
     end
 
     results = []
-    matches = similar_probs.results
-    matches[0..2].each do |m| # return top 3 matches
-      results.push(m)
-    end
+    match = similar_probs.results[0]
+    results.push(match) if match
     return results
   end
 
