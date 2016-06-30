@@ -80,7 +80,7 @@ class Problem < ActiveRecord::Base
     json_hash = JSON.parse(json_source)
     problem = Problem.new(text: "",
                           json: json_source,
-                          is_public: false,
+                          is_public: true,
                           problem_type: json_hash["question_type"],
                           created_date: Time.now,
                           uid: json_hash["uid"].equal?(-1) ? SecureRandom.uuid : json_hash["uid"])

@@ -7,9 +7,9 @@ class Collection < ActiveRecord::Base
   scope :mine_or_public, ->(user) {where('instructor_id=? OR is_public=?', "#{user.id}", 'true')}
 
   def set_attributes(params)
-    self.name = params[:name] if params[:name] != nil
-    self.description = params[:description] if params[:description] != nil
-    self.is_public = params[:is_public] if params[:is_public] != nil
+    self.name = params[:name] if params[:name]
+    self.description = params[:description] if params[:description]
+    self.is_public = params[:is_public] if params[:is_public]
     if ['Public', 'Private'].include? params[:privacy]
       self.is_public = params[:privacy] == 'Public'
     end
