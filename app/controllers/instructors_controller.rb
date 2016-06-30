@@ -14,7 +14,7 @@ class InstructorsController < ApplicationController
   def admin
     authorize! :manage, Whitelist
     # @unauthorized_users = Instructor.all.select{|i| i.privilege.nil?}
-    @whitelist = Whitelist.order(:updated_at).reverse
+    @whitelist = Whitelist.order(:username)
   end
   
   def update_whitelist
