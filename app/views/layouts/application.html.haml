@@ -25,7 +25,7 @@
             %li
               = form_tag logout_path, :method => :post do
                 = submit_tag 'Log Out', :class => 'btn btn-info'
-            %li= link_to 'Help', 'https://github.com/saasbook/coursequestionbank/blob/master/README.md', :target => '_blank'
+            %li= link_to 'Help', 'https://github.com/saasbook/coursequestionbank/blob/master/README.md', :class => 'btn btn-info', :target => '_blank'
 
       %div#flash_message
         - if flash[:notice]
