@@ -1,0 +1,32 @@
+
+%h3.section_title= @heading
+
+%div.section_options
+  = link_to 'New collection', new_collection_path, :class => 'btn btn-primary'
+  = link_to 'Upload questions', upload_path, :class => 'btn btn-primary'
+
+
+- if @collections.empty?
+  %h4.section_body You have no collections.
+
+- else
+  %div.table-responsive.section_body
+    %table.table.table-striped
+      %thead
+        %tr
+          %th Name
+          %th Owner
+          %th # Questions
+          %th Description
+          %th Last used
+          %th Privacy
+      
+      %tbody
+        - @collections.each do |collection|
+          %tr
+            %td= link_to collection.name.truncate(35), collection_path(:id => collection.id), :class => 'btn btn-link', :title => collection.name
+            %td= collection.instructor.try(:name)
+            %td= collection.problems.length
+            %td= collection.description
+            %td= collection.last_used
+            %td= collection.is_public ? 'Public' : 'Private'

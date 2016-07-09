@@ -5,6 +5,7 @@ class Collection < ActiveRecord::Base
   belongs_to :instructor
   # scope :collection, ->(collection_name) { where(name: collection_name) }
   scope :mine_or_public, ->(user) {where('instructor_id=? OR is_public=?', "#{user.id}", 'true')}
+  scope :public, where(:is_public => true)
 
   def set_attributes(params)
     self.name = params[:name] if params[:name]

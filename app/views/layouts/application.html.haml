@@ -20,6 +20,7 @@
             %li= link_to 'Home', problems_path, :class => 'btn btn-info'
             - if can? :manage, Collection
               %li= link_to 'My Collections', profile_path, :class => 'btn btn-info'
+            %li= link_to 'Public Collections', collections_path, :class => 'btn btn-info'
             - if can? :manage, Whitelist
               %li= link_to 'Admin', admin_path, :class => 'btn btn-info'
             %li

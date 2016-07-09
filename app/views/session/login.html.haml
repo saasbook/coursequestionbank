@@ -1,0 +1,7 @@
+
+%p.text-center Welcome to Course Question Bank.
+%p.text-center Easily organize all your tests and class materials!
+%div.text-center
+  = link_to 'Log in with your GitHub account', '/auth/github', class: "btn btn-default"
+  = link_to 'Dev Login', '/auth/developer', class: "btn btn-default" unless Rails.env.production?
+

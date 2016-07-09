@@ -2,10 +2,10 @@ Coursequestionbank::Application.routes.draw do
 
   root :to => 'problems#home'
 
-  get  'auth/:provider/callback' => 'sessions#create'
-  post 'logout' => 'sessions#destroy'
-  get  'auth/failure' => 'sessions#failure'
-  get 'login' => 'sessions#login', :as => 'login'
+  match  'auth/:provider/callback' => 'session#create'
+  post 'logout' => 'session#destroy'
+  get  'auth/failure' => 'session#failure'
+  get 'login' => 'session#login', :as => 'login'
   get 'upload' => 'upload#index', :as => 'upload'
   post 'upload' => 'upload#upload', ":as" => 'upload'
 

@@ -240,3 +240,4 @@ $RECYCLE.BIN/
 # Windows shortcuts
 *.lnk
 TAGS
+sunspot-solr.pid

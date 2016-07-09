@@ -9,15 +9,18 @@ class CollectionsController < ApplicationController
     @collection = Collection.new
   end
 
+  def index
+    # Show all public collections
+    @heading = 'Public collections'
+    @instructor = Instructor.find_by_id(@current_user)
+    @collections = Collection.public
+  end
+
   def edit
     @collection = Collection.find(params[:id])
     @problems = @collection.problems
   end
   
-  def collection_errors(collection)
-    flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
-  end
-
   # creates a new collection with user specified values and sets as current collection
   def create
     collection = @current_user.collections.create
@@ -100,4 +103,11 @@ class CollectionsController < ApplicationController
     @collections = params[:ids].map{|collection_id| Collection.find(collection_id)}
     @collections.each{|c| authorize! :read, c}
   end
+
+  private
+
+  def collection_errors(collection)
+    flash[:notice] =  collection.errors.messages.map {|key, value| key.to_s + ' ' + value.to_s}.join ' ,'
+  end
+
 end

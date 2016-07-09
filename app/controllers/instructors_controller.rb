@@ -2,8 +2,10 @@ class InstructorsController < ApplicationController
 
   def show
     authorize! :manage, Collection
+    @heading = 'Your collections'
     @instructor = Instructor.find_by_id(@current_user)
     @collections = @instructor.collections.to_a
+    render :template => 'collections/index'
   end
 
   # def mark_as_current
