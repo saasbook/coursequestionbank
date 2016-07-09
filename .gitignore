@@ -241,3 +241,4 @@ $RECYCLE.BIN/
 *.lnk
 TAGS
 sunspot-solr.pid
+config/application.yml
