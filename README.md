@@ -9,6 +9,12 @@
 
 See the Wiki.
 
+## Running or Testing Locally
+
+You need to run a solr process during local development (or Cloud9 for those who used it). So `bundle exec sunspot-solr start -p 8983` to start and `bundle exec sunspot-solr stop` to stop (basically the steps in the .travis.yml). And the config in sunspot.yml should enable the app to connect properly.
+
+When running locally, you can click the "Dev Login" button and login as either `saas` (Instructor privilege) or `saas-admin` (Admin privilege) with no password needed.
+
 ## Deployment
 
 Currently set up to deploy to Heroku.  There is a Websolr worker that periodically re-indexes the questions so that keyword search will work; you can run it manually with `heroku run rake sunspot:solr:reindex`
