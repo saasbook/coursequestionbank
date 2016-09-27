@@ -83,10 +83,10 @@ class CollectionsController < ApplicationController
   def export
     @collection = Collection.find(params[:id])
     
-    @ruql_code = @collection.export('ruql')
-    @html_code = @collection.export('Html5')
-    @edx_code = @collection.export('EdXml')
-    @autoqcm_code = @collection.export('AutoQCM')
+    @ruql_code = @collection.export('ruql') rescue "(error rendering RuQL)"
+    @html_code = @collection.export('Html5') rescue "(error rendering HTML)"
+    @edx_code = @collection.export('EdXml') rescue "(error rendering Edml)"
+    @autoqcm_code = @collection.export('AutoQCM') rescue "(error rendering AutoQCM)"
 
     if not @html_code
       flash[:notice] = 'Cannot export an empty collection! Add some questions to your collection first!'
