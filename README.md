@@ -7,7 +7,7 @@
 
 ## User Guide
 
-See the Wiki.
+See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
 ## Running or Testing Locally
 
