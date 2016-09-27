@@ -181,6 +181,8 @@ GEM
     rake (10.4.2)
     rdoc (3.12.2)
       json (~> 1.4)
+    rollbar (2.13.1)
+      multi_json
     rsolr (1.0.12)
       builder (>= 2.1.2)
     rspec-core (2.14.8)
@@ -252,6 +254,7 @@ DEPENDENCIES
   rails (= 3.2.16)
   rails-settings-cached (= 0.2.4)
   rails_12factor
+  rollbar
   rspec-rails
   ruql!
   sass-rails (~> 3.2.3)
@@ -264,5 +267,8 @@ DEPENDENCIES
   will_paginate
   zeroclipboard-rails
 
+RUBY VERSION
+   ruby 2.2.2p95
+
 BUNDLED WITH
-   1.11.2
+   1.12.5

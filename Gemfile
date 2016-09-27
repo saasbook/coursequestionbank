@@ -17,6 +17,7 @@ gem 'progress_bar'
 gem 'json'
 gem 'will_paginate'
 gem 'sunspot_solr'
+gem 'rollbar'
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem "rails-settings-cached", "0.2.4"
 
