@@ -26,6 +26,7 @@ group :test do
 end
 
 group :development, :test do
+  gem 'rails-erd'
   gem 'sqlite3'
   #gem 'ruby-debug19'
   gem 'byebug'
