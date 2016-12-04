@@ -1,8 +1,9 @@
-- problem.tags.each do |tag|
-  %div.tag
-    = link_to tag.name, view_tags_path(:tag_names => tag.name), :class => 'btn btn-info'
+- if can? :manage, problem
+  - problem.tags.each do |tag|
+    %div.tag
+      = link_to tag.name, view_tags_path(:tag_names => tag.name), :class => 'btn btn-info'
 
-    = form_tag remove_tags_path(:id => problem.id), :method => :post, :class => 'remove_tag' do
-      = hidden_field_tag :tag_names, tag.name, :id => nil
-      = button_tag :type => 'submit', :class => 'clr-button' do
-        %div.glyphicon.glyphicon-remove
+      = form_tag remove_tags_path(:id => problem.id), :method => :post, :class => 'remove_tag' do
+        = hidden_field_tag :tag_names, tag.name, :id => nil
+        = button_tag :type => 'submit', :class => 'clr-button' do
+          %div.glyphicon.glyphicon-remove

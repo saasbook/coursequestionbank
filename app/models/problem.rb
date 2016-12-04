@@ -1,14 +1,16 @@
 require 'ruql_renderer'
 
 class Problem < ActiveRecord::Base
-  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :text, :json, :problem_type, :obsolete, :bloom_category, :uid
+  attr_accessible :created_date, :is_public, :last_used, :rendered_text, :json, :text, :problem_type, :obsolete, :bloom_category, :uid, :access_level
   has_and_belongs_to_many :tags
   belongs_to :instructor
   has_and_belongs_to_many :collections
+  has_many :studentanswers
   belongs_to :previous_version, class_name: 'Problem'
   validates :uid, uniqueness: true
 
-  scope :is_public, -> { where(is_public:  true) }
+  scope :is_public, -> { where(access_level:  3) }
+  scope :is_share, -> { where(access_level:  2) }
   scope :last_used, ->(t) { where(last_used: t) }
   scope :instructor_id, ->(id) { where(instructor_id: id) }
 
@@ -19,6 +21,7 @@ class Problem < ActiveRecord::Base
     text      :json, :more_like_this => true
     integer   :instructor_id
     boolean   :is_public
+    integer   :access_level
     time      :last_used
     time      :updated_at
     string    :problem_type
@@ -27,10 +30,10 @@ class Problem < ActiveRecord::Base
     string    :bloom_category
     string    :uid
 
-    string    :tag_names, :multiple => true do
+    string :tag_names, :multiple => true do
       tags.map(&:name)
     end
-    integer   :collection_ids, :multiple => true do
+    integer :collection_ids, :multiple => true do
       collections.map(&:id)
     end
   end
@@ -57,22 +60,104 @@ class Problem < ActiveRecord::Base
     if json and !json.empty?
       begin
         question = Question.from_JSON(self.json)
-        quiz = Quiz.new("", nil, :questions => [question])
+        quiz = Quiz.new("", :questions => [question])
         quiz.render_with("Html5", {'template' => 'preview.html.erb'})
         self.update_attributes(:rendered_text => quiz.output)
         quiz.output
-      rescue
-        return 'There was a problem rendering this question'
+      rescue Exception => e
+        return 'There was a problem rendering this question' + e.message
       end
     else
       'This question could not be displayed (no JSON found)'
     end
   end
 
-  def ruql_source
-    new_uid = SecureRandom.uuid
-    prev_uid = self.uid
+  def ruql_source(new = true)
+    if new
+      new_uid = SecureRandom.uuid
+      prev_uid = self.uid
+    end
     return RuqlRenderer.render_from_json(self.json, new_uid, prev_uid)
+  end
+
+  def view_select_type
+    if problem_type == "MultipuleChoice"
+      "checkbox"
+    else
+      "radio"
+    end
+  end
+
+  def question_text
+    return JSON.parse(json)["question_text"]
+  end
+
+  def question_image
+    return JSON.parse(json)["question_image"]
+  end
+
+  def answer_entrys
+    return JSON.parse(json)["answers"].collect{|entry| entry["answer_text"]}
+  end
+
+  def answer_correct?
+    return JSON.parse(json)["answers"].collect{|entry| entry["correct"]}
+  end
+
+  def answer_explanation
+    return JSON.parse(json)["answers"].collect do |entry|
+      if entry["explanation"].to_s != ""
+        entry["explanation"]
+      else
+        if entry["correct"]
+          "Correct!"
+        else
+          JSON.parse(json)["global_explanation"].to_s
+        end
+      end
+    end
+  end
+
+  def global_explanation
+    # debugger
+    return JSON.parse(json)["global_explanation"]
+  end
+
+  def attempt_stats
+    attempts = studentanswers.where(:first=>true)
+    correct_cnt = 0
+    entrys_attempt = {}
+    entrys = answer_entrys
+    entrys_attempt[1] = 0
+    entrys_attempt[2] = 0
+    for i in (3..entrys.length) do
+        entrys_attempt[i] = 0
+    end
+    attempts.each do |answer|
+      correct_cnt += 1 if answer.correctness
+      answer.attempt.split("entry_").each do |entry|
+          entrys_attempt[entry.to_i] += 1 if entry.to_s != ""
+      end
+    end
+    entrys_array = entrys_attempt.sort.to_h.values
+    overallAttempts = studentanswers.length
+    allAttemptsWrongAmount = studentanswers.where(:correctness => false).length
+
+    return {"first_attempts" => attempts.length, "first_correct" => correct_cnt, "entry_attempts" => entrys_array,
+            "overallAttempts" => overallAttempts, "allAttemptsWrongAmount" => allAttemptsWrongAmount}
+  end
+
+  def sub_questions
+    # To do: figure out why exactly the question
+    if problem_type == "Group"
+      sub_problems = []
+      JSON.parse(json)["questions"].each do |question_json|
+        sub_problems << Problem.from_JSON(nil, question_json.to_json)
+      end
+      return sub_problems
+    else
+      return nil
+    end
   end
 
   def self.from_JSON(instructor, json_source)
@@ -81,9 +166,10 @@ class Problem < ActiveRecord::Base
     problem = Problem.new(text: "",
                           json: json_source,
                           is_public: true,
+                          access_level: 1,
                           problem_type: json_hash["question_type"],
                           created_date: Time.now,
-                          uid: json_hash["uid"].equal?(-1) ? SecureRandom.uuid : json_hash["uid"])
+                          uid: json_hash["uid"].equal?(nil) ? SecureRandom.uuid : json_hash["uid"])
     problem.instructor = instructor
     json_hash["question_tags"].each do |tag_name|
       tag = Tag.find_by_name(tag_name) || Tag.create(name: tag_name)
@@ -93,73 +179,85 @@ class Problem < ActiveRecord::Base
   end
 
   def self.filter(user, filters, bump_problem)
-    problems = Problem.search do
-      any_of do
-        with(:instructor_id, user.id)
-        with(:is_public, true)
-      end
-
-      filters[:tags].each do |tag|
-        with(:tag_names, tag)
-      end
-
-      if !filters[:problem_type].empty?
+      problems = Problem.search do
         any_of do
-          filters[:problem_type].each do |sort_param|
-            with(:problem_type, sort_param)
+          with(:instructor_id, user.id)
+          with(:access_level, 1)
+          if user.privilege != "Student"
+            with(:access_level, 2)
           end
         end
-      end
 
-      if !filters[:bloom_category].empty?
-        any_of do
-          filters[:bloom_category].each do |category|
-            with(:bloom_category, category)
+        filters[:tags].each do |tag|
+          with(:tag_names, tag)
+        end
+
+
+        ["problem_type", "bloom_category"].each do |sub|
+          if !filters["#{sub}"].empty?
+            any_of do
+              filters["#{sub}"].each do |sort_param|
+                with("#{sub}", sort_param)
+              end
+            end
           end
         end
-      end
 
-      if !filters[:collections].empty?
-        any_of do
-          filters[:collections].each do |col|
-            with(:collection_ids, col)
+        # if !filters[:problem_type].empty?
+        #   any_of do
+        #     filters[:problem_type].each do |sort_param|
+        #       with(:problem_type, sort_param)
+        #     end
+        #   end
+        # end
+        #
+        # if !filters[:bloom_category].empty?
+        #   any_of do
+        #     filters[:bloom_category].each do |category|
+        #       with(:bloom_category, category)
+        #     end
+        #   end
+        # end
+
+        if !filters[:collections].empty?
+          any_of do
+            filters[:collections].each do |col|
+              with(:collection_ids, col)
+            end
           end
         end
+
+
+
+
+
+
+        if !filters[:show_obsolete]
+          without(:obsolete, true)
+        end
+
+        fulltext filters[:search]
+
+        if filters[:sort_by] == 'Relevancy'
+          order_by(:score, :desc)
+        elsif filters[:sort_by] == 'Date Created'
+          order_by(:created_date, :desc)
+        elsif filters[:sort_by] == 'Last Used'
+          order_by(:last_used, :desc)
+        end
+
+        paginate :page => filters['page'], :per_page => filters['per_page']
       end
-
-      if !filters[:show_obsolete]
-        without(:obsolete, true)
+      # debugger
+    if !problems.nil?
+      results = problems.results
+      if !bump_problem.nil?
+        results.reject! {|p| p.id == bump_problem.id}
+        results.insert(0, bump_problem)
       end
-
-      fulltext filters[:search]
-
-      if filters[:sort_by] == 'Relevancy'
-        order_by(:score, :desc)
-      elsif filters[:sort_by] == 'Date Created'
-        order_by(:created_date, :desc)
-      elsif filters[:sort_by] == 'Last Used'
-        order_by(:last_used, :desc)
-      end
-
-      paginate :page => filters['page'], :per_page => filters['per_page']
-    end
-
-    results = problems.results
-    if !bump_problem.nil?
-      results.reject! {|p| p.id == bump_problem.id}
-      results.insert(0, bump_problem)
     end
     return results
   end
-
-  # def supersede(user, source)
-  #   new_problem = RuqlReader.read_problem(user, source)
-  #   new_problem.previous_version = self
-  #   new_problem.is_public = self.is_public
-  #   new_problem.tags += tags
-  #   new_problem.save
-  #   new_problem
-  # end
 
   def add_tag(tag_name)
     return false if tag_name.strip == ""
@@ -209,8 +307,13 @@ class Problem < ActiveRecord::Base
     target_json = JSON.parse(target.json)
 
     from_you = current_user.problems
-    from_others = Problem.where(is_public: true)
-    search_set = (from_you + from_others).uniq
+    from_others = Problem.where(access_level: 1)
+    if current_user.privilege != "Student"
+      from_instructors = Problem.where(access_level: 2)
+    else
+      from_instructors = []
+    end
+    search_set = (from_you + from_others + from_instructors).uniq
     results = []
     search_set.each do |other|
       other_json = JSON.parse(other.json)
@@ -228,7 +331,10 @@ class Problem < ActiveRecord::Base
       fields :json # Also limited by stopwords.txt
       any_of do
         with(:instructor_id, user_id)
-        with(:is_public, true)
+        with(:access_level, 1)
+        if current_user.privilege != "Student"
+          with(:access_level, 2)
+        end
       end
       minimum_term_frequency 1
       minimum_document_frequency 1
@@ -241,5 +347,4 @@ class Problem < ActiveRecord::Base
     results.push(match) if match
     return results
   end
-
 end

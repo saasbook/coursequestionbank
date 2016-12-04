@@ -1,12 +1,16 @@
 source 'https://rubygems.org'
 
-ruby '2.2.2'
+ruby '2.3.0'
 gem 'rails', '3.2.16'
+
+
+gem 'googlecharts', :git => 'https://github.com/mattetti/googlecharts.git'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
-gem 'ruql', :git =>'https://github.com/jshoe/ruql'
+gem 'ruql', :git =>'https://github.com/stevenwuyinze/ruql'
 gem 'omniauth'
+gem "highcharts-rails"
 gem 'cancan'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
@@ -21,9 +25,8 @@ gem 'rollbar'
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem "rails-settings-cached", "0.2.4"
 
-group :test do
-  gem 'cucumber-rails', :require => false
-end
+gem 'cucumber-rails', :require => false
+gem 'rspec-rails'
 
 group :development, :test do
   gem 'rails-erd'
@@ -31,7 +34,6 @@ group :development, :test do
   #gem 'ruby-debug19'
   gem 'byebug'
   gem 'database_cleaner'
-  gem 'rspec-rails'
   gem 'simplecov'
   gem 'rack_session_access'
   gem 'test-unit'

@@ -1,10 +1,15 @@
 class SessionController < ApplicationController
   skip_before_filter :set_current_user
 
+  def bypass
+    session[:user_id] = params[:user_id]
+    redirect_to problems_path
+  end
+
   def create
     auth = request.env["omniauth.auth"]
-    user = Instructor.find_by_provider_and_uid(auth["provider"],auth["uid"]) ||
-      Instructor.create_with_omniauth(auth)
+    user = Instructor.find_by_provider_and_uid(auth["provider"], auth["uid"]) ||
+             Instructor.create_via_omniauth(auth)
     session[:user_id] = user.id
     redirect_to problems_path
   end
@@ -22,5 +27,6 @@ class SessionController < ApplicationController
   end
 
   def login
+    @dev_users = Instructor.dev_users
   end
 end

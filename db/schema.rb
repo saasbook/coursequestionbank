@@ -11,17 +11,18 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20160430062346) do
+ActiveRecord::Schema.define(:version => 20161130023227) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
     t.string   "name"
     t.datetime "last_used"
-    t.datetime "created_at",    :null => false
-    t.datetime "updated_at",    :null => false
+    t.datetime "created_at",                   :null => false
+    t.datetime "updated_at",                   :null => false
     t.text     "description"
     t.boolean  "is_public"
     t.string   "color"
+    t.integer  "access_level",  :default => 1
   end
 
   create_table "collections_problems", :id => false, :force => true do |t|
@@ -39,6 +40,7 @@ ActiveRecord::Schema.define(:version => 20160430062346) do
     t.string   "provider_image"
     t.string   "provider_email"
     t.string   "username"
+    t.string   "privilege"
   end
 
   create_table "problems", :force => true do |t|
@@ -48,8 +50,8 @@ ActiveRecord::Schema.define(:version => 20160430062346) do
     t.string   "created_by"
     t.boolean  "is_public"
     t.datetime "last_used"
-    t.datetime "created_at",          :null => false
-    t.datetime "updated_at",          :null => false
+    t.datetime "created_at",                         :null => false
+    t.datetime "updated_at",                         :null => false
     t.text     "rendered_text"
     t.string   "problem_type"
     t.text     "json"
@@ -57,6 +59,7 @@ ActiveRecord::Schema.define(:version => 20160430062346) do
     t.string   "bloom_category"
     t.boolean  "obsolete"
     t.string   "uid"
+    t.integer  "access_level",        :default => 1
   end
 
   create_table "problems_tags", :id => false, :force => true do |t|
@@ -84,6 +87,17 @@ ActiveRecord::Schema.define(:version => 20160430062346) do
   end
 
   add_index "settings", ["thing_type", "thing_id", "var"], :name => "index_settings_on_thing_type_and_thing_id_and_var", :unique => true
+
+  create_table "studentanswers", :force => true do |t|
+    t.string   "attempt"
+    t.boolean  "correctness"
+    t.string   "problem_uid"
+    t.datetime "created_at",    :null => false
+    t.datetime "updated_at",    :null => false
+    t.integer  "instructor_id"
+    t.integer  "problem_id"
+    t.boolean  "first"
+  end
 
   create_table "tags", :force => true do |t|
     t.string   "name"

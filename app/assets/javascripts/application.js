@@ -14,7 +14,11 @@
 //= require jquery_ujs
 //= require_tree .
 //= require bootstrap-sprockets
+//= require highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/modules/solid-gauge
 //= require zeroclipboard
+//= require highcharts/adapters/standalone-framework
 
 jQuery(document).ready(function() {
 	// $('.maintable').find('.answers').hide(); //Hide/close all containers
@@ -36,11 +40,38 @@ jQuery(document).ready(function() {
 	$(".d_clip_button").on("click", function(){
 		alert("Source code copied to clipboard!");
 	});
-	
+
 	$('.check_all').show();
 	$('.check_all').change(function () {
 		var group = $(this).attr('id').substring('check_all_'.length);
     $('.check_box_' + group).prop('checked', $(this).prop('checked'));
 	});
-	
+
 });
+
+var LoginPanel = {
+	setup: function() {
+
+		var IdentityPanel = $('#choose-identity');
+		var BackButton = $('#back');
+		var LoginButton = $('#login');
+
+		IdentityPanel.hide();
+		BackButton.hide();
+
+		LoginButton.click(function() {
+			BackButton.show();
+			LoginButton.hide();
+			IdentityPanel.show();
+			return false;
+		});
+
+		BackButton.click(function() {
+			BackButton.hide();
+			LoginButton.show();
+			IdentityPanel.hide();
+			return false;
+		});
+	}
+}
+$(LoginPanel.setup);

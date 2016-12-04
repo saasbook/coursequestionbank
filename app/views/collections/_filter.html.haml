@@ -1,0 +1,8 @@
+= form_tag search_collection_path, :method => :post, :id => 'filter-form' do
+
+  %div.form-group
+    = label_tag :name, 'Search:'
+    = text_field_tag :name, session[:name], class: 'form-control', placeholder: 'Name of the Collection'
+  %hr
+    = submit_tag 'Search', :class => 'btn btn-primary'
+ 
