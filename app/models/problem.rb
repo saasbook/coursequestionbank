@@ -97,7 +97,7 @@ class Problem < ActiveRecord::Base
   end
 
   def answer_entrys
-    return JSON.parse(json)["answers"].collect{|entry| entry["answer_text"]}
+    return JSON.parse(json)["answers"].collect{|entry| entry["answer_text"].to_s}
   end
 
   def answer_correct?
