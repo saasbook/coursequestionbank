@@ -10,7 +10,7 @@ See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
 ## Running or Testing Locally
 
-You need to run a solr process during local development (or Cloud9 for those who used it). So `bundle exec sunspot-solr start -p 8983` to start and `bundle exec sunspot-solr stop` to stop (basically the steps in the .travis.yml). And the config in sunspot.yml should enable the app to connect properly.
+You need to run a Solr process during local development (or Cloud9 for those who used it). So `bundle exec sunspot-solr start -p 8983` to start and `bundle exec sunspot-solr stop` to stop (basically the steps in `.travis.yml`). And the config in `sunspot.yml` should enable the app to connect properly.
 
 When running locally, you can click the "Dev Login" button and login as either `saas` (Instructor privilege) or `saas-admin` (Admin privilege) with no password needed.
 

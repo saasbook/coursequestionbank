@@ -24,11 +24,13 @@ gem 'sunspot_solr'
 gem 'rollbar'
 gem "codeclimate-test-reporter", group: :test, require: nil
 gem "rails-settings-cached", "0.2.4"
-
-gem 'cucumber-rails', :require => false
-gem 'rspec-rails'
+gem 'jquery-rails'
+gem 'haml'
+gem 'zeroclipboard-rails'
 
 group :development, :test do
+  gem 'cucumber-rails', :require => false
+  gem 'rspec-rails'
   gem 'rails-erd'
   gem 'sqlite3'
   #gem 'ruby-debug19'
@@ -55,10 +57,6 @@ group :assets do
   gem 'uglifier', '>= 1.0.3'
 end
 
-gem 'jquery-rails'
-gem 'haml'
-gem 'zeroclipboard-rails'
-gem 'test-unit'
 
 # To use ActiveModel has_secure_password
 # gem 'bcrypt-ruby', '~> 3.0.0'
