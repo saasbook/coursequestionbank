@@ -9,7 +9,7 @@ class ProblemsController < ApplicationController
    'collections' => [],
    'bloom_category' => [],
    'show_obsolete' => false,
-   'per_page' => 60, 'page' => 1 })
+   'per_page' => 10, 'page' => 1 })
 
   def set_filter_options
     session[:filters] ||= HashWithIndifferentAccess.new(@@defaults)
