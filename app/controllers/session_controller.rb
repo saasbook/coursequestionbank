@@ -28,5 +28,6 @@ class SessionController < ApplicationController
 
   def login
     @dev_users = Instructor.dev_users
+    @on_production = ENV['RACK_ENV'] == 'production'
   end
 end
