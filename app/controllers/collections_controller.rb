@@ -89,7 +89,7 @@ class CollectionsController < ApplicationController
     @collection = Collection.find(params[:id])
 
     @ruql_code = @collection.export('ruql') rescue "(error rendering RuQL)"
-    @html_code = @collection.export('Html5') rescue $!
+    @html_code = @collection.export('Html5') rescue "(error rendering Html5)"
     @edx_code = @collection.export('EdXml') rescue "(error rendering Edml)"
     @autoqcm_code = @collection.export('AutoQCM') rescue "(error rendering AutoQCM)"
 
