@@ -5,6 +5,7 @@
 <span style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" ><a style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" href="https://www.pivotaltracker.com/n/projects/1544183">PivotalTracker</a></span>
 
 #Video Links
+
 Client Entry Video - https://youtu.be/oNJuf9Z29W0 
 Screencast Video - 
 
