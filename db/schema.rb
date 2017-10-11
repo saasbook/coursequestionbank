@@ -11,7 +11,7 @@
 #
 # It's strongly recommended to check this file into your version control system.
 
-ActiveRecord::Schema.define(:version => 20161130023227) do
+ActiveRecord::Schema.define(:version => 20170825074143) do
 
   create_table "collections", :force => true do |t|
     t.integer  "instructor_id"
