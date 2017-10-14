@@ -517,3 +517,8 @@ end
 When(/^I unchecked "([^"]*)"$/) do |arg|
   page.uncheck(arg)
 end
+
+When(/^I check the clipboard$/) do
+  # pending
+end
+
