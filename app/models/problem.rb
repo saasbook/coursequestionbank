@@ -60,7 +60,7 @@ class Problem < ActiveRecord::Base
     if json and !json.empty?
       begin
         question = Question.from_JSON(self.json)
-        quiz = Quiz.new("", nil, :questions => [question])
+        quiz = Quiz.new("", :questions => [question])
         quiz.render_with("Html5", {'template' => 'preview.html.erb'})
         self.update_attributes(:rendered_text => quiz.output)
         quiz.output
