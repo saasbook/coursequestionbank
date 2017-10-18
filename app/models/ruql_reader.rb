@@ -32,7 +32,7 @@ class RuqlReader
   end
 
   def self.read_problem(user, source)
-    quiz = Quiz.new(nil)
+    quiz = Quiz.new(nil, nil)
     quiz.instance_eval(source)
     problems_json = quiz.render_with("JSON", {})
     raise 'Question source must contain exactly one question.' unless problems_json.size == 1
