@@ -27,6 +27,7 @@ gem "rails-settings-cached", "0.2.4"
 gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
+gem 'clipboard-rails'
 
 group :development, :test do
   gem 'cucumber-rails', :require => false

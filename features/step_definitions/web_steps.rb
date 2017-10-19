@@ -517,3 +517,8 @@ end
 When(/^I unchecked "([^"]*)"$/) do |arg|
   page.uncheck(arg)
 end
+
+Then(/^the clipboard should contain "([^"]*)"$/) do |copied|
+  clipboard_text = page.evaluate_script("clip.text()")
+  expect(clipboard_text).to eq(copied)
+end
