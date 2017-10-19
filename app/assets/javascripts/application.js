@@ -19,6 +19,7 @@
 //= require highcharts/modules/solid-gauge
 //= require zeroclipboard
 //= require highcharts/adapters/standalone-framework
+//= require clipboard
 
 jQuery(document).ready(function() {
 	// $('.maintable').find('.answers').hide(); //Hide/close all containers
@@ -36,9 +37,18 @@ jQuery(document).ready(function() {
 	// });
 
 	$('.d_clip_button').show();
-	var clip = new ZeroClipboard($('.d_clip_button'));
-	$(".d_clip_button").on("click", function(){
-		alert("Source code copied to clipboard!");
+	// var clip = new Clipboard('.d_clip_button');
+	// clip.on('success', function(e){console.info('Text:', e.text)});
+	// console.log(clip);
+	// $(".d_clip_button").on("click", function(){
+	// 	alert("Source code copied to clipboard!");
+	// });
+	var clipboard = new Clipboard('.d_clip_button');
+	clipboard.on('success', function(e) {
+	    console.log(e);
+	});
+	clipboard.on('error', function(e) {
+	    console.log(e);
 	});
 
 	$('.check_all').show();

@@ -74,6 +74,7 @@ GEM
       rack-test (>= 0.5.4)
       xpath (~> 2.0)
     choice (0.2.0)
+    clipboard-rails (1.7.1)
     codeclimate-test-reporter (0.5.0)
       simplecov (>= 0.7.1, < 1.0.0)
     coffee-rails (3.2.2)
@@ -253,6 +254,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.3.3)
   byebug
   cancan
+  clipboard-rails
   codeclimate-test-reporter
   coffee-rails (~> 3.2.1)
   cucumber-rails
@@ -289,4 +291,4 @@ RUBY VERSION
    ruby 2.3.0p0
 
 BUNDLED WITH
-   1.13.6
+   1.15.4
