@@ -17,7 +17,6 @@ Scenario: replacing a question with a new version
   And I should see "Which of the following"
   And I should not see "Witch"
 
-
 Scenario: syntax error in question supersession
   When I follow "supersede_button" for problem containing "Witch"
   And I fill in "ruql_source" with "Whoopsies :("
