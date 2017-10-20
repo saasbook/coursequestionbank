@@ -10,6 +10,7 @@ Scenario: viewing a question's original source code
   When I press button "copy_source_button" for problem containing "This is a source code test"
   Then I should see "What's your favorite creative color?"
   
+@javascript
 Scenario: copying a question's original source code
   Given I am signed in with uid "1234" and provider "github"
   And I have uploaded 'source_code_test.txt'

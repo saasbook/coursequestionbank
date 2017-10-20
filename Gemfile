@@ -40,6 +40,8 @@ group :development, :test do
   gem 'simplecov'
   gem 'rack_session_access'
   gem 'test-unit'
+  gem 'poltergeist'
+  gem 'phantomjs', :require => 'phantomjs/poltergeist'
 end
 
 group :production do

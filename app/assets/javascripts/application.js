@@ -21,6 +21,8 @@
 //= require highcharts/adapters/standalone-framework
 //= require clipboard
 
+clipboard = undefined;
+
 jQuery(document).ready(function() {
 	// $('.maintable').find('.answers').hide(); //Hide/close all containers
 	// $('.maintable').find('.additional').hide();
@@ -43,7 +45,7 @@ jQuery(document).ready(function() {
 	// $(".d_clip_button").on("click", function(){
 	// 	alert("Source code copied to clipboard!");
 	// });
-	var clipboard = new Clipboard('.d_clip_button');
+	clipboard = new Clipboard('.d_clip_button');
 	clipboard.on('success', function(e) {
 	    console.log(e);
 	});
