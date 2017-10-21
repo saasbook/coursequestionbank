@@ -8,7 +8,7 @@ script:
   - bundle exec rake db:test:prepare
   - bundle exec rake db:seed
   - bundle exec rake sunspot:solr:reindex
-  - bundle exec cucumber
+  - bundle exec cucumber features/students_problem_view.feature
   - bundle exec rake spec
 after_script:
   - bundle exec sunspot-solr stop
