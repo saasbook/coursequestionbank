@@ -1,7 +1,7 @@
 
 env:
   - DB=sqlite
-features = {features/students_problem_view.feature features/add_bloom_ratings.feature}
+  - features = {features/students_problem_view.feature features/add_bloom_ratings.feature}
 - |
   for i in ${features[@]}; do  
     before_script:
