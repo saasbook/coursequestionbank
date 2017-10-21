@@ -8,12 +8,12 @@ script:
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rake db:test:prepare
   - bundle exec rake db:seed
-    - |
-        features = ('features/students_problem_view.feature' 'features/add_bloom_ratings.feature')
-        for i in ${features[@]}; do 
-          bundle exec rake sunspot:solr:reindex
-          bundle exec cucumber $i
-        done
+  - |
+    features = ('features/students_problem_view.feature' 'features/add_bloom_ratings.feature')
+      for i in ${features[@]}; do 
+        bundle exec rake sunspot:solr:reindex
+        bundle exec cucumber $i
+    done
   - bundle exec rake spec
 after_script:
       - bundle exec sunspot-solr stop
