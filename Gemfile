@@ -23,6 +23,7 @@ gem 'will_paginate'
 gem 'sunspot_solr'
 gem 'rollbar'
 gem "codeclimate-test-reporter", group: :test, require: nil
+gem 'coveralls', require: false
 gem "rails-settings-cached", "0.2.4"
 gem 'jquery-rails'
 gem 'haml'
