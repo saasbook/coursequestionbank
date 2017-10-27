@@ -3,8 +3,7 @@
 %p.text-center Easily organize all your tests and class materials!
 %div.text-center
   = link_to 'Log in with your GitHub account', '/auth/github', class: "btn btn-default"
-  <!--- if not @on_production-->
-    = link_to 'Dev Login', '/auth/developer', :id => "login", class: "btn btn-default"
+  = link_to 'Dev Login', '/auth/developer', :id => "login", class: "btn btn-default"
 %div.text-center#choose-identity
   %p.text-center Login as
   - @dev_users.each do |user|
