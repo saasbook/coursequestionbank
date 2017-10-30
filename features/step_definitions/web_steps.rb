@@ -527,3 +527,23 @@ Then(/^I should see an alert saying "([^"]*)"$/) do |message|
   alert_text = page.driver.browser.switch_to.alert.text
   expect(alert_text).to eq(message)
 end
+
+Then(/^the question should be part of "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^the question should not be part of "(.*?)"$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Given(/^I am offline$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^the "(.*?)" button should not be blue$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
+
+Then(/^the "(.*?)" button should be blue$/) do |arg1|
+  pending # express the regexp above with the code you wish you had
+end
