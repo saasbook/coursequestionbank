@@ -6,7 +6,8 @@ Feature: User should be able to know if AJAX action succeeds or not (making AJAX
 Background: 
   Given I am on the login page
   Given I am signed in with uid "1234" and provider "github"
-  And I have uploaded 'micro_quizzes.txt'
+  And I have uploaded 'bloom_test.txt'
+  And I am on the CourseQuestionBank home page
   And I press "Remember"
   
 Scenario: I am online. 
