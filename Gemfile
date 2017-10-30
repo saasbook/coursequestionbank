@@ -29,6 +29,7 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
 gem 'clipboard-rails'
+gem 'sqlite3'
 
 group :development, :test do
   gem 'cucumber-rails', :require => false
@@ -42,7 +43,7 @@ group :development, :test do
   gem 'rack_session_access'
   gem 'test-unit'
   gem 'poltergeist'
-  gem 'phantomjs', :require => 'phantomjs/poltergeist'
+  gem 'phantomjs' #:require => 'phantomjs/poltergeist'
 end
 
 group :production do
