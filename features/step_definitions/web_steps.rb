@@ -522,3 +522,8 @@ Then(/^the clipboard should contain "([^"]*)"$/) do |copied|
   clipboard_text = page.evaluate_script("clipboard.clipboardAction.text")
   clipboard_text.should include(copied)
 end
+
+Then(/^I should see an alert saying "([^"]*)"$/) do |message|
+  alert_text = page.driver.browser.switch_to.alert.text
+  expect(alert_text).to eq(message)
+end

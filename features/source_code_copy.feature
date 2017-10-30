@@ -8,6 +8,7 @@ Scenario: viewing a question's original source code
   And I have uploaded 'source_code_test.txt'
   And I am on the CourseQuestionBank home page
   When I press button "copy_source_button" for problem containing "This is a source code test"
+  Then I should see an alert saying "Source code copied to clipboard!"
   Then I should see "What's your favorite creative color?"
   
 @javascript
