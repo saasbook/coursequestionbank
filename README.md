@@ -3,7 +3,6 @@
 [![Travis CI](https://travis-ci.org/hrzlvn/coursequestionbank.svg?branch=master)](https://travis-ci.org/Laralinmcc/coursequestionbank)
 [![Test Coverage](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/coverage.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank/coverage)
 <span style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" ><a style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" href="https://www.pivotaltracker.com/n/projects/1544183">PivotalTracker</a></span>
-[![Coverage Status](https://coveralls.io/repos/github/Laralinmcc/coursequestionbank/badge.svg?branch=fall2017_features)](https://coveralls.io/github/Laralinmcc/coursequestionbank?branch=fall2017_features)
 
 # Video Links
 
