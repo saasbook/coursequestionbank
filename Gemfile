@@ -44,6 +44,7 @@ group :development, :test do
   gem 'test-unit'
   gem 'poltergeist'
   gem 'phantomjs' #:require => 'phantomjs/poltergeist'
+  gem 'jasmine'
 end
 
 group :production do
