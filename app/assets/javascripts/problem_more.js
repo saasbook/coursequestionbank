@@ -282,25 +282,26 @@ var ChangeCollectionsByCheckbox = {
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'PUT',
-                    // success: ChangeCollectionsByCheckbox.editCollectionButton,
-                    data: {"collection": $(this).attr("collection")}
-
+                    data: {"collection": $(this).attr("collection")},
+                    success: function() {
+                        // update belongs to which collecion
+                        button_text = "#collection_text_" + $(this).attr("collection") + "_" + $(this).attr("problem")
+        
+                        var button = $(this).find('input[type="submit"]');
+        
+                        if ($(this).attr("checked") === "checked") {
+                            $(this).attr('checked',false);
+                            $(button_text).hide();
+                        }
+                        else {
+                            $(this).attr('checked',true);
+                            $(button_text).show();
+                        }
+                    },
+                    error: function() {
+                        alert("Error: Collection not updated")
+                    }
                 });
-                // update belongs to which collecion
-
-                button_text = "#collection_text_" + $(this).attr("collection") + "_" + $(this).attr("problem")
-
-                var button = $(this).find('input[type="submit"]');
-
-                if ($(this).attr("checked") === "checked") {
-                    $(this).attr('checked',false);
-                    $(button_text).hide();
-                }
-                else {
-                    $(this).attr('checked',true);
-                    $(button_text).show();
-                }
-
                 return true;
             });
 
