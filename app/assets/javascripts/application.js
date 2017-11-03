@@ -47,6 +47,7 @@ jQuery(document).ready(function() {
 	// });
 	clipboard = new Clipboard('.d_clip_button');
 	clipboard.on('success', function(e) {
+		alert("Source code copied to clipboard!");
 	    console.log(e);
 	});
 	clipboard.on('error', function(e) {
