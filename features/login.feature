@@ -14,6 +14,7 @@ Scenario: redirect to login page if not logged in
 	Then I should be on the login page
 
 Scenario: redirect to home page if login successful
+	# PTID 152415858
 	Given I am on the login page
 	And I follow "Log in with your GitHub account"
 	Then I should be on the problems page
