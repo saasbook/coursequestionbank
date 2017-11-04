@@ -29,7 +29,6 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
 gem 'clipboard-rails'
-gem 'sqlite3'
 
 group :development, :test do
   gem 'cucumber-rails', :require => false
