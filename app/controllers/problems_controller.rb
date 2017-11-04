@@ -24,7 +24,6 @@ class ProblemsController < ApplicationController
     else
       session[:filters] = session[:filters].merge params.slice(:page, :per_page) 
     end
-    session[:filters] = session[:filters].merge params.slice(:page, :per_page)
   end
 
   def set_filters
