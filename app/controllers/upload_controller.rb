@@ -4,11 +4,13 @@ class UploadController < ApplicationController
     authorize! :manage, Problem
     begin
       collections, dups_found = RuqlReader.store_as_json(@current_user, params[:ruql_file])
+
       if dups_found
         flash[:notice] = "Near-duplicate questions may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Click on tag to view potential matches. Mark undesired Questions as Obsolete. Remove dup tags when finished."
       end
     rescue Exception => e
-      flash[:notice] = "There is an error in the file: " + e.message
+      flash[:notice] = e.message()
+      # flash[:notice] = e.backtrace()
       flash.keep
       redirect_to upload_path
       return

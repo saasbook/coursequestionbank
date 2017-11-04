@@ -1,31 +1,50 @@
 class CollectionsController < ApplicationController
   load_and_authorize_resource
-  # after_filter :set_current_collection
 
-  # def set_current_collection
-  # end
+  @@defaults = HashWithIndifferentAccess.new({'search' => ""})
+
+
 
   def new
     @collection = Collection.new
   end
 
   def index
-    # Show all public collections
+    session[:filters] = nil
     @heading = 'Public collections'
     @instructor = Instructor.find_by_id(@current_user)
-    @collections = Collection.public
+
+    if @current_user.get_privilege == "Student"
+      @collections = Collection.where(:access_level => 1)
+    else
+      @collections = Collection.where(:access_level => 1) + Collection.where(:access_level => 2)
+    end
+    # debugger
+  end
+
+  def search
+    session[:filter] ||= HashWithIndifferentAccess.new(@@defaults)
+    session[:filter][:search] = params[:search]
+
+    @search = session[:filter][:search]
+
+    if @search.empty? || @collections.nil?
+      redirect_to collections_path
+    end
+
+    @collections = Collection.filter(@current_user, session[:filter].clone)
   end
 
   def edit
     @collection = Collection.find(params[:id])
     @problems = @collection.problems
   end
-  
+
   # creates a new collection with user specified values and sets as current collection
   def create
     collection = @current_user.collections.create
     collection.set_attributes(params)
-    
+
     if not collection.valid?
       collection_errors(collection)
       redirect_to :back and return
@@ -41,17 +60,21 @@ class CollectionsController < ApplicationController
   end
 
   def update
+
     collection = Collection.find(params[:id])
     collection.set_attributes(params)
-    
+
     if not collection.valid?
       collection_errors(collection)
       redirect_to :back and return
     else
+      if params[:access_level].nil? == false
+        name = {"Public" => 1, "Share" => 2, "Private" => 3}
+        level = name[params[:access_level]]
+        collection.access_level = level
+      end
       collection.save
-      # if params[:is_public] != nil
-      #   collection.problems.each{ |prob| prob.is_public = collection.is_public ; prob.save }
-      # end
+
     end
     redirect_to collection_path(:id => collection.id)
   end
@@ -61,30 +84,12 @@ class CollectionsController < ApplicationController
     flash[:notice] = 'Collection deleted'
     redirect_to profile_path
   end
-  
-  # def add_problems
-  #   collection = Collection.find(params[:id])
-  #   problem_ids = self.class.parse_list params[:problem_ids]
-  #   problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
-  #   problems.each {|p| collection.problems << p if !collection.problems.include?(p)}
-  #   flash[:notice] = "Problems added"
-  #   redirect_to :back
-  # end
-  
-  # def remove_problems
-  #   collection = Collection.find(params[:id])
-  #   problem_ids = self.class.parse_list params[:problem_ids]
-  #   problems = problem_ids.map{|id| Problem.find_by_id(id)}.reject{|p| p.nil?}
-  #   problems.each {|p| collection.problems.delete(p) if collection.problems.include?(p)}
-  #   flash[:notice] = "Problems removed"
-  #   redirect_to :back
-  # end
 
   def export
     @collection = Collection.find(params[:id])
-    
+
     @ruql_code = @collection.export('ruql') rescue "(error rendering RuQL)"
-    @html_code = @collection.export('Html5') rescue "(error rendering HTML)"
+    @html_code = @collection.export('Html5') rescue "(error rendering Html5)"
     @edx_code = @collection.export('EdXml') rescue "(error rendering Edml)"
     @autoqcm_code = @collection.export('AutoQCM') rescue "(error rendering AutoQCM)"
 
@@ -93,10 +98,10 @@ class CollectionsController < ApplicationController
       redirect_to collection_path(:id => @collection.id)
     end
   end
-  
+
   def preview
-    html_code = Collection.find(params[:id]).export('Html5')
-    render :text => html_code
+    ruql_code = Collection.find(params[:id]).export('Html5')
+    render :text => ruql_code
   end
 
   def finalize_upload

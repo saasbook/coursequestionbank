@@ -1,0 +1,14 @@
+quiz "Tony Lee Collection" do
+
+  choice_answer do
+    uid "47ca4c13-7c70-43cb-98cf-1070b0066905"
+    #uid "49b1620c-c9ef-4ebf-8987-f2f6542b19cf"
+    image "http://www.websiteoptimization.com/secrets/metrics/10-21-http-request.png"
+    text "An HTTP request must consist of both a(n) ----- and a(n) -----"
+    distractor "CRUD action, database"
+    distractor "header, cookie", :explanation => "A header is part of the request, but a cookie is not necessarily included unless the server previously specified one."
+    distractor "URL, wildcard", :explanation => "A URL is necessary, but not a wildcard."
+    answer "URI, HTTP request method", :explanation => "The URI alone isn't enough--the same URI used with two different methods can cause two different actions."
+  end
+
+end

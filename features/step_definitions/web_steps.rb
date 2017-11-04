@@ -31,6 +31,11 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+
+Then /^I should see the image "(.+)"$/ do |image|
+    page.should have_xpath("//img[@src=\"#{image}\"]")
+end
+
 # Single-line step scoper
 When /^(.*) within (.*[^:])$/ do |step, parent|
   with_scope(parent) { When step }
@@ -51,12 +56,36 @@ Then /^(?:|I )should see (.*) '(.*)' in the database$/ do |datatype, name_value|
 end
 
 When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
-  collection_id = Collection.find_by_name(former)
-  visit edit_collection_path(:id => collection_id)
+
+
+  collection = Collection.find_by_name(former)
+  collection.access_level = 1
+  collection.save
+
+  visit edit_collection_path(:id => collection.id)
   steps %Q{
-    And I fill in "name" with "#{new}"
-    And I press "Update"
-  }
+      And I fill in "name" with "#{new}"
+      And I press "Update"
+    }
+
+
+  # visit edit_collection_path(:id => collection_id)
+  # if new != ""
+  #   collection_id.name = new
+  #   collection_id.save
+  #
+  # #   steps %Q{
+  # #   And I fill in "name" with "#{new}"
+  # #   And I press "Update"
+  # # }
+  # else
+  #
+  #     visit edit_collection_path(:id => collection_id)
+  #     steps %Q{
+  #     And I fill in "name" with "#{new}"
+  #     And I press "Update"
+  #   }
+  # end
 end
 
 Given /^(?:|I )have uploaded '(.*)'$/ do |file|
@@ -181,7 +210,6 @@ end
 When /^(?:|I )go to (.+)$/ do |page_name|
   visit path_to(page_name)
 end
-
 
 When /^(?:|I )press "([^"]*)"$/ do |button|
   click_button(button)
@@ -403,6 +431,7 @@ Then /^(?:|I )should see a button "([^\"]*)"$/ do |text|
   should have_button text
 end
 
+
 Then(/^the problem containing "(.*?)" should have the tag "(.*?)"$/) do |problem_text, tag|
   problem = problems_with_text(problem_text)[0]
   problem.tags[0].name.should =~ /#{tag}/
@@ -429,4 +458,67 @@ end
 
 Then(/^I should see "(.*?)" under "(.*?)"$/) do |arg1, arg2|
   pending # express the regexp above with the code you wish you had
+end
+
+
+Then(/^I should not see "(.*?)" checkbox$/) do |text|
+  checkboxName = find(:css, "#collections_#{collection.id}").should_not be_visible
+end
+
+Given(/^there exist a user with username "(.*?)" and uid "(.*?)"$/) do |username, uid|
+  Instructor.find_by_username_and_uid(username, uid).should_not be nil
+end
+
+Then /^the "([^"*])" checkbox should be checked$/ do |id|
+  find("#{id}").should be_checked
+end
+
+And(/^I check "([^"]*)" checkbox$/) do |id|
+  check(id)
+end
+
+Then(/^the plain text "([^"]*)" is hidden$/) do |id|
+  find_field(id).should_not be_visible
+end
+
+And(/^the plain text "([^"]*)" is shown$/) do |id|
+  find_field([".fillin-correct"], {:name => id}).should be_visible
+end
+
+
+Then(/^I should see soltuion "([^"]*)" highlighted$/) do |arg|
+  page.should have_css("div.entrybox")
+end
+
+Then(/^I should see "([^"]*)" notice$/) do |arg|
+  if Collection.find_by_name(arg) ==nil and Collection.find_by_description(arg) ==nil
+      "No collection matches"
+  end
+end
+
+
+And(/^I should see "([^"]*)" is checked in "([^"]*)"$/) do |str, element|
+  expect(page).to have_select(element, selected: str)
+end
+
+Then(/^I select "([^"]*)" in "([^"]*)"$/) do |str, element|
+  select str, from: element
+end
+
+And (/^I should see a correct message$/) do
+  page.should have_css('.fillin-correct', :visible => true)
+end
+
+
+When(/^I checked "([^"]*)"$/) do |arg|
+  page.check(arg)
+end
+
+When(/^I unchecked "([^"]*)"$/) do |arg|
+  page.uncheck(arg)
+end
+
+Then(/^the clipboard should contain "([^"]*)"$/) do |copied|
+  clipboard_text = page.evaluate_script("clipboard.clipboardAction.text")
+  clipboard_text.should include(copied)
 end

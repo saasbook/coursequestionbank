@@ -1,0 +1,44 @@
+%h3.section_title= @heading
+
+%div.section_options
+  - if can? :create, Collection    
+    = link_to 'New collection', new_collection_path, :class => 'btn btn-primary'
+    = link_to 'Upload questions', upload_path, :class => 'btn btn-primary'
+
+%div#filter-sidebar
+  = form_tag search_collection_path do
+    = field_set_tag do
+      = label_tag :search, 'Search:'
+      = text_field_tag :search, params[:search], class: 'form-control', placeholder: 'Search'
+      %br
+      = submit_tag 'Search', :class => 'btn btn-primary'
+  %hr
+
+
+%div#filter-content.container-fluid
+  - if @collections.nil? || @collections.empty?
+    %h4.section_body No collection matches.
+
+  - else
+    %div.table-responsive.section_body
+      %table.table.table-striped
+        %thead
+          %tr
+            %th Name
+            %th Owner
+            %th # Questions
+            %th Description
+            %th Last used
+            %th Privacy
+
+        %tbody
+          - @collections.each do |collection|
+            %tr
+              %td= link_to collection.name.truncate(35), collection_path(:id => collection.id), :class => 'btn btn-link', :title => collection.name
+              %td= collection.instructor.try(:name)
+              %td= collection.problems.length
+              %td= collection.description
+              %td= collection.last_used
+              - name = ["", "Public", "Share", "Private"]
+              - level = collection.access_level
+              %td= name[level]

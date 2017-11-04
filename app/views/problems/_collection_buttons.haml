@@ -4,11 +4,4 @@
     = form_tag problem_path(:id => problem.id), :method => :put do
       - selected = collection.problems.include? problem
       = hidden_field_tag :collection, collection.id, :id => nil
-      = submit_tag collection.name.truncate(35), :id => "toggle_collection_#{collection.id}_#{problem.id}", :class => "collection-button btn #{selected ? 'btn-info' : 'btn-default'}", :title => collection.name
-
-- others = problem.collections.select{ |c| can?(:read, c) and cannot?(:manage, c) }
-- if !others.empty?
-  %div.collections-from-others
-    Collections from Others:
-    - others.each do |collection|
-      = link_to collection.name.truncate(35), collection_path(:id => collection.id), :class => 'btn btn-link', :title => collection.name
+      = submit_tag collection.name.truncate(35), :id => "toggle_collection_#{collection.id}_#{problem.id}", :class => "collection-button btn #{selected ? 'btn-info' : 'btn-default'}", :title => collection.name, :style => "display :#{selected ? 'block' : 'none'}"

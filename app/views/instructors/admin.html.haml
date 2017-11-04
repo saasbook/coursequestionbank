@@ -1,16 +1,15 @@
-%div.section_title 
-  %h3 Manage Whitelist
+%div.section_title
+  %h3 Manage User Access Level
 
-%div.section_options
-  = form_tag toggle_whitelist_path do
-    = button_tag :type => 'submit', :class => 'btn btn-primary' do
-      = Whitelist.is_enabled ? 'Disable whitelist' : 'Enable whitelist'
-
+// %div.section_options
+//   = form_tag toggle_whitelist_path do
+//     = button_tag :type => 'submit', :class => 'btn btn-primary' do
+//       = Whitelist.is_enabled ? 'Disable whitelist' : 'Enable whitelist'
 
 %div.section_body
-  
+
   %div.table-responsive
-    %table.table.whitelist-table
+    %table.table.users-table
       %thead
         %tr
           %th Username
@@ -18,28 +17,27 @@
           %th Privilege
           %th
           %th
-      
-      %tbody
-        %tr#whitelist-new
-          %td= text_field_tag :username, nil, :id => 'new-username', :class => 'form-control', :form => "whitelist-form-new", :placeholder => 'Username'
-          %td= select_tag :provider, options(Whitelist.providers, 'Provider'), :id => 'new-provider', :class => 'form-control', :form => "whitelist-form-new"
-          %td= select_tag :privilege, options(Whitelist.privilege_levels, 'Privilege'), :id => 'new-privilege', :class => 'form-control', :form => "whitelist-form-new"
-          %td
-            = form_tag update_whitelist_path, :id => "whitelist-form-new" do
-              = submit_tag 'Add to whitelist', :class => 'btn btn-primary', :id => 'new-submit'
-          %td
 
-        - @whitelist.each do |entry|
+      %tbody
+        // %tr#whitelist-new
+        //   %td= text_field_tag :username, nil, :id => 'new-username', :class => 'form-control', :form => "whitelist-form-new", :placeholder => 'Username'
+        //   %td= select_tag :provider, options(Whitelist.providers, 'Provider'), :id => 'new-provider', :class => 'form-control', :form => "whitelist-form-new"
+        //   %td= select_tag :privilege, options(Whitelist.privilege_levels, 'Privilege'), :id => 'new-privilege', :class => 'form-control', :form => "whitelist-form-new"
+        //   %td
+        //     = form_tag update_whitelist_path, :id => "whitelist-form-new" do
+        //       = submit_tag 'Add to whitelist', :class => 'btn btn-primary', :id => 'new-submit'
+        //   %td
+        - @instructor.each do |entry|
           %tr
             %td= entry.username
             %td= entry.provider
-            %td= select_tag :privilege, options(Whitelist.privilege_levels, entry.privilege), :id => nil, :class => 'form-control', :form => "whitelist-form-#{entry.id}"
+            %td= select_tag :privilege, options(Instructor.privilege_levels, entry.get_privilege), :id => "privilege_#{entry.uid}", :class => 'form-control', :form => "instructor-form-#{entry.id}"
             %td
-              = form_tag update_whitelist_path, :id => "whitelist-form-#{entry.id}" do
+              = form_tag update_instructor_path, :id => "instructor-form-#{entry.id}" do
                 = hidden_field_tag :username, entry.username, :id => nil
                 = hidden_field_tag :provider, entry.provider, :id => nil
-                = submit_tag 'Update', :class => 'btn btn-primary'
-            %td
-              = form_tag whitelist_entry_path(:id => entry.id), :method => :delete do
-                = button_tag :type => 'submit', :class => 'clr-button' do
-                  %span.glyphicon.glyphicon-remove
+                = submit_tag 'Update', :class => 'btn btn-primary', :id => "update_#{entry.uid}"
+            -# %td
+            -#   = form_tag whitelist_entry_path(:id => entry.id), :method => :delete do
+            -#     = button_tag :type => 'submit', :class => 'clr-button' do
+            -#       %span.glyphicon.glyphicon-remove

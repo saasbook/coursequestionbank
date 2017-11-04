@@ -1,0 +1,11 @@
+app_secret: 'rails app secret'
+test:
+github_key: "0dd8024c4751fb03fe612dea74fd5f46"
+github_secret: "0dd8024c4751fb03fe612dea74fd5f46"
+ROLLBAR_ACCESS_TOKEN: "17994413d7484f4ba66e3d618347d9b5"
+
+# For Heroku deployment as oursequestionbank-f17.herokuapp.com
+production:
+github_key: "0dd8024c4751fb03fe612dea74fd5f46"
+github_secret: "0dd8024c4751fb03fe612dea74fd5f46"
+ROLLBAR_ACCESS_TOKEN: "17994413d7484f4ba66e3d618347d9b5"

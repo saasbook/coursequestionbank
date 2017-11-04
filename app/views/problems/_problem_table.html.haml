@@ -4,27 +4,30 @@
 
 - if problems.empty? and !local_assigns[:empty_msg].nil?
   %h3= empty_msg
-  
+
 - else
-  - if group_id == 0
+  - if group_id == 0 and can? :manage, @collection
     = link_to 'New question', new_problem_path, :class => 'btn btn-primary'
 
-  - if columns.include? :checkbox
+  - if columns.include? :checkbox and (can? :add_tags, Problem)
     = form_tag update_multiple_tags_path, :id => "update_multiple_tags_#{group_id}", :class => 'check_form' do
       = text_field_tag :tag_names, nil, :id => nil, :class => 'form-control', :placeholder => 'tag 1, tag 2'
       = submit_tag 'Tag checked problems', :class => 'btn btn-primary'
 
   %div.table-responsive.problem_table
     %table.table.table-striped
-      %thead
-        %tr
-          - columns.each do |col|
-            - if col == :checkbox
-              %th= check_box_tag nil, 1, false, :id => "check_all_#{group_id}", :class => 'checkbox check_all', :style => 'display: none'
-            - elsif col == :problem
-              %th Question Text
-            - elsif col == :tags
-              %th Tags
+      -if (can? :add_tags, Problem)
+        %thead
+          %tr
+            - columns.each do |col|
+              - if col == :checkbox
+                %th= check_box_tag nil, 1, false, :id => "check_all_#{group_id}", :class => 'checkbox check_all', :style => 'display: none'
+              - elsif col == :problem
+                %th Question Text
+              - elsif col == :stats
+                %th Response Stats
+              - elsif col == :tags
+                %th Tags
 
       %tbody
         - problems.each do |problem|
