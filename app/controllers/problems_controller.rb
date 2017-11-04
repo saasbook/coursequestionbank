@@ -19,7 +19,11 @@ class ProblemsController < ApplicationController
     end
 
     session[:filters][:page] = nil
-    session[:filters] = session[:filters].merge params.slice(:page, :per_page)
+    if (params[:per_page]) and (params[:per_page].to_i > 60)
+        flash[:notice] = "Cannot view more than 60 questions at a time"
+    else
+      session[:filters] = session[:filters].merge params.slice(:page, :per_page) 
+    end
   end
 
   def set_filters

@@ -20,7 +20,7 @@ module NavigationHelpers
     when /^the upload page$/ then '/upload'
     when /^the admin panel$/ then '/admin'
     when /^the login page$/ then '/auth/bypass/5'
-
+    when /^the page with more than sixty questions$/ then '/problems?per_page=100'
     when /^the collection search page$/ then '/collections' 
     when /^the collection index page$/ then '/collections' 
     when /^the collection search page of "(.*?)" $/ then '/collections' 
