@@ -22,6 +22,7 @@
 //= require clipboard
 
 clipboard = undefined;
+alert_check = false;
 
 jQuery(document).ready(function() {
 	// $('.maintable').find('.answers').hide(); //Hide/close all containers
@@ -47,6 +48,11 @@ jQuery(document).ready(function() {
 	// });
 	clipboard = new Clipboard('.d_clip_button');
 	clipboard.on('success', function(e) {
+		alert("Source code copied to clipboard!");
+		btn = document.getElementById(e.trigger.id);
+		btn.innerHTML = "Source Code Clipped";
+		btn.classList.remove('btn-default');
+		btn.classList.add('btn-info');
 	    console.log(e);
 	});
 	clipboard.on('error', function(e) {
