@@ -1,6 +1,6 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
+require 'coveralls'
+Coveralls.wear!
 
 require 'simplecov'
 SimpleCov.start 'rails'
@@ -41,4 +41,5 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = "random"
+  config.color_enabled = true
 end

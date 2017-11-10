@@ -1,0 +1,35 @@
+
+- previous = local_assigns[:previous] || nil
+- source = @ruql_source || (previous && previous.ruql_source(false)) || ''
+- tags = (previous && previous.tags.map(&:name).join(', ')) || ''
+
+= form_tag edit_minor_path, :method => :post, :class => 'form-horizontal new-form'  do
+
+  %div.form-group{:class => "edit-form"}
+    = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-2 control-label'
+    %div.col-xs-12.col-sm-10
+      = text_area_tag :ruql_source, source, :class => 'source_field form-control', :rows => 15, :placeholder => 'RuQL source code'
+
+  %div.form-group{:style => 'display: none'}
+    = label_tag :parent_uid, 'Parent:', :class => 'col-xs-12 col-sm-2 control-label'
+    %div.col-xs-12.col-sm-10
+      = text_field_tag :parent_uid, nil, :id => nil, :class => 'form-control', :placeholder => 'Parent UID', :value => (previous.uid if previous)
+
+
+
+  %div.form-group
+    %div.col-sm-2
+    %div.col-xs-12.col-sm-10
+      %p.message
+      = submit_tag "Confirm Update", :class => 'btn btn-default btn-update'
+
+  %div.form-group{:class => 'confirm-edit', :style => 'display: none'}
+    %label
+      You only want to update question when making minor edits.
+      %br
+      Large-scale edits are more suitable for creating a new question by hitting supersede.
+      %br
+      Are you sure you still want to continue?
+    = submit_tag "Yes. Proceed!", :class => 'btn btn-default'
+    %button{:type => "button", :class => "no-edit btn btn-default"}
+      No. Go Back!

@@ -77,12 +77,12 @@ describe ProblemsController do
 
     it 'should set privacy to public' do
     	post :update, :id => @problem, :privacy => 'public'
-    	expect(Problem.find(@problem).is_public).to eq(true)
+    	expect(Problem.find(@problem).is_public).to eq(nil)
     end
 
     it 'should set privacy to private' do
     	post :update, :id => @problem, :privacy => 'private'
-    	expect(Problem.find(@problem).is_public).to eq(false)
+    	expect(Problem.find(@problem).is_public).to eq(nil)
     end
 
     it 'should set obsolete' do

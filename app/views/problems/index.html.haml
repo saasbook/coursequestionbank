@@ -1,16 +1,16 @@
-
 %div#filter-sidebar
   = render :partial => 'filter'
 
-
 %div#filter-content.container-fluid
-  = render :partial => 'problem_table', :locals => {:problems => @problems, :columns => [:checkbox, :problem, :tags],
+
+  = render :partial => 'problem_table', :locals => {:problems => @problems, :columns => [:checkbox, :problem, :stats, :tags],
                                                     :empty_msg => 'No questions matched your search criteria'}
 
-  - if !@problems.select{|p| can? :read, p}.empty?
+
+  - if !@problems.nil? and !@problems.select{|p| can? :read, p}.empty?
     %div.row#page_options
       %div.col-xs-6
-        - [5, 30, 60].each do |n|
+        - [5, 10, 20, 60].each do |n|
           = link_to "View #{n}", problems_path(:per_page => n)
       %div.col-xs-6
         = will_paginate @problems
