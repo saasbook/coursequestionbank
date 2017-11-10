@@ -1,4 +1,5 @@
 # Course Question Bank - CS 169 Project
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](http://coursequestionbank-f17.herokuapp.com)
 [![Code Climate](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/gpa.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank)
 [![Travis CI](https://travis-ci.org/hrzlvn/coursequestionbank.svg?branch=master)](https://travis-ci.org/Laralinmcc/coursequestionbank)
 [![Test Coverage](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/coverage.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank/coverage)
