@@ -12,7 +12,6 @@ Background:
   And I press "Upload File"
 
 Scenario: User can resolve duplicates by deleting one
-  When I am on the finalize upload page
   And I click Delete
   Then I should be on the CourseQuestionBank home page
   And I should see "Upload successful!"

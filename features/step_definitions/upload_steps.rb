@@ -40,3 +40,8 @@ end
 Then(/^I should see a flash message asking me to select a file$/) do
   flash[:notice] = "Please select a file"
 end
+
+Given(/^I click Delete$/) do
+  pending # express the regexp above with the code you wish you had
+end
+

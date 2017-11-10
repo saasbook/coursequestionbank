@@ -531,3 +531,7 @@ end
 Given(/^the AJAX request does not succeed\.$/) do
   pending # express the regexp above with the code you wish you had
 end
+
+When(/^I pending$/) do
+  pending # express the regexp above with the code you wish you had
+end

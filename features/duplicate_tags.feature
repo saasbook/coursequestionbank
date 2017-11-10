@@ -12,6 +12,7 @@ Background:
 Scenario: User tries to upload duplicate
   When I attach the file "features/test_files/dup_test_third.txt" to "file_upload"
   And I press "Upload File"
+  And I pending
   Then I should see "Duplicate questions may have been uploaded"
   Then the problem containing "The quick brown fox jumped over the lazy dog" should have the tag "dup"
   And I should be on the finalize upload page

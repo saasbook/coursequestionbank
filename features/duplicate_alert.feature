@@ -15,9 +15,11 @@ Scenario: User tries to upload different question (sad path, no duplicate detect
   And I press "Upload File"
   Then I should see "Upload successful!"
 
+
 Scenario: User tries to upload exact copy of question
   When I attach the file "features/test_files/dup_test_second.txt" to "file_upload"
   And I press "Upload File"
+  And I pending
   Then I should see "Duplicate questions have been uploaded"
   Then the problem containing "The quick brown fox jumped over the lazy dog" should have the tag "dup"
   And I should be on the finalize upload page
