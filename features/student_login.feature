@@ -1,5 +1,5 @@
 Feature: Student login
-    As an student
+    As a student
     So that I can access the application
 	  I want to login to the app with github
 	  

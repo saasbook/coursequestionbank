@@ -524,10 +524,14 @@ Then(/^the clipboard should contain "([^"]*)"$/) do |copied|
 end
 
 Then(/^I should see an alert saying "([^"]*)"$/) do |message|
-  alert_text = page.driver.browser.switch_to.alert.text
-  expect(alert_text).to eq(message)
+  #alert_text = page.driver.browser.switch_to.alert.text
+  expect(accept_alert).to eq(message)
 end
 
 Given(/^the AJAX request does not succeed\.$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I pending$/) do
   pending # express the regexp above with the code you wish you had
 end
