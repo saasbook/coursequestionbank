@@ -43,20 +43,6 @@ class ProblemsController < ApplicationController
         end
     end
 
-    # session[:filters][:problem_type] = []
-    # if params[:problem_type]
-    #   params[:problem_type].each do |key, value|
-    #       session[:filters][:problem_type] << key if value == "1"
-    #   end
-    # end
-    #
-    # session[:filters][:bloom_category] = []
-    # if params[:bloom_category]
-    #   params[:bloom_category].each do |key, value|
-    #       session[:filters][:bloom_category] << key if value == "1"
-    #   end
-    # end
-
     session[:filters][:collections] = []
     if params[:collections]
       params[:collections].each do |key, value|
@@ -158,12 +144,10 @@ class ProblemsController < ApplicationController
       authorize! :set_privacy, problem
       privacy = params[:privacy].downcase.strip
       if privacy == 'public'
-        # problem.is_public = true
         problem.access_level = 2
       elsif privacy == 'share'
         problem.access_level = 3
       elsif privacy == 'private'
-        # problem.is_public = false
         problem.access_level = 1
       else
         return
@@ -323,3 +307,18 @@ class ProblemsController < ApplicationController
   end
 
 end
+
+################ Commented Legacy Code ################
+    # session[:filters][:problem_type] = []
+    # if params[:problem_type]
+    #   params[:problem_type].each do |key, value|
+    #       session[:filters][:problem_type] << key if value == "1"
+    #   end
+    # end
+    #
+    # session[:filters][:bloom_category] = []
+    # if params[:bloom_category]
+    #   params[:bloom_category].each do |key, value|
+    #       session[:filters][:bloom_category] << key if value == "1"
+    #   end
+    # end
