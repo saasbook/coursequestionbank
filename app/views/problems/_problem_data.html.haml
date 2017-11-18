@@ -113,9 +113,8 @@
       %div
         Edit question:
         // not sure if text area below is necessary will investigate
-        %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= "#{problem.ruql_source}"
-        %button{"data-clipboard-target" => "#source_#{problem.id}", "data-clipboard-text" => "#{problem.ruql_source}", "data-clipboard-action" => "copy", 
-                :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
+        // %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= "#{problem.ruql_source}"
+        %button{:title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
                 :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
           Clip Source Code
         = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => 'supersede_button btn btn-default', :value => "Supersede"

@@ -25,28 +25,23 @@ clipboard = undefined;
 alert_check = false;
 
 jQuery(document).ready(function() {
-	// $('.maintable').find('.answers').hide(); //Hide/close all containers
-	// $('.maintable').find('.additional').hide();
-	// $('.text').addClass('toggler').removeClass('text');
-	// $('.maintable').find('.toggler').addClass('text').removeClass('toggler');
-	// $('.icon').click(function(){
-
-	// 	$('#q' + $(this).attr('id')).find('.answers').toggle();
-	// 	$('#q' + $(this).attr('id')).find('.additional').toggle();
-	// 	$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
-	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-	// 	$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
-	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-	// });
-
 	$('.d_clip_button').show();
-	// var clip = new Clipboard('.d_clip_button');
-	// clip.on('success', function(e){console.info('Text:', e.text)});
-	// console.log(clip);
-	// $(".d_clip_button").on("click", function(){
-	// 	alert("Source code copied to clipboard!");
-	// });
-	clipboard = new Clipboard('.d_clip_button');
+	clipboard = new Clipboard('.d_clip_button', {
+	    text: function(trigger) {
+	    	var button_id = trigger.getAttribute('id')
+	    	var question_num = button_id.charAt(button_id.length - 1)
+	        $.ajax({
+				type: "GET",
+				async: false,
+				context: this,
+				url: 'problems/'+ question_num + '/minorupdate',
+				success: function (source) {
+	                question_source = source;
+				}
+			});
+			return question_source
+    	}
+	});
 	clipboard.on('success', function(e) {
 		alert("Source code copied to clipboard!");
 		btn = document.getElementById(e.trigger.id);
@@ -93,3 +88,24 @@ var LoginPanel = {
 	}
 }
 $(LoginPanel.setup);
+
+// Commented Legacy Code
+	// var clip = new Clipboard('.d_clip_button');
+	// clip.on('success', function(e){console.info('Text:', e.text)});
+	// console.log(clip);
+	// $(".d_clip_button").on("click", function(){
+	// 	alert("Source code copied to clipboard!");
+	// });
+	// $('.maintable').find('.answers').hide(); //Hide/close all containers
+	// $('.maintable').find('.additional').hide();
+	// $('.text').addClass('toggler').removeClass('text');
+	// $('.maintable').find('.toggler').addClass('text').removeClass('toggler');
+	// $('.icon').click(function(){
+
+	// 	$('#q' + $(this).attr('id')).find('.answers').toggle();
+	// 	$('#q' + $(this).attr('id')).find('.additional').toggle();
+	// 	$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
+	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
+	// 	$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
+	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
+	// });
