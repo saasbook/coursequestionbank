@@ -34,15 +34,5 @@ class StudentanswersController < ApplicationController
     else
       redirect_to :back
     end
-
-    # add answer to problem
-    # problem = Problem.find(params[:problem_id])
-    # problem.student_answers << answer
-    # problem.save
-    #
-    # # add answer to student
-    # instrucotr = Instructor.find(params[:instructor_id])
-    # instrucotr.student_answers << answer
-    # instrucotr.save
   end
 end

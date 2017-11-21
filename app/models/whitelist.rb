@@ -1,6 +1,8 @@
 class Whitelist < ActiveRecord::Base
   attr_accessible :privilege, :username, :provider
+end
 
+#------------ LEGACY CODE ----------------
   # def self.providers
   #   %w{github developer}
   # end
@@ -16,4 +18,3 @@ class Whitelist < ActiveRecord::Base
   # def self.is_enabled=(value)
   #   Setting.whitelist = !!value
   # end
-end
