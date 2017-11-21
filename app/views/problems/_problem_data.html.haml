@@ -117,14 +117,14 @@
         %button{:title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
                 :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
           Clip Source Code
-        = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => 'supersede_button btn btn-default', :value => "Supersede"
+        = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => 'supersede_button btn btn-default', :value => "Supersede", :remote => 'True'
         = link_to "Update", minorupdate_path(:id => problem.id), :id => "minorupdate_button_#{problem.id}", :value => "Update", :class => 'minorupdate_button btn btn-default'
 
         - if !problem.previous_version.nil?
           = link_to "See Version History", problem_history_path(:id => problem.id), :id => "history_button_#{problem.id}", :class => 'history_button btn btn-default'
 
-      %div.supersede_form.hidden-additional{:style => 'display: none'}
-        = render :partial => 'problems/new_form', :locals => {:previous => problem}
+      %div.supersede_form.hidden-additional{:style => 'display: none', :id => "supersede_form_#{problem.id}"}
+        //= render :partial => 'problems/new_form', :locals => {:previous => problem}
 
       %div.history_list.hidden-additional{:style => 'display: none'}
         = render :partial => 'problems/history_list', :locals => {:problem => problem}

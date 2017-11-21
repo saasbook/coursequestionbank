@@ -274,6 +274,9 @@ class ProblemsController < ApplicationController
   def supersede
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
+    respond_to do |format|               
+      format.js {render layout: false, content_type: 'text/javascript' }
+    end  
   end
 
   def view_history
