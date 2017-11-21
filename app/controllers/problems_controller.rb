@@ -269,6 +269,9 @@ class ProblemsController < ApplicationController
   def minorupdate
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
+    if request.xhr?
+      render :json => {"ruql_source" => @problem.ruql_source(false)}
+    end
   end
 
   def supersede

@@ -11,9 +11,10 @@ var AdditionalHidden = {
   				type: "GET",
   				async: false,
   				context: this,
+  				dataType: 'json',
   				url: 'problems/'+ question_num + '/minorupdate',
   				success: function (source) {
-  	           problem.find("textarea").val(source);
+  	        problem.find("textarea").val(source['ruql_source']);
 				  }
 			  });
         problem.find(button_name).toggle();

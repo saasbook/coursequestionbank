@@ -34,9 +34,10 @@ jQuery(document).ready(function() {
 				type: "GET",
 				async: false,
 				context: this,
+				dataType: 'json',
 				url: 'problems/'+ question_num + '/minorupdate',
 				success: function (source) {
-	                question_source = source;
+	                question_source = source['ruql_source'];
 				}
 			});
 			return question_source
