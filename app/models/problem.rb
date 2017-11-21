@@ -192,7 +192,6 @@ class Problem < ActiveRecord::Base
           with(:tag_names, tag)
         end
 
-
         ["problem_type", "bloom_category"].each do |sub|
           if !filters["#{sub}"].empty?
             any_of do
@@ -203,22 +202,6 @@ class Problem < ActiveRecord::Base
           end
         end
 
-        # if !filters[:problem_type].empty?
-        #   any_of do
-        #     filters[:problem_type].each do |sort_param|
-        #       with(:problem_type, sort_param)
-        #     end
-        #   end
-        # end
-        #
-        # if !filters[:bloom_category].empty?
-        #   any_of do
-        #     filters[:bloom_category].each do |category|
-        #       with(:bloom_category, category)
-        #     end
-        #   end
-        # end
-
         if !filters[:collections].empty?
           any_of do
             filters[:collections].each do |col|
@@ -226,11 +209,6 @@ class Problem < ActiveRecord::Base
             end
           end
         end
-
-
-
-
-
 
         if !filters[:show_obsolete]
           without(:obsolete, true)
@@ -348,6 +326,24 @@ class Problem < ActiveRecord::Base
 end
 
 #------------ LEGACY CODE ----------------
+  # In self.filter
+  # if !filters[:problem_type].empty?
+  #   any_of do
+  #     filters[:problem_type].each do |sort_param|
+  #       with(:problem_type, sort_param)
+  #     end
+  #   end
+  # end
+  #
+  # if !filters[:bloom_category].empty?
+  #   any_of do
+  #     filters[:bloom_category].each do |category|
+  #       with(:bloom_category, category)
+  #     end
+  #   end
+  # end  
+
+
   # def self.handle_near_dups(user, problem_id)
   #   near_dups = Problem.near_dups_of(user, problem_id)
   #   to_tag = (near_dups + Problem.exact_title_match(user, problem_id)).uniq
