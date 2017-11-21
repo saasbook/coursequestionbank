@@ -1,7 +1,7 @@
+require 'sidekiq/web'
 Coursequestionbank::Application.routes.draw do
-
   root :to => 'problems#home'
-
+  mount Sidekiq::Web, at: '/sidekiq'    #needed to view the SideKiq UI 
   match  'auth/:provider/callback' => 'session#create'
   get 'auth/bypass/:user_id' => 'session#bypass', :as => 'bypass'
   post 'logout' => 'session#destroy'
@@ -9,7 +9,7 @@ Coursequestionbank::Application.routes.draw do
   get 'login' => 'session#login', :as => 'login'
   get 'upload' => 'upload#index', :as => 'upload'
   post 'upload' => 'upload#upload', ":as" => 'upload'
-
+  get 'loading' => 'upload#loading', :as => 'loading_file'
   resources :problems
   get 'problems/tags/:tag_names' => 'problems#view_tags', :as => 'view_tags'
   post 'problems/filters' => 'problems#set_filters', :as => 'set_filters'
