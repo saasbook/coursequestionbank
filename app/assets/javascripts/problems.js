@@ -4,7 +4,18 @@ var AdditionalHidden = {
     $('.additional').each(function() {
       var problem = $(this);
       
-      function toggle_behavior(button_name){
+      function toggle_behavior(button_name, trigger){
+        var button_id = trigger.currentTarget.getAttribute('id')
+        var question_num = button_id.charAt(button_id.length - 1)
+	    $.ajax({
+  				type: "GET",
+  				async: false,
+  				context: this,
+  				url: 'problems/'+ question_num + '/minorupdate',
+  				success: function (source) {
+  	           problem.find("textarea").val(source);
+				  }
+			  });
         problem.find(button_name).toggle();
       }
 
@@ -17,8 +28,8 @@ var AdditionalHidden = {
       }
 
       function event_handling(select_button, hide_button_one, hide_button_two, toggle_button){
-        problem.find(select_button).click(function() {
-        toggle_behavior(toggle_button);
+        problem.find(select_button).click(function(trigger) {
+        toggle_behavior(toggle_button, trigger);
         hide_behavior(hide_button_one);
         hide_behavior(hide_button_two);
         return false;
