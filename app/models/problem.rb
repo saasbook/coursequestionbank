@@ -284,9 +284,8 @@ class Problem < ActiveRecord::Base
   end
 
   def self.handle_dups(user, problem_id)
-    near_dups = Problem.near_dups_of(user, problem_id)
-    to_tag = (near_dups + Problem.exact_title_match(user, problem_id)).uniq
-    problem_uid = Problem.find(problem_id).uid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
+    to_tag = (Problem.exact_title_match(user, problem_id)).uniq
+    problem_uid = Problem.find(problem_id).uid 
     to_tag.delete(Problem.find(problem_id))
     if !to_tag.empty?
       tag_dups(problem_id, problem_uid) #tag original with its own uid
@@ -303,21 +302,20 @@ class Problem < ActiveRecord::Base
   end
 
   def self.exact_title_match(current_user, problem_id)
-    target = Problem.find(problem_id)
-    target_json = JSON.parse(target.json)
+    target_in_json = JSON.parse(Problem.find(problem_id).json)
 
-    from_you = current_user.problems
+    from_me = current_user.problems
     from_others = Problem.where(access_level: 1)
     if current_user.privilege != "Student"
       from_instructors = Problem.where(access_level: 2)
     else
       from_instructors = []
     end
-    search_set = (from_you + from_others + from_instructors).uniq
+    search_set = (from_me + from_others + from_instructors).uniq
     results = []
     search_set.each do |other|
-      other_json = JSON.parse(other.json)
-      if target_json["question_text"] == other_json["question_text"]
+      other_in_json = JSON.parse(other.json)
+      if target_in_json["question_text"] == other_in_json["question_text"]
         results.push(other)
       end
     end
@@ -348,3 +346,16 @@ class Problem < ActiveRecord::Base
     return results
   end
 end
+
+#------------ LEGACY CODE ----------------
+  # def self.handle_near_dups(user, problem_id)
+  #   near_dups = Problem.near_dups_of(user, problem_id)
+  #   to_tag = (near_dups + Problem.exact_title_match(user, problem_id)).uniq
+  #   problem_uid = Problem.find(problem_id).uid #CHANGE THIS TO UID WHEN MIGRATION COMPLETE
+  #   to_tag.delete(Problem.find(problem_id))
+  #   if !to_tag.empty?
+  #     tag_dups(problem_id, problem_uid) #tag original with its own uid
+  #     to_tag.each { |id|  tag_dups(id, problem_uid)}
+  #     return true # true for dups_found
+  #   end
+  # end
