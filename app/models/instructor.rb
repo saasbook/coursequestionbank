@@ -26,18 +26,6 @@ class Instructor < ActiveRecord::Base
     end
   end
 
-  # def admin?
-  #   privilege == "Admin"
-  # end
-  #
-  # def instructor?
-  #   privilege == "Instructor"
-  # end
-  #
-  # def student?
-  #   privilege == "Student"
-  # end
-
   # The new data structure stores privilege information in Instructor
   # To prevent data loss, the old whitelist table is preseved.
   # If the privilege attribute is nil in instructor table, find that user in whitelist
@@ -62,3 +50,16 @@ class Instructor < ActiveRecord::Base
   end
 
 end
+
+#------------ LEGACY CODE ----------------
+  # def admin?
+  #   privilege == "Admin"
+  # end
+  #
+  # def instructor?
+  #   privilege == "Instructor"
+  # end
+  #
+  # def student?
+  #   privilege == "Student"
+  # end
