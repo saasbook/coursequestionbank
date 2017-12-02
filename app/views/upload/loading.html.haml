@@ -1,14 +1,16 @@
-%div#upload_form
-    = form_tag '', :multipart => true, :class => 'form-horizontal' do
+%div
+    %fieldset{:disabled => "disabled"}
         %div.form-group
             %div.col-xs-5
             %div.col-xs-7
                 = file_field_tag :ruql_file, :id => 'file_upload', :class => 'text-center'
         %div.form-group
             %div.col-xs-12.text-center
-                = submit_tag 'Upload File', :class => 'btn btn-primary'
+                = submit_tag 'Upload File', :class => 'upload_file_button btn btn-primary'
 %div#loading_img
     %div.col-xs-3
     %div.col-xs-6
         = image_tag('uploading.gif')
-
+        
+:javascript
+    window.onload = upload_handling;

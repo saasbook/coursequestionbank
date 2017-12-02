@@ -3,8 +3,60 @@ class UploadController < ApplicationController
     authorize! :manage, Problem
     #TODO: Redirect to the loading page
     file = params[:ruql_file]
-    UploadWorker.perform_async(session[:user_id], file.path)
+    @job_id = UploadWorker.perform_async(session[:user_id], file.path)
+    session[:job_id] = @job_id
     flash[:notice] = "Uploading File..."
-    redirect_to loading_file_path
+    flash.keep
+    redirect_to loading_path
+    return
+  end
+  #adopted from https://gist.github.com/kitwalker12/513d55721b787a160426
+  def fetch
+    job_id = session[:job_id]
+    if Sidekiq::Status::complete? job_id
+      #flash[:notice] = "Upload Succesful!"
+      #redirect_to problems_path
+      return 1
+    elsif Sidekiq::Status::failed? job_id
+      #[:notice] = "Error Uploading File! Please try again..."
+      #redirect_to upload_path
+      #return 0
+      raise "ERROR"
+    else 
+      #return 2
+      raise "PROCESSING..."
+    end
+  end
+  def redirectSuccess(redirect_id)
+    if(redirect_id == 1) 
+      redirect_to problems_path
+    end
   end
 end
+=begin  **** LEGACY CODE ****
+  def upload
+    authorize! :manage, Problem
+    begin
+      collections, dups_found = RuqlReader.store_as_json(@current_user, params[:ruql_file])
+
+      if dups_found
+        flash[:notice] = "Near-duplicate questions may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Click on tag to view potential matches. Mark undesired Questions as Obsolete. Remove dup tags when finished."
+      end
+    rescue Exception => e
+      flash[:notice] = e.message()
+      # flash[:notice] = e.backtrace()
+      flash.keep
+      redirect_to upload_path
+      return
+    end
+    flash.keep
+    redirect_to finalize_upload_path(:ids => collections.map{|collection| collection.id})
+  end
+  # In upload
+    # if collections.nil? || collections.empty?
+    #   flash[:notice] = 'The file you uploaded does not contain any quizzes'
+    #   flash.keep
+    #   redirect_to upload_path
+    #   return
+    # end
+=end

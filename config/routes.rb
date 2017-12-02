@@ -8,8 +8,10 @@ Coursequestionbank::Application.routes.draw do
   get  'auth/failure' => 'session#failure'
   get 'login' => 'session#login', :as => 'login'
   get 'upload' => 'upload#index', :as => 'upload'
-  post 'upload' => 'upload#upload', ":as" => 'upload'
-  get 'loading' => 'upload#loading', :as => 'loading_file'
+  post 'upload' => 'upload#upload', :as => 'upload'
+  post 'upload/loading' => 'upload#loading', :as => 'loading'
+  get 'upload/loading' => 'upload#loading', :as => 'loading'
+  get 'upload/fetch' => 'upload#fetch', :as => 'fetch'
   resources :problems
   get 'problems/tags/:tag_names' => 'problems#view_tags', :as => 'view_tags'
   post 'problems/filters' => 'problems#set_filters', :as => 'set_filters'

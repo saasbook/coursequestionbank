@@ -32,6 +32,7 @@ gem 'clipboard-rails'
 gem 'sidekiq', '~> 3.5.4'
 gem 'sinatra', require: false
 gem 'slim'
+gem 'sidekiq-status'
 group :development, :test do
   gem 'cucumber-rails', :require => false
   gem 'rspec-rails'
