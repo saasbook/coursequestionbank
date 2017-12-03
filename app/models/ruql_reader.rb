@@ -1,6 +1,7 @@
 class RuqlReader
-  def self.store_as_json(user, file)
-    filename = file.path
+  @file_processed = false
+  def self.store_as_json(user_id, filename)
+    user = Instructor.find_by_id(user_id)
     Quiz.reset
     Quiz.instance_eval "#{IO.read(filename)}"
     collections = []
@@ -15,10 +16,6 @@ class RuqlReader
           problem.save
           Problem.reindex
           Sunspot.commit
-# <<<<<<< HEAD
-#           # debug
-# =======
-# >>>>>>> 757c8f31e1fae3f377fa1de2176ec8d4f4c4ad45
           result = Problem.handle_dups(user, problem.id) #check for dups
           dups_found = true if result
         end
@@ -37,5 +34,8 @@ class RuqlReader
     problems_json = quiz.render_with("JSON", {})
     raise 'Question source must contain exactly one question.' unless problems_json.size == 1
     Problem.from_JSON(user, problems_json[0])
+  end
+  def self.notify_file_processed
+    @file_processed = true
   end
 end
