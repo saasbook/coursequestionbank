@@ -14,22 +14,13 @@ class UploadController < ApplicationController
   def fetch
     job_id = session[:job_id]
     if Sidekiq::Status::complete? job_id
-      #flash[:notice] = "Upload Succesful!"
-      #redirect_to problems_path
-      return 1
+      flash[:notice] = "Upload Succesful!"
+      render json: { success: true }
     elsif Sidekiq::Status::failed? job_id
-      #[:notice] = "Error Uploading File! Please try again..."
-      #redirect_to upload_path
-      #return 0
-      raise "ERROR"
+      flash[:notice] = "Error Uploading File! Please try again..."
+      render json: { success: false }
     else 
-      #return 2
-      raise "PROCESSING..."
-    end
-  end
-  def redirectSuccess(redirect_id)
-    if(redirect_id == 1) 
-      redirect_to problems_path
+      render json: { status: :ok, processing: true }
     end
   end
 end

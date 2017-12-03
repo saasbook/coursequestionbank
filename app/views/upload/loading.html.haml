@@ -13,4 +13,23 @@
         = image_tag('uploading.gif')
         
 :javascript
-    window.onload = upload_handling;
+    (function poll() {
+        setTimeout(function() {
+            $.ajax({
+                url: "/upload/fetch",
+                type: "GET",
+                success: function(data) {
+                  if(data.success){
+                      window.location.href = '/problems';
+                  } else if (!data.success && !data.processing) {
+                      window.location.href = '/upload';
+                  } else {
+                      console.log("PROCESSING...");
+                  }
+                },
+                dataType: "json",
+                complete: poll,
+                timeout: 2000
+            })
+        }, 2000);
+    })();
