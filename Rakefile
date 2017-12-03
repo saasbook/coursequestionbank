@@ -15,12 +15,7 @@ end
 
 desc "Set up sunspot before running App on C9."
 task :run do
-  sh "bundle exec rake db:reset"
-  sh "bundle exec rake db:migrate"
-  sh "bundle exec rake db:seed"
-  sh "bundle exec sunspot-solr stop"
   sh "bundle exec sunspot-solr start -p 8983"
-  sh "rails s -p $PORT -b $IP"
 end
 
 desc "Shut sunspot off before running any migrations"
