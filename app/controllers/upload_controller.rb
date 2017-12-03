@@ -43,7 +43,9 @@ end
     flash.keep
     redirect_to finalize_upload_path(:ids => collections.map{|collection| collection.id})
   end
-  # In upload
+end
+
+# In upload
     # if collections.nil? || collections.empty?
     #   flash[:notice] = 'The file you uploaded does not contain any quizzes'
     #   flash.keep

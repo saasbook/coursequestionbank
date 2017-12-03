@@ -51,28 +51,6 @@ class Collection < ActiveRecord::Base
     end
   end
 
-  # def self.search(search)
-  #   # debugger
-  #   # if Problem.count != 0
-  #     collections = Collection.search do
-  #       # debugger
-  #       any_of do
-  #         with(:search, collection.name)
-  #         with(:search, collection.description)
-  #       end
-  #     end
-  #   end
-
-  # def get_access_level
-  #   if self.access_level.nil?
-  #       self.access_level = 0
-  #     else
-  #       self.access_level = 1
-  #     end
-  #   end
-  #   return self.access_level
-  # end
-
   def export(format)
     if problems.empty?
       return nil
@@ -100,3 +78,27 @@ class Collection < ActiveRecord::Base
     %w{Public Share Private}
   end
 end
+
+
+#------------ LEGACY CODE ----------------
+  # def self.search(search)
+  #   # debugger
+  #   # if Problem.count != 0
+  #     collections = Collection.search do
+  #       # debugger
+  #       any_of do
+  #         with(:search, collection.name)
+  #         with(:search, collection.description)
+  #       end
+  #     end
+  #   end
+
+  # def get_access_level
+  #   if self.access_level.nil?
+  #       self.access_level = 0
+  #     else
+  #       self.access_level = 1
+  #     end
+  #   end
+  #   return self.access_level
+  # end

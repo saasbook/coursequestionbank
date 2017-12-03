@@ -43,20 +43,6 @@ class ProblemsController < ApplicationController
         end
     end
 
-    # session[:filters][:problem_type] = []
-    # if params[:problem_type]
-    #   params[:problem_type].each do |key, value|
-    #       session[:filters][:problem_type] << key if value == "1"
-    #   end
-    # end
-    #
-    # session[:filters][:bloom_category] = []
-    # if params[:bloom_category]
-    #   params[:bloom_category].each do |key, value|
-    #       session[:filters][:bloom_category] << key if value == "1"
-    #   end
-    # end
-
     session[:filters][:collections] = []
     if params[:collections]
       params[:collections].each do |key, value|
@@ -323,3 +309,19 @@ class ProblemsController < ApplicationController
   end
 
 end
+
+
+# In set_filters
+    # session[:filters][:problem_type] = []
+    # if params[:problem_type]
+    #   params[:problem_type].each do |key, value|
+    #       session[:filters][:problem_type] << key if value == "1"
+    #   end
+    # end
+    #
+    # session[:filters][:bloom_category] = []
+    # if params[:bloom_category]
+    #   params[:bloom_category].each do |key, value|
+    #       session[:filters][:bloom_category] << key if value == "1"
+    #   end
+    # end
