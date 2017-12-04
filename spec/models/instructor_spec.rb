@@ -2,7 +2,6 @@ require 'spec_helper'
 
 describe Instructor do
 	pending "Need to be made backwards compatible with current code"
-	skip
 
 	describe 'create_with_omniauth' do
     before do
