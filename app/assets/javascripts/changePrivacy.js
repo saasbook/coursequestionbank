@@ -19,8 +19,6 @@ var ChangePrivacy = {
                     }
         
                     button.attr('value', newValue);
-                    // $(this).find('input[name="privacy"]').attr('value', button.attr('value'));
-                    debugger
                 },
                 error: function(thrownError) {
                     alert("Error: Privacy not updated to \"" + newValue + "\"");
