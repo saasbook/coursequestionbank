@@ -40,7 +40,7 @@ class ProblemsController < ApplicationController
           params["#{sub}"].each do |key, value|
               session[:filters]["#{sub}"] << key if value == "1"
           end
-        end
+      end
     end
 
     session[:filters][:collections] = []
@@ -64,16 +64,13 @@ class ProblemsController < ApplicationController
   end
 
   def index
-    # debugger
     if can? :manage, Collection and @current_user.collections
       @collections = @current_user.collections + Collection.where(:access_level => 2) + Collection.where(:access_level => 3)
     else
       @collections = Collection.where(:access_level => 3)
     end
-    # @is_student = cannot? :manage Collections
 
     @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem]))
-    # debugger
   end
 
   def new
@@ -84,9 +81,7 @@ class ProblemsController < ApplicationController
     parent_uid = params[:parent_uid]
     if parent_uid
       previous_version = Problem.find_by_uid(params[:parent_uid])
-      if !previous_version
-        flash[:error] = "Could not find #{params[:parent_uid]}, using default previous question"
-      end
+      flash_if_not_cond(previous_version, :error, "Could not find #{params[:parent_uid]}, using default previous question")
     end
 
     privacy = params[:privacy] ? params[:privacy].strip.downcase : nil
@@ -100,6 +95,19 @@ class ProblemsController < ApplicationController
       end
     end
 
+    if !index_question(previous_version, privacy, category, collections)
+      return
+    end
+
+    flash[:notice] ||= "Question created."
+    if request.xhr?
+      render :json => {'error' => nil}
+    else
+      redirect_to problems_path
+    end
+  end
+
+  def index_question(previous_version, privacy, category, collections)
     begin
       problem = RuqlReader.read_problem(@current_user, params[:ruql_source])
       problem.previous_version = previous_version
@@ -113,11 +121,10 @@ class ProblemsController < ApplicationController
       Problem.reindex
       Sunspot.commit
       dups_found = Problem.handle_dups(@current_user, problem.id) #check for dups
-      if dups_found
-        flash[:notice] = "Near-duplicate question may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Click on tag to view potential matches. Mark undesired Questions as Obsolete. Remove dup tags when finished."
-      end
-
-    rescue Exception => e
+      flash_if_not_cond(!dups_found, :notice, "Near-duplicate question may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Click on tag to view potential matches. Mark undesired Questions as Obsolete. Remove dup tags when finished.")
+      return true
+      
+    rescue StandardError => e
       if request.xhr?
         render :json => {'error' => e.message}
       else
@@ -125,15 +132,8 @@ class ProblemsController < ApplicationController
         flash[:ruql_source] = params[:ruql_source]
         redirect_to :back
       end
-      return
-    end
-
-    flash[:notice] = "Question created." if !flash[:notice]
-    if request.xhr?
-      render :json => {'error' => nil}
-    else
-      redirect_to problems_path
-    end
+      return false
+    end    
   end
 
   def update
@@ -148,7 +148,7 @@ class ProblemsController < ApplicationController
     update_previous(problem)
     problem.save
 
-    flash_xhr(:bump_problem, problem.id)
+    flash_if_not_cond(request.xhr?, :bump_problem, problem.id)
     if request.xhr?
       render :nothing => true
     else
@@ -156,8 +156,8 @@ class ProblemsController < ApplicationController
     end
   end
 
-  def flash_xhr(type, message)
-    if !request.xhr?
+  def flash_if_not_cond(cond, type, message)
+    if !cond
       flash[type] = message
     end
   end
@@ -172,7 +172,7 @@ class ProblemsController < ApplicationController
       else
         return false
       end
-      flash_xhr(:notice, "Problem changed to #{privacy}")
+      flash_if_not_cond(request.xhr?, :notice, "Problem changed to #{privacy}")
     end
     return true
   end
@@ -181,7 +181,7 @@ class ProblemsController < ApplicationController
     if !params[:obsolete].nil?
       authorize! :set_obsolete, problem
       problem.obsolete = params[:obsolete] == '1'
-      flash_xhr(:notice, "Problem marked as #{'not ' if !problem.obsolete}obsolete")
+      flash_if_not_cond(request.xhr?, :notice, "Problem marked as #{'not ' if !problem.obsolete}obsolete")
     end
   end  
     
@@ -192,10 +192,10 @@ class ProblemsController < ApplicationController
       category[0] = category[0].upcase
       if Problem.all_bloom_categories.include? category
         problem.bloom_category = category
-        flash_xhr(:notice, "Bloom category set to #{category}")
+        flash_if_not_cond(request.xhr?, :notice, "Bloom category set to #{category}")
       elsif category == 'None'
         problem.bloom_category = nil
-        flash_xhr(:notice, "Bloom category removed")
+        flash_if_not_cond(request.xhr?, :notice, "Bloom category removed")
       end
     end
   end
@@ -206,11 +206,11 @@ class ProblemsController < ApplicationController
       if !target_collection.problems.include? problem
         authorize! :add_problems, target_collection
         target_collection.problems << problem
-        flash_xhr(:notice, "Problem added to #{target_collection.name}")
+        flash_if_not_cond(request.xhr?, :notice, "Problem added to #{target_collection.name}")
       else
         authorize! :remove_problems, target_collection
         target_collection.problems.delete(problem)
-        flash_xhr(:notice, "Problem removed from #{target_collection.name}")
+        flash_if_not_cond(request.xhr?, :notice, "Problem removed from #{target_collection.name}")
       end
     end
   end
@@ -221,9 +221,9 @@ class ProblemsController < ApplicationController
         previous = Problem.find_by_uid(params[:previous])
         if previous
           problem.previous_version = previous
-          flash_xhr(:notice, "Problem parent set to #{params[:previous]}")
+          flash_if_not_cond(request.xhr?, :notice, "Problem parent set to #{params[:previous]}")
         else
-          flash_xhr(:error, "Problem #{params[:previous]} not found")
+          flash_if_not_cond(request.xhr?, :error, "Problem #{params[:previous]} not found")
         end
     end
   end
@@ -285,6 +285,9 @@ class ProblemsController < ApplicationController
   def minorupdate
     @problem = Problem.find(params[:id])
     @ruql_source = flash[:ruql_source]
+    if request.xhr?
+      render :json => {"ruql_source" => @problem.ruql_source(false)}
+    end
   end
 
   def supersede

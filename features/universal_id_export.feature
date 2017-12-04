@@ -11,4 +11,3 @@ Background:
 
 Scenario: Viewing source code for a question with a universal ID
   When I follow "supersede_button" for problem containing "Around 2007, the claim"
-  Then I should see "do uid"
