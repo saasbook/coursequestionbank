@@ -14,7 +14,6 @@ class UploadController < ApplicationController
     user = Instructor.find_by_id(session[:user_id])
     msg = ""
     if Sidekiq::Status::complete? job_id
-      byebug
       if user.uploaded_duplicates
          msg = "Identical questions may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Mark undesired Questions as Obsolete. Remove dup tags when finished."
       elsif user.uploaded_same_file
