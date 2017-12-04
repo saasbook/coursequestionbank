@@ -1,0 +1,7 @@
+quiz 'Source Code Test Quiz' do
+  fill_in do
+    uid "eb3f6f5e-99b4-4d3e-b961-6deb47c23591"
+    text "Adding a new action to your Rails app requires adding a --- to map the URI."
+    answer "/route/i"
+  end
+end

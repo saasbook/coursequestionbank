@@ -1,0 +1,7 @@
+
+%h4 Create new version of question:
+%div.problem_box
+  = @problem.html5.html_safe
+  %div.additional Created #{@problem.created_date} by #{@problem.instructor.name}
+
+= render :partial => 'minor_form', :locals => {:previous => @problem}

@@ -1,0 +1,45 @@
+quiz 'Advanced Render Test' do
+
+  choice_answer :randomize => true do
+    text "Which of the following best identifies the four basic operations supported by RDBMS?"
+    distractor "HTTP", :explanation => 'HTTP stands for HyperText Transfer Protocol, which is used to transfer SaaS content to browsers.'
+    distractor "Get, Put, Post, Delete", :explanation => 'These are four of the methods or "verbs" used by HTTP.'
+    answer "CRUD", :explanation => 'Create, Read, Update, Delete are the four basic database operations commonly performed by SaaS apps.'
+    distractor "REST", :explanation => 'REpresentational State Transfer is a design approach for making SaaS requests self-contained by having each request refer to a resource and an operation on that resource.'
+  end
+
+  truefalse 'If an app has a RESTful API, it must be performing CRUD operations.',
+  false,
+  :explanation => 'The REST principle can be applied to any kind of operation'
+
+  choice_answer :randomize => true do
+    text "The implied port number of the URI <tt>http://google.com</tt> is"
+    answer "80"
+    distractor "400"
+    distractor "3000"
+    distractor "8000"
+  end
+
+  grouped_question do
+    image "http://i2.cdn.cnn.com/cnnnext/dam/assets/160201150128-trump-clinton-split-portrait-exlarge-169.jpg"
+    text "In today's lecture, we've discussed some basics about US institutions and politics. Here are some questions to enhance your memories."
+
+    choice_answer :randomize => true do
+      text  "What is the largest US state?"
+      explanation "Not big enough." # for distractors without their own explanation
+      distractor 'Hawaii'
+      distractor 'Texas', :explanation => "That's pretty big, but think colder."
+      answer 'Alaska'
+    end
+
+    select_multiple do
+      text "Which are American political parties?"
+      distractor "Tories", :explanation => "They're British"
+      distractor "Social Democrats"
+      answer "Democrats"
+      answer "Republicans"
+      answer "Greens", :explanation => "Yes, they're a party!"
+    end
+  end
+
+end

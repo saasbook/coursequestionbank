@@ -95,7 +95,7 @@ div.prob-right {
   margin-left: 5px;
 }
 
-.prob_privacy, .prob_obsolete, .collection-buttons form, .collections-from-others form, .bloom-buttons form {
+.prob_privacy, .prob_obsolete, .collection-buttons form, .collections-from-others form, .bloom-buttons form{
   display: inline-block;
   margin: 2px 0;
 }
@@ -159,4 +159,118 @@ div.hidden-additional {
   padding: 10px;
   margin: 15px;
   border-radius: 4px;
+}
+
+li.collection-checkbox-li {
+  display: block;
+  float: left;
+  width: 33%;
+}
+
+div.edit-collections {
+  width: 750px;
+}
+
+.question {
+  width: 550px;
+  font-size: 100%;
+  margin-left: 5px;
+}
+
+.stats {
+  width: 300px;
+}
+
+.total_graph {
+  height: 150px;
+  font-size: 80%;
+}
+
+.entrys_graph {
+  height: 300px;
+  font-size: 80%;
+}
+
+.first_graph {
+  height: 160px;
+  font-size: 100%;
+}
+
+.entrys {
+  margin-left: 5px;
+}
+
+.entrybox{
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  width: 550px;
+  //display: inline;
+}
+
+.correctness{
+  padding: 5px;
+  margin: 5px;
+  border-radius: 5px;
+  border: 1px solid lightgrey;
+  width: 550px;
+  //display: inline;
+}
+
+.entryexplain{
+  // border-top: 2px solid grey;
+  margin: 2px;
+}
+//
+p.entrytext{
+  width: 550px;
+  margin-left: 5px;
+  display: inline;
+  //white-space: pre-wrap;
+  word-wrap: break-word;
+  //white-space: -moz-pre-wrap;
+}
+
+p.questiontext{
+  width: 550px;
+  display: inline;
+  //white-space: pre-wrap;
+  word-wrap: break-word;
+  //white-space: -moz-pre-wrap;
+}
+
+pre {
+    width: 520px;
+    font-family: Arial, sans-erif;
+    font-size: 14px;
+    margin-top: 5px;
+    tab-size: 2;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    //white-space: -moz-pre-wrap;
+}
+
+.collection-checkbox-text form{
+  display: inline-block;
+  //float: left;
+  //width: 33%
+  //margin-left: S20px;
+}
+
+.collection-text{
+  padding-right: 40px;
+}
+
+.confirm-edit{
+  position: absolute;
+  width: 500px;
+  padding: 4px;
+  border: 2px double grey;
+  font-size: 120%;
+  background-color: antiquewhite;
+}
+
+br.sep{
+  font-size: 24%;
 }

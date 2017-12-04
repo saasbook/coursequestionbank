@@ -6,9 +6,9 @@ class ApplicationController < ActionController::Base
 
   protected # prevents method from being invoked by a route
   def set_current_user
-    @current_user ||= Instructor.find_by_id(session[:user_id])
+    @current_user = Instructor.find_by_id(session[:user_id])
     redirect_to login_path and return unless @current_user
-    authorize! :read, Problem
+    #authorize! :read, Problem
   end
 
   def current_ability
@@ -16,14 +16,8 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
-    if cannot? :read, Problem
-    	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
-    	session.delete(:user_id)
-      redirect_to login_path
-    else
       flash[:notice] = "You don't have permission to access this page."
       redirect_to request.referer.present? ? :back : problems_path
-    end
   end
 
 
@@ -32,3 +26,17 @@ class ApplicationController < ActionController::Base
   end
 
 end
+
+
+# In rescue_from CanCan:
+    # if cannot? :read, Problem
+    # 	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
+    # 	session.delete(:user_id)
+    #   redirect_to login_path
+    # else
+    # @col = Collection.find_by_id(params[:id])
+    # if @col.access_level == 2 and @current_user.privilege != "Student"
+    #   redirect_to problems_path
+    # else
+    #
+    # end
