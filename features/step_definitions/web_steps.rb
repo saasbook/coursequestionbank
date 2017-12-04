@@ -18,9 +18,9 @@
 # * http://elabs.se/blog/15-you-re-cuking-it-wrong
 #
 
-
 require 'uri'
 require 'cgi'
+require 'timeout'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
 
@@ -93,7 +93,7 @@ Given /^(?:|I )have uploaded '(.*)'$/ do |file|
     Given I am on the upload page
     And I attach the file "features/test_files/#{file}" to "file_upload"
     And I press "Upload File"
-    Then I should see "Upload successful!"
+    Then I should see "Uploading File"
   }
 end
 
@@ -119,7 +119,7 @@ When /^(?:|I )deny '(.*)'/ do |user|
   visit "admin/deny/#{Instructor.find_by_name(user).id}"
 end
 
-def problems_with_text(text, collection=nil)
+def problems_with_text(text, collfection=nil)
   probs = Problem.all.select{|problem| problem.json and problem.json.include? text}
   probs.select!{|problem| problem.collections.map(&:name).include? collection} if collection
   probs
@@ -396,6 +396,11 @@ Then /^(?:|I )should be on (.+)$/ do |page_name|
   else
     assert_equal path_to(page_name), current_path
   end
+end
+
+And /^I should be redirected$/ do
+  sleep 15
+  visit [ current_path, page.driver.request.env['QUERY_STRING'] ].reject(&:blank?).join('?')
 end
 
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|

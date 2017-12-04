@@ -14,7 +14,7 @@ class UploadController < ApplicationController
   def fetch
     job_id = session[:job_id]
     if Sidekiq::Status::complete? job_id
-      flash[:notice] = "Upload Succesful!"
+      flash[:notice] = "Upload successful!"
       render json: { success: true }
     elsif Sidekiq::Status::failed? job_id
       flash[:notice] = "Error Uploading File! Please try again..."
@@ -24,6 +24,7 @@ class UploadController < ApplicationController
     end
   end
 end
+
 =begin  **** LEGACY CODE ****
   def upload
     authorize! :manage, Problem
