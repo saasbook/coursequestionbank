@@ -1,1 +1,1 @@
-uploadworker: bundle exec sidekiq -c 1
+uploadworker: bundle exec sidekiq -q high
