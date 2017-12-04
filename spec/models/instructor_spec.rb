@@ -1,9 +1,9 @@
 require 'spec_helper'
 
 describe Instructor do
+	pending "Need to be made backwards compatible with current code"
 
 	describe 'create_with_omniauth' do
-		pending "Need to be made backwards compatible with current code"
     before do
       auth = {"provider" => "github", "uid" => "12345",
               "info" => { "name" => "foo",
