@@ -1,3 +1,5 @@
+PTID: #152774422
+
 Feature:
   As an instructor/Admin, I want to do minor edit on a question
 
@@ -8,7 +10,6 @@ Scenario: I edit the question slightly
   And I am on the CourseQuestionBank home page
   Then I should see "Update"
   And I follow "Update"
-  And I press "Confirm Update"
   Then I should see "Which of the following best identifies the four basic operations supported by RDBMS?"
 
 Scenario: I edit the question, then I regreted that I was editing too much on this question
@@ -18,5 +19,4 @@ Scenario: I edit the question, then I regreted that I was editing too much on th
   And I am on the CourseQuestionBank home page
   Then I should see "Update"
   And I follow "Update"
-  And I press "Confirm Update"
   Then I should see "An HTTP request must consist of both"
