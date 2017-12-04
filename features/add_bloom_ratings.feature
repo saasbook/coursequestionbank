@@ -5,6 +5,7 @@ Feature: User can associate a Bloom Taxonomy rating with a question
 
 Background:
   Given I am signed in with uid "1234" and provider "github"
+  Then I should see "Admin"
   And I have uploaded 'bloom_test.txt'
   And I am on the CourseQuestionBank home page
 

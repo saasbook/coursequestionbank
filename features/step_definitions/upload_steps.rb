@@ -3,8 +3,18 @@ Given(/^I have selected a file to upload$/) do
 end
 
 Given(/^I press the upload button$/) do
-  puts page.body
+
   click_button "Upload File"
+end
+
+Given(/^I press the private button$/) do
+
+  click_button "Private"
+end
+
+Given(/^I press the update button$/) do
+
+  click_button "Update"
 end
 
 Given(/^the upload fails$/) do

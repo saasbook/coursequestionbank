@@ -14,7 +14,15 @@
 //= require jquery_ujs
 //= require_tree .
 //= require bootstrap-sprockets
+//= require highcharts
+//= require highcharts/highcharts-more
+//= require highcharts/modules/solid-gauge
 //= require zeroclipboard
+//= require highcharts/adapters/standalone-framework
+//= require clipboard
+
+clipboard = undefined;
+alert_check = false;
 
 jQuery(document).ready(function() {
 	// $('.maintable').find('.answers').hide(); //Hide/close all containers
@@ -32,15 +40,56 @@ jQuery(document).ready(function() {
 	// });
 
 	$('.d_clip_button').show();
-	var clip = new ZeroClipboard($('.d_clip_button'));
-	$(".d_clip_button").on("click", function(){
+	// var clip = new Clipboard('.d_clip_button');
+	// clip.on('success', function(e){console.info('Text:', e.text)});
+	// console.log(clip);
+	// $(".d_clip_button").on("click", function(){
+	// 	alert("Source code copied to clipboard!");
+	// });
+	clipboard = new Clipboard('.d_clip_button');
+	clipboard.on('success', function(e) {
 		alert("Source code copied to clipboard!");
+		btn = document.getElementById(e.trigger.id);
+		btn.innerHTML = "Source Code Clipped";
+		btn.classList.remove('btn-default');
+		btn.classList.add('btn-info');
+	    console.log(e);
 	});
-	
+	clipboard.on('error', function(e) {
+	    console.log(e);
+	});
+
 	$('.check_all').show();
 	$('.check_all').change(function () {
 		var group = $(this).attr('id').substring('check_all_'.length);
     $('.check_box_' + group).prop('checked', $(this).prop('checked'));
 	});
-	
+
 });
+
+var LoginPanel = {
+	setup: function() {
+
+		var IdentityPanel = $('#choose-identity');
+		var BackButton = $('#back');
+		var LoginButton = $('#login');
+
+		IdentityPanel.hide();
+		BackButton.hide();
+
+		LoginButton.click(function() {
+			BackButton.show();
+			LoginButton.hide();
+			IdentityPanel.show();
+			return false;
+		});
+
+		BackButton.click(function() {
+			BackButton.hide();
+			LoginButton.show();
+			IdentityPanel.hide();
+			return false;
+		});
+	}
+}
+$(LoginPanel.setup);
