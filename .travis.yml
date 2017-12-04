@@ -1,9 +1,11 @@
 
 env:
   - DB=sqlite
- 
+services:
+  - redis-server
 before_script:
       - bundle exec sunspot-solr start -p 8983
+      - bundle exec sidekiq -r ./spec/dummy_app/app.rb -L /tmp/sidekiq.log &
 script:
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rake db:test:prepare
