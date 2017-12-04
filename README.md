@@ -1,6 +1,6 @@
 # Course Question Bank - CS 169 Project
 [![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](http://coursequestionbank-f17.herokuapp.com)
-[![Code Climate](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/gpa.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank)
+[![Code Climate](https://codeclimate.com/github/Laralinmcc/coursequestionbank/badges/gpa.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank)
 [![Travis CI](https://travis-ci.org/hrzlvn/coursequestionbank.svg?branch=master)](https://travis-ci.org/Laralinmcc/coursequestionbank)
 [![Test Coverage](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/coverage.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank/coverage)
 <span style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" ><a style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" href="https://www.pivotaltracker.com/n/projects/1544183">PivotalTracker</a></span>
