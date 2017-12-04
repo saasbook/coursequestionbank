@@ -1,7 +1,46 @@
+FIRST_GRAPH_DATA_LABELS = {y: 5,
+                            borderWidth: 0,
+                            useHTML: true
+                          }
+ENTRY_GRAPH_DATA_LABELS = {enabled: true,
+                            rotation: -90,
+                            color: '#FFFFFF',
+                            align: 'right',
+                            format: '{point.y:.1f}', // one decimal
+                            y: 10, // 10 pixels down from the top
+                            style: {
+                                fontSize: '13px',
+                                fontFamily: 'Verdana, sans-serif'
+                                }
+                            }
+FIRST_GRAPH_GAUGE_OPTIONS = {chart: {type: 'solidgauge'},
+                            title: {text: ''},
+                            pane: {center: ['50%', '85%'],
+                                    size: '130%',
+                                    startAngle: -90,
+                                    endAngle: 90,
+                                    background: {innerRadius: '60%',
+                                                outerRadius: '100%',
+                                                shape: 'arc'}
+                            },
+                    
+                            // the value axis
+                            yAxis: {stops: [[0.1, '#DF5353'], // red
+                                            [0.5, '#DDDF0D'], // yellow
+                                            [0.9, '#55BF3B']],// green 
+                                    lineWidth: 0,
+                                    minorTickInterval: null,
+                                    tickAmount: 2,
+                                    title: {y: -70},
+                                    labels: {y: 16}
+                            },
+                    
+                            plotOptions: { solidgauge: {dataLabels: FIRST_GRAPH_DATA_LABELS}}
+                        }
+
 $(document).ready(function() {
 
    $(".stats").each(function() {
-       debugger
        id = $(this).attr('id').split("_")[1];
        overallAttempts = parseInt($(this).find(".overallAttempts").text().trim(), 10);
        wrong_cnt = parseInt($(this).find(".allAttemptsWrongAmount").text().trim(), 10);
@@ -33,48 +72,23 @@ var entrysGraph = function(divId, entryChoice) {
             title: {text: 'First Attempt Choices'}
         },
         series: yData,
-        dataLabels: {
-            enabled: true,
-            rotation: -90,
-            color: '#FFFFFF',
-            align: 'right',
-            format: '{point.y:.1f}', // one decimal
-            y: 10, // 10 pixels down from the top
-            style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-            }
-        }
+        dataLabels: ENTRY_GRAPH_DATA_LABELS
     });
 }
 
 var totalGraph = function(divId, overallAttempts, wrong_cnt) {
     Highcharts.chart(divId, {
-        chart: {
-            type: 'bar'
-        },
-        title: {
-            text: ''
-        },
-        xAxis: {
-            categories: ['']
-        },
+        chart: {type: 'bar'},
+        title: {text: ''},
+        xAxis: {categories: ['']},
         yAxis: {
             allowDecimals: false,
             min: 0,
             max: overallAttempts,
-            title: {
-                text: 'Overall Attempts Count'
-            }
+            title: {text: 'Overall Attempts Count'}
         },
-        legend: {
-            reversed: true
-        },
-        plotOptions: {
-            series: {
-                stacking: 'normal'
-            }
-        },
+        legend: {reversed: true},
+        plotOptions: {series: {stacking: 'normal'} },
         series: [{
             name: 'Correct',
             data: [overallAttempts - wrong_cnt]
@@ -86,63 +100,14 @@ var totalGraph = function(divId, overallAttempts, wrong_cnt) {
 }
 
 var firstGraph = function (divId, success_rate) {
-    var gaugeOptions = {
-        chart: {
-            type: 'solidgauge'
-        },
-        title: {
-            text: ''
-        },
-        pane: {
-            center: ['50%', '85%'],
-            size: '130%',
-            startAngle: -90,
-            endAngle: 90,
-            background: {
-                innerRadius: '60%',
-                outerRadius: '100%',
-                shape: 'arc'
-            }
-        },
-
-        // the value axis
-        yAxis: {
-            stops: [
-                [0.1, '#DF5353'], // red
-                [0.5, '#DDDF0D'], // yellow
-                [0.9, '#55BF3B'] // green
-            ],
-            lineWidth: 0,
-            minorTickInterval: null,
-            tickAmount: 2,
-            title: {
-                y: -70
-            },
-            labels: {
-                y: 16
-            }
-        },
-
-        plotOptions: {
-            solidgauge: {
-                dataLabels: {
-                    y: 5,
-                    borderWidth: 0,
-                    useHTML: true
-                }
-            }
-        }
-    };
+    var gaugeOptions = FIRST_GRAPH_GAUGE_OPTIONS
 
     Highcharts.chart(divId, Highcharts.merge(gaugeOptions, {
         yAxis: {
-            title: {
-                text: "First Attempt Success"
-            },
+            title: {text: "First Attempt Success"},
             min: 0,
             max: 100
         },
-
         series: [{
             name: 'First Success',
             data: [first_success],
