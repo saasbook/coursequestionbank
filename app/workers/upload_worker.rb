@@ -8,6 +8,7 @@ class UploadWorker
     sidekiq_options retry:false
     def perform (user_id, file)
         Sidekiq::Queue.new.clear
+        puts "INSIDE perform: file: #{file}"
         RuqlReader.store_as_json(user_id, file)
     end
 end

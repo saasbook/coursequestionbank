@@ -1,8 +1,9 @@
 class UploadController < ApplicationController
   def upload
     authorize! :manage, Problem
-    file = params[:ruql_file]
-    @job_id = UploadWorker.perform_async(session[:user_id], file.path)
+    file = params[:ruql_file].read
+    puts "file: #{file}"
+    @job_id = UploadWorker.perform_async(session[:user_id], file)
     session[:job_id] = @job_id
     flash[:notice] = "Uploading File..."
     flash.keep

@@ -1,10 +1,10 @@
 class RuqlReader
   @file_processed = false
-  def self.store_as_json(user_id, filename)
+  def self.store_as_json(user_id, file)
     user = Instructor.find_by_id(user_id)
     user.update_attributes(:uploaded_duplicates => false, :uploaded_same_file => false, :uploaded_empty_file => false, :current_collection => 0)
     Quiz.reset
-    Quiz.instance_eval "#{IO.read(filename)}"
+    Quiz.instance_eval file
     collections = []
     dups_found = false
     Quiz.quizzes.uniq.each do |quiz|
