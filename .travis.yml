@@ -10,13 +10,13 @@ script:
   - RAILS_ENV=test bundle exec rake db:migrate
   - bundle exec rake db:test:prepare
   - bundle exec rake db:seed
+  - bundle exec rake spec
   - |
     FILES=(add_bloom_ratings.feature instructor_accessibility.feature share_collection.feature add_collection_checkbox.feature instructors_problem_view.feature show_answer.feature add_tags.feature login.feature sort_searches.feature add_to_collections.feature manage_privilege.feature source_code_copy.feature admin.feature minor_edit_question.feature answer_question_fillin.feature near_duplicate_alert.feature student_login.feature bloom_rating_buttons.feature near_duplicate_tags.feature students_accessibility.feature check_answer.feature new_problem_with_bloom.feature students_problem_view.feature collapse_collection_button.feature new_problem_with_collections.feature collections.feature previewQuiz.feature tag_uploads.feature display_image_in_question.feature problems_stats.feature duplicate_resolutions.feature question_history.feature three_question_level.feature export.feature question_superseding.feature universal_id_export.feature filter_bloom_ratings.feature remove_from_collections.feature universal_id_upload.feature filter_collections.feature search_collection.feature upload.feature group_question_with_same_resource.feature search_questions.feature view_tags.feature highlight_solution_for_instructor.feature search_tags.feature view_whitelist.feature)
     for ((i = 0; i < ${#FILES[@]}; i++))
     do
       bundle exec cucumber "features/${FILES[$i]}"
     done
-  - bundle exec rake spec
 after_script:
       - bundle exec sunspot-solr stop
 language: ruby
