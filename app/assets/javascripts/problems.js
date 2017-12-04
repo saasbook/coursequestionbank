@@ -12,7 +12,7 @@ var AdditionalHidden = {
   				async: false,
   				context: this,
   				dataType: 'json',
-  				url: 'problems/'+ question_num + '/minorupdate',
+  				url: '/problems/'+ question_num + '/minorupdate',
   				success: function (source) {
   	        problem.find("textarea").val(source['ruql_source']);
 				  }
@@ -38,8 +38,6 @@ var AdditionalHidden = {
 
       function toggle_checkbox(toggle_button, arg1, arg2){
       problem.find(toggle_button).click(function() {
-      // problem.find('.edit-Collections').show()
-      // problem.find('.show_checkbox').show()
         if (toggle_button === '.hide_checkbox'){
           show_behavior(arg1);
         }
@@ -64,7 +62,6 @@ var AdditionalHidden = {
             }
           })
           $(this).hide();
-          //problem.find('.collections-less-toggle').show()
           show_behavior(show_toggle);
           return false;
         })
@@ -101,6 +98,36 @@ var AdditionalHidden = {
   }
 };
 $(AdditionalHidden.setup);
+
+var Supersession = {
+    setup: function() {
+        $('.supersede_form form').submit(problemUpdateAjax);
+    }
+};
+$(Supersession.setup);
+
+var MinorUpdate = {
+    setup: function() {
+        $('.minor_form form').submit(problemUpdateAjax);
+    }
+};
+$(MinorUpdate.setup);
+
+function problemUpdateAjax(e) {
+    $.ajax({
+        context: this,
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(data, textStatus, jqXHR) {
+            if (data.error === null)
+                window.location.reload();
+            else
+                $(this).find('.message').text(data.error);
+        }
+    });
+    return false;
+}
 
 
 
