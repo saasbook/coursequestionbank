@@ -1,7 +1,12 @@
 class UploadController < ApplicationController
   def upload
     authorize! :manage, Problem
+<<<<<<< HEAD
+    puts params
     file = params[:ruql_file].read
+=======
+    file = params[:ruql_file].read if params[:ruql_file]
+>>>>>>> 2e28ace3772ec38b6af3c33d33ff919bd1999569
     puts "file: #{file}"
     @job_id = UploadWorker.perform_async(session[:user_id], file)
     session[:job_id] = @job_id
@@ -15,6 +20,7 @@ class UploadController < ApplicationController
     user = Instructor.find_by_id(session[:user_id])
     msg = ""
     if Sidekiq::Status::complete? job_id
+      byebug
       if user.uploaded_duplicates
          msg = "Identical questions may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Mark undesired Questions as Obsolete. Remove dup tags when finished."
       elsif user.uploaded_same_file
