@@ -6,6 +6,7 @@ Feature: User can add problem to collection that using checkbox
   Background:
     Given I am signed in with uid "1234" and provider "github"
     And I have uploaded 'bloom_test.txt'
+    And I pending   #need to implement JS test here to test Uploading File
     And I am on the CourseQuestionBank home page
 
   Scenario: Check a checkbox that show plain text

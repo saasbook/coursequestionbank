@@ -8,6 +8,7 @@ Feature: User can add tags to questions at the time of import
     And I have uploaded 'micro_quizzes.txt'
     And I am on the CourseQuestionBank home page
     And I follow "My Collections"
+    And I pending
     And I follow "1/22/15 (W1 L2)"
     And I check problem containing "Around 2007, the claim"
     And I check problem containing "statements comparing Plan-and-Document"

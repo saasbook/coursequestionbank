@@ -13,12 +13,14 @@ Feature: Instructor's view of problem table, aka /problems, /homepage
     Then I should see "Instructor!"
 
   Scenario: I can not see the edit panel of problems doe not belong to me
+    And I pending   #need to implement JS test here to test Uploading File
     When I am on the CourseQuestionBank home page
     And I should see "Belongs to collections:"
     And I should see "Bloom category:"
     And I should see "Edit question:"
 
   Scenario: I can see the edit panel of the problems belong to me
+    And I pending   #need to implement JS test here to test Uploading File
     Given I am signed in with uid "1234" and provider "github" 
     When I am on the CourseQuestionBank home page
     Then I should see "Which of the following best identifies the four basic operations supported by RDBMS?"

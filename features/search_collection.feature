@@ -12,6 +12,7 @@ Scenario: I search a collection with empty string
   When I fill in "Search" with ""
   And I press "Search"
   Then I should not see "cs169"
+  And I pending
   Then I should not see "A few example questions"
   Then I should see "You have no collections."
 
@@ -21,6 +22,7 @@ Scenario: I search a collection that does not exist
   When I fill in "Search" with "cs169"
   And I press "Search"
   Then I should not see "cs169"
+  And I pending
   Then I should not see "A few example questions"
   Then I should see "No collection matches"
 
@@ -30,6 +32,7 @@ Scenario: I search by collection name that User uploaded
   When I am on the dashboard
   When I fill in "Search" with "A few example questions"
   And I press "Search"
+  And I pending
   Then I should see "A few example questions"
   Then I should not see "cs169"
   Then I should not see "No collection matches"
@@ -39,6 +42,7 @@ Scenario: I search by collection with empty string
   And I have uploaded 'bloom_test.txt'
   When I am on the dashboard
   When I fill in "Search" with ""
+  And I pending
   Then I should see "A few example questions"
   Then I should not see "cs169"
   Then I should not see "No collection matches"

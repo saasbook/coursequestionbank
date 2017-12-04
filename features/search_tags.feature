@@ -16,6 +16,7 @@ Feature: User can search for questions by tags
     Given I am signed in with uid "1234" and provider "github"
     And I have uploaded 'foo.txt'
     And I am on the CourseQuestionBank home page
+	  And I pending
     And I follow "View 60"
 
 

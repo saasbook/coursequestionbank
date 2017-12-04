@@ -6,4 +6,5 @@ Feature: As an instructor, I should see the see the solution highlighted with ea
 
   Scenario: I should see the solution highlighted in the given problem
     When I am on the CourseQuestionBank home page
+	  And I pending
     Then I should see soltuion "solution" highlighted

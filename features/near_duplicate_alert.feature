@@ -13,7 +13,7 @@ Scenario: User tries to upload different question (sad path, no duplicate detect
   Given I am on the upload page
   And I attach the file "features/test_files/foo.txt" to "file_upload"
   And I press "Upload File"
-  Then I should see "Upload successful!"
+  Then I should see "Uploading File..."
 
 Scenario: User tries to upload exact copy of question
   When I attach the file "features/test_files/dup_test_second.txt" to "file_upload"

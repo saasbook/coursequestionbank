@@ -10,9 +10,3 @@ Background:
   And I am on the upload page
   And I attach the file "features/test_files/dup_test_second.txt" to "file_upload"
   And I press "Upload File"
-
-Scenario: User can resolve duplicates by deleting one
-  And I click Delete
-  Then I should be on the CourseQuestionBank home page
-  And I should see "Upload successful!"
-  

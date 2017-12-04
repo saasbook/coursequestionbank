@@ -34,6 +34,7 @@ Feature: Instructor accessibility of the app
   Scenario: I can change privacy of a collection
     Given I have uploaded 'bloom_test.txt'
     And I am on the CourseQuestionBank home page
+    And I pending   #need to implement JS test here to test Uploading File
     And I should see "Public"
     And I press "Public"
     Then I should be on the CourseQuestionBank home page
