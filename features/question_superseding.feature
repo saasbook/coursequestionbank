@@ -7,6 +7,7 @@ Background:
   Given I am signed in with uid "1234" and provider "github"
   And I have uploaded 'history_test.txt'
   And I am on the CourseQuestionBank home page
+  And I pending
   And I follow "View 60"
 
 Scenario: replacing a question with a new version

@@ -31,7 +31,18 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+module WaitForAjax
+  def wait_for_ajax
+    Timeout.timeout(Capybara.default_wait_time) do
+      loop until finished_all_ajax_requests?
+    end
+  end
 
+  def finished_all_ajax_requests?
+    page.evaluate_script('jQuery.active').zero?
+  end
+end
+World(WaitForAjax)
 Then /^I should see the image "(.+)"$/ do |image|
     page.should have_xpath("//img[@src=\"#{image}\"]")
 end
@@ -95,6 +106,7 @@ Given /^(?:|I )have uploaded '(.*)'$/ do |filename|
     And I press "Upload File"
     Then I should see "Uploading File..."
   }
+  And I pending   #need to implement JS test here to test Uploading File
 end
 
 When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|

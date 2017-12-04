@@ -8,9 +8,10 @@ Feature: show answer directly
     Given I am on the upload page
     And I attach the file "features/test_files/bloom_test.txt" to "file_upload"
     And I press "Upload File"
-    Then I should see "Upload successful!"
+    Then I should see "Uploading File..."
 
   Scenario: I want to show the answer directly
+    And I pending   #need to implement JS test here to test Uploading File
     And I am on the CourseQuestionBank home page
     And I should see "Which of the following best identifies the four basic operations supported by RDBMS?"
     And I press "Check Answer"
