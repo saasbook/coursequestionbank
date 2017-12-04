@@ -1,0 +1,120 @@
+- if test_problem.problem_type == "MultipleChoice" or test_problem.problem_type == "TrueFalse"
+  %div.question{:id => "#{test_problem.uid}", :class => "multiple_choice_question"}
+    %p.questiontext
+      = test_problem.question_text.html_safe
+    - if !test_problem.question_image.nil?
+      %br
+        = image_tag test_problem.question_image, :style => "max-width: 600px;"
+    %div.question-entrys
+      %div.entrys{:tag => "multiple"}
+
+        - for i in (0..test_problem.answer_entrys.length - 1)
+          - correct = test_problem.answer_correct?[i]
+          %div.entrybox{:answer_id => "entry_#{i+1}", :correct => correct.to_s}
+            %div.entrybody
+              - if can? :see_answer, test_problem
+                %input{:type=> "radio", :name => "#{test_problem.uid}", :value=> 1, :checked=>test_problem.answer_correct?[i], :id=>"#{test_problem.uid}"}
+              - else
+                %input{:type=> "radio", :name => "#{test_problem.uid}", :value=> 1, :checked=>false, :id=>"#{test_problem.uid}"}
+
+              %p.entrytext
+                = test_problem.answer_entrys[i].strip.html_safe
+            %div.entryexplain{:style => "display:none"}
+              %p.entrytext
+                %br
+                  - if test_problem.answer_explanation[i].strip.length == 0
+                    = "Wrong"
+                  - else
+                    = test_problem.answer_explanation[i].strip.html_safe
+
+      %button{:type => "button", :class => "button-check btn btn-default check-answer"}
+        Check Answer
+      %button{:type => "button", :class => "button-check btn btn-default show-answer"}
+        Show Answer
+
+      %div.multiple-correct.correctness{:style => "display: none"}
+        %p.entrytext
+          = "Correct.\n"
+      %div.multiple-wrong.correctness{:style => "display: none"}
+        %p.entrytext
+          = "Wrong.\n" + test_problem.global_explanation.to_s.html_safe
+
+- if test_problem.problem_type == "SelectMultiple"
+  %div.question{:id => "#{test_problem.uid}", :class => "select_multiple_question"}
+    %p.questiontext
+      = test_problem.question_text.html_safe
+    - if !test_problem.question_image.nil?
+      %br
+        = image_tag test_problem.question_image, :style => "max-height: 400px;"
+    %div.entrys{:tag => "multiple"}
+      - for i in (0..test_problem.answer_entrys.length - 1)
+        - correct = test_problem.answer_correct?[i]
+        %div.entrybox{:answer_id => "entry_#{i+1}", :correct => correct.to_s}
+          %div.entrybody
+            - if can? :see_answer, test_problem
+              %input{:type=> "checkbox", :name => "#{test_problem.uid}", :value=> 1, :checked=>test_problem.answer_correct?[i], :id=>"#{test_problem.uid}"}
+            - else
+              %input{:type=> "checkbox", :name => "#{test_problem.uid}", :value=> 1, :checked=>false, :id=>"#{test_problem.uid}"}
+            %p.entrytext
+              = test_problem.answer_entrys[i].strip.html_safe
+          %div.entryexplain{:style => "display:none"}
+            %p.entrytext
+              %br
+                - if test_problem.answer_explanation[i].strip.length == 0
+                  = "Wrong"
+                - else
+                  = test_problem.answer_explanation[i].strip.html_safe
+      %button{:type => "button", :class => "button-check btn btn-default check-answer"}
+        Check Answer
+      %button{:type => "button", :class => "button-check btn btn-default show-answer"}
+        Show Answer
+      %div.multiple-correct.correctness{:style => "display: none"}
+        %p.entrytext
+          = "Correct.\n"
+      %div.multiple-wrong.correctness{:style => "display: none"}
+        %p.entrytext
+          = "Wrong.\n"
+
+
+- if test_problem.problem_type == "FillIn"
+  %div.question{:id => "#{test_problem.uid}", :class => "fillin_question"}
+    %p.questiontext
+      = test_problem.question_text.html_safe
+    - if !test_problem.question_image.nil?
+      %br
+        = image_tag test_problem.question_image, :style => "max-height: 400px;"
+    %br
+    = "Your Answer:"
+    - if can? :see_answer, test_problem
+      %input{:type => "text", :class => "students-answer", :id => "#{test_problem.uid}", :name => "fill-in", :value => test_problem.answer_entrys[0]}
+    - else
+      %input{:type => "text", :class => "students-answer", :id => "#{test_problem.uid}", :name => "fill-in"}
+
+    %button{:type => "button", :class => "button-check btn btn-default check-answer"}
+      Check Answer
+    %button{:type => "button", :class => "button-check btn btn-default show-answer"}
+      Show Answer
+    %div.entrybox
+      %p.answer{:style => "display: none"}
+        = test_problem.answer_entrys[0]
+      %div.entryexplain.fillin-correct{:style => "display: none", :name => "correct"}
+        %p.entrytext
+          = "Correct.\n"
+      %div.entryexplain.fillin-wrong{:style => "display: none"}
+        %p.entrytext
+          = "Wrong.\n" + test_problem.answer_entrys[0]
+      %div.entryexplain.fillin-showAnswer{:style => "display: none"}
+        %p.entrytext
+          = "answer is : .\n" + test_problem.answer_entrys[0]
+
+- if test_problem.problem_type == "Group"
+  %div.question{:id => "#{test_problem.uid}", :class => "question"}
+    %p.questiontext
+      = test_problem.question_text.html_safe
+    - if !test_problem.question_image.nil?
+      %br
+        = image_tag test_problem.question_image, :style => "max-height: 400px;"
+    - sub_questions = test_problem.sub_questions
+    - for i in (0..sub_questions.length - 1)
+      - sub_question = sub_questions[i]
+      = render :partial => "problems/student_answer", :locals => {:test_problem => sub_question}

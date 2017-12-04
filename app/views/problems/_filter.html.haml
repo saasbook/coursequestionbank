@@ -4,8 +4,6 @@
     = label_tag :search, 'Search Keywords:'
     = text_field_tag :search, session[:filters][:search], class: 'form-control', placeholder: 'Search'
 
-  %hr
-
   %div.form-group
     = label_tag :tags, 'Tags:'
     = text_field_tag :tags, session[:filters][:tags].join(', '), class: 'form-control', placeholder: 'e.g.: tag 1, tag 2'
@@ -38,16 +36,19 @@
         = label_tag "bloom_category_#{category}", category
 
   %hr
-
-  %div.form-group
-    = label_tag :collections, 'Collections:'
-    - @collections.each do |collection|
+  - unless @collections.nil?
+    %div.form-group
+      = label_tag :collections, 'Collections:'
+      - @uniq_collections = @collections.uniq!
+      - if @uniq_collections != nil
+        - @collections = @uniq_collections 
+      - @collections.each do |collection|
+        %div.filter_option
+          = check_box_tag "collections[#{collection.id}]", 1,  !!(session[:filters][:collections].include? collection.id), class: 'checkbox', id: "collections_#{collection.id}"
+          = label_tag "collections_#{collection.id}", collection.name
       %div.filter_option
-        = check_box_tag "collections[#{collection.id}]", 1,  !!(session[:filters][:collections].include? collection.id), class: 'checkbox', id: "collections_#{collection.id}"
-        = label_tag "collections_#{collection.id}", collection.name
-    %div.filter_option
-      = check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: 'checkbox', id: 'collections_0'
-      = label_tag 'collections_0', 'All Collections'
+        = check_box_tag "collections[0]", 1, !!(session[:filters][:collections].include? 0), class: 'checkbox', id: 'collections_0'
+        = label_tag 'collections_0', 'All Collections'
 
   %hr
 

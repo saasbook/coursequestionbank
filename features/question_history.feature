@@ -7,7 +7,8 @@ Scenario: seeing past versions of a question
   Given I am signed in with uid "1234" and provider "github"
   And I have uploaded 'history_test.txt'
   And I am on the CourseQuestionBank home page
-  
+  And I pending
+
   When I follow "supersede_button" for problem containing "This was the original version"
   And I fill in "ruql_source" with text of "history_test2.txt"
   And I press "Supersede question"

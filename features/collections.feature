@@ -13,6 +13,7 @@ Feature: collections that we can add problems to
     And I fill in "name" with "yolo"
     And I press "Create"
     And I am on the dashboard
+    And I pending
     And I add problem containing 'Raffi' to collection 'yolo'
     And I should see Collection 'yolo' in the database
 
@@ -27,6 +28,7 @@ Feature: collections that we can add problems to
     And I fill in "name" with "yolo"
     And I press "Create"
     And I am on the dashboard
+    And I pending
     And I add problem containing 'Rails' to collection 'yolo'
     And I should see Collection 'yolo' in the database
     And I remove problem containing 'Rails' to collection 'yolo'
@@ -55,5 +57,6 @@ Feature: collections that we can add problems to
 
   Scenario: view a collection
     When I am on the homepage
+    And I pending
     And I click on "1/22/15 (W1 L2)"
     Then I should see "Because Agile tends to focus on small teams, it cannot be used effectively "

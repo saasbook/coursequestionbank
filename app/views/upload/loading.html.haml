@@ -1,0 +1,43 @@
+%div
+    %fieldset{:disabled => "disabled"}
+        %div.form-group
+            %div.col-xs-5
+            %div.col-xs-7
+                = file_field_tag :ruql_file, :id => 'file_upload', :class => 'text-center'
+        %div.form-group
+            %div.col-xs-12.text-center
+                = submit_tag 'Upload File', :class => 'upload_file_button btn btn-primary'
+%div.loading_img
+    %div.col-xs-3
+    %div.col-xs-6
+        = image_tag('uploading.gif')
+        
+:javascript
+    (function poll() {
+        setTimeout(function() {
+            $.ajax({
+                url: "/upload/fetch",
+                type: "GET",
+                success: function(data) {
+                  if(data.success && !data.processing) {
+                    if(data.dups_found) {
+                        window.location.href = '/collections/' + data.collection_id;
+                    } else if (data.same_file) {
+                        window.location.href = '/profile';
+                    }  else if (!data.dups_found && !data.processing) {
+                        window.location.href = '/problems';
+                    } else {
+                        window.location.href = '/upload';
+                    }
+                  } else if (!data.success && !data.processing){
+                    window.location.href = '/upload';
+                  } else {
+                    console.log("PROCESSING...");
+                  }
+                },
+                dataType: "json",
+                complete: poll,
+                timeout: 2000
+            })
+        }, 2000);
+    })();

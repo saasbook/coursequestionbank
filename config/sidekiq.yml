@@ -1,0 +1,7 @@
+:concurrency: 10
+staging:
+  :concurrency: 15
+production:
+  :concurrency: 25
+:queues:
+  - high

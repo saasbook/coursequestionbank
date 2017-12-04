@@ -9,24 +9,27 @@ Background:
   And I am on the CourseQuestionBank home page
 
 Scenario: positive filtering by Bloom rating
+  And I pending
   When I press "Understand"
   And I check "Understand"
   And I press "Search"
   Then I should see "Which of the following"
 
 Scenario: negative filtering by Bloom rating
+  And I pending
   When I press "Understand"
   And I check "Evaluate"
   And I press "Search"
   Then I should see "No questions matched your search criteria"
 
 Scenario: filtering by multiple ratings
+  And I pending
   When I press "Evaluate"
   And I check "Understand"
   And I check "Evaluate"
   And I press "Search"
   Then I should see "Which of the following"
-  And I should not see "No questions matched your search criteria"
+  And I should see "RDBMS"
 
 Scenario: no matching results for Bloom Taxonomy rating
   When I check "Remember"

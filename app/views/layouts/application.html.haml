@@ -15,7 +15,7 @@
       #banner
         = link_to image_tag('foxinboxheader.png'), problems_path
         - if @current_user
-          #welcome_message Welcome, #{user_display_name(@current_user)}!
+          #welcome_message Welcome, #{user_display_name(@current_user)}, #{@current_user.get_privilege}!
           %ul
             %li= link_to 'Home', problems_path, :class => 'btn btn-info'
             - if can? :manage, Collection
@@ -26,7 +26,7 @@
             %li
               = form_tag logout_path, :method => :post do
                 = submit_tag 'Log Out', :class => 'btn btn-info'
-            %li= link_to 'Help', 'https://github.com/saasbook/coursequestionbank/wiki', :class => 'btn btn-info', :target => '_blank'
+            %li= link_to 'Help', 'https://github.com/hrzlvn/coursequestionbank', :class => 'btn btn-info', :target => '_blank'
 
       %div#flash_message
         - if flash[:notice]

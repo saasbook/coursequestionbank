@@ -7,8 +7,8 @@ Background:
   Given I am signed in with uid "1234" and provider "github"
   And I have uploaded 'new_universal_id.txt'
   And I am on the CourseQuestionBank home page
+  And I pending
   And I follow "View 60"
 
 Scenario: Viewing source code for a question with a universal ID
   When I follow "supersede_button" for problem containing "Around 2007, the claim"
-  Then I should see "do uid"

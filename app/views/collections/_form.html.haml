@@ -37,13 +37,10 @@
   %div.form-group
     %div.col-sm-2
     %div.col-xs-12.col-sm-10
-      = select_tag :privacy, privacy_options(collection.is_public), :id => nil, :class => 'form-control'
-  
-  // %div.form-group
-  //   = label_tag :is_public, 'Public:', :class => 'col-xs-12 col-sm-2 control-label'
-  //   %div.col-xs-12.col-sm-8
-  //     = check_box_tag :is_public, 1, collection.is_public, :id => nil, :class => 'checkbox'
-  
+      - level = ["", "Public", "Share", "Private"][collection.access_level]
+      = select_tag :access_level, options(Collection.access_levels, level), :id => "dropdown", :class => 'form-control', :style=>"max-width:10%"
+
+
   %div.form-group
     %div.col-sm-2
     %div.col-sm-10.col-xs-12

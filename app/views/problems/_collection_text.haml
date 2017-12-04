@@ -1,0 +1,8 @@
+%div.collection-checkbox-text
+  Belongs to collections:
+  - Collection.accessible_by(current_ability, :manage).each do |collection|
+    = form_tag problem_path(:id => problem.id), :method => :put do
+      - selected = collection.problems.include? problem
+      = hidden_field_tag :collection, collection.id, :id => nil
+      %div{:style => "display :#{selected ? 'block' : 'none'}", :id => "collection_text_#{collection.id}_#{problem.id}", :class => "collection-text"}
+        #{collection.name.strip}
