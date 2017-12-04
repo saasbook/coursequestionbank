@@ -41,7 +41,6 @@ FIRST_GRAPH_GAUGE_OPTIONS = {chart: {type: 'solidgauge'},
 $(document).ready(function() {
 
    $(".stats").each(function() {
-       debugger
        id = $(this).attr('id').split("_")[1];
        overallAttempts = parseInt($(this).find(".overallAttempts").text().trim(), 10);
        wrong_cnt = parseInt($(this).find(".allAttemptsWrongAmount").text().trim(), 10);
