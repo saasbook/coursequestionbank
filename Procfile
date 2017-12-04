@@ -1,1 +1,1 @@
-uploadworker: bundle exec sidekiq -q high
+UploadWorker: bundle exec sidekiq -e production -C config/sidekiq.yml
