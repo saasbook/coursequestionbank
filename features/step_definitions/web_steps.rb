@@ -91,7 +91,6 @@ end
 Given /^(?:|I )have uploaded '(.*)'$/ do |file|
   steps %Q{
     Given I am on the upload page
-    And I attach the file "features/test_files/#{file}" to "file_upload"
     And I press "Upload File"
     Then I should see "Uploading File"
   }
