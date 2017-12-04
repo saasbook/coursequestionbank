@@ -33,8 +33,10 @@ gem 'sidekiq', '~> 3.5.4'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'sidekiq-status'
+gem 'test-unit'
+
 group :development, :test do
-  gem 'cucumber-rails', require: false
+  gem 'cucumber-rails', :require => false
   gem 'rspec-rails'
   gem 'rails-erd'
   gem 'sqlite3'
@@ -43,7 +45,6 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'simplecov'
   gem 'rack_session_access'
-  gem 'test-unit'
   gem 'poltergeist'
   gem 'phantomjs' #:require => 'phantomjs/poltergeist'
   gem 'jasmine'
