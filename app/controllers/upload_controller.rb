@@ -21,7 +21,7 @@ class UploadController < ApplicationController
       elsif user.uploaded_empty_file
         msg = "The file you uploaded does not contain any quizzes. Please try uploading another file..."
       else
-        msg = "Upload Successful!"
+        msg = "Upload successful!"
       end
       flash[:notice] = msg
       flash.keep

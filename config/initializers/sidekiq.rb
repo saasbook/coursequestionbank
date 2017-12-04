@@ -1,9 +1,9 @@
-Sidekiq.configure_server do |config|
-    config.redis = { url: ENV['REDIS_PROVIDER'], :size => 1}
+# Sidekiq.configure_server do |config|
+#     config.redis = { url: ENV['REDIS_PROVIDER'], :size => 1}
     
-end
+# end
 
-Sidekiq.configure_client do |config|
-    config.redis = {url: ENV['REDIS_PROVIDER'], :size => 1}
+# Sidekiq.configure_client do |config|
+#     config.redis = {url: ENV['REDIS_PROVIDER'], :size => 1}
     
-end
+# end
