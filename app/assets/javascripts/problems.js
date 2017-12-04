@@ -3,7 +3,6 @@ var AdditionalHidden = {
   setup: function() {
     $('.additional').each(function() {
      var problem = $(this);
-
      problem.find('.btn-update').click(function() {
           console.log("Received");
           var pop = problem.find('.confirm-edit');
