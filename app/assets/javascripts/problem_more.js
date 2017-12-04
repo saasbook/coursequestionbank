@@ -1,4 +1,3 @@
-
 var Question = {
     setup: function() {
         $('.select_multiple_question').each(function() {
@@ -84,25 +83,6 @@ var Question = {
                     return false;
                 }
 
-                var showCorrect = function (showButton) {
-                    $(this).parent().find(".entrybox").each(function () {
-                        if ($(this).attr('correct') === 'true'){
-                            $(this).find('.entryexplain').show();
-                            $(this).find('input[type = "checkbox"]').prop("checked", true);
-                            $(this).css('border', '2px solid green');
-                            $(this).off("mouseover");
-                            $(this).off("mouseleave");
-                        }else{
-                            $(this).find('.entryexplain').hide();
-                            $(this).find('input[type = "checkbox"]').prop("checked", false);
-                            $(this).css('border', '1px solid grey');
-                            $(this).on("mouseover");
-                            $(this).on("mouseleave");
-                        }
-                    })
-
-                }
-
                 question.find(".show-answer").click(showCorrect);
                 question.find(".entrybox").mouseover(hoverOnEntry);
                 question.find(".entrybox").mouseleave(hoverOffEntry);
@@ -182,38 +162,12 @@ var Question = {
                     return false;
                 }
 
-
-                var showCorrect = function (showButton) {
-                    $(this).parent().find(".entrybox").each(function () {
-                        if ($(this).attr('correct') === 'true'){
-                            $(this).find('.entryexplain').show();
-                            $(this).find('input[type = "checkbox"]').prop("checked", true);
-                            $(this).css('border', '2px solid green');
-                            $(this).off("mouseover");
-                            $(this).off("mouseleave");
-                        }else{
-                            $(this).find('.entryexplain').hide();
-                            $(this).find('input[type = "checkbox"]').prop("checked", false);
-                            $(this).css('border', '1px solid grey');
-                            $(this).on("mouseover");
-                            $(this).on("mouseleave");
-                        }
-                    })
-
-                }
-
-
                 question.find(".show-answer").click(showCorrect);
                 question.find(".entrybox").mouseover(hoverOnEntry);
                 question.find(".entrybox").mouseleave(hoverOffEntry);
                 question.find(".entrybox").click(clickOnEntry);
                 question.find(".check-answer").click(checkCorrect);
-
-                // question.find(".entrybox").mouseover(hoverOnEntry);
-                // question.find(".entrybox").mouseleave(hoverOffEntry);
-                // question.find(".entrybox").click(clickOnEntry);
-                // question.find(".check-answer").click(checkCorrect)
-
+                
             });
 
         });
@@ -304,11 +258,28 @@ var ChangeCollectionsByCheckbox = {
                 });
                 return true;
             });
-
-            // question.find(".entrybox").css('border', "None")
-            // question.find(".check-answer").click(checkCorrect)
+            
         });
     }
 
 };
+
+function showCorrect(showButton) {
+    $(this).parent().find(".entrybox").each(function () {
+        if ($(this).attr('correct') === 'true'){
+            $(this).find('.entryexplain').show();
+            $(this).find('input[type = "checkbox"]').prop("checked", true);
+            $(this).css('border', '2px solid green');
+            $(this).off("mouseover");
+            $(this).off("mouseleave");
+        }else{
+            $(this).find('.entryexplain').hide();
+            $(this).find('input[type = "checkbox"]').prop("checked", false);
+            $(this).css('border', '1px solid grey');
+            $(this).on("mouseover");
+            $(this).on("mouseleave");
+        }
+    })
+}
+
 $(ChangeCollectionsByCheckbox.setup);

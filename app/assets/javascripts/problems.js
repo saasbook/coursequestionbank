@@ -89,7 +89,6 @@ var AdditionalHidden = {
 
       var hide_collections_button = problem.find('button.collections-less-toggle')
       hide_collections_button.click(function(){
-        //problem.find('.collection-button btn').toggle();
         toggle_behavior('.collections-button btn');
         return false;
       })
@@ -128,8 +127,3 @@ function problemUpdateAjax(e) {
     });
     return false;
 }
-
-
-
-
-
