@@ -1,4 +1,5 @@
 # PTID: 152624808
+
 Feature: User is alerted when uploading a Problem with text similar to an existing Problem
   As an instructor
   So that I can avoid duplicated problems
@@ -13,13 +14,9 @@ Scenario: User tries to upload different question (sad path, no duplicate detect
   Given I am on the upload page
   And I attach the file "features/test_files/foo.txt" to "file_upload"
   And I press "Upload File"
-  Then I should see "Upload successful!"
-
+  And I should see "Uploading File"
 
 Scenario: User tries to upload exact copy of question
   When I attach the file "features/test_files/dup_test_second.txt" to "file_upload"
   And I press "Upload File"
-  And I pending
-  Then I should see "Duplicate questions have been uploaded"
-  Then the problem containing "The quick brown fox jumped over the lazy dog" should have the tag "dup"
-  And I should be on the finalize upload page
+  And I should be redirected

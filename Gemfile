@@ -34,7 +34,7 @@ gem 'sinatra', require: false
 gem 'slim'
 gem 'sidekiq-status'
 group :development, :test do
-  gem 'cucumber-rails', :require => false
+  gem 'cucumber-rails', require: false
   gem 'rspec-rails'
   gem 'rails-erd'
   gem 'sqlite3'

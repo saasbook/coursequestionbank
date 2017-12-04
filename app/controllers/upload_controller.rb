@@ -37,6 +37,7 @@ class UploadController < ApplicationController
     end
   end
 end
+
 =begin  **** LEGACY CODE ****
   def upload
     authorize! :manage, Problem
