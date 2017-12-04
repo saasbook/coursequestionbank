@@ -139,61 +139,13 @@ class ProblemsController < ApplicationController
   def update
     problem = Problem.find(params[:id])
 
-    if !params[:privacy].nil?
-
-      authorize! :set_privacy, problem
-      privacy = params[:privacy].downcase.strip
-      priv_map = {'public' => 2, 'share' => 3, 'private' => 1}
-      if priv_map.key?(privacy)
-        problem.access_level = priv_map[privacy]
-      else
-        return
-      end
-      flash_xhr(:notice, "Problem changed to #{privacy}")
+    if !update_privacy(problem)
+      return
     end
-
-    if !params[:obsolete].nil?
-      authorize! :set_obsolete, problem
-      problem.obsolete = params[:obsolete] == '1'
-      flash_xhr(:notice, "Problem marked as #{'not ' if !problem.obsolete}obsolete")
-    end
-
-    if !params[:category].nil?
-      authorize! :bloom_categorize, problem
-      category = params[:category].downcase.strip
-      category[0] = category[0].upcase
-      if Problem.all_bloom_categories.include? category
-        problem.bloom_category = category
-        flash_xhr(:notice, "Bloom category set to #{category}")
-      elsif category == 'None'
-        problem.bloom_category = nil
-        flash_xhr(:notice, "Bloom category removed")
-      end
-    end
-
-    if !params[:collection].nil?
-      target_collection = Collection.find(params[:collection])
-      if !target_collection.problems.include? problem
-        authorize! :add_problems, target_collection
-        target_collection.problems << problem
-        flash_xhr(:notice, "Problem added to #{target_collection.name}")
-      else
-        authorize! :remove_problems, target_collection
-        target_collection.problems.delete(problem)
-        flash_xhr(:notice, "Problem removed from #{target_collection.name}")
-      end
-    end
-
-    if !params[:previous].nil?
-        authorize! :set_previous, problem
-        previous = Problem.find_by_uid(params[:previous])
-        if previous
-          problem.previous_version = previous
-          flash_xhr(:notice, "Problem parent set to #{params[:previous]}")
-        else
-          flash_xhr(:error, "Problem #{params[:previous]} not found")
-        end
-    end
+    update_obs(problem)
+    update_category(problem)
+    update_collection(problem)
+    update_previous(problem)
     problem.save
 
     flash_xhr(:bump_problem, problem.id)
@@ -209,7 +161,73 @@ class ProblemsController < ApplicationController
       flash[type] = message
     end
   end
-
+  
+  def update_privacy(problem)
+    if !params[:privacy].nil?
+      authorize! :set_privacy, problem
+      privacy = params[:privacy].downcase.strip
+      priv_map = {'public' => 2, 'share' => 3, 'private' => 1}
+      if priv_map.key?(privacy)
+        problem.access_level = priv_map[privacy]
+      else
+        return false
+      end
+      flash_xhr(:notice, "Problem changed to #{privacy}")
+    end
+    return true
+  end
+    
+  def update_obs(problem)
+    if !params[:obsolete].nil?
+      authorize! :set_obsolete, problem
+      problem.obsolete = params[:obsolete] == '1'
+      flash_xhr(:notice, "Problem marked as #{'not ' if !problem.obsolete}obsolete")
+    end
+  end  
+    
+  def update_category(problem)
+    if !params[:category].nil?
+      authorize! :bloom_categorize, problem
+      category = params[:category].downcase.strip
+      category[0] = category[0].upcase
+      if Problem.all_bloom_categories.include? category
+        problem.bloom_category = category
+        flash_xhr(:notice, "Bloom category set to #{category}")
+      elsif category == 'None'
+        problem.bloom_category = nil
+        flash_xhr(:notice, "Bloom category removed")
+      end
+    end
+  end
+  
+  def update_collection(problem)
+    if !params[:collection].nil?
+      target_collection = Collection.find(params[:collection])
+      if !target_collection.problems.include? problem
+        authorize! :add_problems, target_collection
+        target_collection.problems << problem
+        flash_xhr(:notice, "Problem added to #{target_collection.name}")
+      else
+        authorize! :remove_problems, target_collection
+        target_collection.problems.delete(problem)
+        flash_xhr(:notice, "Problem removed from #{target_collection.name}")
+      end
+    end
+  end
+  
+  def update_previous(problem)
+    if !params[:previous].nil?
+        authorize! :set_previous, problem
+        previous = Problem.find_by_uid(params[:previous])
+        if previous
+          problem.previous_version = previous
+          flash_xhr(:notice, "Problem parent set to #{params[:previous]}")
+        else
+          flash_xhr(:error, "Problem #{params[:previous]} not found")
+        end
+    end
+  end
+    
   def add_tags
     problem = Problem.find(params[:id])
     tags = self.class.parse_list params[:tag_names]
