@@ -1,6 +1,5 @@
 
 - previous = local_assigns[:previous] || nil
-- source = @ruql_source || (previous && previous.ruql_source(false)) || ''
 - tags = (previous && previous.tags.map(&:name).join(', ')) || ''
 
 = form_tag edit_minor_path, :method => :post, :class => 'form-horizontal new-form'  do
@@ -8,7 +7,7 @@
   %div.form-group{:class => "edit-form"}
     = label_tag :ruql_source, 'Source:', :class => 'col-xs-12 col-sm-2 control-label'
     %div.col-xs-12.col-sm-10
-      = text_area_tag :ruql_source, source, :class => 'source_field form-control', :rows => 15, :placeholder => 'RuQL source code'
+      = text_area_tag :ruql_source, nil, :class => 'source_field form-control', :rows => 15, :placeholder => 'RuQL source code'
 
   %div.form-group{:style => 'display: none'}
     = label_tag :parent_uid, 'Parent:', :class => 'col-xs-12 col-sm-2 control-label'

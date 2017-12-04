@@ -4,7 +4,19 @@ var AdditionalHidden = {
     $('.additional').each(function() {
       var problem = $(this);
       
-      function toggle_behavior(button_name){
+      function toggle_behavior(button_name, trigger){
+        var button_id = trigger.currentTarget.getAttribute('id')
+        var question_num = button_id.charAt(button_id.length - 1)
+	    $.ajax({
+  				type: "GET",
+  				async: false,
+  				context: this,
+  				dataType: 'json',
+  				url: '/problems/'+ question_num + '/minorupdate',
+  				success: function (source) {
+  	        problem.find("textarea").val(source['ruql_source']);
+				  }
+			  });
         problem.find(button_name).toggle();
       }
 
@@ -17,8 +29,8 @@ var AdditionalHidden = {
       }
 
       function event_handling(select_button, hide_button_one, hide_button_two, toggle_button){
-        problem.find(select_button).click(function() {
-        toggle_behavior(toggle_button);
+        problem.find(select_button).click(function(trigger) {
+        toggle_behavior(toggle_button, trigger);
         hide_behavior(hide_button_one);
         hide_behavior(hide_button_two);
         return false;
@@ -26,8 +38,6 @@ var AdditionalHidden = {
 
       function toggle_checkbox(toggle_button, arg1, arg2){
       problem.find(toggle_button).click(function() {
-      // problem.find('.edit-Collections').show()
-      // problem.find('.show_checkbox').show()
         if (toggle_button === '.hide_checkbox'){
           show_behavior(arg1);
         }
@@ -52,7 +62,6 @@ var AdditionalHidden = {
             }
           })
           $(this).hide();
-          //problem.find('.collections-less-toggle').show()
           show_behavior(show_toggle);
           return false;
         })
@@ -80,7 +89,6 @@ var AdditionalHidden = {
 
       var hide_collections_button = problem.find('button.collections-less-toggle')
       hide_collections_button.click(function(){
-        //problem.find('.collection-button btn').toggle();
         toggle_behavior('.collections-button btn');
         return false;
       })
@@ -90,7 +98,32 @@ var AdditionalHidden = {
 };
 $(AdditionalHidden.setup);
 
+var Supersession = {
+    setup: function() {
+        $('.supersede_form form').submit(problemUpdateAjax);
+    }
+};
+$(Supersession.setup);
 
+var MinorUpdate = {
+    setup: function() {
+        $('.minor_form form').submit(problemUpdateAjax);
+    }
+};
+$(MinorUpdate.setup);
 
-
-
+function problemUpdateAjax(e) {
+    $.ajax({
+        context: this,
+        url: $(this).attr('action'),
+        type: 'POST',
+        data: $(this).serialize(),
+        success: function(data, textStatus, jqXHR) {
+            if (data.error === null)
+                window.location.reload();
+            else
+                $(this).find('.message').text(data.error);
+        }
+    });
+    return false;
+}

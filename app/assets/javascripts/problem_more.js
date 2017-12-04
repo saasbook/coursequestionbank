@@ -1,4 +1,3 @@
-
 var Question = {
     setup: function() {
         $('.select_multiple_question').each(function() {
@@ -84,25 +83,6 @@ var Question = {
                     return false;
                 }
 
-                var showCorrect = function (showButton) {
-                    $(this).parent().find(".entrybox").each(function () {
-                        if ($(this).attr('correct') === 'true'){
-                            $(this).find('.entryexplain').show();
-                            $(this).find('input[type = "checkbox"]').prop("checked", true);
-                            $(this).css('border', '2px solid green');
-                            $(this).off("mouseover");
-                            $(this).off("mouseleave");
-                        }else{
-                            $(this).find('.entryexplain').hide();
-                            $(this).find('input[type = "checkbox"]').prop("checked", false);
-                            $(this).css('border', '1px solid grey');
-                            $(this).on("mouseover");
-                            $(this).on("mouseleave");
-                        }
-                    })
-
-                }
-
                 question.find(".show-answer").click(showCorrect);
                 question.find(".entrybox").mouseover(hoverOnEntry);
                 question.find(".entrybox").mouseleave(hoverOffEntry);
@@ -182,38 +162,12 @@ var Question = {
                     return false;
                 }
 
-
-                var showCorrect = function (showButton) {
-                    $(this).parent().find(".entrybox").each(function () {
-                        if ($(this).attr('correct') === 'true'){
-                            $(this).find('.entryexplain').show();
-                            $(this).find('input[type = "checkbox"]').prop("checked", true);
-                            $(this).css('border', '2px solid green');
-                            $(this).off("mouseover");
-                            $(this).off("mouseleave");
-                        }else{
-                            $(this).find('.entryexplain').hide();
-                            $(this).find('input[type = "checkbox"]').prop("checked", false);
-                            $(this).css('border', '1px solid grey');
-                            $(this).on("mouseover");
-                            $(this).on("mouseleave");
-                        }
-                    })
-
-                }
-
-
                 question.find(".show-answer").click(showCorrect);
                 question.find(".entrybox").mouseover(hoverOnEntry);
                 question.find(".entrybox").mouseleave(hoverOffEntry);
                 question.find(".entrybox").click(clickOnEntry);
                 question.find(".check-answer").click(checkCorrect);
-
-                // question.find(".entrybox").mouseover(hoverOnEntry);
-                // question.find(".entrybox").mouseleave(hoverOffEntry);
-                // question.find(".entrybox").click(clickOnEntry);
-                // question.find(".check-answer").click(checkCorrect)
-
+                
             });
 
         });
@@ -282,32 +236,50 @@ var ChangeCollectionsByCheckbox = {
                 $.ajax({
                     url: $(this).attr('action'),
                     type: 'PUT',
-                    // success: ChangeCollectionsByCheckbox.editCollectionButton,
-                    data: {"collection": $(this).attr("collection")}
-
+                    data: {"collection": $(this).attr("collection")},
+                    success: function() {
+                        // update belongs to which collecion
+                        button_text = "#collection_text_" + $(this).attr("collection") + "_" + $(this).attr("problem")
+        
+                        var button = $(this).find('input[type="submit"]');
+        
+                        if ($(this).attr("checked") === "checked") {
+                            $(this).attr('checked',false);
+                            $(button_text).hide();
+                        }
+                        else {
+                            $(this).attr('checked',true);
+                            $(button_text).show();
+                        }
+                    },
+                    error: function() {
+                        alert("Error: Collection not updated")
+                    }
                 });
-                // update belongs to which collecion
-
-                button_text = "#collection_text_" + $(this).attr("collection") + "_" + $(this).attr("problem")
-
-                var button = $(this).find('input[type="submit"]');
-
-                if ($(this).attr("checked") === "checked") {
-                    $(this).attr('checked',false);
-                    $(button_text).hide();
-                }
-                else {
-                    $(this).attr('checked',true);
-                    $(button_text).show();
-                }
-
                 return true;
             });
-
-            // question.find(".entrybox").css('border', "None")
-            // question.find(".check-answer").click(checkCorrect)
+            
         });
     }
 
 };
+
+function showCorrect(showButton) {
+    $(this).parent().find(".entrybox").each(function () {
+        if ($(this).attr('correct') === 'true'){
+            $(this).find('.entryexplain').show();
+            $(this).find('input[type = "checkbox"]').prop("checked", true);
+            $(this).css('border', '2px solid green');
+            $(this).off("mouseover");
+            $(this).off("mouseleave");
+        }else{
+            $(this).find('.entryexplain').hide();
+            $(this).find('input[type = "checkbox"]').prop("checked", false);
+            $(this).css('border', '1px solid grey');
+            $(this).on("mouseover");
+            $(this).on("mouseleave");
+        }
+    })
+}
+
 $(ChangeCollectionsByCheckbox.setup);
