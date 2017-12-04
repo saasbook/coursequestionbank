@@ -1,9 +1,7 @@
 var Question = {
     setup: function() {
         $('.select_multiple_question').each(setupSelectMultipleQuestion);
-
         $('.multiple_choice_question').each(setupMultipleQuestion);
-
         $('.fillin_question').each(setupFillinQuestion);
     }
 };
@@ -19,17 +17,13 @@ var ChangeCollectionsByCheckbox = {
                     url: $(this).attr('action'),
                     type: 'PUT',
                     data: {"collection": $(this).attr("collection")},
-                    success: function() {
-                        // update belongs to which collecion
+                    success: function() { // update belongs to which collecion
                         button_text = "#collection_text_" + $(this).attr("collection") + "_" + $(this).attr("problem")
-        
                         var button = $(this).find('input[type="submit"]');
-        
                         if ($(this).attr("checked") === "checked") {
                             $(this).attr('checked',false);
                             $(button_text).hide();
-                        }
-                        else {
+                        } else {
                             $(this).attr('checked',true);
                             $(button_text).show();
                         }
@@ -49,8 +43,7 @@ $(ChangeCollectionsByCheckbox.setup);
 function setupSelectMultipleQuestion() {
     var question = $(this);
     question.ready(function() {
-        
-        question.find(".show-answer").click(showCorrectMultipleQuestion);
+        question.find(".show-answer").click(showCorrectAnswers);
         question.find(".entrybox").mouseover(hoverOnEntry);
         question.find(".entrybox").mouseleave(hoverOffEntry);
         question.find(".entrybox").click(multipleSelectClickOnEntry);
@@ -59,45 +52,43 @@ function setupSelectMultipleQuestion() {
 }
 
 function checkCorrectSelectMultiple(checkButton) {
-    var correct = true
-    var attemptRecord = ""
-    $(this).parent().find(".entrybox").each(function () {
+    var correct = true, attemptRecord = "", parent = $(this).parent();
+    parent.find(".entrybox").each(function () {
         choice_correct = ($(this).attr('correct') === 'true') === $(this).find('input[type="checkbox"]').is(':checked')
         correct = correct && choice_correct;
         if ($(this).find('input[type="checkbox"]').is(':checked')){
             attemptRecord =  attemptRecord + $(this).attr("answer_id");
         }
     })
-    $(this).parent().find(".entrybox").each(toggleAnswers);
+    parent.find(".entrybox").each(toggleAnswers);
+    var multipleCorrect = parent.find(".multiple-correct"), multipleWrong = parent.find(".multiple-wrong");
     if (correct){
-        $(this).parent().find(".multiple-correct").show();
-        $(this).parent().find(".multiple-correct").css('border', '2px solid green');
-        $(this).parent().find(".multiple-wrong").hide();
-    }else{
-        $(this).parent().find(".multiple-wrong").css('border', '2px solid red');
-        $(this).parent().find(".multiple-correct").hide();
-        $(this).parent().find(".multiple-wrong").show();
+        multipleCorrect.css('border', '2px solid green');
+        multipleCorrect.show();
+        multipleWrong.hide();
+    } else {
+        multipleWrong.css('border', '2px solid red');
+        multipleCorrect.hide();
+        multipleWrong.show();
     }
     problemName = $(this).parent().find("input").attr("name")
-    $.ajax({
-        url: "studentanswers",
-        type: 'POST',
-        data: {attempt: attemptRecord, problem_uid:problemName, correctness:correct}
-    });
+    $.ajax({ url: "studentanswers",
+             type: 'POST',
+             data: {attempt: attemptRecord, problem_uid:problemName, correctness:correct}});
     return false;
 }
 
-function showCorrectMultipleQuestion(showButton) {
+function showCorrectAnswers(showButton) {
     $(this).parent().find(".entrybox").each(function () {
-        if ($(this).attr('correct') === 'true'){
+        var correct = $(this).attr('correct') === 'true';
+        $(this).find('input[type = "checkbox"]').prop("checked", correct);
+        if (correct){
             $(this).find('.entryexplain').show();
-            $(this).find('input[type = "checkbox"]').prop("checked", true);
             $(this).css('border', '2px solid green');
             $(this).off("mouseover");
             $(this).off("mouseleave");
         }else{
             $(this).find('.entryexplain').hide();
-            $(this).find('input[type = "checkbox"]').prop("checked", false);
             $(this).css('border', '1px solid grey');
             $(this).on("mouseover");
             $(this).on("mouseleave");
@@ -111,6 +102,8 @@ function setupMultipleQuestion() {
         var checkCorrect = function(checkButton) {
             $(this).parent().find(".entrybox").each(toggleAnswers);
             problemName = $(this).parent().find("input").attr("name")
+            attemptRecord = $(this).attr("answer_id")
+            result = $(this).attr('correct') === 'true'
             $.ajax({
                 url: "studentanswers",
                 type: 'POST',
@@ -118,7 +111,7 @@ function setupMultipleQuestion() {
             });
             return false;
         }
-        question.find(".show-answer").click(showCorrectMultipleQuestion);
+        question.find(".show-answer").click(showCorrectAnswers);
         question.find(".entrybox").mouseover(hoverOnEntry);
         question.find(".entrybox").mouseleave(hoverOffEntry);
         question.find(".entrybox").click(multipleQuestionClickOnEntry);
@@ -175,12 +168,10 @@ function multipleSelectClickOnEntry(event) {
         checked = !checked;
     }
     if (checked) {
-        $(this).on("mouseover", hoverOnEntry);
-        $(this).on("mouseleave", hoverOffEntry);
+        mouseOverLeaveOn();
     } else {
         $(this).mouseover();
-        $(this).off("mouseover");
-        $(this).off("mouseleave");
+        mouseOverLeaveOff();
     }
     choice.prop('checked', !checked);
     return;
@@ -194,24 +185,18 @@ function multipleQuestionClickOnEntry(event) {
         checked = !checked;
     }
     if (checked) {
-
-        $(this).on("mouseover", hoverOnEntry);
-        $(this).on("mouseleave", hoverOffEntry);
+        mouseOverLeaveOn();
     } else {
         uncheckAll($(this).parent());
         $(this).mouseover();
-        $(this).off("mouseover");
-        $(this).off("mouseleave");
+        mouseOverLeaveOff();
     }
     choice.prop('checked', !checked);
-    result = $(this).attr('correct') === 'true'
-    attemptRecord = $(this).attr("answer_id")
 }
 
 function uncheckAll(entrysDiv) {
     $(entrysDiv).find(".entrybox").each(function() {
-        $(this).on("mouseover", hoverOnEntry);
-        $(this).on("mouseleave", hoverOffEntry);
+        mouseOverLeaveOn();
         $(this).mouseleave();
     });
 }
@@ -219,16 +204,14 @@ function uncheckAll(entrysDiv) {
 function toggleAnswers() {
     if ($(this).find('input[type="radio"]').is(':checked')){
         $(this).find('.entryexplain').show();
-        $(this).off("mouseover");
-        $(this).off("mouseleave");
+        mouseOverLeaveOff();
         if ($(this).attr('correct') === 'true') 
             $(this).css('border', '2px solid green');
         else
             $(this).css('border', '2px solid red');
     }else{
         $(this).find('.entryexplain').hide();
-        $(this).on("mouseover", hoverOnEntry);
-        $(this).on("mouseleave", hoverOffEntry);
+        mouseOverLeaveOn();
     }
 }
 
@@ -238,4 +221,14 @@ function hoverOnEntry() {
 
 function hoverOffEntry() {
     $(this).css('border', '1px solid grey');
+}
+
+function mouseOverLeaveOff() {
+    $(this).off("mouseover");
+    $(this).off("mouseleave");
+}
+
+function mouseOverLeaveOn() {
+    $(this).on("mouseover", hoverOnEntry);
+    $(this).on("mouseleave", hoverOffEntry);
 }
