@@ -8,7 +8,10 @@
 # Video Links
 
 Client Entry Video - https://youtu.be/oNJuf9Z29W0 
-Screencast Video - https://youtu.be/EVNBPCu02wQ
+
+Intro Screencast Video - https://youtu.be/EVNBPCu02wQ
+
+Final Screencast Video - https://youtu.be/DiDK1wS4gyU
 
 # User Guide
 See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
@@ -16,17 +19,28 @@ See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 ## Running or Testing Locally
 
 You need to run a Solr process during local development (or Cloud9 for those who used it). So after cloning the repository, run:
+
 `git fetch --all`
+
 `git checkout fall2017_features`
+
 `bundle install --without production` 
+
 Now, on two new terminals, run `redis-server` and `bundle exec sidekiq -q high` respectively.
 Returning to the first terminal, run:
+
 `rake all`
+
 `rake features`
+
 `rake spec`
+
 `rake run`
+
 to start the application. To see your application running on Cloud 9, run:
+
 `rails s -b $IP -p $PORT`
+
 To stop the application, run `bundle exec sunspot-solr stop` (basically the steps in `.travis.yml`). And the config in `sunspot.yml` should enable the app to connect properly.
 
 When running locally, you can click the "Dev Login" button and login as either `saas` (Instructor privilege) or `saas-admin` (Admin privilege) with no password needed.
