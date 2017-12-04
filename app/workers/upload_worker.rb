@@ -1,13 +1,14 @@
 require 'sidekiq'
 require 'sidekiq-status'
+require 'sidekiq/api'
 class UploadWorker
     include Sidekiq::Worker
     include Sidekiq::Status::Worker
     sidekiq_options queue: "high"
     sidekiq_options retry:false
     def perform (user_id, file)
-        current_user = Instructor.find_by_id(user_id)
-        RuqlReader.store_as_json(current_user, file)
+        Sidekiq::Queue.new.clear
+        RuqlReader.store_as_json(user_id, file)
     end
 end
 

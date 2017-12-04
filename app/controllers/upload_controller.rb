@@ -10,14 +10,28 @@ class UploadController < ApplicationController
     redirect_to loading_path
     return
   end
-  #adopted from https://gist.github.com/kitwalker12/513d55721b787a160426
   def fetch
     job_id = session[:job_id]
+    user = Instructor.find_by_id(session[:user_id])
+    msg = ""
     if Sidekiq::Status::complete? job_id
-      flash[:notice] = "Upload Succesful!"
-      render json: { success: true }
+      if user.uploaded_duplicates
+         msg = "Identical questions may have been uploaded! See questions tagged with 'dup' and the new Question's UID. Mark undesired Questions as Obsolete. Remove dup tags when finished."
+      elsif user.uploaded_same_file
+        msg = 'Quiz with that name already exists in your list of collections. You probably did not mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that.'
+      elsif user.uploaded_empty_file
+        msg = "The file you uploaded does not contain any quizzes. Please try uploading another file..."
+      else
+        msg = "Upload Successful!"
+      end
+      flash[:notice] = msg
+      flash.keep
+      session[:job_id] = nil
+      render json: {success: true, dups_found: user.uploaded_duplicates, same_file: user.uploaded_same_file, empty_file: user.uploaded_empty_file, collection_id: user.current_collection}
     elsif Sidekiq::Status::failed? job_id
       flash[:notice] = "Error Uploading File! Please try again..."
+      flash.keep
+      session[:job_id] = nil
       render json: { success: false }
     else 
       render json: { status: :ok, processing: true }
