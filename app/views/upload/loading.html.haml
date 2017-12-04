@@ -19,12 +19,20 @@
                 url: "/upload/fetch",
                 type: "GET",
                 success: function(data) {
-                  if(data.success){
-                      window.location.href = '/problems';
-                  } else if (!data.success && !data.processing) {
-                      window.location.href = '/upload';
+                  if(data.success && !data.processing) {
+                    if(data.dups_found) {
+                        window.location.href = '/collections/' + data.collection_id;
+                    } else if (data.same_file) {
+                        window.location.href = '/profile';
+                    }  else if (!data.dups_found && !data.processing) {
+                        window.location.href = '/problems';
+                    } else {
+                        window.location.href = '/upload';
+                    }
+                  } else if (!data.success && !data.processing){
+                    window.location.href = '/upload';
                   } else {
-                      console.log("PROCESSING...");
+                    console.log("PROCESSING...");
                   }
                 },
                 dataType: "json",

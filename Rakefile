@@ -17,7 +17,11 @@ desc "Set up sunspot before running App on C9."
 task :run do
   sh "bundle exec sunspot-solr start -p 8983"
 end
-
+task :all do 
+  sh "rake db:reset"
+  sh "rake db:migrate"
+  sh "rake db:seed"
+end
 desc "Shut sunspot off before running any migrations"
 task :stop do
   sh "bundle exec sunspot-solr stop"

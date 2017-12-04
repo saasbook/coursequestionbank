@@ -34,13 +34,16 @@ ActiveRecord::Schema.define(:version => 20170825074143) do
     t.string   "name"
     t.string   "provider"
     t.string   "uid"
-    t.datetime "created_at",         :null => false
-    t.datetime "updated_at",         :null => false
+    t.datetime "created_at",          :null => false
+    t.datetime "updated_at",          :null => false
     t.integer  "current_collection"
     t.string   "provider_image"
     t.string   "provider_email"
     t.string   "username"
     t.string   "privilege"
+    t.boolean  "uploaded_duplicates"
+    t.boolean  "uploaded_same_file"
+    t.boolean  "uploaded_empty_file"
   end
 
   create_table "problems", :force => true do |t|

@@ -2,6 +2,7 @@ class RuqlReader
   @file_processed = false
   def self.store_as_json(user_id, filename)
     user = Instructor.find_by_id(user_id)
+    user.update_attributes(:uploaded_duplicates => false, :uploaded_same_file => false, :uploaded_empty_file => false, :current_collection => 0)
     Quiz.reset
     Quiz.instance_eval "#{IO.read(filename)}"
     collections = []
@@ -17,15 +18,21 @@ class RuqlReader
           Problem.reindex
           Sunspot.commit
           result = Problem.handle_dups(user, problem.id) #check for dups
-          dups_found = true if result
+          if result
+            user.update_attributes(:uploaded_duplicates => true)
+          end
         end
         collection.save!
         collections.append collection
       else
-        raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that.'
+        user.update_attributes(:uploaded_same_file => true)
       end
     end
-    [collections, dups_found]
+    id = collections.map{|collection| collection.id}
+    user.update_attributes(:current_collection => id[0])
+    if collections.nil? or collections.empty?
+      user.update_attributes(:uploaded_empty_file => true)
+    end
   end
 
   def self.read_problem(user, source)
