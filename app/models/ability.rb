@@ -48,6 +48,10 @@ class Ability
       can [:read, :export, :preview], Collection, :access_level => 1
       can :create, Collection
     end
+    
+    if user.get_privilege == "Student"
+      can :manage, Problem
+    end
 
   end
 end

@@ -22,7 +22,6 @@
 //= require clipboard
 
 clipboard = undefined;
-alert_check = false;
 
 jQuery(document).ready(function() {
 	$('.d_clip_button').show();
@@ -45,11 +44,6 @@ jQuery(document).ready(function() {
 	});
 	clipboard.on('success', function(e) {
 		alert("Source code copied to clipboard!");
-		btn = document.getElementById(e.trigger.id);
-		btn.innerHTML = "Source Code Clipped";
-		btn.classList.remove('btn-default');
-		btn.classList.add('btn-info');
-	    console.log(e);
 	});
 	clipboard.on('error', function(e) {
 	    console.log(e);
