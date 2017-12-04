@@ -88,11 +88,12 @@ When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
   # end
 end
 
-Given /^(?:|I )have uploaded '(.*)'$/ do |file|
+Given /^(?:|I )have uploaded '(.*)'$/ do |filename|
   steps %Q{
     Given I am on the upload page
+    And I attach the file "features/test_files/#{filename}" to "file_upload"
     And I press "Upload File"
-    Then I should see "Uploading File"
+    Then I should see "Uploading File..."
   }
 end
 
