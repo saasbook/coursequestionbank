@@ -16,7 +16,7 @@ Final Screencast Video - https://youtu.be/DiDK1wS4gyU
 # User Guide
 See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
-## Running or Testing Locally
+## Running or Testing Locally (Cloud9 Development)
 
 You need to run a Solr process during local development (or Cloud9 for those who used it). So after cloning the repository, run:
 
@@ -31,11 +31,11 @@ Returning to the first terminal, run:
 
 `rake all`
 
+`rake run`
+
 `rake features`
 
 `rake spec`
-
-`rake run`
 
 to start the application. To see your application running on Cloud 9, run:
 
