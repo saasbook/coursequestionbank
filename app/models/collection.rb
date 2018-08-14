@@ -24,7 +24,6 @@ class Collection < ActiveRecord::Base
         with(:access_level, 1)
         with(:instructor_id, user.uid)
         if user.privilege != "Student"
-
           with(:access_level, 2)
         end
       end

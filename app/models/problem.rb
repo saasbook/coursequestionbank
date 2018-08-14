@@ -52,6 +52,10 @@ class Problem < ActiveRecord::Base
     ['Relevancy', 'Date Created', 'Last Used']
   end
 
+  def ormJSON
+    @parsedJSON ||= JSON.parse(json)
+  end
+
   def html5
     if rendered_text
       return rendered_text
@@ -89,38 +93,37 @@ class Problem < ActiveRecord::Base
   end
 
   def question_text
-    return JSON.parse(json)["question_text"]
+    return ormJSON["question_text"]
   end
 
   def question_image
-    return JSON.parse(json)["question_image"]
+    return ormJSON["question_image"]
   end
 
   def answer_entrys
-    return JSON.parse(json)["answers"].collect{|entry| entry["answer_text"].to_s}
+    return ormJSON["answers"].collect{|entry| entry["answer_text"].to_s}
   end
 
   def answer_correct?
-    return JSON.parse(json)["answers"].collect{|entry| entry["correct"]}
+    return ormJSON["answers"].collect{|entry| entry["correct"]}
   end
 
   def answer_explanation
-    return JSON.parse(json)["answers"].collect do |entry|
+    return ormJSON["answers"].collect do |entry|
       if entry["explanation"].to_s != ""
         entry["explanation"]
       else
         if entry["correct"]
           "Correct!"
         else
-          JSON.parse(json)["global_explanation"].to_s
+          ormJSON["global_explanation"].to_s
         end
       end
     end
   end
 
   def global_explanation
-    # debugger
-    return JSON.parse(json)["global_explanation"]
+    return ormJSON["global_explanation"]
   end
 
   def attempt_stats_place_holder
@@ -156,7 +159,7 @@ class Problem < ActiveRecord::Base
     # To do: figure out why exactly the question
     if problem_type == "Group"
       sub_problems = []
-      JSON.parse(json)["questions"].each do |question_json|
+      ormJSON["questions"].each do |question_json|
         sub_problems << Problem.from_JSON(nil, question_json.to_json)
       end
       return sub_problems
