@@ -14,7 +14,6 @@ var ChangePrivacy = {
 
             button.attr('value', newValue);
             // $(this).find('input[name="privacy"]').attr('value', button.attr('value'));
-            debugger
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'PUT',

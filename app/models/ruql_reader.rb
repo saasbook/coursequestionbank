@@ -15,10 +15,6 @@ class RuqlReader
           problem.save
           Problem.reindex
           Sunspot.commit
-# <<<<<<< HEAD
-#           # debug
-# =======
-# >>>>>>> 757c8f31e1fae3f377fa1de2176ec8d4f4c4ad45
           result = Problem.handle_dups(user, problem.id) #check for dups
           dups_found = true if result
         end

@@ -17,29 +17,16 @@
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/solid-gauge
-//= require zeroclipboard
+//= require clipboard
 //= require highcharts/adapters/standalone-framework
 
 jQuery(document).ready(function() {
-	// $('.maintable').find('.answers').hide(); //Hide/close all containers
-	// $('.maintable').find('.additional').hide();
-	// $('.text').addClass('toggler').removeClass('text');
-	// $('.maintable').find('.toggler').addClass('text').removeClass('toggler');
-	// $('.icon').click(function(){
-
-	// 	$('#q' + $(this).attr('id')).find('.answers').toggle();
-	// 	$('#q' + $(this).attr('id')).find('.additional').toggle();
-	// 	$('#q' + $(this).attr('id')).find('.text, .toggler').toggleClass("text toggler");
-	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-	// 	$(this).toggleClass("glyphicon glyphicon-chevron-right icon glyphicon glyphicon-chevron-down icon")
-	// 	$('#q' + $(this).attr('id')).find('.colname, .toggler2').toggleClass("colname toggler2");
-	// });
 
 	$('.d_clip_button').show();
-	var clip = new ZeroClipboard($('.d_clip_button'));
-	$(".d_clip_button").on("click", function(){
-		alert("Source code copied to clipboard!");
-	});
+	var clip = new Clipboard('.d_clip_button');
+    clip.on('success', function(e) {
+        alert("Source code copied to clipboard!");
+    });
 
 	$('.check_all').show();
 	$('.check_all').change(function () {

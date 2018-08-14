@@ -18,10 +18,6 @@
       %a{"data-toggle" => "tab", :href => "#section_ruql"} RuQL Code
     %li
       %a{"data-toggle" => "tab", :href => "#section_html"} HTML Code
-    %li
-      %a{"data-toggle" => "tab", :href => "#section_edx"} EdX Code
-    %li
-      %a{"data-toggle" => "tab", :href => "#section_autocqm"} AutoQCM Code
   
   %div.tab-content#export-content
     // #sectionA.tab-pane.fade.in.active
@@ -36,13 +32,5 @@
       %h3 HTML Code
       %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
         = preserve @html_code
-    %div#section_edx.tab-pane
-      %h3 EdX Code
-      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
-        = preserve @edx_code
-    %div#section_autocqm.tab-pane
-      %h3 AutoQCM Code
-      %textarea.source_field{:wrap => 'hard', :readonly => 'true'}
-        = preserve @autoqcm_code
 
     

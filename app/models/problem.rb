@@ -123,6 +123,11 @@ class Problem < ActiveRecord::Base
     return JSON.parse(json)["global_explanation"]
   end
 
+  def attempt_stats_place_holder
+    return {"first_attempts" => 0, "first_correct" => 0, "entry_attempts" => 0,
+            "overallAttempts" => 0, "allAttemptsWrongAmount" => 0}
+  end
+
   def attempt_stats
     attempts = studentanswers.where(:first=>true)
     correct_cnt = 0

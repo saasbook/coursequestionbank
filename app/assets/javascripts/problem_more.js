@@ -43,7 +43,6 @@ var Question = {
                     var correct = true
                     var attemptRecord = ""
                     $(this).parent().find(".entrybox").each(function () {
-                        // debugger
                         choice_correct = ($(this).attr('correct') === 'true') === $(this).find('input[type="checkbox"]').is(':checked')
                         correct = correct && choice_correct;
                         if ($(this).find('input[type="checkbox"]').is(':checked')){
