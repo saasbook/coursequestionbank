@@ -17,37 +17,18 @@
 //= require highcharts
 //= require highcharts/highcharts-more
 //= require highcharts/modules/solid-gauge
-//= require zeroclipboard
+//= require clipboard
 //= require highcharts/adapters/standalone-framework
 //= require clipboard
 
-clipboard = undefined;
+jQuery(document).ready(function() {
 
 jQuery(document).ready(function() {
 	$('.d_clip_button').show();
-	clipboard = new Clipboard('.d_clip_button', {
-	    text: function(trigger) {
-	    	var button_id = trigger.getAttribute('id')
-	    	var question_num = button_id.charAt(button_id.length - 1)
-	        $.ajax({
-				type: "GET",
-				async: false,
-				context: this,
-				dataType: 'json',
-				url: '/problems/'+ question_num + '/minorupdate',
-				success: function (source) {
-	                question_source = source['ruql_source'];
-				}
-			});
-			return question_source
-    	}
-	});
-	clipboard.on('success', function(e) {
-		alert("Source code copied to clipboard!");
-	});
-	clipboard.on('error', function(e) {
-	    console.log(e);
-	});
+	var clip = new Clipboard('.d_clip_button');
+    clip.on('success', function(e) {
+        alert("Source code copied to clipboard!");
+    });
 
 	$('.check_all').show();
 	$('.check_all').change(function () {

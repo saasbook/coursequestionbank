@@ -38,8 +38,7 @@
       %div.multiple-wrong.correctness{:style => "display: none"}
         %p.entrytext
           = "Wrong.\n" + test_problem.global_explanation.to_s.html_safe
-
-- if test_problem.problem_type == "SelectMultiple"
+- elsif test_problem.problem_type == "SelectMultiple"
   %div.question{:id => "#{test_problem.uid}", :class => "select_multiple_question"}
     %p.questiontext
       = test_problem.question_text.html_safe
@@ -74,9 +73,7 @@
       %div.multiple-wrong.correctness{:style => "display: none"}
         %p.entrytext
           = "Wrong.\n"
-
-
-- if test_problem.problem_type == "FillIn"
+- elsif test_problem.problem_type == "FillIn"
   %div.question{:id => "#{test_problem.uid}", :class => "fillin_question"}
     %p.questiontext
       = test_problem.question_text.html_safe
@@ -106,8 +103,7 @@
       %div.entryexplain.fillin-showAnswer{:style => "display: none"}
         %p.entrytext
           = "answer is : .\n" + test_problem.answer_entrys[0]
-
-- if test_problem.problem_type == "Group"
+- elsif test_problem.problem_type == "Group"
   %div.question{:id => "#{test_problem.uid}", :class => "question"}
     %p.questiontext
       = test_problem.question_text.html_safe

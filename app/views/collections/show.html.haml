@@ -2,7 +2,7 @@
 %div.section_title
   - name = ["", "Public", "Share", "Private"]
   - level = @collection.access_level
-  %h3 #{name[level]} Collection #{@collection.name}
+  %h3 #{name[level]} Collection: #{@collection.name}
   %h4= @collection.description
   - if @collection.is_public
     %h5= @collection.instructor.name

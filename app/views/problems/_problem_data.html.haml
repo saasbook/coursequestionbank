@@ -3,9 +3,9 @@
     = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}",
       class: "checkbox check_box_#{group_id}", form: "update_multiple_tags_#{group_id}"
 
-- if can? :add_to_collection,problem
+- if can? :add_to_collection, problem
   - if column == :stats
-    - stats = problem.attempt_stats
+    - stats = problem.attempt_stats_place_holder
     %div.stats{:id => "stats_#{problem.id}"}
       %div.plain_text
         = "Successful First Attempt Percentage:"
@@ -42,19 +42,21 @@
 
   %div.additional
     %div.prob-right
-      - if can? :set_privacy, problem
-        = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_privacy' do
-          - name = ["Public", "Share", "Private"]
-          - level = problem.access_level
-          - if level == 1
-            = hidden_field_tag :privacy, name[0], :id => nil
-            = submit_tag (name[0]), :class => 'btn btn-default privacy-button'
-          - elsif level == 2
-            = hidden_field_tag :privacy, name[1], :id => nil
-            = submit_tag (name[1]), :class => 'btn btn-default privacy-button'
-          - else
-            = hidden_field_tag :privacy, name[2], :id => nil
-            = submit_tag (name[2]), :class => 'btn btn-default privacy-button'
+      -#
+        - if can? :set_privacy, problem
+          = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_privacy' do
+            - name = ["Public", "Share", "Private"]
+            - level = problem.access_level
+            - if level == 1
+              = hidden_field_tag :privacy, name[0], :id => nil
+              = submit_tag (name[0]), :class => 'btn btn-default privacy-button'
+            - elsif level == 2
+              = hidden_field_tag :privacy, name[1], :id => nil
+              = submit_tag (name[1]), :class => 'btn btn-default privacy-button'
+            - else
+              = hidden_field_tag :privacy, name[2], :id => nil
+              = submit_tag (name[2]), :class => 'btn btn-default privacy-button'
+              */
 
       = form_tag problem_path(:id => problem.id), :method => :put, :class => 'prob_obsolete' do
         = hidden_field_tag :obsolete, problem.obsolete ? '0' : '1', :id => nil
@@ -112,10 +114,10 @@
     - if can? :supersede, problem
       %div
         Edit question:
-        // not sure if text area below is necessary will investigate
-        // %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= "#{problem.ruql_source}"
-        %button{:title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
-                :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
+        %textarea{:id => "source_#{problem.id}", :value => "current_ruql", :style => "display: none"}= "#{problem.ruql_source}"
+        %button{"data-clipboard-target" => "#source_#{problem.id}", "data-clipboard-text" => "#{problem.ruql_source}", "data-clipboard-action" => "copy",
+                  :title => "", :id => "copy_source_button_#{problem.id}", :class => "d_clip_button btn btn-default",
+                  :value => "copy_source_button_#{problem.id}", :style => ('display: none' if not Rails.env.test?)}
           Clip Source Code
         = link_to "Supersede", supersede_path(:id => problem.id), :id => "supersede_button_#{problem.id}", :class => 'supersede_button btn btn-default', :value => "Supersede"
         = link_to "Update", minorupdate_path(:id => problem.id), :id => "minorupdate_button_#{problem.id}", :value => "Update", :class => 'minorupdate_button btn btn-default'
