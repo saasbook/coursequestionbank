@@ -1,13 +1,22 @@
 # Course Question Bank - CS 169 Project
-[![Code Climate](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/gpa.svg)](https://codeclimate.com/github/hrzlvn/coursequestionbank)
-[![Travis CI](https://travis-ci.org/hrzlvn/coursequestionbank.svg?branch=master)](https://travis-ci.org/hrzlvn/coursequestionbank)
-[![Test Coverage](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/coverage.svg)](https://codeclimate.com/github/hrzlvn/coursequestionbank/coverage)
+[![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](http://coursequestionbank-f17.herokuapp.com)
+[![Code Climate](https://codeclimate.com/github/Laralinmcc/coursequestionbank/badges/gpa.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank)
+[![Travis CI](https://travis-ci.org/hrzlvn/coursequestionbank.svg?branch=master)](https://travis-ci.org/Laralinmcc/coursequestionbank)
+[![Test Coverage](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/coverage.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank/coverage)
 <span style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" ><a style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" href="https://www.pivotaltracker.com/n/projects/1544183">PivotalTracker</a></span>
 
+# Video Links
+
+Client Entry Video - https://youtu.be/oNJuf9Z29W0 
+
+Intro Screencast Video - https://youtu.be/EVNBPCu02wQ
+
+Final Screencast Video - https://youtu.be/DiDK1wS4gyU
 
 # User Guide
 See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
+<<<<<<< HEAD
 ## NOTE: This tool ought to be deprecated
 
 We should find a useful tool that allows tagging, grouping,
@@ -16,8 +25,34 @@ etc. questions in the
 format, like these [examples](https://webapps.ph.ed.ac.uk/qtiworks/anonymous/samples).
 
 ## Running or Testing Locally
+=======
+## Running or Testing Locally (Cloud9 Development)
 
-You need to run a Solr process during local development (or Cloud9 for those who used it). So `bundle exec sunspot-solr start -p 8983` to start and `bundle exec sunspot-solr stop` to stop (basically the steps in `.travis.yml`). And the config in `sunspot.yml` should enable the app to connect properly.
+You need to run a Solr process during local development (or Cloud9 for those who used it). So after cloning the repository, run:
+
+`git fetch --all`
+
+`git checkout fall2017_features`
+
+`bundle install --without production` 
+
+Now, on two new terminals, run `redis-server` and `bundle exec sidekiq -q high` respectively.
+Returning to the first terminal, run:
+
+`rake all`
+
+`rake run`
+
+`rake features`
+
+`rake spec`
+
+to start the application. To see your application running on Cloud 9, run:
+
+`rails s -b $IP -p $PORT`
+>>>>>>> 23a7b2f9414f573f7e423a73e99afff62df6b47a
+
+To stop the application, run `bundle exec sunspot-solr stop` (basically the steps in `.travis.yml`). And the config in `sunspot.yml` should enable the app to connect properly.
 
 When running locally, you can click the "Dev Login" button and login as either `saas` (Instructor privilege) or `saas-admin` (Admin privilege) with no password needed.
 

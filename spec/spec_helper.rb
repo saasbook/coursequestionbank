@@ -1,6 +1,4 @@
 # This file is copied to spec/ when you run 'rails generate rspec:install'
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
 
 require 'simplecov'
 SimpleCov.start 'rails'
@@ -9,6 +7,14 @@ require File.expand_path("../../config/environment", __FILE__)
 require 'rspec/rails'
 require 'rspec/autorun'
 
+def wait_for_ajax
+  Timeout.timeout(Capybara.default_wait_time) do
+    loop do
+      active = page.evaluate_script('jQuery.active')
+      break if active == 0
+    end
+  end
+end
 
 # Requires supporting ruby files with custom matchers and macros, etc,
 # in spec/support/ and its subdirectories.

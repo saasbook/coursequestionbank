@@ -1,6 +1,6 @@
 class Instructor < ActiveRecord::Base
 
-  attr_accessible :name, :username, :uid, :provider, :provider_image, :provider_email, :privilege, :collections, :problem
+  attr_accessible :name, :username, :uid, :provider, :provider_image, :provider_email, :privilege, :collections, :problem, :uploaded_duplicates,:uploaded_same_file, :uploaded_empty_file, :current_collection
 
   has_many :collections
   has_many :problems
@@ -23,20 +23,12 @@ class Instructor < ActiveRecord::Base
       user.provider_image = auth["info"]["image"]
       user.provider_email = auth["info"]["email"]
       user.privilege = "Student"
+      user.uploaded_duplicates = false
+      user.uploaded_same_file = false
+      user.uploaded_empty_file = false
+      user.current_collection = 0
     end
   end
-
-  # def admin?
-  #   privilege == "Admin"
-  # end
-  #
-  # def instructor?
-  #   privilege == "Instructor"
-  # end
-  #
-  # def student?
-  #   privilege == "Student"
-  # end
 
   # The new data structure stores privilege information in Instructor
   # To prevent data loss, the old whitelist table is preseved.
@@ -56,9 +48,22 @@ class Instructor < ActiveRecord::Base
     end
     return self.privilege
   end
-
+  
   def self.privilege_levels
     %w{Admin Instructor Student}
   end
 
 end
+
+#------------ LEGACY CODE ----------------
+  # def admin?
+  #   privilege == "Admin"
+  # end
+  #
+  # def instructor?
+  #   privilege == "Instructor"
+  # end
+  #
+  # def student?
+  #   privilege == "Student"
+  # end

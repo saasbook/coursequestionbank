@@ -4,6 +4,7 @@ Feature: Student's view of problem table, aka /problems, /homepage
 
   Background:
     Given I am signed in with uid "1234" and provider "github"
+    And I pending   #need to implement JS test here to test Uploading File
     And I have uploaded 'bloom_test.txt'
     Then I am signed in with uid "12345" and provider "developer"
 

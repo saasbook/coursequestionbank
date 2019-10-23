@@ -9,6 +9,7 @@ Background:
 
 Scenario: Superseded questions have new universal IDs
   And I am on the CourseQuestionBank home page
+  And I pending
   When I follow "supersede_button" for problem containing "Rails doesn't scale"
   And I fill in "ruql_source" with text of "new_universal_id2.txt"
   And I press "Supersede question"
@@ -16,6 +17,7 @@ Scenario: Superseded questions have new universal IDs
 
 Scenario: Uploading a question with a new universal ID
   And I am on the home page
+  And I pending
   And I follow "View 60"
   Then the problem containing "Rails doesn't scale" should have a non-empty uid
 

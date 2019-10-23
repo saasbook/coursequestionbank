@@ -7,6 +7,7 @@ Feature: I am able to preview the ruql format in preview quiz
 
   Scenario: I can export and view the content
     Given I am on the collection index page
+    And I pending
     Given I am on the collection edit page
     Then I am on the export page
     Then I should see "Preview"

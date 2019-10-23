@@ -10,6 +10,9 @@ class SessionController < ApplicationController
     auth = request.env["omniauth.auth"]
     user = Instructor.find_by_provider_and_uid(auth["provider"], auth["uid"]) ||
              Instructor.create_via_omniauth(auth)
+		if user.privilege.nil?
+		  user.privilege = "Student"
+		end
     session[:user_id] = user.id
     redirect_to problems_path
   end
@@ -28,5 +31,6 @@ class SessionController < ApplicationController
 
   def login
     @dev_users = Instructor.dev_users
+    @on_production = ENV['RACK_ENV'] == 'production'
   end
 end

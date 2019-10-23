@@ -18,9 +18,9 @@
 # * http://elabs.se/blog/15-you-re-cuking-it-wrong
 #
 
-
 require 'uri'
 require 'cgi'
+require 'timeout'
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "paths"))
 require File.expand_path(File.join(File.dirname(__FILE__), "..", "support", "selectors"))
 
@@ -31,7 +31,18 @@ module WithinHelpers
 end
 World(WithinHelpers)
 
+module WaitForAjax
+  def wait_for_ajax
+    Timeout.timeout(Capybara.default_wait_time) do
+      loop until finished_all_ajax_requests?
+    end
+  end
 
+  def finished_all_ajax_requests?
+    page.evaluate_script('jQuery.active').zero?
+  end
+end
+World(WaitForAjax)
 Then /^I should see the image "(.+)"$/ do |image|
     page.should have_xpath("//img[@src=\"#{image}\"]")
 end
@@ -88,13 +99,14 @@ When /^(?:|I )update '(.*)' to '(.*)'$/ do |former, new|
   # end
 end
 
-Given /^(?:|I )have uploaded '(.*)'$/ do |file|
+Given /^(?:|I )have uploaded '(.*)'$/ do |filename|
   steps %Q{
     Given I am on the upload page
-    And I attach the file "features/test_files/#{file}" to "file_upload"
+    And I attach the file "features/test_files/#{filename}" to "file_upload"
     And I press "Upload File"
-    Then I should see "Upload successful!"
+    Then I should see "Uploading File..."
   }
+  And I pending   #need to implement JS test here to test Uploading File
 end
 
 When /^(?:|I )create a new collection '(.*)'(.*)/ do |name, optional|
@@ -119,7 +131,7 @@ When /^(?:|I )deny '(.*)'/ do |user|
   visit "admin/deny/#{Instructor.find_by_name(user).id}"
 end
 
-def problems_with_text(text, collection=nil)
+def problems_with_text(text, collfection=nil)
   probs = Problem.all.select{|problem| problem.json and problem.json.include? text}
   probs.select!{|problem| problem.collections.map(&:name).include? collection} if collection
   probs
@@ -398,6 +410,11 @@ Then /^(?:|I )should be on (.+)$/ do |page_name|
   end
 end
 
+And /^I should be redirected$/ do
+  sleep 15
+  visit [ current_path, page.driver.request.env['QUERY_STRING'] ].reject(&:blank?).join('?')
+end
+
 Then /^(?:|I )should have the following query string:$/ do |expected_pairs|
   query = URI.parse(current_url).query
   actual_params = query ? CGI.parse(query) : {}
@@ -516,4 +533,22 @@ end
 
 When(/^I unchecked "([^"]*)"$/) do |arg|
   page.uncheck(arg)
+end
+
+Then(/^the clipboard should contain "([^"]*)"$/) do |copied|
+  clipboard_text = page.evaluate_script("clipboard.clipboardAction.text")
+  clipboard_text.should include(copied)
+end
+
+Then(/^I should see an alert saying "([^"]*)"$/) do |message|
+  #alert_text = page.driver.browser.switch_to.alert.text
+  expect(accept_alert).to eq(message)
+end
+
+Given(/^the AJAX request does not succeed\.$/) do
+  pending # express the regexp above with the code you wish you had
+end
+
+When(/^I pending$/) do
+  pending # express the regexp above with the code you wish you had
 end

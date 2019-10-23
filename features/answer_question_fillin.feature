@@ -8,6 +8,7 @@ Background:
   Given I am signed in with uid "1234" and provider "github"
   Then I should see "Admin"
   And I have uploaded 'test_fill_in.txt'
+  And I pending   #need to implement JS test here to test Uploading File
   And I am on the CourseQuestionBank home page
 
 Scenario: I can answer a fill-in-the-blank question

@@ -9,11 +9,6 @@ class InstructorsController < ApplicationController
     render :template => 'collections/index'
   end
 
-  # def mark_as_current
-  #   Instructor.update(@current_user.id, {:current_collection => params[:id]})
-  #   redirect_to profile_path
-  # end
-
   def admin
     authorize! :manage, Instructor
     # @unauthorized_users = Instructor.all.select{|i| i.privilege.nil?}
@@ -31,17 +26,6 @@ class InstructorsController < ApplicationController
       redirect_to :back and return
     end
 
-    # if username == ''
-    #   flash[:error] = 'Please enter a username.'
-    #   redirect_to :back and return
-    # elsif !Whitelist.providers.include?(provider)
-    #   flash[:error] = 'Please select a provider.'
-    #   redirect_to :back and return
-    # elsif !Whitelist.privilege_levels.include?(privilege)
-    #   flash[:error] = 'Please select a privilege level.'
-    #   redirect_to :back and return
-    # end
-
     instructor = Instructor.find_by_username_and_provider(username, provider)
     # if whitelist
     instructor.update_attribute(:privilege, privilege)
@@ -53,6 +37,27 @@ class InstructorsController < ApplicationController
     redirect_to :back
   end
 
+end
+
+
+#------------ LEGACY CODE ----------------
+  # def mark_as_current
+  #   Instructor.update(@current_user.id, {:current_collection => params[:id]})
+  #   redirect_to profile_path
+  # end
+  
+# in update_instructor
+    # if username == ''
+    #   flash[:error] = 'Please enter a username.'
+    #   redirect_to :back and return
+    # elsif !Whitelist.providers.include?(provider)
+    #   flash[:error] = 'Please select a provider.'
+    #   redirect_to :back and return
+    # elsif !Whitelist.privilege_levels.include?(privilege)
+    #   flash[:error] = 'Please select a privilege level.'
+    #   redirect_to :back and return
+    # end
+    
   # def delete_whitelist_entry
   #   authorize! :manage, Instructor
   #   instructor = Instructor.find(params[:id])
@@ -72,6 +77,4 @@ class InstructorsController < ApplicationController
   #   Whitelist.is_enabled = !Whitelist.is_enabled
   #   flash[:notice] = Whitelist.is_enabled ? 'Whitelist enabled.' : 'Whitelist disabled.'
   #   redirect_to :back
-  # end
-
-end
+  # end    

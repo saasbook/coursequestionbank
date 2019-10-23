@@ -1,8 +1,10 @@
 class RuqlReader
-  def self.store_as_json(user, file)
-    filename = file.path
+  @file_processed = false
+  def self.store_as_json(user_id, file)
+    user = Instructor.find_by_id(user_id)
+    user.update_attributes(:uploaded_duplicates => false, :uploaded_same_file => false, :uploaded_empty_file => false, :current_collection => 0)
     Quiz.reset
-    Quiz.instance_eval "#{IO.read(filename)}"
+    Quiz.instance_eval file
     collections = []
     dups_found = false
     Quiz.quizzes.uniq.each do |quiz|
@@ -15,20 +17,22 @@ class RuqlReader
           problem.save
           Problem.reindex
           Sunspot.commit
-# <<<<<<< HEAD
-#           # debug
-# =======
-# >>>>>>> 757c8f31e1fae3f377fa1de2176ec8d4f4c4ad45
           result = Problem.handle_dups(user, problem.id) #check for dups
-          dups_found = true if result
+          if result
+            user.update_attributes(:uploaded_duplicates => true)
+          end
         end
         collection.save!
         collections.append collection
       else
-        raise 'Quiz with that name already exists in your list of collections. You probably didn\'t mean to upload the same quiz again. Try deleting the old collection and upload again if you really meant to do that.'
+        user.update_attributes(:uploaded_same_file => true)
       end
     end
-    [collections, dups_found]
+    id = collections.map{|collection| collection.id}
+    user.update_attributes(:current_collection => id[0])
+    if collections.nil? or collections.empty?
+      user.update_attributes(:uploaded_empty_file => true)
+    end
   end
 
   def self.read_problem(user, source)
@@ -37,5 +41,8 @@ class RuqlReader
     problems_json = quiz.render_with("JSON", {})
     raise 'Question source must contain exactly one question.' unless problems_json.size == 1
     Problem.from_JSON(user, problems_json[0])
+  end
+  def self.notify_file_processed
+    @file_processed = true
   end
 end
