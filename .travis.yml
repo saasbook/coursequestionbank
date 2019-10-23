@@ -21,7 +21,10 @@ after_script:
       - bundle exec sunspot-solr stop
 language: ruby
 rvm:
-  - 2.3.0
+  - 2.3.8
+  - 2.4.9
+  - 2.5.7
+  - 2.6.5
 
 addons:
     code_climate:
