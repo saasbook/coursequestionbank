@@ -4,6 +4,7 @@ Feature: User should be able to see image in problem's view
   Background:
     Given I am signed in with uid "1234" and provider "github"
     And I have uploaded 'test_question_with_image.txt'
+    And I pending
     And I am on the collection edit page
     
 

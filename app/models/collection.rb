@@ -51,6 +51,36 @@ class Collection < ActiveRecord::Base
     end
   end
 
+  def export(format)
+    if problems.empty?
+      return nil
+    else
+      if format == 'ruql'
+        print_name = (description.nil? || description.strip.empty?) ? name : name + ': ' + description
+        source = "quiz #{print_name.inspect} do\n"
+        problems.each do |prob|
+          prob_source = prob.ruql_source.lines.map{|x| '  ' + x}.join
+          source += "\n#{prob_source}\n"
+        end
+        source += "\nend"
+      else
+        export_quiz = Quiz.new(name, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
+        export_quiz.render_with(format)
+      end
+    end
+  end
+
+  # def public?
+  #   self.is_public
+  # end
+
+  def self.access_levels
+    %w{Public Share Private}
+  end
+end
+
+
+#------------ LEGACY CODE ----------------
   # def self.search(search)
   #   # debugger
   #   # if Problem.count != 0
@@ -72,31 +102,3 @@ class Collection < ActiveRecord::Base
   #   end
   #   return self.access_level
   # end
-
-  def export(format)
-    if problems.empty?
-      return nil
-    else
-      if format == 'ruql'
-        print_name = (description.nil? || description.strip.empty?) ? name : name + ': ' + description
-        source = "quiz #{print_name.inspect} do\n"
-        problems.each do |prob|
-          prob_source = prob.ruql_source.lines.map{|x| '  ' + x}.join
-          source += "\n#{prob_source}\n"
-        end
-        source += "\nend"
-      else
-        export_quiz = Quiz.new(name, nil, {:questions => problems.map {|problem| Question.from_JSON(problem.json)}})
-        export_quiz.render_with(format)
-      end
-    end
-  end
-
-  # def public?
-  #   self.is_public
-  # end
-
-  def self.access_levels
-    %w{Public Share Private}
-  end
-end

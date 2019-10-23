@@ -9,6 +9,7 @@ Feature: Export a collection
     And I am on the dashboard
 
   Scenario: Export a quiz successfully
+    And I pending
     When I follow "1/22/15 (W1 L2)"
     And I follow "Export"
     Then I should see "1/22/15 (W1 L2)"

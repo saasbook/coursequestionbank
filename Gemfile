@@ -23,10 +23,17 @@ gem 'will_paginate'
 gem 'sunspot_solr'
 gem 'rollbar'
 gem "codeclimate-test-reporter", group: :test, require: nil
+gem 'coveralls', require: false
 gem "rails-settings-cached", "0.2.4"
 gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
+gem 'clipboard-rails'
+gem 'sidekiq', '~> 3.5.4'
+gem 'sinatra', require: false
+gem 'slim'
+gem 'sidekiq-status'
+gem 'test-unit'
 
 group :development, :test do
   gem 'cucumber-rails', :require => false
@@ -38,7 +45,9 @@ group :development, :test do
   gem 'database_cleaner'
   gem 'simplecov'
   gem 'rack_session_access'
-  gem 'test-unit'
+  gem 'poltergeist'
+  gem 'phantomjs' #:require => 'phantomjs/poltergeist'
+  gem 'jasmine'
 end
 
 group :production do

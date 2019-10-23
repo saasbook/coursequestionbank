@@ -10,6 +10,7 @@ Feature: Admin / instructors can share a collection
     And I am on the dashboard
     When I am on the admin panel
     And I have uploaded 'bloom_test.txt'
+    And I pending   #need to implement JS test here to test Uploading File
 
   Scenario: The shared collection should appear on admin's "My collection" and "Public collection"
 

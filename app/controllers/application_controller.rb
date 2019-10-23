@@ -16,6 +16,19 @@ class ApplicationController < ActionController::Base
   end
 
   rescue_from CanCan::AccessDenied do |exception|
+      flash[:notice] = "You don't have permission to access this page."
+      redirect_to request.referer.present? ? :back : problems_path
+  end
+
+
+  def self.parse_list(string)
+    string ? string.split(',').map(&:strip).reject(&:empty?) : []
+  end
+
+end
+
+
+# In rescue_from CanCan:
     # if cannot? :read, Problem
     # 	flash[:notice] = "You don't have permission to access this site. Ask an administrator to be granted permission first."
     # 	session.delete(:user_id)
@@ -25,14 +38,5 @@ class ApplicationController < ActionController::Base
     # if @col.access_level == 2 and @current_user.privilege != "Student"
     #   redirect_to problems_path
     # else
-      flash[:notice] = "You don't have permission to access this page."
-      redirect_to request.referer.present? ? :back : problems_path
+    #
     # end
-  end
-
-
-  def self.parse_list(string)
-    string ? string.split(',').map(&:strip).reject(&:empty?) : []
-  end
-
-end

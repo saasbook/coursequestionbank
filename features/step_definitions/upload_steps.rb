@@ -24,7 +24,11 @@ end
 Then(/^I should see a flash message telling me of failure$/) do
   pending # express the regexp above with the code you wish you had
 end
-
+Then(/^an animation should run for Uploading File!$/) do
+  page.execute_script("$('input[name=upload]').css('opacity','1')")
+  page.driver.browser.switch_to.frame 'modaliframe'
+  sleep 20
+end
 Given(/^I successfully upload a file$/) do
   pending # express the regexp above with the code you wish you had
 end
@@ -36,3 +40,8 @@ end
 Then(/^I should see a flash message asking me to select a file$/) do
   flash[:notice] = "Please select a file"
 end
+
+Given(/^I click Delete$/) do
+  pending # express the regexp above with the code you wish you had
+end
+

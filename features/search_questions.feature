@@ -12,6 +12,7 @@ Feature: Search questions by question text
     Given I am signed in with uid "1234" and provider "github"
     And I have uploaded 'foo.txt'
     And I am on the CourseQuestionBank home page
+	  And I pending
     And I follow "View 60"
 
   Scenario: searching by question text
