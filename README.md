@@ -16,16 +16,6 @@ Final Screencast Video - https://youtu.be/DiDK1wS4gyU
 # User Guide
 See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
-<<<<<<< HEAD
-## NOTE: This tool ought to be deprecated
-
-We should find a useful tool that allows tagging, grouping,
-etc. questions in the
-[QTI](http://www.imsglobal.org/question/qtiv2p2/imsqti_v2p2_impl.html)
-format, like these [examples](https://webapps.ph.ed.ac.uk/qtiworks/anonymous/samples).
-
-## Running or Testing Locally
-=======
 ## Running or Testing Locally (Cloud9 Development)
 
 You need to run a Solr process during local development (or Cloud9 for those who used it). So after cloning the repository, run:
@@ -50,7 +40,6 @@ Returning to the first terminal, run:
 to start the application. To see your application running on Cloud 9, run:
 
 `rails s -b $IP -p $PORT`
->>>>>>> 23a7b2f9414f573f7e423a73e99afff62df6b47a
 
 To stop the application, run `bundle exec sunspot-solr stop` (basically the steps in `.travis.yml`). And the config in `sunspot.yml` should enable the app to connect properly.
 

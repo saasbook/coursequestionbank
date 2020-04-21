@@ -3,9 +3,6 @@ class Collection < ActiveRecord::Base
   validates :name, presence: true #, uniqueness: true for now this is bad
   has_and_belongs_to_many :problems
   belongs_to :instructor
-  # scope :collection, ->(collection_name) { where(name: collection_name) }
-  scope :mine_or_public, ->(user) {where('instructor_id=? OR access_level<?', "#{user.id}", '3')}
-  scope :public, where("access_level < 3")
 
   searchable do
     text :name

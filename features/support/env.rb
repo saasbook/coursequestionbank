@@ -5,6 +5,7 @@
 # files.
 require 'simplecov'
 SimpleCov.start 'rails'
+require 'byebug'
 require 'cucumber/rails'
 require 'cucumber/rspec/doubles'
 require File.dirname(__FILE__) + '/seeds'

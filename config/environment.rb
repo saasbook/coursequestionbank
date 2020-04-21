@@ -1,6 +1,5 @@
-# Load the rails application
+# Load the Rails application.
 require File.expand_path('../application', __FILE__)
-# Rails.logger = Logger.new(STDOUT)
-# Rails.logger.level = 0 # In any environment initializer, or
-# Initialize the rails application
+
+# Initialize the Rails application.
 Coursequestionbank::Application.initialize!

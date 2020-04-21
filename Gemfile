@@ -1,14 +1,19 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
-gem 'rails', '3.2.16'
+#ruby '2.4.9'
+ruby '2.5.5'
+#gem 'rails', '4.0.13'
+gem 'rails', '4.2.9'
 
+gem 'rails4_upgrade'
 
 gem 'googlecharts', :git => 'https://github.com/mattetti/googlecharts.git'
 # Bundle edge Rails instead:
 # gem 'rails', :git => 'git://github.com/rails/rails.git'
 
 gem 'ruql', :git =>'https://github.com/stevenwuyinze/ruql'
+gem 'protected_attributes'
+gem 'activerecord-session_store'
 gem 'omniauth'
 gem "highcharts-rails"
 gem 'cancan'
@@ -22,25 +27,29 @@ gem 'json'
 gem 'will_paginate'
 gem 'sunspot_solr'
 gem 'rollbar'
-gem "codeclimate-test-reporter", group: :test, require: nil
-gem 'coveralls', require: false
-gem "rails-settings-cached", "0.2.4"
+gem "rails-settings-cached" # , "0.2.4"
 gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
 gem 'clipboard-rails'
-gem 'sidekiq', '~> 3.5.4'
+gem 'sassc-rails'
+gem 'uglifier'
+gem 'sidekiq' #ruby, '~> 3.5.4'
+gem 'sidekiq-status'
 gem 'sinatra', require: false
 gem 'slim'
-gem 'sidekiq-status'
-gem 'test-unit'
+
+group :development do
+  gem 'bullet', '< 5.5.0'
+end
 
 group :development, :test do
   gem 'cucumber-rails', :require => false
+  gem "codeclimate-test-reporter", group: :test, require: nil
+  gem 'coveralls', require: false
   gem 'rspec-rails'
   gem 'rails-erd'
-  gem 'sqlite3'
-  #gem 'ruby-debug19'
+  gem 'sqlite3', '~> 1.3.0'
   gem 'byebug'
   gem 'database_cleaner'
   gem 'simplecov'
@@ -48,6 +57,7 @@ group :development, :test do
   gem 'poltergeist'
   gem 'phantomjs' #:require => 'phantomjs/poltergeist'
   gem 'jasmine'
+  gem 'test-unit'
 end
 
 group :production do
@@ -55,29 +65,3 @@ group :production do
   gem 'rails_12factor'
 end
 
-# Gems used only for assets and not required
-# in production environments by default.
-group :assets do
-  gem 'sass-rails',   '~> 3.2.3'
-  gem 'coffee-rails', '~> 3.2.1'
-  #gem 'therubyracer'
-  # See https://github.com/sstephenson/execjs#readme for more supported runtimes
-  # gem 'therubyracer', :platforms => :ruby
-  gem 'uglifier', '>= 1.0.3'
-end
-
-
-# To use ActiveModel has_secure_password
-# gem 'bcrypt-ruby', '~> 3.0.0'
-
-# To use Jbuilder templates for JSON
-# gem 'jbuilder'
-
-# Use unicorn as the app server
-# gem 'unicorn'
-
-# Deploy with Capistrano
-# gem 'capistrano'
-
-# To use debugger
-# gem 'debugger'
