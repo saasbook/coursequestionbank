@@ -15,7 +15,6 @@ gem 'ruql', :git =>'https://github.com/stevenwuyinze/ruql'
 gem 'protected_attributes'
 gem 'activerecord-session_store'
 gem 'omniauth'
-gem "highcharts-rails"
 gem 'cancan'
 gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
@@ -30,8 +29,6 @@ gem 'rollbar'
 gem "rails-settings-cached" # , "0.2.4"
 gem 'jquery-rails'
 gem 'haml'
-gem 'zeroclipboard-rails'
-gem 'clipboard-rails'
 gem 'sassc-rails'
 gem 'uglifier'
 gem 'sidekiq' #ruby, '~> 3.5.4'
@@ -39,8 +36,10 @@ gem 'sidekiq-status'
 gem 'sinatra', require: false
 gem 'slim'
 
+# Gems that bundle JS
+
 group :development do
-  gem 'bullet', '< 5.5.0'
+  #gem 'bullet', '< 5.5.0'
 end
 
 group :development, :test do

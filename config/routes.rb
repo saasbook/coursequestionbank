@@ -2,7 +2,7 @@ require 'sidekiq/web'
 Coursequestionbank::Application.routes.draw do
   root :to => 'problems#home'
   mount Sidekiq::Web, at: '/sidekiq'    #needed to view the SideKiq UI 
-  match  'auth/:provider/callback' => 'session#create', via: :post
+  match  'auth/:provider/callback' => 'session#create', via: [:get,:post]
   get 'auth/bypass/:user_id' => 'session#bypass', :as => 'bypass'
   post 'logout' => 'session#destroy'
   get  'auth/failure' => 'session#failure'
