@@ -1,6 +1,6 @@
 class FillInEmptyUids < ActiveRecord::Migration
   def up
-    probs = Problem.find(:all)
+    probs = Problem.all
     
     probs.each do |p|
       if p.uid.nil?
