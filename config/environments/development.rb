@@ -1,4 +1,10 @@
 Coursequestionbank::Application.configure do
+
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.add_footer = true
+    Bullet.bullet_logger = true
+  end
   # Settings specified here will take precedence over those in config/application.rb
 
   config.eager_load = false

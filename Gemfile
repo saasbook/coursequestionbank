@@ -38,7 +38,7 @@ gem 'slim'
 # Gems that bundle JS
 
 group :development do
-  #gem 'bullet', '< 5.5.0'
+  gem 'bullet', '< 5.5.0'
 end
 
 group :development, :test do

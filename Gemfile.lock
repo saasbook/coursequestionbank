@@ -67,6 +67,9 @@ GEM
       autoprefixer-rails (>= 5.2.1)
       sass (>= 3.3.4)
     builder (3.2.4)
+    bullet (5.4.3)
+      activesupport (>= 3.0.0)
+      uniform_notifier (~> 1.10.0)
     byebug (11.1.2)
     cancan (1.6.10)
     capybara (3.32.1)
@@ -333,6 +336,7 @@ GEM
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
     unicode-display_width (1.7.0)
+    uniform_notifier (1.10.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.4)
@@ -347,6 +351,7 @@ DEPENDENCIES
   activerecord-session_store
   barista
   bootstrap-sass (~> 3.3.3)
+  bullet (< 5.5.0)
   byebug
   cancan
   codeclimate-test-reporter

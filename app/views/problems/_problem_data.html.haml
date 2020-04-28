@@ -3,39 +3,6 @@
     = check_box_tag "checked_problems[#{problem.id}]", 1, false, id: "checked_problems_#{problem.id}",
       class: "checkbox check_box_#{group_id}", form: "update_multiple_tags_#{group_id}"
 
-- if can? :add_to_collection,problem
-  - if column == :stats
-    - stats = problem.attempt_stats
-    %div.stats{:id => "stats_#{problem.id}"}
-      %div.plain_text
-        = "Successful First Attempt Percentage:"
-        %p.first_success_rate
-          = (1.0 * stats["first_correct"]) / stats["first_attempts"] * 100
-        = "overallAttempts:"
-        %p.overallAttempts
-          = stats["overallAttempts"]
-        = "Wrong of All Attempts:"
-        %p.allAttemptsWrongAmount
-          = stats["allAttemptsWrongAmount"]
-
-        = "Total First Attempts:"
-        %p.total_first_attempts
-          = stats["first_attempts"]
-        = "Wrong First Attempts:"
-        %p.wrong_first_attempts
-          = stats["first_attempts"] - stats["first_correct"]
-        = "Correct First Attempts:"
-        %p.correct_first_attempts
-          = stats["first_correct"]
-        = "Entrys Distribution:"
-        %p.entrys_array
-          = stats["entry_attempts"].to_s
-      %div.first_graph{:id => "first_graph_#{problem.id}"}
-        = "PlaceHolder"
-      %div.total_graph{:id => "total_graph_#{problem.id}"}
-        = "PlaceHolder"
-      %div.entrys_graph{:id => "entrys_graph_#{problem.id}"}
-        = stats["entry_attempts"].to_s
 
 - if column == :problem
   = render :partial => "problems/student_answer", :locals => {:test_problem => problem, :index => -1},:columns => [:checkbox, :problem]

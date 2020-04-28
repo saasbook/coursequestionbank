@@ -55,7 +55,7 @@ class CollectionsController < ApplicationController
   end
 
   def show
-    @collection = Collection.find(params[:id])
+    @collection = Collection.find(params[:id]).include(:problems)
     @problems = @collection.problems
   end
 

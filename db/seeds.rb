@@ -10,21 +10,27 @@ Whitelist.delete_all
 
 # These are only available when the omniauth 'developer' strategy is enabled (ie, not in production)
 
-Instructor.create!(username: "Admin", uid: "adm", name: "Questionbank Admin", provider: "developer")
+admin =
+  Instructor.create!(username: "Admin", uid: "adm", name: "Questionbank Admin", provider: "developer")
 Whitelist.create!(username: "Admin", provider: "dev", privilege: "Admin")
 
-instructor =
+student = 
   Instructor.create!(username: "JoeS", uid: "stu", name: "Joe Student", provider: "developer")
 Whitelist.create!(username: "Joe Student", provider: "developer", privilege: "Student")
 
-Instructor.create!(username: "GSI", uid: "gsi", name: "Tony Lee", provider: "developer")
+gsi = 
+  Instructor.create!(username: "GSI", uid: "gsi", name: "Tony Lee", provider: "developer")
 Whitelist.create!(username: "GSI", provider: "developer", privilege: "Instructor")
+
+instructor_id = gsi.id
 
 # Seed problems from db/problems.csv, but make them all owned by the sole instructor, and access
 # level of 2 (public)
 
 Problem.delete_all
-max_problems = 10
+max_problems = 100
+puts "Creating up to #{max_problems} problems..."
+num_problems = 0
 CSV.parse(File.read(File.join(Rails.root, 'db', 'problems.csv')), :headers => true).each do |p|
   Problem.create!(
     :access_level => 2,
@@ -34,7 +40,19 @@ CSV.parse(File.read(File.join(Rails.root, 'db', 'problems.csv')), :headers => tr
     :json => p['json'],
     :bloom_category => p['bloom_category'],
     :uid => p['uid']
-    ).update_attribute(:instructor_id, instructor.id)
-  max_problems -= 1
-  break if max_problems.zero?
+    ).update_attribute(:instructor_id, instructor_id)
+  num_problems += 1
+  break if num_problems == max_problems
 end
+puts "Created #{num_problems} problems"
+
+# Create a few collections
+per_collection = 50
+(1..2).each do |i|
+  puts "Creating collection #{i}"
+  c = Collection.create!(:name => "Collection #{i}", :is_public => true, :description => 'A collection')
+  c.update_attribute(:instructor_id, instructor_id)
+  c.problems = Problem.all.offset((i-1)*per_collection).limit(per_collection)
+  c.save!
+end
+
