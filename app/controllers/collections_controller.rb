@@ -56,7 +56,7 @@ class CollectionsController < ApplicationController
 
   def show
     @collection = Collection.find(params[:id])
-    @problems = @collection.problems
+    @problems = @collection.problems.paginate(:per_page => 10, :page => params[:page])
   end
 
   def update

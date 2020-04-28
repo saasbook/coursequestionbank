@@ -16,11 +16,5 @@
     Export
 
 %div.section_body
-  / - if can? :manage, @collection
-  = render :partial => 'problems/problem_table',
-            :locals => {:problems => @collection.problems, :columns => [:checkbox, :problem, :tags],
-                        :group_id => @collection.id, :empty_msg => 'This collection is empty'}
-  / - else
-  /   = render :partial => 'problems/student_problem_table',
-  /             :locals => {:problems => @collection.problems, :columns => [:checkbox, :problem, :tags],
-  /                         :group_id => @collection.id, :empty_msg => 'This collection is empty'}
+  = render :partial => 'problems/problem_table', :locals => {:problems => @collection.problems, :columns => [:checkbox, :problem, :tags], :group_id => @collection.id, :empty_msg => 'This collection is empty'}
+  = will_paginate @collection.problems
