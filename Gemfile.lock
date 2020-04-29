@@ -1,28 +1,10 @@
 GIT
-  remote: https://github.com/mattetti/googlecharts.git
-  revision: d316458ad177369d5deda5d16513bd3d2e06478d
-  specs:
-    googlecharts (1.6.12)
-
-GIT
   remote: https://github.com/stevenwuyinze/ruql
   revision: e1e6b89699aeada0d37729e6648709d185b7465b
   specs:
     ruql (0.1.6)
       builder (>= 3.0)
       getopt (>= 1.0)
-
-GIT
-  remote: https://github.com/sunspot/sunspot.git
-  revision: b019323eab3a026d057d72bd33dae8b6c4598293
-  specs:
-    sunspot (2.5.0)
-      pr_geohash (~> 1.0)
-      rsolr (>= 1.1.1, < 3)
-    sunspot_rails (2.5.0)
-      rails (>= 3)
-      sunspot (= 2.5.0)
-    sunspot_solr (2.5.0)
 
 GEM
   remote: https://rubygems.org/
@@ -306,6 +288,13 @@ GEM
       activesupport (>= 4.0)
       sprockets (>= 3.0.0)
     sqlite3 (1.3.13)
+    sunspot (2.5.0)
+      pr_geohash (~> 1.0)
+      rsolr (>= 1.1.1, < 3)
+    sunspot_rails (2.5.0)
+      rails (>= 3)
+      sunspot (= 2.5.0)
+    sunspot_solr (2.5.0)
     temple (0.8.2)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
@@ -341,7 +330,6 @@ DEPENDENCIES
   cucumber-rails
   database_cleaner
   figaro
-  googlecharts!
   haml
   jasmine
   jquery-rails
@@ -364,7 +352,7 @@ DEPENDENCIES
   simplecov
   slim
   sqlite3 (~> 1.3.0)
-  sunspot_rails!
+  sunspot_rails
   sunspot_solr
   test-unit
   uglifier
