@@ -13,7 +13,7 @@ gem 'omniauth'
 gem "highcharts-rails"
 gem 'cancan'
 gem 'omniauth-github'
-gem 'bootstrap-sass', '~> 3.3.3'
+gem 'bootstrap-sass', '~> 3.4.1'
 gem 'barista'
 gem 'figaro'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
