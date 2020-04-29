@@ -12,6 +12,18 @@ GIT
       builder (>= 3.0)
       getopt (>= 1.0)
 
+GIT
+  remote: https://github.com/sunspot/sunspot.git
+  revision: b019323eab3a026d057d72bd33dae8b6c4598293
+  specs:
+    sunspot (2.5.0)
+      pr_geohash (~> 1.0)
+      rsolr (>= 1.1.1, < 3)
+    sunspot_rails (2.5.0)
+      rails (>= 3)
+      sunspot (= 2.5.0)
+    sunspot_solr (2.5.0)
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -195,6 +207,7 @@ GEM
       cliver (~> 0.3.1)
       websocket-driver (>= 0.2.0)
     power_assert (1.2.0)
+    pr_geohash (1.0.0)
     progress_bar (1.3.1)
       highline (>= 1.6, < 3)
       options (~> 2.3.0)
@@ -236,9 +249,6 @@ GEM
     rails-settings-cached (2.1.1)
       rails (>= 4.2.0)
       request_store
-    rails4_upgrade (0.5.0)
-      bundler (>= 1.2.2)
-      terminal-table (>= 1.4.5)
     rails_12factor (0.0.3)
       rails_serve_static_assets
       rails_stdout_logging
@@ -261,6 +271,9 @@ GEM
       mime-types (>= 1.16)
     rexml (3.2.4)
     rollbar (2.24.0)
+    rsolr (2.3.0)
+      builder (>= 2.1.2)
+      faraday (>= 0.9.0)
     rspec-core (3.9.1)
       rspec-support (~> 3.9.1)
     rspec-expectations (3.9.1)
@@ -323,8 +336,6 @@ GEM
     temple (0.8.2)
     term-ansicolor (1.2.2)
       tins (~> 0.8)
-    terminal-table (1.8.0)
-      unicode-display_width (~> 1.1, >= 1.1.1)
     test-unit (3.3.5)
       power_assert
     thor (0.18.1)
@@ -335,7 +346,6 @@ GEM
       thread_safe (~> 0.1)
     uglifier (4.2.0)
       execjs (>= 0.3.0, < 3)
-    unicode-display_width (1.7.0)
     uniform_notifier (1.10.0)
     websocket-driver (0.7.1)
       websocket-extensions (>= 0.1.0)
@@ -375,7 +385,6 @@ DEPENDENCIES
   rails (= 4.2.9)
   rails-erd
   rails-settings-cached
-  rails4_upgrade
   rails_12factor
   rollbar
   rspec-rails
@@ -387,6 +396,8 @@ DEPENDENCIES
   sinatra
   slim
   sqlite3 (~> 1.3.0)
+  sunspot_rails!
+  sunspot_solr
   test-unit
   uglifier
   will_paginate

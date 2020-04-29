@@ -2,7 +2,7 @@ require 'ruql_renderer'
 
 class Problem < ActiveRecord::Base
 
-  include DisableSolr
+  #include DisableSolr
 
   attr_accessible :created_date, :is_public, :last_used, :rendered_text, :json, :text, :problem_type, :obsolete, :bloom_category, :uid, :access_level
   has_and_belongs_to_many :tags

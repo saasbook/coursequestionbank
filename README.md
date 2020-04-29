@@ -25,9 +25,16 @@ you can `brew install redis` and `brew install solr`.
 
 To run locally:
 
-1. `bundle exec rake sunspot:solr:start` to run Solr in the
-background.  To run it in the foreground and see log/error messages,
-run `sunspot:solr:run` instead.
+1. `bundle exec sunspot-solr run` to start Solr in its own terminal.
+**NOTE:** The most recent (2.5.x) versions of the `sunspot_solr` gem
+requires Java <= 1.7, which is confusingly numbered Java 7 or
+earlier.  On Mac OS X you may have to [uninstall or downgrade
+Java](https://stackoverflow.com/a/46517346) to do this.  If you use
+the wrong version, Solr won't initialize properly.
+**HINT:** You can check if Solr is running by visiting
+`localhost:8983` after starting it.  When you click on `Cores` you
+should see `default`, `development`, and `test`.
+
 2. Start `redis-server`
 3. In another terminal, `bundle exec sidekiq -q high`
 4. In yet another, start the app

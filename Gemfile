@@ -1,11 +1,7 @@
 source 'https://rubygems.org'
 
-#ruby '2.4.9'
 ruby '2.5.5'
-#gem 'rails', '4.0.13'
 gem 'rails', '4.2.9'
-
-gem 'rails4_upgrade'
 
 gem 'googlecharts', :git => 'https://github.com/mattetti/googlecharts.git'
 # Bundle edge Rails instead:
@@ -20,7 +16,7 @@ gem 'omniauth-github'
 gem 'bootstrap-sass', '~> 3.3.3'
 gem 'barista'
 gem 'figaro'
-# gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
+gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
 gem 'json'
 gem 'will_paginate'
@@ -42,7 +38,7 @@ group :development do
 end
 
 group :development, :test do
-  # gem 'sunspot_solr'            # "not for use in production"
+  gem 'sunspot_solr'            # "not for use in production"
   gem 'cucumber-rails', :require => false
   gem "codeclimate-test-reporter", group: :test, require: nil
   gem 'coveralls', require: false
