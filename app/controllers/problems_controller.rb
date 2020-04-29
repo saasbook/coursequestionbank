@@ -70,7 +70,10 @@ class ProblemsController < ApplicationController
       @collections = Collection.where(:access_level => 3)
     end
 
-    @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem]))
+    @problems = Problem.filter(@current_user, session[:filters].clone, Problem.find_by_id(flash[:bump_problem])).
+      includes(:instructor).
+      includes(:previous_version).
+      includes(:tags)
   end
 
   def new

@@ -24,8 +24,6 @@
                 %th= check_box_tag nil, 1, false, :id => "check_all_#{group_id}", :class => 'checkbox check_all', :style => 'display: none'
               - elsif col == :problem
                 %th Question Text
-              - elsif col == :stats
-                %th Response Stats
               - elsif col == :tags
                 %th Tags
 

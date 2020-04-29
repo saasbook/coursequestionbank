@@ -1,6 +1,9 @@
 require 'ruql_renderer'
 
 class Problem < ActiveRecord::Base
+
+  include DisableSolr
+
   attr_accessible :created_date, :is_public, :last_used, :rendered_text, :json, :text, :problem_type, :obsolete, :bloom_category, :uid, :access_level
   has_and_belongs_to_many :tags
   belongs_to :instructor
@@ -226,7 +229,6 @@ class Problem < ActiveRecord::Base
 
         paginate :page => filters['page'], :per_page => filters['per_page']
       end
-      # debugger
     if !problems.nil?
       results = problems.results
       if !bump_problem.nil?
