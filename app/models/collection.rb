@@ -1,6 +1,7 @@
 class Collection < ActiveRecord::Base
 
-  #include DisableSolr
+
+  # include DisableSolr if Rails.configuration.try(:without_solr)
 
   attr_accessible :last_used, :name, :description, :is_public, :color, :access_level
   validates :name, presence: true #, uniqueness: true for now this is bad

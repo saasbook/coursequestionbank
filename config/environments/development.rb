@@ -1,10 +1,17 @@
 Coursequestionbank::Application.configure do
 
+  # to disable N+1 query reporting (Bullet gem), just set Bullet.enable to false
   config.after_initialize do
     Bullet.enable = true
     Bullet.add_footer = true
     Bullet.bullet_logger = true
   end
+
+  config.logger = Logger.new(STDOUT)
+
+  # to disable Solr during development, set this:
+  config.without_solr = true
+
   # Settings specified here will take precedence over those in config/application.rb
 
   config.eager_load = false

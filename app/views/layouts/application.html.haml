@@ -1,7 +1,4 @@
 
-%link{:href => '//fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
-
-
 %html
   %head
     %title Course Question Bank
@@ -9,8 +6,10 @@
     = javascript_include_tag 'application'
     = csrf_meta_tags
     %meta{:name => 'viewport', :content => 'initial-scale=1'}
-
+    %link{:href => '//fonts.googleapis.com/css?family=Droid+Serif|Open+Sans:400,800,700', :rel => 'stylesheet', :type => 'text/css'}
   %body
+    - if Rails.configuration.try(:without_solr)
+      .alert.alert-danger.text-white.text-center.my-0 <b>Warning:</b> Solr is disabled. See <code>config/development.rb</code>
     %div#header
       #banner
         = link_to image_tag('foxinboxheader.png'), problems_path

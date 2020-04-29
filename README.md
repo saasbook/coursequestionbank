@@ -1,31 +1,50 @@
-# Course Question Bank - CS 169 Project
+# Course Question Bank
 [![Heroku](https://heroku-badge.herokuapp.com/?app=heroku-badge&style=flat)](http://coursequestionbank-f17.herokuapp.com)
 [![Code Climate](https://codeclimate.com/github/Laralinmcc/coursequestionbank/badges/gpa.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank)
 [![Travis CI](https://travis-ci.org/hrzlvn/coursequestionbank.svg?branch=master)](https://travis-ci.org/Laralinmcc/coursequestionbank)
 [![Test Coverage](https://codeclimate.com/github/hrzlvn/coursequestionbank/badges/coverage.svg)](https://codeclimate.com/github/Laralinmcc/coursequestionbank/coverage)
 <span style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" ><a style="background-color: blue; text-decoration:none; font: Verdana 7px bold; color:white; padding: 2px; margin: 2px;" href="https://www.pivotaltracker.com/n/projects/1544183">PivotalTracker</a></span>
 
-# Video Links
+## Documentation
 
-Client Entry Video - https://youtu.be/oNJuf9Z29W0 
+User guide is the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
-Intro Screencast Video - https://youtu.be/EVNBPCu02wQ
+See the [Client Entry Video](https://youtu.be/oNJuf9Z29W0),
+[Intro Screencast](https://youtu.be/EVNBPCu02wQ),
+[Final Screencast](https://youtu.be/DiDK1wS4gyU)
 
-Final Screencast Video - https://youtu.be/DiDK1wS4gyU
-
-# User Guide
-See the [Wiki](https://github.com/saasbook/coursequestionbank/wiki).
 
 ## Running or Testing Locally
 
-You need Redis and Solr installed locally to do development.
+You optionally need Redis and Solr installed locally to do development.
 
-For recent MacOS versions using Homebrew (at least as of High Sierra),
-you can `brew install redis` and `brew install solr`.
+If you run **without Redis**, the file-uploading functionality won't work.
+To run with Redis, do these steps first:
 
-To run locally:
+1. Make sure Redis is installed. `brew install redis` works on Mac OS
+X with Homebrew.
 
-1. `bundle exec sunspot-solr run` to start Solr in its own terminal.
+2. In a terminal window, run `redis-server`
+
+3. In a different terminal window, `bundle exec sidekiq -q high`
+
+Now to start up the application.
+
+If you run **without Solr**, the search-and-filter functions will
+always return "every record" rather than "every matching record".
+
+To run locally **without Solr:** 
+
+1. In `config/environments/development.rb`, set `disable_solr` to any
+truthy value.
+
+2. Start the app.
+
+To run locally **with Solr**:
+
+1. In `config/environments/development.rb`, set `disable_solr` to a falsy value or comment out the setting.
+
+2. `bundle exec sunspot-solr run` to start Solr in its own terminal.
 **NOTE:** The most recent (2.5.x) versions of the `sunspot_solr` gem
 requires Java <= 1.7, which is confusingly numbered Java 7 or
 earlier.  On Mac OS X you may have to [uninstall or downgrade
@@ -35,11 +54,11 @@ the wrong version, Solr won't initialize properly.
 `localhost:8983` after starting it.  When you click on `Cores` you
 should see `default`, `development`, and `test`.
 
-2. Start `redis-server`
-3. In another terminal, `bundle exec sidekiq -q high`
-4. In yet another, start the app
+3. In another terminal, start the app.
 
-When done, to stop the application, run `bundle exec rake sunspot:solr:stop` (basically the steps in `.travis.yml`). And the config in `sunspot.yml` should enable the app to connect properly.
+When done running the app, don't forget to stop Solr, Redis, and Sidekiq.
+
+## Dev Login
 
 When running locally, you can click the "Dev Login" button and login as either `saas` (Instructor privilege) or `saas-admin` (Admin privilege) with no password needed.
 
