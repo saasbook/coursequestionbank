@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20200428192026) do
+ActiveRecord::Schema.define(version: 20200429185824) do
 
   create_table "collections", force: :cascade do |t|
     t.integer  "instructor_id"
@@ -90,17 +90,6 @@ ActiveRecord::Schema.define(version: 20200428192026) do
 
   add_index "sessions", ["session_id"], name: "index_sessions_on_session_id"
   add_index "sessions", ["updated_at"], name: "index_sessions_on_updated_at"
-
-  create_table "settings", force: :cascade do |t|
-    t.string   "var",        limit: 255, null: false
-    t.text     "value"
-    t.integer  "thing_id"
-    t.string   "thing_type", limit: 30
-    t.datetime "created_at",             null: false
-    t.datetime "updated_at",             null: false
-  end
-
-  add_index "settings", ["thing_type", "thing_id", "var"], name: "index_settings_on_thing_type_and_thing_id_and_var", unique: true
 
   create_table "studentanswers", force: :cascade do |t|
     t.string   "attempt",       limit: 255

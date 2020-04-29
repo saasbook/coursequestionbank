@@ -21,7 +21,6 @@ gem 'progress_bar'
 gem 'json'
 gem 'will_paginate'
 gem 'rollbar'
-gem "rails-settings-cached" # , "0.2.4"
 gem 'jquery-rails'
 gem 'haml'
 gem 'sassc-rails'

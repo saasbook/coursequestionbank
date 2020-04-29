@@ -18,6 +18,7 @@ end
 if Rails.configuration.try(:without_solr)
   puts "\n\n*************   WARNING:  Solr is disabled in development  *************\n\n To enable it, see config/development.rb\n\n"
 
+  ::Sunspot.session = ::Sunspot::Rails::StubSessionProxy.new(::Sunspot.session)
   # eagerly load the two classes into which we want to mix the above module, which stubs Solr...
   require 'collection'
   require 'problem'

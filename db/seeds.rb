@@ -10,18 +10,19 @@ Whitelist.delete_all
 
 # These are only available when the omniauth 'developer' strategy is enabled (ie, not in production)
 
-admin =
-  Instructor.create!(username: "Admin", uid: "adm", name: "Questionbank Admin", provider: "developer")
-Whitelist.create!(username: "Admin", provider: "dev", privilege: "Admin")
+@uid = 1000
+def create_seed_user(username, name, priv)
+  @uid += 1
+  u = Instructor.create!(
+    :username => username, :name => name, :provider => 'developer', :uid => @uid)
+  Whitelist.create!(
+    :username => username, :provider => 'developer', :privilege => priv)
+  u
+end
 
-student = 
-  Instructor.create!(username: "JoeS", uid: "stu", name: "Joe Student", provider: "developer")
-Whitelist.create!(username: "Joe Student", provider: "developer", privilege: "Student")
-
-gsi = 
-  Instructor.create!(username: "GSI", uid: "gsi", name: "Tony Lee", provider: "developer")
-Whitelist.create!(username: "GSI", provider: "developer", privilege: "Instructor")
-
+admin =   create_seed_user('Administrator', 'Questionbank Admin', 'Admin')
+student = create_seed_user('JoeS', 'Joe Student', 'Student')
+gsi =     create_seed_user('GSI', 'Tara Teacher', 'Instructor')
 instructor_id = gsi.id
 
 # Seed problems from db/problems.csv, but make them all owned by the sole instructor, and access
