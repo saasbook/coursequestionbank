@@ -200,7 +200,7 @@ GEM
       oauth2 (~> 1.1)
       omniauth (~> 1.9)
     options (2.3.2)
-    pg (1.2.3)
+    pg (0.21.0)
     phantomjs (2.1.1.0)
     poltergeist (1.18.1)
       capybara (>= 2.1, < 4)
@@ -371,7 +371,7 @@ DEPENDENCIES
   json
   omniauth
   omniauth-github
-  pg
+  pg (~> 0.15)
   phantomjs
   poltergeist
   progress_bar
