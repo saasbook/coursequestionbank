@@ -1,6 +1,6 @@
 source 'https://rubygems.org'
 
-ruby '2.3.0'
+ruby '> 2.3.0'
 gem 'rails', '3.2.16'
 
 
@@ -18,7 +18,7 @@ gem 'barista'
 gem 'figaro'
 gem 'sunspot_rails', :git => 'https://github.com/sunspot/sunspot.git'
 gem 'progress_bar'
-gem 'json'
+gem 'json', '>= 1.8.3' # Hack for installing on recent macOS. :(
 gem 'will_paginate'
 gem 'sunspot_solr'
 gem 'rollbar'
