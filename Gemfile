@@ -29,7 +29,7 @@ gem 'jquery-rails'
 gem 'haml'
 gem 'zeroclipboard-rails'
 gem 'clipboard-rails'
-gem 'sidekiq', '~> 3.5.4'
+gem 'sidekiq', '~> 5.2.8'
 gem 'sinatra', require: false
 gem 'slim'
 gem 'sidekiq-status'
